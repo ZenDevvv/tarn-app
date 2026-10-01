@@ -9,25 +9,28 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# Workflow-level so EVERY job gets its own container. A `services:` block
+# declared inside a single job gives that job Postgres and leaves the others
+# with nothing at localhost:5432 — which is exactly how the e2e job first
+# failed. GitHub starts one container per job, so jobs stay isolated.
+services:
+  postgres:
+    image: postgres:16-alpine
+    env:
+      POSTGRES_USER: tarn
+      POSTGRES_PASSWORD: tarn
+      POSTGRES_DB: tarn
+    ports:
+      - 5432:5432
+    options: >-
+      --health-cmd "pg_isready -U tarn -d tarn"
+      --health-interval 5s
+      --health-timeout 5s
+      --health-retries 10
+
 jobs:
   verify:
     runs-on: ubuntu-latest
-
-    # Database-backed integration tests need Postgres (architecture §62).
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_USER: tarn
-          POSTGRES_PASSWORD: tarn
-          POSTGRES_DB: tarn
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U tarn -d tarn"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
 
     # Top-level env is inherited by every job. Keep it as plain literal values:
     # GitHub does not substitute `${VAR}` inside an env block, so a reference
