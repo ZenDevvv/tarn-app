@@ -438,9 +438,11 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 - RESOLVED — CI had never actually run. It has now. Both the `verify` job (lint, dependency audit, typecheck, tests, build — against a live Postgres service in CI) and the `Dependency Review` job pass on GitHub.
   - Status: RESOLVED
   - Evidence: verified 2026-10-01 on a real pull request; both checks reported `pass`.
-- OPEN — CodeRabbit is not installed yet. The repository is public so the free tier applies, but the GitHub App must be installed by the owner in a browser; that cannot be done from the command line.
-  - Status: OPEN
-  - Evidence: `.coderabbit.yaml` is committed and ready; install at <https://github.com/apps/coderabbitai>.
+- RESOLVED — CodeRabbit not installed. **Installed and verified working** on 2026-10-01. It reads `.coderabbit.yaml`, applies the `assertive` review profile, and reviews every pull request. Verified on a real pull request where all three checks passed: CodeRabbit, `verify`, and `Dependency Review`.
+  - Status: RESOLVED
+  - Evidence: pull request #29, closed after verification. CodeRabbit posted a configuration summary naming the repository config file and the ASSERTIVE profile.
+  - **One config defect was found by CodeRabbit itself on its first run:** `prismaLint` is listed in CodeRabbit's schema reference but is not accepted by the current schema, producing a parsing warning on every review. Removed, and the warning is confirmed gone.
+  - Cost note: the free tier applies because the repository is public. CodeRabbit displayed "Plan: Advanced" in its run summary. Worth watching the billing page, since Advanced is a paid tier name in their public pricing.
 - RESOLVED — Independent human security review. **Consciously deferred** by the owner, not overlooked. Recorded so it is not rediscovered as an oversight.
   - Status: RESOLVED_DEFERRED
   - Evidence: owner instruction "independent human reviewer, not for now", 2026-10-01; `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
@@ -478,8 +480,7 @@ Still open:
   - Why it matters: pre-commit hooks stop broken work reaching main. CI already gates lint, typecheck, tests, and build, so hooks are a convenience rather than a safety net.
   - Evidence / uncertainty: architecture §2.4 lists both as recommended tooling.
 - Question: Will the repository be public or private, and what AI reviewer should run on pull requests?
-  - Resolved 2026-10-01: the repository is **public** and the owner chose **CodeRabbit**. The free tier applies to public repositories, so there is no cost. The configuration is committed.
-  - Remaining: install the GitHub App at <https://github.com/apps/coderabbitai>. That step needs a browser and cannot be scripted.
+  - Resolved 2026-10-01: repository is **public**, reviewer is **CodeRabbit** on the free tier, installed and verified working.
 - Question: When should the ownership boundary be reviewed by someone other than the implementing agent?
   - Why it matters: an independent human review of the authentication and data-access code was **consciously deferred** by the owner, not overlooked. The residual risk is concentrated in one property — a single missing `userId` filter on one endpoint would expose the whole database.
   - Evidence / uncertainty: mitigated by required cross-user isolation tests, not eliminated. Deterministic mitigations are in place: dependency scanning, lint, typecheck, 90 unit/integration tests, 24 browser tests.

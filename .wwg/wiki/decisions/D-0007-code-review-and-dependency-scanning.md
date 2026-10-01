@@ -154,9 +154,15 @@ The owner resolved this on 2026-10-01: publish **public** and **unlicensed**, an
 
 The repository is live at **https://github.com/ZenDevvv/tarn-app**.
 
-`.coderabbit.yaml` is committed and tuned to this project (assertive profile, 13 path-specific instruction sets encoding the project's own documented rules). **The GitHub App still has to be installed manually** at <https://github.com/apps/coderabbitai> — that step requires a browser and cannot be scripted.
+**Installed and verified 2026-10-01.** Verified on a real pull request: CodeRabbit posted a configuration summary naming the repository's `.coderabbit.yaml` and reporting the ASSERTIVE review profile, and all three repository checks passed — CodeRabbit, `verify`, and `Dependency Review`.
+
+CodeRabbit found a defect in its own input on the first run: `prismaLint` is listed in CodeRabbit's published schema reference but is **not accepted** by the current schema, so it produced `Validation error: Unrecognized key: "prismaLint"` on every review. Removed, and the warning was confirmed gone on a follow-up run. Prisma schema rules remain enforced through the `packages/database/prisma/**` path instructions instead.
+
+Worth noting as a general lesson: **the configuration reference is not a schema guarantee.** A key can be documented and still be rejected. Only running the tool proved it.
 
 **Licence:** the owner chose to stay unlicensed. Public is not open source; without a licence nobody may legally reuse the code. Recorded as a deliberate choice, not an omission.
+
+**Cost watch item:** CodeRabbit's run summary displayed `Plan: Advanced`. Advanced is a paid tier name in CodeRabbit's public pricing (~$90 per developer per month). The usage here is the free public-repository tier, so no charge is expected — but the owner should confirm on CodeRabbit's billing page that nothing is being invoiced.
 
 ### Two bugs this uncovered on the first real run
 
