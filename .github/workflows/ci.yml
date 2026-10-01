@@ -9,28 +9,32 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-# Workflow-level so EVERY job gets its own container. A `services:` block
-# declared inside a single job gives that job Postgres and leaves the others
-# with nothing at localhost:5432 — which is exactly how the e2e job first
-# failed. GitHub starts one container per job, so jobs stay isolated.
-services:
-  postgres:
-    image: postgres:16-alpine
-    env:
-      POSTGRES_USER: tarn
-      POSTGRES_PASSWORD: tarn
-      POSTGRES_DB: tarn
-    ports:
-      - 5432:5432
-    options: >-
-      --health-cmd "pg_isready -U tarn -d tarn"
-      --health-interval 5s
-      --health-timeout 5s
-      --health-retries 10
+# NOTE: each job declares its OWN `services:` block rather than sharing one at
+# workflow level. Sharing is the tidier option, but it produced runs that
+# GitHub refused to dispatch (zero jobs, no log). Duplicating the block is
+# verbose and explicit, and it is known to work — `verify` has always had its
+# own. GitHub starts one container per job either way, so there is no shared
+# state to lose.
 
 jobs:
   verify:
     runs-on: ubuntu-latest
+
+    # Database-backed integration tests need Postgres.
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: tarn
+          POSTGRES_PASSWORD: tarn
+          POSTGRES_DB: tarn
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U tarn -d tarn"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
 
     # Top-level env is inherited by every job. Keep it as plain literal values:
     # GitHub does not substitute `${VAR}` inside an env block, so a reference
@@ -95,10 +99,24 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
 
-    # NOT inherited from the top-level `env`: GitHub does not substitute
-    # `${DATABASE_URL}` in a job-level env block, so re-declaring it there
-    # would have produced a literal, invalid value. The values are repeated
-    # literally instead.
+    # Its own Postgres, matching `verify`. A job-level `services:` block does
+    # not inherit the top-level `env`, and a job-level `env` block REPLACES the
+    # top-level one rather than merging — so the values are repeated literally.
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: tarn
+          POSTGRES_PASSWORD: tarn
+          POSTGRES_DB: tarn
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U tarn -d tarn"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
     env:
       NODE_ENV: test
       PORT: 4000
