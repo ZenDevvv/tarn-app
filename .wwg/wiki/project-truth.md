@@ -435,20 +435,30 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 - RESOLVED — No git remote. The repository is published at **https://github.com/ZenDevvv/tarn-app**, public, with `main` tracking `origin/main`.
   - Status: RESOLVED
   - Evidence: `git remote -v`; GitHub API on 2026-10-01.
-- RESOLVED — CI had never actually run. It has now. Both the `verify` job (lint, dependency audit, typecheck, tests, build — against a live Postgres service in CI) and the `Dependency Review` job pass on GitHub.
+- RESOLVED — CI had never actually run. It has now. Both the `verify` job (lint, dependency audit, typecheck, tests, build — against a live Postgres service in CI) and the `Dependency Review` job pass on GitHub, and both are now required by branch protection.
   - Status: RESOLVED
-  - Evidence: verified 2026-10-01 on a real pull request; both checks reported `pass`.
+  - Evidence: verified 2026-10-01 on real pull requests; both checks reported `pass` and gated a real merge.
+- RESOLVED — Nothing enforced CI. `main` now has branch protection with **admin enforcement on**.
+  - Status: RESOLVED
+  - Evidence: applied and verified 2026-10-01 via the GitHub API.
+  - Settings: required status checks `verify`, `dependency-review`, `CodeRabbit`; **strict mode** (the pull request branch must be up to date with the base branch before merging, and checks must pass on the latest commit SHA); pull request required with zero required approvals; `enforce_admins: true`; force pushes disabled; branch deletion disabled; conversation resolution required.
+  - **Known limit, flagged by CodeRabbit:** with squash merge, the commit that lands on `main` is newly generated and CI never runs against it. Strict mode guarantees checks passed on the latest *pull request* commit, not on the squash result. If a guarantee on the merged SHA is wanted, use a merge commit or a post-merge re-run check instead of squash.
+  - **Verified by testing, not assumption.** A direct push to `main` was rejected with `GH006: Protected branch update failed`. A real pull request went `BLOCKED` while CodeRabbit was still running, flipped to `CLEAN` once all three passed, and merged. That is the complete workflow proven end to end.
+  - Owner chose admin enforcement knowingly. The first configuration deliberately set `enforce_admins: false` as a lockout safeguard; that made the gates advisory because the owner is the only admin, so it was changed to `true` on request.
+  - Escape hatch if CodeRabbit ever fails to report: an admin can remove or edit the protection rule in repository settings or via the API. This is friction, not a permanent lockout.
+  - Operational consequence: **no more direct pushes to `main`.** Every change needs a branch, a pull request, and three green checks. Squash merge is the path used so far.
 - RESOLVED — CodeRabbit not installed. **Installed and verified working** on 2026-10-01. It reads `.coderabbit.yaml`, applies the `assertive` review profile, and reviews every pull request. Verified on a real pull request where all three checks passed: CodeRabbit, `verify`, and `Dependency Review`.
   - Status: RESOLVED
   - Evidence: pull request #29, closed after verification. CodeRabbit posted a configuration summary naming the repository config file and the ASSERTIVE profile.
   - **One config defect was found by CodeRabbit itself on its first run:** `prismaLint` is listed in CodeRabbit's schema reference but is not accepted by the current schema, producing a parsing warning on every review. Removed, and the warning is confirmed gone.
   - Cost note: the free tier applies because the repository is public. CodeRabbit displayed "Plan: Advanced" in its run summary. Worth watching the billing page, since Advanced is a paid tier name in their public pricing.
+  - Timing note: CodeRabbit took roughly three minutes to complete a review. With it required and strict mode on, expect a merge to wait for it.
 - RESOLVED — Independent human security review. **Consciously deferred** by the owner, not overlooked. Recorded so it is not rediscovered as an oversight.
   - Status: RESOLVED_DEFERRED
   - Evidence: owner instruction "independent human reviewer, not for now", 2026-10-01; `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
-- DEFERRED_BLOCKED — No AI code reviewer on pull requests. Recorded, but cannot be installed: the repository has no git remote, so no GitHub App can be installed. Whether the chosen tool is free depends on whether the repository is public or private.
-  - Status: DEFERRED_BLOCKED
-  - Evidence: `git remote -v` returns nothing; research summary and per-tool cost table in `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
+- SUPERSEDED — "No AI code reviewer on pull requests" (recorded when the repository had no git remote). Superseded by the resolved CodeRabbit entry above once the repository was published public and the app was installed. Retained as history so the sequence is not rewritten.
+  - Status: SUPERSEDED
+  - Evidence: replaced 2026-10-01. This entry previously claimed the repository had no git remote, which stopped being true on publication.
 - NEEDS_CONFIRMATION — Deployment target is recommended, not decided: frontend → Vercel, API → Railway/Render, PostgreSQL → Neon/Supabase, object storage → Cloudflare R2 (architecture §65). No deployment configuration exists.
   - Status: NEEDS_CONFIRMATION
   - Evidence: architecture §65–§66; working-tree scan.
