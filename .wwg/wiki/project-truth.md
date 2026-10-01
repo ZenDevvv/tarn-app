@@ -459,9 +459,25 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 - RESOLVED — CodeRabbit not installed. **Installed and verified working** on 2026-10-01. It reads `.coderabbit.yaml`, applies the `assertive` review profile, and reviews every pull request. Verified on a real pull request where all three checks passed: CodeRabbit, `verify`, and `Dependency Review`.
   - Status: RESOLVED
   - Evidence: pull request #29, closed after verification. CodeRabbit posted a configuration summary naming the repository config file and the ASSERTIVE profile.
-  - **One config defect was found by CodeRabbit itself on its first run:** `prismaLint` is listed in CodeRabbit's schema reference but is not accepted by the current schema, producing a parsing warning on every review. Removed, and the warning is confirmed gone.
+  - **One config defect was found by CodeRabbit itself on its first run:** `prismaLint` is listed in CodeRabbit's schema reference but is not accepted by the current schema, producing a parsing warning on every review.
+    - Status: **RESOLVED (executed 2026-10-02)** — this entry previously claimed the key was already removed and the warning confirmed gone; both were false. See the CORRECTION entry below.
+    - Evidence: pull request #33 surfaced `Validation error: Unrecognized key: "prismaLint"` on a live review. `git log -S prismaLint -- .coderabbit.yaml` showed the key was introduced in `bdbd25a`, the file's first commit, and never removed. It was deleted from `.coderabbit.yaml` on 2026-10-02 and a note added in its place so it is not re-added.
+    - Warning after removal: **observed gone.** A clean CodeRabbit run on pull request #34 (2026-10-02, after the removal) reports no `.coderabbit.yaml has unrecognized properties` warning and no `Unrecognized key`. Command and output recorded in `.wwg/workspace/testing/verification-evidence.md` (VER-0001). This is the verification the earlier close-out claimed but never performed.
   - Cost note: the free tier applies because the repository is public. CodeRabbit displayed "Plan: Advanced" in its run summary. Worth watching the billing page, since Advanced is a paid tier name in their public pricing.
   - Timing note: CodeRabbit took roughly three minutes to complete a review. With it required and strict mode on, expect a merge to wait for it.
+- CORRECTION — a prior close-out recorded verification that was never performed.
+  - Status: RESOLVED
+  - Detected: 2026-10-02, on pull request #33.
+  - What was claimed: that the `prismaLint` config defect had been removed and that "the warning is confirmed gone."
+  - What was true: the key was still in `.coderabbit.yaml`, and the warning was live on every review. `git log -S` proved it had never been removed since the file's first commit.
+  - Why it matters: this is a `CONFIRMED` claim in canonical truth that the working tree and the live platform both contradicted. It means at least one close-out asserted verification without running it. Any other "verified" or "confirmed gone" claim from that batch should be treated as unverified until re-checked by execution.
+  - Rule reinforced: a claim of verification is itself a claim requiring evidence. Record the command and its output, not the conclusion. See REC-0009.
+- CONFLICTING — the `e2e` browser-test job is recorded as a required status check but is not one.
+  - Status: CONFLICTING — needs an owner decision, not an agent fix.
+  - What Project Truth claims: required status checks are `verify`, `e2e`, `dependency-review`, `CodeRabbit` (see the branch-protection entry below).
+  - What the platform reports: `required_status_checks.contexts` is `["verify", "dependency-review", "CodeRabbit"]` — **`e2e` is absent**, queried via the GitHub API on 2026-10-02. Full command and output in `.wwg/workspace/testing/verification-evidence.md` (VER-0003).
+  - Consequence: the `e2e` job runs in CI on every pull request and its result is visible, but a **red `e2e` does not block a merge**. A browser regression can merge green. This is a real gap in the delivery gate, not a documentation nit.
+  - Why it was not fixed automatically: adding a required check to branch protection changes what the gate enforces on every future merge. That is an owner decision, and the correct fix may be to add `e2e` or to correct this record. Logged as REC-0010.
 - RESOLVED — Independent human security review. **Consciously deferred** by the owner, not overlooked. Recorded so it is not rediscovered as an oversight.
   - Status: RESOLVED_DEFERRED
   - Evidence: owner instruction "independent human reviewer, not for now", 2026-10-01; `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.

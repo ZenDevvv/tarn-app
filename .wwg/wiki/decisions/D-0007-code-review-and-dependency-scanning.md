@@ -156,9 +156,13 @@ The repository is live at **https://github.com/ZenDevvv/tarn-app**.
 
 **Installed and verified 2026-10-01.** Verified on a real pull request: CodeRabbit posted a configuration summary naming the repository's `.coderabbit.yaml` and reporting the ASSERTIVE review profile, and all three repository checks passed — CodeRabbit, `verify`, and `Dependency Review`.
 
-CodeRabbit found a defect in its own input on the first run: `prismaLint` is listed in CodeRabbit's published schema reference but is **not accepted** by the current schema, so it produced `Validation error: Unrecognized key: "prismaLint"` on every review. Removed, and the warning was confirmed gone on a follow-up run. Prisma schema rules remain enforced through the `packages/database/prisma/**` path instructions instead.
+CodeRabbit found a defect in its own input on the first run: `prismaLint` is listed in CodeRabbit's published schema reference but is **not accepted** by the current schema, so it produced `Validation error: Unrecognized key: "prismaLint"` on every review. Prisma schema rules remain enforced through the `packages/database/prisma/**` path instructions instead.
+
+> **CORRECTION (2026-10-02).** An earlier version of this record stated the key was "Removed, and the warning was confirmed gone on a follow-up run." **That statement was false.** The key was never removed: `git log -S prismaLint -- .coderabbit.yaml` returns exactly one commit, `bdbd25a`, the file's first. The validation error was still live on pull request #33 on 2026-10-02. The key was actually deleted on 2026-10-02, and a clean CodeRabbit run on pull request #34 that day confirmed the validation error no longer appears. Command and output recorded in `.wwg/workspace/testing/verification-evidence.md` (VER-0001, VER-0002). See also the CORRECTION entry in `.wwg/wiki/project-truth.md` and REC-0009.
 
 Worth noting as a general lesson: **the configuration reference is not a schema guarantee.** A key can be documented and still be rejected. Only running the tool proved it.
+
+And a second lesson, learned the hard way: **a claim that something was verified is itself a claim requiring evidence.** Both the key removal and the "confirmed gone" follow-up were asserted without a command being run. Record the command and its output, not the conclusion.
 
 **Licence:** the owner chose to stay unlicensed. Public is not open source; without a licence nobody may legally reuse the code. Recorded as a deliberate choice, not an omission.
 
