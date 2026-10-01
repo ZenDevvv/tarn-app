@@ -34,8 +34,8 @@ The product is **Tarn**. They are not the same thing.
 
 ## Requirements
 
-- Node.js >= 20.11 (developed on 24.x)
-- pnpm 9 (`npm i -g pnpm@9.15.4`, or `corepack enable pnpm`)
+- Node.js 22 (see `.nvmrc` — CI uses the same pinned version)
+- pnpm 9.15.4 (`npm i -g pnpm@9.15.4`)
 - Docker, for local PostgreSQL
 
 ## Getting started
@@ -82,10 +82,19 @@ Everything below runs in GitHub Actions on every push:
 | `pnpm typecheck` | types across all six packages |
 | `pnpm test` | 90 unit and integration tests |
 | `pnpm build` | both apps compile |
+| Playwright job | 24 browser and accessibility assertions in a real engine |
 
-Dependabot opens weekly dependency pull requests, grouped so they stay readable. Prisma major bumps are held back deliberately — they change client generation and need a manual migration.
+All four of these must pass, along with the CodeRabbit review, before `main` accepts a merge.
 
-Locally, `npx playwright test` adds 24 browser assertions covering landmarks, focus order, colour contrast in both themes, 360px layout, and 44px touch targets. It drives your installed Microsoft Edge by default; set `PW_CHANNEL=chrome` to use Chrome instead.
+Dependabot opens weekly dependency pull requests, grouped so they stay readable. Major bumps are held back deliberately — upgrading across a major is manual work, not something that arrives unannounced on a Monday. Prisma majors specifically need a client-generation migration.
+
+### Running the browser tests locally
+
+`npx playwright test` adds colour-contrast, focus-order, 360px layout, and 44px touch-target assertions that jsdom cannot perform.
+
+It uses your installed Microsoft Edge by default, since the bundled Chromium download is often blocked on Windows. Set `PW_CHANNEL=chrome` for Chrome, or `PW_CHANNEL=` to use the bundled browser.
+
+CI always uses the pinned bundled Chromium so results stay reproducible.
 
 ## Layout
 

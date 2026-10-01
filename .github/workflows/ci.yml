@@ -46,7 +46,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Single source of truth for the Node version. Keeping this as a bare
+          # number in two places is how they drift apart.
+          node-version-file: .nvmrc
           cache: pnpm
 
       - name: Install dependencies
@@ -78,5 +80,57 @@ jobs:
       - name: Build
         run: pnpm build
 
-      # E2E is intentionally not run yet: there are no implemented workflows to
-      # drive (architecture §63 lists Playwright as optional at first).
+  # Browser and accessibility tests.
+  #
+  # These cover the checks jsdom cannot do: colour contrast in a real engine,
+  # focus order, 360px layout, and 44px touch targets (DESIGN.md §11).
+  #
+  # Kept as a separate job from `verify` so the two run in parallel.
+  e2e:
+    runs-on: ubuntu-latest
+
+    env:
+      # Force the bundled Chromium. playwright.config.ts defaults to the
+      # system-installed browser for local convenience (msedge), which does not
+      # exist on the ubuntu runner. An empty value selects the pinned download,
+      # which keeps results reproducible.
+      PW_CHANNEL: ''
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma client
+        run: pnpm db:generate
+
+      - name: Apply migrations
+        run: pnpm --filter @tarn/database exec prisma migrate deploy
+
+      - name: Seed reference data
+        run: pnpm db:seed
+
+      # --with-deps installs the Linux system libraries Chromium needs.
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run browser and accessibility tests
+        run: pnpm exec playwright test
+
+      - name: Upload failure artefacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

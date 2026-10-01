@@ -1549,7 +1549,7 @@
       "affectedFile": ".wwg/governance/test-enforcement.md",
       "fileType": "governance",
       "affectedSection": "Related Truths",
-      "line": 128,
+      "line": 133,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -1559,15 +1559,6 @@
       "affectedFile": ".wwg/governance/test-enforcement.md",
       "fileType": "governance",
       "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/governance/test-enforcement.md",
-      "fileType": "governance",
-      "line": 25,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
       "severity": "suggestion",
@@ -4060,7 +4051,7 @@
       "affectedFile": ".wwg/governance/test-enforcement.md",
       "fileType": "governance",
       "affectedSection": "Related Truths",
-      "line": 128,
+      "line": 133,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -4070,15 +4061,6 @@
       "affectedFile": ".wwg/governance/test-enforcement.md",
       "fileType": "governance",
       "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/governance/test-enforcement.md",
-      "fileType": "governance",
-      "line": 25,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
       "severity": "warning",
@@ -4875,7 +4857,7 @@
       "affectedFile": ".wwg/governance/test-enforcement.md",
       "fileType": "governance",
       "affectedSection": "Related Truths",
-      "line": 128,
+      "line": 133,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -4885,15 +4867,6 @@
       "affectedFile": ".wwg/governance/test-enforcement.md",
       "fileType": "governance",
       "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/governance/test-enforcement.md",
-      "fileType": "governance",
-      "line": 25,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
       "severity": "suggestion",
@@ -5961,7 +5934,7 @@
     "skippedFileCount": 1,
     "errorCount": 0,
     "warningCount": 110,
-    "suggestionCount": 101,
+    "suggestionCount": 100,
     "classificationCounts": {
       "context": 15,
       "skill": 0,
