@@ -281,7 +281,7 @@ reviews:
         number — for example "the MVP database tables section of the
         architecture document" rather than a section symbol.
 
-# Optional: Prisma schema linting. Requires a plan that includes SAST support;
-# harmless to leave off otherwise.
-prismaLint:
-  enabled: false
+# NOTE: a `prismaLint` key used to sit here. CodeRabbit's current schema rejects
+# it ("Validation error: Unrecognized key"), so it was ignored and produced a
+# warning on every review. Removed 2026-10-02. Do not re-add it unless the
+# schema documents support for it — verify against a real review first.

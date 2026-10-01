@@ -4,7 +4,7 @@
 
 Validation status: WARN.
 
-Checked 73 Markdown file(s), with 0 error(s), 111 warning(s), and 107 suggestion(s).
+Checked 73 Markdown file(s), with 0 error(s), 111 warning(s), and 108 suggestion(s).
 
 ## Overall Status
 
@@ -230,6 +230,7 @@ Checked 73 Markdown file(s), with 0 error(s), 111 warning(s), and 107 suggestion
 - SUGGESTION markdown-possible-stale-current-language (.wwg/governance/drift-detection.md:28): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
 - SUGGESTION markdown-possible-stale-current-language (.wwg/governance/drift-guard.md:51): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
 - SUGGESTION markdown-possible-stale-current-language (.wwg/governance/public-discovery-review.md:15): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
+- SUGGESTION markdown-possible-vague-pronouns (.wwg/governance/recommendation-registry.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
 - SUGGESTION markdown-possible-vague-pronouns (.wwg/governance/regression-gaps.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
 - SUGGESTION markdown-todo-without-owner-or-reason (.wwg/governance/regression-guardrail-catalog.md:60): TODO/TBD appears without an owner, reason, or open-question context. Recommendation: Add the owner, reason, or decision needed before resolving the placeholder.
 - SUGGESTION markdown-todo-without-owner-or-reason (.wwg/governance/regression-guardrail-catalog.md:66): TODO/TBD appears without an owner, reason, or open-question context. Recommendation: Add the owner, reason, or decision needed before resolving the placeholder.
@@ -416,6 +417,7 @@ Checked 73 Markdown file(s), with 0 error(s), 111 warning(s), and 107 suggestion
 - WARNING governance-rules-missing-structure (.wwg/governance/recommendation-policy.md) [Must, Must Not, Prefer, Avoid]: Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid. Recommendation: Use Must / Must Not / Prefer / Avoid for enforceable governance rules.
 - WARNING governance-contract-missing-sections (.wwg/governance/recommendation-registry.md) [Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References]: Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References. Recommendation: Add the missing governance section or mark it explicitly not applicable.
 - WARNING governance-rules-missing-structure (.wwg/governance/recommendation-registry.md) [Must, Must Not, Prefer, Avoid]: Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid. Recommendation: Use Must / Must Not / Prefer / Avoid for enforceable governance rules.
+- SUGGESTION markdown-possible-vague-pronouns (.wwg/governance/recommendation-registry.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
 - WARNING governance-contract-missing-sections (.wwg/governance/regression-gaps.md) [Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References]: Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References. Recommendation: Add the missing governance section or mark it explicitly not applicable.
 - WARNING governance-rules-missing-structure (.wwg/governance/regression-gaps.md) [Must, Must Not, Prefer, Avoid]: Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid. Recommendation: Use Must / Must Not / Prefer / Avoid for enforceable governance rules.
 - SUGGESTION markdown-possible-vague-pronouns (.wwg/governance/regression-gaps.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.

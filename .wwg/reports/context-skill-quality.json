@@ -1516,6 +1516,14 @@
       "severity": "suggestion",
       "code": "markdown-possible-vague-pronouns",
       "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/governance/recommendation-registry.md",
+      "fileType": "governance",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
       "affectedFile": ".wwg/governance/regression-gaps.md",
       "fileType": "governance",
       "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
@@ -3958,6 +3966,14 @@
       "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
     },
     {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/governance/recommendation-registry.md",
+      "fileType": "governance",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
       "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
@@ -4922,6 +4938,14 @@
       "fileType": "governance",
       "line": 15,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/governance/recommendation-registry.md",
+      "fileType": "governance",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
     },
     {
       "severity": "suggestion",
@@ -6112,7 +6136,7 @@
     "skippedFileCount": 1,
     "errorCount": 0,
     "warningCount": 111,
-    "suggestionCount": 107,
+    "suggestionCount": 108,
     "classificationCounts": {
       "context": 15,
       "skill": 0,
