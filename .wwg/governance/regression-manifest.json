@@ -1,0 +1,302 @@
+{
+  "schemaVersion": 1,
+  "kind": "wwg.governance.regressionManifest",
+  "generatedAt": "2026-10-01T06:59:05.993Z",
+  "sourceBaselineReportPath": ".wwg/reports/adoption-regression-report.md",
+  "sourceBaselineJsonPath": ".wwg/reports/adoption-regression-report.json",
+  "baselineKind": "wwg.adoption.regressionBaseline",
+  "baselineSchemaVersion": 1,
+  "projectClassification": {
+    "type": "non-technical",
+    "confidence": "medium",
+    "reasons": [
+      "Multiple documentation or process files were detected."
+    ]
+  },
+  "detectedVerificationMode": "non-technical",
+  "testFrameworks": [],
+  "testCommands": [],
+  "existingTestInventorySummary": {
+    "total": 0,
+    "byKind": {},
+    "examples": []
+  },
+  "criticalBehaviorSummary": {
+    "count": 5,
+    "items": [
+      {
+        "name": "Runtime/build behavior",
+        "criticality": "medium",
+        "confidence": "low"
+      },
+      {
+        "name": "Data persistence behavior",
+        "criticality": "medium",
+        "confidence": "low"
+      },
+      {
+        "name": "Auth and permission behavior",
+        "criticality": "medium",
+        "confidence": "low"
+      },
+      {
+        "name": "Payment behavior",
+        "criticality": "medium",
+        "confidence": "low"
+      },
+      {
+        "name": "Deployment/runtime readiness",
+        "criticality": "medium",
+        "confidence": "low"
+      }
+    ]
+  },
+  "uncoveredBehaviorSummary": {
+    "count": 5,
+    "items": [
+      {
+        "name": "Runtime/build behavior",
+        "criticality": "medium",
+        "confidence": "low"
+      },
+      {
+        "name": "Data persistence behavior",
+        "criticality": "medium",
+        "confidence": "low"
+      },
+      {
+        "name": "Auth and permission behavior",
+        "criticality": "medium",
+        "confidence": "low"
+      },
+      {
+        "name": "Payment behavior",
+        "criticality": "medium",
+        "confidence": "low"
+      },
+      {
+        "name": "Deployment/runtime readiness",
+        "criticality": "medium",
+        "confidence": "low"
+      }
+    ]
+  },
+  "regressionGapCountBySeverity": {
+    "critical": 0,
+    "high": 0,
+    "medium": 7,
+    "low": 0,
+    "info": 0
+  },
+  "safeCandidateCountByType": {
+    "technical": 0,
+    "non-technical": 10,
+    "mixed": 0
+  },
+  "safeCandidates": [
+    {
+      "id": "candidate-process-regression-checklist",
+      "name": "Process regression checklist candidate",
+      "type": "non-technical",
+      "proposedCheckType": "process-checklist",
+      "classification": "advisory",
+      "target": "process",
+      "mode": "report-first",
+      "safeToGenerateExecutableTest": false,
+      "confidence": "medium",
+      "sourceEvidence": [
+        "DESIGN.md",
+        "job-application-tracker-brd-prd.md",
+        "job-application-tracker-project-architecture.md"
+      ],
+      "inferredBehavior": "Confirm documented process steps remain current.",
+      "recommendedAction": "Turn recurring process expectations into a review checklist."
+    },
+    {
+      "id": "candidate-document-consistency-check",
+      "name": "Document consistency check candidate",
+      "type": "non-technical",
+      "proposedCheckType": "document-consistency",
+      "classification": "advisory",
+      "target": "docs",
+      "mode": "report-first",
+      "safeToGenerateExecutableTest": false,
+      "confidence": "medium",
+      "sourceEvidence": [
+        "DESIGN.md",
+        "job-application-tracker-brd-prd.md",
+        "job-application-tracker-project-architecture.md"
+      ],
+      "inferredBehavior": "Confirm docs, policies, and handoff material do not contradict one another.",
+      "recommendedAction": "Review canonical ownership before automating doc checks."
+    },
+    {
+      "id": "candidate-approval-flow-check",
+      "name": "Approval-flow check candidate",
+      "type": "non-technical",
+      "proposedCheckType": "approval-flow",
+      "classification": "blocking",
+      "target": "approval",
+      "mode": "report-first",
+      "safeToGenerateExecutableTest": false,
+      "confidence": "medium",
+      "sourceEvidence": [
+        "DESIGN.md",
+        "job-application-tracker-brd-prd.md",
+        "job-application-tracker-project-architecture.md"
+      ],
+      "inferredBehavior": "Confirm sensitive changes have review and approval evidence.",
+      "recommendedAction": "Define approval evidence in governance before enforcement."
+    },
+    {
+      "id": "candidate-handoff-completeness-check",
+      "name": "Handoff completeness check candidate",
+      "type": "non-technical",
+      "proposedCheckType": "handoff-completeness",
+      "classification": "advisory",
+      "target": "handoff",
+      "mode": "report-first",
+      "safeToGenerateExecutableTest": false,
+      "confidence": "medium",
+      "sourceEvidence": [
+        "DESIGN.md",
+        "job-application-tracker-brd-prd.md",
+        "job-application-tracker-project-architecture.md"
+      ],
+      "inferredBehavior": "Confirm future agents have enough context to continue.",
+      "recommendedAction": "Use the candidate as manual review guidance first."
+    },
+    {
+      "id": "candidate-operational-readiness-check",
+      "name": "Operational readiness check candidate",
+      "type": "non-technical",
+      "proposedCheckType": "operational-readiness",
+      "classification": "advisory",
+      "target": "operations",
+      "mode": "report-first",
+      "safeToGenerateExecutableTest": false,
+      "confidence": "medium",
+      "sourceEvidence": [
+        "DESIGN.md",
+        "job-application-tracker-brd-prd.md",
+        "job-application-tracker-project-architecture.md"
+      ],
+      "inferredBehavior": "Confirm runbooks, ownership, and release readiness are reviewed.",
+      "recommendedAction": "Keep report-first until owners confirm operational truth."
+    },
+    {
+      "id": "candidate-runtime-build-behavior-regression",
+      "name": "Runtime/build behavior regression candidate",
+      "type": "non-technical",
+      "proposedCheckType": "critical-workflow",
+      "classification": "advisory",
+      "target": "Runtime/build behavior",
+      "mode": "report-first",
+      "safeToGenerateExecutableTest": false,
+      "confidence": "medium",
+      "sourceEvidence": [
+        "No existing test inventory was detected for this adopted project."
+      ],
+      "inferredBehavior": "Confirm runtime/build behavior remains covered as the project changes.",
+      "recommendedAction": "Map this candidate to concrete evidence before generating executable tests."
+    },
+    {
+      "id": "candidate-data-persistence-behavior-regression",
+      "name": "Data persistence behavior regression candidate",
+      "type": "non-technical",
+      "proposedCheckType": "critical-workflow",
+      "classification": "advisory",
+      "target": "Data persistence behavior",
+      "mode": "report-first",
+      "safeToGenerateExecutableTest": false,
+      "confidence": "medium",
+      "sourceEvidence": [
+        "No existing test inventory was detected for this adopted project."
+      ],
+      "inferredBehavior": "Confirm data persistence behavior remains covered as the project changes.",
+      "recommendedAction": "Map this candidate to concrete evidence before generating executable tests."
+    },
+    {
+      "id": "candidate-auth-and-permission-behavior-regression",
+      "name": "Auth and permission behavior regression candidate",
+      "type": "non-technical",
+      "proposedCheckType": "critical-workflow",
+      "classification": "advisory",
+      "target": "Auth and permission behavior",
+      "mode": "report-first",
+      "safeToGenerateExecutableTest": false,
+      "confidence": "medium",
+      "sourceEvidence": [
+        "No existing test inventory was detected for this adopted project."
+      ],
+      "inferredBehavior": "Confirm auth and permission behavior remains covered as the project changes.",
+      "recommendedAction": "Map this candidate to concrete evidence before generating executable tests."
+    },
+    {
+      "id": "candidate-payment-behavior-regression",
+      "name": "Payment behavior regression candidate",
+      "type": "non-technical",
+      "proposedCheckType": "critical-workflow",
+      "classification": "advisory",
+      "target": "Payment behavior",
+      "mode": "report-first",
+      "safeToGenerateExecutableTest": false,
+      "confidence": "medium",
+      "sourceEvidence": [
+        "No existing test inventory was detected for this adopted project."
+      ],
+      "inferredBehavior": "Confirm payment behavior remains covered as the project changes.",
+      "recommendedAction": "Map this candidate to concrete evidence before generating executable tests."
+    },
+    {
+      "id": "candidate-deployment-runtime-readiness-regression",
+      "name": "Deployment/runtime readiness regression candidate",
+      "type": "non-technical",
+      "proposedCheckType": "critical-workflow",
+      "classification": "advisory",
+      "target": "Deployment/runtime readiness",
+      "mode": "report-first",
+      "safeToGenerateExecutableTest": false,
+      "confidence": "medium",
+      "sourceEvidence": [
+        "No existing test inventory was detected for this adopted project."
+      ],
+      "inferredBehavior": "Confirm deployment/runtime readiness remains covered as the project changes.",
+      "recommendedAction": "Map this candidate to concrete evidence before generating executable tests."
+    }
+  ],
+  "verificationPathsSummary": {
+    "technical": [],
+    "nonTechnical": [
+      "Review process, policy, runbook, and handoff documents for consistency.",
+      "Define approval-flow and stakeholder review checkpoints for changes that are not software-testable.",
+      "Record checklist results in reports before treating non-technical readiness as complete."
+    ],
+    "mixed": []
+  },
+  "ciReadinessSummary": {
+    "status": "partial",
+    "reasons": [
+      "Non-technical documentation exists, but no formal regression checklist or CI-ready path was confirmed."
+    ],
+    "strictBlockingReasons": [
+      "No meaningful formal test/check path exists yet."
+    ]
+  },
+  "baselineFreshness": {
+    "baselineGeneratedAt": "2026-10-01T06:59:05.993Z",
+    "manifestGeneratedAt": "2026-10-01T06:59:05.993Z",
+    "freshnessStatus": "current",
+    "refreshSource": "wwg adopt"
+  },
+  "recommendedNextGovernanceAction": "Create manual/process verification checklists and record review evidence before claiming readiness.",
+  "safetyNotes": [
+    "Adoption may complete even when regression readiness is poor.",
+    "Missing tests are a regression readiness gap, not an adoption failure.",
+    "No executable tests were generated in this pass.",
+    "Existing source tests were not modified.",
+    "All safe test candidates are report-first and require human or agent review before executable tests are created.",
+    "Safe candidates are not coverage evidence.",
+    "Governance artifacts summarize adoption findings; they do not enforce CI readiness yet."
+  ]
+}

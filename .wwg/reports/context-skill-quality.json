@@ -1,0 +1,1885 @@
+{
+  "checkedFiles": [
+    ".wwg/governance/drift-guard.md",
+    ".wwg/governance/regression-gaps.md",
+    ".wwg/governance/regression-manifest.md",
+    ".wwg/governance/rule-traceability.md",
+    ".wwg/governance/truth-capture.md",
+    ".wwg/reports/adoption-audit.md",
+    ".wwg/reports/adoption-regression-report.md",
+    ".wwg/reports/skill-cleanup-review.md",
+    ".wwg/reports/wwg-adoption-plan.md",
+    ".wwg/reports/wwg-adoption-report.md",
+    ".wwg/reports/wwg-adoption-truth-handoff.md",
+    ".wwg/reports/wwg-existing-audit-report.md",
+    ".wwg/reports/wwg-maintenance-review.md",
+    ".wwg/reports/wwg-validate-report.md",
+    ".wwg/wiki/principles/README.md",
+    ".wwg/wiki/project-truth.md",
+    ".wwg/wiki/terminology.md",
+    ".wwg/workspace/current-task.md",
+    ".wwg/workspace/testing/manual-verification-checklist.md",
+    ".wwg/workspace/testing/non-technical-regression-checklist.md",
+    ".wwg/workspace/testing/regression-candidate-review.md",
+    "AGENTS.md",
+    "DESIGN.md",
+    "job-application-tracker-brd-prd.md",
+    "job-application-tracker-project-architecture.md"
+  ],
+  "classifiedFiles": [
+    {
+      "path": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/regression-gaps.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/regression-manifest.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/rule-traceability.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/truth-capture.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/reports/adoption-audit.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/adoption-regression-report.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/skill-cleanup-review.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-adoption-plan.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-adoption-report.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-adoption-truth-handoff.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-existing-audit-report.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-maintenance-review.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-validate-report.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/wiki/principles/README.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
+    },
+    {
+      "path": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "reason": "Canonical truth or compact truth surface path."
+    },
+    {
+      "path": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "reason": "Canonical truth or compact truth surface path."
+    },
+    {
+      "path": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "reason": "No deterministic classification signal matched."
+    },
+    {
+      "path": ".wwg/workspace/testing/manual-verification-checklist.md",
+      "fileType": "unknown",
+      "reason": "No deterministic classification signal matched."
+    },
+    {
+      "path": ".wwg/workspace/testing/non-technical-regression-checklist.md",
+      "fileType": "unknown",
+      "reason": "No deterministic classification signal matched."
+    },
+    {
+      "path": ".wwg/workspace/testing/regression-candidate-review.md",
+      "fileType": "unknown",
+      "reason": "No deterministic classification signal matched."
+    },
+    {
+      "path": "AGENTS.md",
+      "fileType": "agent_instruction",
+      "reason": "AGENTS.md files are active agent instructions."
+    },
+    {
+      "path": "DESIGN.md",
+      "fileType": "unknown",
+      "reason": "No deterministic classification signal matched."
+    },
+    {
+      "path": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "reason": "No deterministic classification signal matched."
+    },
+    {
+      "path": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "reason": "No deterministic classification signal matched."
+    }
+  ],
+  "skippedFiles": [
+    {
+      "path": ".wwg/reports/context-skill-quality.md",
+      "reason": "Current quality report is excluded to avoid self-referential findings."
+    }
+  ],
+  "errors": [],
+  "warnings": [
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/regression-gaps.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/regression-gaps.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/regression-manifest.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/regression-manifest.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/rule-traceability.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/rule-traceability.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/truth-capture.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/truth-capture.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/adoption-audit.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/adoption-regression-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/skill-cleanup-review.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-adoption-plan.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-adoption-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-adoption-truth-handoff.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-maintenance-review.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-validate-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/principles/README.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "agent-instruction-contract-missing-sections",
+      "message": "Agent Instruction is missing contract section(s): Required Reading, Operating Rules.",
+      "affectedFile": "AGENTS.md",
+      "fileType": "agent_instruction",
+      "affectedSection": "Required Reading, Operating Rules",
+      "recommendedFix": "Add the missing active instruction section or link to the canonical source."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "FR-AUTH-001 — User Registration",
+      "line": 262,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Dashboard Metrics",
+      "line": 299,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Required Application Information",
+      "line": 340,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Columns",
+      "line": 385,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Sections",
+      "line": 410,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-Up Fields",
+      "line": 505,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Saved Job Information",
+      "line": 538,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Company Information",
+      "line": 567,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Contact Fields",
+      "line": 611,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Interview Fields",
+      "line": 631,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Preparation Sections",
+      "line": 671,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Resume Fields",
+      "line": 690,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Fields",
+      "line": 717,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Information",
+      "line": 735,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Core Metrics",
+      "line": 791,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Offer Fields",
+      "line": 859,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Product Metrics",
+      "line": 1546,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    }
+  ],
+  "suggestions": [
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "line": 51,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Inferred Truth' repeats at the same level.",
+      "affectedFile": ".wwg/reports/adoption-audit.md",
+      "fileType": "report",
+      "affectedSection": "Inferred Truth",
+      "line": 77,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Open Questions' repeats at the same level.",
+      "affectedFile": ".wwg/reports/adoption-audit.md",
+      "fileType": "report",
+      "affectedSection": "Open Questions",
+      "line": 86,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/adoption-regression-report.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Inferred Truth' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Inferred Truth",
+      "line": 81,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Open Questions' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Open Questions",
+      "line": 90,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/wwg-maintenance-review.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "AGENTS.md",
+      "fileType": "agent_instruction",
+      "line": 60,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": "DESIGN.md",
+      "fileType": "unknown",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Mitigation' repeats at the same level.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Mitigation",
+      "line": 1785,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Mitigation' repeats at the same level.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Mitigation",
+      "line": 1800,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Mitigation' repeats at the same level.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Mitigation",
+      "line": 1806,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Mitigation' repeats at the same level.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Mitigation",
+      "line": 1812,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-empty-section",
+      "message": "Section '7. Functional Requirements' is empty.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "7. Functional Requirements",
+      "line": 258,
+      "recommendedFix": "Fill the section or state 'Not applicable' with a short reason."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "line": 177,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "line": 198,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "line": 208,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "line": 217,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "line": 786,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Frontend' repeats at the same level.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "affectedSection": "Frontend",
+      "line": 2097,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Backend' repeats at the same level.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "affectedSection": "Backend",
+      "line": 2103,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Frontend' repeats at the same level.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "affectedSection": "Frontend",
+      "line": 2788,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Backend' repeats at the same level.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "affectedSection": "Backend",
+      "line": 2802,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Storage' repeats at the same level.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "affectedSection": "Storage",
+      "line": 2818,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "line": 233,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "line": 248,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "line": 1376,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "line": 1386,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "line": 1398,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    }
+  ],
+  "contractFindings": [
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/regression-gaps.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/regression-gaps.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/regression-manifest.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/regression-manifest.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/rule-traceability.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/rule-traceability.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/truth-capture.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/truth-capture.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/adoption-audit.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/adoption-regression-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/skill-cleanup-review.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-adoption-plan.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-adoption-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-adoption-truth-handoff.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-maintenance-review.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-validate-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/principles/README.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "agent-instruction-contract-missing-sections",
+      "message": "Agent Instruction is missing contract section(s): Required Reading, Operating Rules.",
+      "affectedFile": "AGENTS.md",
+      "fileType": "agent_instruction",
+      "affectedSection": "Required Reading, Operating Rules",
+      "recommendedFix": "Add the missing active instruction section or link to the canonical source."
+    }
+  ],
+  "skillFindings": [],
+  "contextFindings": [
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/principles/README.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    }
+  ],
+  "governanceFindings": [
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "line": 51,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/regression-gaps.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/regression-gaps.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/regression-manifest.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/regression-manifest.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/rule-traceability.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/rule-traceability.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/truth-capture.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/truth-capture.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    }
+  ],
+  "reportFindings": [
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/adoption-audit.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Inferred Truth' repeats at the same level.",
+      "affectedFile": ".wwg/reports/adoption-audit.md",
+      "fileType": "report",
+      "affectedSection": "Inferred Truth",
+      "line": 77,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Open Questions' repeats at the same level.",
+      "affectedFile": ".wwg/reports/adoption-audit.md",
+      "fileType": "report",
+      "affectedSection": "Open Questions",
+      "line": 86,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/adoption-regression-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/adoption-regression-report.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/skill-cleanup-review.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-adoption-plan.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-adoption-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-adoption-truth-handoff.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Inferred Truth' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Inferred Truth",
+      "line": 81,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Open Questions' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Open Questions",
+      "line": 90,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-maintenance-review.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/wwg-maintenance-review.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-validate-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    }
+  ],
+  "publicDocFindings": [],
+  "agentInstructionFindings": [
+    {
+      "severity": "warning",
+      "code": "agent-instruction-contract-missing-sections",
+      "message": "Agent Instruction is missing contract section(s): Required Reading, Operating Rules.",
+      "affectedFile": "AGENTS.md",
+      "fileType": "agent_instruction",
+      "affectedSection": "Required Reading, Operating Rules",
+      "recommendedFix": "Add the missing active instruction section or link to the canonical source."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "AGENTS.md",
+      "fileType": "agent_instruction",
+      "line": 60,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    }
+  ],
+  "changelogGovernanceFindings": [],
+  "markdownQualityFindings": [
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "line": 51,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Inferred Truth' repeats at the same level.",
+      "affectedFile": ".wwg/reports/adoption-audit.md",
+      "fileType": "report",
+      "affectedSection": "Inferred Truth",
+      "line": 77,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Open Questions' repeats at the same level.",
+      "affectedFile": ".wwg/reports/adoption-audit.md",
+      "fileType": "report",
+      "affectedSection": "Open Questions",
+      "line": 86,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/adoption-regression-report.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Inferred Truth' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Inferred Truth",
+      "line": 81,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Open Questions' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Open Questions",
+      "line": 90,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/wwg-maintenance-review.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "AGENTS.md",
+      "fileType": "agent_instruction",
+      "line": 60,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": "DESIGN.md",
+      "fileType": "unknown",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "FR-AUTH-001 — User Registration",
+      "line": 262,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Dashboard Metrics",
+      "line": 299,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Required Application Information",
+      "line": 340,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Columns",
+      "line": 385,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Sections",
+      "line": 410,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-Up Fields",
+      "line": 505,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Saved Job Information",
+      "line": 538,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Company Information",
+      "line": 567,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Contact Fields",
+      "line": 611,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Interview Fields",
+      "line": 631,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Preparation Sections",
+      "line": 671,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Resume Fields",
+      "line": 690,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Fields",
+      "line": 717,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Information",
+      "line": 735,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Core Metrics",
+      "line": 791,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Offer Fields",
+      "line": 859,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "warning",
+      "code": "markdown-skipped-heading-level",
+      "message": "Heading level jumps from H1 to H3.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Product Metrics",
+      "line": 1546,
+      "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Mitigation' repeats at the same level.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Mitigation",
+      "line": 1785,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Mitigation' repeats at the same level.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Mitigation",
+      "line": 1800,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Mitigation' repeats at the same level.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Mitigation",
+      "line": 1806,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Mitigation' repeats at the same level.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "Mitigation",
+      "line": 1812,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-empty-section",
+      "message": "Section '7. Functional Requirements' is empty.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "affectedSection": "7. Functional Requirements",
+      "line": 258,
+      "recommendedFix": "Fill the section or state 'Not applicable' with a short reason."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "line": 177,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "line": 198,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "line": 208,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "line": 217,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-brd-prd.md",
+      "fileType": "unknown",
+      "line": 786,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Frontend' repeats at the same level.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "affectedSection": "Frontend",
+      "line": 2097,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Backend' repeats at the same level.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "affectedSection": "Backend",
+      "line": 2103,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Frontend' repeats at the same level.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "affectedSection": "Frontend",
+      "line": 2788,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Backend' repeats at the same level.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "affectedSection": "Backend",
+      "line": 2802,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Storage' repeats at the same level.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "affectedSection": "Storage",
+      "line": 2818,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "line": 233,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "line": 248,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "line": 1376,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "line": 1386,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": "job-application-tracker-project-architecture.md",
+      "fileType": "unknown",
+      "line": 1398,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    }
+  ],
+  "vorterBoundaryFindings": [],
+  "aliasMapApplied": [
+    {
+      "alias": "When to Use",
+      "contractSection": "Trigger",
+      "satisfies": "full",
+      "condition": "Names task, evidence, or request conditions."
+    },
+    {
+      "alias": "When Not to Use",
+      "contractSection": "Stop Conditions",
+      "satisfies": "partial",
+      "condition": "Full only when it also says what the agent should do instead."
+    },
+    {
+      "alias": "Evidence Signals",
+      "contractSection": "Trigger",
+      "satisfies": "partial",
+      "condition": "Supports trigger but does not replace explicit task conditions."
+    },
+    {
+      "alias": "Agent Checklist",
+      "contractSection": "Steps",
+      "satisfies": "partial",
+      "condition": "Full only when ordered enough to execute without extra inference."
+    },
+    {
+      "alias": "Workflow",
+      "contractSection": "Steps",
+      "satisfies": "full",
+      "condition": "Written as ordered actions."
+    },
+    {
+      "alias": "Validation Expectations",
+      "contractSection": "Required Checks",
+      "satisfies": "full",
+      "condition": "Checks are mandatory and scoped."
+    },
+    {
+      "alias": "Validation and Testing Expectations",
+      "contractSection": "Required Checks",
+      "satisfies": "full",
+      "condition": "Checks are mandatory and scoped."
+    },
+    {
+      "alias": "Validation and Review Expectations",
+      "contractSection": "Required Checks",
+      "satisfies": "full",
+      "condition": "Checks are mandatory and scoped."
+    },
+    {
+      "alias": "External References",
+      "contractSection": "References",
+      "satisfies": "full",
+      "condition": "Provides source or reference links."
+    },
+    {
+      "alias": "Related Skills",
+      "contractSection": "References",
+      "satisfies": "partial",
+      "condition": "Helps navigation but does not replace canonical sources."
+    },
+    {
+      "alias": "Canonical Artifacts to Check",
+      "contractSection": "References",
+      "satisfies": "partial",
+      "condition": "Helps navigation but does not replace canonical sources."
+    },
+    {
+      "alias": "Outputs",
+      "contractSection": "Output Contract",
+      "satisfies": "partial",
+      "condition": "Full only when format and destination are explicit."
+    },
+    {
+      "alias": "Output / Reporting Expectations",
+      "contractSection": "Output Contract",
+      "satisfies": "full",
+      "condition": "Names expected output and reporting format."
+    }
+  ],
+  "metadataPolicyApplied": "Option C: Skill Registry metadata is canonical; skill files may include lightweight metadata when beneficial, and package-side skills do not require frontmatter.",
+  "summary": {
+    "checkedFileCount": 25,
+    "skippedFileCount": 1,
+    "errorCount": 0,
+    "warningCount": 40,
+    "suggestionCount": 30,
+    "classificationCounts": {
+      "context": 3,
+      "skill": 0,
+      "governance": 5,
+      "report": 9,
+      "public_doc": 0,
+      "agent_instruction": 1,
+      "changelog_governance": 0,
+      "changelog_or_release_note": 0,
+      "design_contract": 0,
+      "template": 0,
+      "unknown": 7
+    }
+  },
+  "validationStatus": "warn",
+  "nextRecommendedPass": "Pass E should compact active context and AGENTS.md using these findings, without weakening safety-critical governance.",
+  "reportPaths": {
+    "markdown": ".wwg/reports/context-skill-quality.md",
+    "json": ".wwg/reports/context-skill-quality.json"
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "kind": "wwg.governance.regressionGaps",
+  "generatedAt": "2026-10-01T06:59:05.993Z",
+  "sourceBaselineReportPath": ".wwg/reports/adoption-regression-report.md",
+  "gaps": [
+    {
+      "id": "gap-no-existing-tests",
+      "title": "No existing tests detected",
+      "source": "test inventory",
+      "severity": "medium",
+      "blockingClassification": "adoption-nonblocking-advisory",
+      "confidence": "medium",
+      "affectedBehaviorOrWorkflow": "No existing tests",
+      "expectedVerificationPath": "Create meaningful executable tests or documented manual/process checks.",
+      "recommendedAction": "Create report-first regression candidates and then add meaningful tests or manual verification.",
+      "status": "open",
+      "waiver": null,
+      "note": "The adoption scan found no formal test inventory.",
+      "relatedCandidateIds": [],
+      "relatedTraceabilityIds": []
+    },
+    {
+      "id": "gap-no-formal-non-technical-verification-checklist-confirmed",
+      "title": "No formal non-technical verification checklist confirmed",
+      "source": "manual/process evidence",
+      "severity": "medium",
+      "blockingClassification": "adoption-nonblocking-advisory",
+      "confidence": "medium",
+      "affectedBehaviorOrWorkflow": "No formal non-technical verification checklist confirmed",
+      "expectedVerificationPath": "Review process, policy, runbook, and handoff documents for consistency.",
+      "recommendedAction": "Create process, approval-flow, handoff, and policy consistency checks.",
+      "status": "open",
+      "waiver": null,
+      "note": "Documentation exists, but no explicit regression checklist was confirmed.",
+      "relatedCandidateIds": [
+        "candidate-process-regression-checklist"
+      ],
+      "relatedTraceabilityIds": []
+    },
+    {
+      "id": "gap-uncovered-behavior-runtime-build-behavior",
+      "title": "Uncovered behavior: Runtime/build behavior",
+      "source": "baseline",
+      "severity": "medium",
+      "blockingClassification": "adoption-nonblocking-advisory",
+      "confidence": "medium",
+      "affectedBehaviorOrWorkflow": "Runtime/build behavior",
+      "expectedVerificationPath": "Review process, policy, runbook, and handoff documents for consistency.",
+      "recommendedAction": "Map this behavior to a report-first candidate before generating or editing executable tests.",
+      "status": "open",
+      "waiver": null,
+      "note": "No existing test inventory was detected for this adopted project.",
+      "relatedCandidateIds": [
+        "candidate-runtime-build-behavior-regression"
+      ],
+      "relatedTraceabilityIds": [
+        "trace-runtime-build-behavior"
+      ]
+    },
+    {
+      "id": "gap-uncovered-behavior-data-persistence-behavior",
+      "title": "Uncovered behavior: Data persistence behavior",
+      "source": "baseline",
+      "severity": "medium",
+      "blockingClassification": "adoption-nonblocking-advisory",
+      "confidence": "medium",
+      "affectedBehaviorOrWorkflow": "Data persistence behavior",
+      "expectedVerificationPath": "Review process, policy, runbook, and handoff documents for consistency.",
+      "recommendedAction": "Map this behavior to a report-first candidate before generating or editing executable tests.",
+      "status": "open",
+      "waiver": null,
+      "note": "No existing test inventory was detected for this adopted project.",
+      "relatedCandidateIds": [
+        "candidate-data-persistence-behavior-regression"
+      ],
+      "relatedTraceabilityIds": [
+        "trace-data-persistence-behavior"
+      ]
+    },
+    {
+      "id": "gap-uncovered-behavior-auth-and-permission-behavior",
+      "title": "Uncovered behavior: Auth and permission behavior",
+      "source": "baseline",
+      "severity": "medium",
+      "blockingClassification": "adoption-nonblocking-advisory",
+      "confidence": "medium",
+      "affectedBehaviorOrWorkflow": "Auth and permission behavior",
+      "expectedVerificationPath": "Review process, policy, runbook, and handoff documents for consistency.",
+      "recommendedAction": "Map this behavior to a report-first candidate before generating or editing executable tests.",
+      "status": "open",
+      "waiver": null,
+      "note": "No existing test inventory was detected for this adopted project.",
+      "relatedCandidateIds": [
+        "candidate-auth-and-permission-behavior-regression"
+      ],
+      "relatedTraceabilityIds": [
+        "trace-auth-and-permission-behavior"
+      ]
+    },
+    {
+      "id": "gap-uncovered-behavior-payment-behavior",
+      "title": "Uncovered behavior: Payment behavior",
+      "source": "baseline",
+      "severity": "medium",
+      "blockingClassification": "adoption-nonblocking-advisory",
+      "confidence": "medium",
+      "affectedBehaviorOrWorkflow": "Payment behavior",
+      "expectedVerificationPath": "Review process, policy, runbook, and handoff documents for consistency.",
+      "recommendedAction": "Map this behavior to a report-first candidate before generating or editing executable tests.",
+      "status": "open",
+      "waiver": null,
+      "note": "No existing test inventory was detected for this adopted project.",
+      "relatedCandidateIds": [
+        "candidate-payment-behavior-regression"
+      ],
+      "relatedTraceabilityIds": [
+        "trace-payment-behavior"
+      ]
+    },
+    {
+      "id": "gap-uncovered-behavior-deployment-runtime-readiness",
+      "title": "Uncovered behavior: Deployment/runtime readiness",
+      "source": "baseline",
+      "severity": "medium",
+      "blockingClassification": "adoption-nonblocking-advisory",
+      "confidence": "medium",
+      "affectedBehaviorOrWorkflow": "Deployment/runtime readiness",
+      "expectedVerificationPath": "Review process, policy, runbook, and handoff documents for consistency.",
+      "recommendedAction": "Map this behavior to a report-first candidate before generating or editing executable tests.",
+      "status": "open",
+      "waiver": null,
+      "note": "No existing test inventory was detected for this adopted project.",
+      "relatedCandidateIds": [
+        "candidate-deployment-runtime-readiness-regression"
+      ],
+      "relatedTraceabilityIds": [
+        "trace-deployment-runtime-readiness"
+      ]
+    }
+  ]
+}

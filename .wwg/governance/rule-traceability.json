@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "kind": "wwg.governance.ruleTraceability",
+  "generatedAt": "2026-10-01T06:59:05.993Z",
+  "sourceBaselineReportPath": ".wwg/reports/adoption-regression-report.md",
+  "records": [
+    {
+      "id": "trace-runtime-build-behavior",
+      "truthOrBehaviorName": "Runtime/build behavior",
+      "sourceEvidence": [
+        "package.json: package scripts not found"
+      ],
+      "sourceType": "scripts",
+      "expectedCheckType": "CI check",
+      "existingEvidence": [],
+      "coverageStatus": "uncovered",
+      "confidence": "low",
+      "relatedGapIds": [
+        "gap-uncovered-behavior-runtime-build-behavior"
+      ],
+      "relatedSafeCandidateIds": [
+        "candidate-runtime-build-behavior-regression"
+      ],
+      "recommendedNextAction": "Convert related report-first candidates into confirmed verification evidence before claiming coverage."
+    },
+    {
+      "id": "trace-data-persistence-behavior",
+      "truthOrBehaviorName": "Data persistence behavior",
+      "sourceEvidence": [
+        "repository scan: no database/schema/migration indicators"
+      ],
+      "sourceType": "code",
+      "expectedCheckType": "process checklist",
+      "existingEvidence": [],
+      "coverageStatus": "uncovered",
+      "confidence": "low",
+      "relatedGapIds": [
+        "gap-uncovered-behavior-data-persistence-behavior"
+      ],
+      "relatedSafeCandidateIds": [
+        "candidate-data-persistence-behavior-regression"
+      ],
+      "recommendedNextAction": "Convert related report-first candidates into confirmed verification evidence before claiming coverage."
+    },
+    {
+      "id": "trace-auth-and-permission-behavior",
+      "truthOrBehaviorName": "Auth and permission behavior",
+      "sourceEvidence": [
+        "repository scan: no auth/security indicators"
+      ],
+      "sourceType": "code",
+      "expectedCheckType": "process checklist",
+      "existingEvidence": [],
+      "coverageStatus": "uncovered",
+      "confidence": "low",
+      "relatedGapIds": [
+        "gap-uncovered-behavior-auth-and-permission-behavior"
+      ],
+      "relatedSafeCandidateIds": [
+        "candidate-auth-and-permission-behavior-regression"
+      ],
+      "recommendedNextAction": "Convert related report-first candidates into confirmed verification evidence before claiming coverage."
+    },
+    {
+      "id": "trace-payment-behavior",
+      "truthOrBehaviorName": "Payment behavior",
+      "sourceEvidence": [
+        "repository scan: no payment/billing indicators"
+      ],
+      "sourceType": "code",
+      "expectedCheckType": "process checklist",
+      "existingEvidence": [],
+      "coverageStatus": "uncovered",
+      "confidence": "low",
+      "relatedGapIds": [
+        "gap-uncovered-behavior-payment-behavior"
+      ],
+      "relatedSafeCandidateIds": [
+        "candidate-payment-behavior-regression"
+      ],
+      "recommendedNextAction": "Convert related report-first candidates into confirmed verification evidence before claiming coverage."
+    },
+    {
+      "id": "trace-deployment-runtime-readiness",
+      "truthOrBehaviorName": "Deployment/runtime readiness",
+      "sourceEvidence": [
+        "repository scan: no Docker/Vercel/Netlify/GitHub Actions config detected"
+      ],
+      "sourceType": "config",
+      "expectedCheckType": "operational readiness check",
+      "existingEvidence": [],
+      "coverageStatus": "uncovered",
+      "confidence": "low",
+      "relatedGapIds": [
+        "gap-uncovered-behavior-deployment-runtime-readiness"
+      ],
+      "relatedSafeCandidateIds": [
+        "candidate-deployment-runtime-readiness-regression"
+      ],
+      "recommendedNextAction": "Convert related report-first candidates into confirmed verification evidence before claiming coverage."
+    }
+  ]
+}
