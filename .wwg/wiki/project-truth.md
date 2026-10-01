@@ -455,9 +455,9 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 - RESOLVED — Independent human security review. **Consciously deferred** by the owner, not overlooked. Recorded so it is not rediscovered as an oversight.
   - Status: RESOLVED_DEFERRED
   - Evidence: owner instruction "independent human reviewer, not for now", 2026-10-01; `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
-- DEFERRED_BLOCKED — No AI code reviewer on pull requests. Recorded, but cannot be installed: the repository has no git remote, so no GitHub App can be installed. Whether the chosen tool is free depends on whether the repository is public or private.
-  - Status: DEFERRED_BLOCKED
-  - Evidence: `git remote -v` returns nothing; research summary and per-tool cost table in `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
+- SUPERSEDED — "No AI code reviewer on pull requests" (recorded when the repository had no git remote). Superseded by the resolved CodeRabbit entry above once the repository was published public and the app was installed. Retained as history so the sequence is not rewritten.
+  - Status: SUPERSEDED
+  - Evidence: replaced 2026-10-01. This entry previously claimed the repository had no git remote, which stopped being true on publication.
 - NEEDS_CONFIRMATION — Deployment target is recommended, not decided: frontend → Vercel, API → Railway/Render, PostgreSQL → Neon/Supabase, object storage → Cloudflare R2 (architecture §65). No deployment configuration exists.
   - Status: NEEDS_CONFIRMATION
   - Evidence: architecture §65–§66; working-tree scan.
