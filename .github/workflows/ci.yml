@@ -29,6 +29,9 @@ jobs:
           --health-timeout 5s
           --health-retries 10
 
+    # Top-level env is inherited by every job. Keep it as plain literal values:
+    # GitHub does not substitute `${VAR}` inside an env block, so a reference
+    # here would resolve to a literal string rather than the job's value.
     env:
       DATABASE_URL: postgresql://tarn:tarn@localhost:5432/tarn?schema=public
       JWT_SECRET: ci-only-jwt-secret
@@ -89,7 +92,19 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
 
+    # NOT inherited from the top-level `env`: GitHub does not substitute
+    # `${DATABASE_URL}` in a job-level env block, so re-declaring it there
+    # would have produced a literal, invalid value. The values are repeated
+    # literally instead.
     env:
+      NODE_ENV: test
+      PORT: 4000
+      DATABASE_URL: postgresql://tarn:tarn@localhost:5432/tarn?schema=public
+      JWT_SECRET: ci-only-jwt-secret
+      COOKIE_SECRET: ci-only-cookie-secret
+      WEB_ORIGIN: http://localhost:5173
+      SEED_USER_EMAIL: ci-seed@example.com
+      SEED_USER_PASSWORD: ci-seed-password
       # Force the bundled Chromium. playwright.config.ts defaults to the
       # system-installed browser for local convenience (msedge), which does not
       # exist on the ubuntu runner. An empty value selects the pinned download,
