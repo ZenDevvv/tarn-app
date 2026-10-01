@@ -1,8 +1,11 @@
 /* ==========================================================================
-   Marker design system: Job Application Tracker
+   Marker design system: Tarn
    apps/web/src/index.css  (Tailwind CSS v4 + shadcn/ui)
 
-   npm i @fontsource-variable/bricolage-grotesque @fontsource-variable/instrument-sans
+   NOTE (2026-10-01): this file is still at the repository root. It moves to
+   apps/web/src/index.css as the first step of the monorepo scaffold.
+
+   pnpm add -D @fontsource-variable/bricolage-grotesque @fontsource-variable/instrument-sans
    Tailwind v3? Move the :root / .dark blocks as-is and map the @theme values
    into tailwind.config.ts (theme.extend.colors / borderRadius / fontFamily).
    ========================================================================== */

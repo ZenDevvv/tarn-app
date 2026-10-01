@@ -141,6 +141,48 @@
         "suggestedRole": "project_master_context",
         "confidence": "medium",
         "category": "canonicalContext"
+      },
+      {
+        "path": "wiki/decisions",
+        "kind": "ADR directory",
+        "suggestedRole": "reference_history",
+        "confidence": "medium",
+        "category": "canonicalContext"
+      },
+      {
+        "path": "wiki/decisions/D-0001-product-name-tarn.md",
+        "kind": "decision history",
+        "suggestedRole": "reference_history",
+        "confidence": "medium",
+        "category": "canonicalContext"
+      },
+      {
+        "path": "wiki/decisions/D-0002-mvp-authentication.md",
+        "kind": "decision history",
+        "suggestedRole": "reference_history",
+        "confidence": "medium",
+        "category": "canonicalContext"
+      },
+      {
+        "path": "wiki/decisions/D-0003-package-manager-pnpm.md",
+        "kind": "decision history",
+        "suggestedRole": "reference_history",
+        "confidence": "medium",
+        "category": "canonicalContext"
+      },
+      {
+        "path": "wiki/decisions/D-0004-mvp-schema-scope.md",
+        "kind": "decision history",
+        "suggestedRole": "reference_history",
+        "confidence": "medium",
+        "category": "canonicalContext"
+      },
+      {
+        "path": "wiki/decisions/D-0005-token-file-location.md",
+        "kind": "decision history",
+        "suggestedRole": "reference_history",
+        "confidence": "medium",
+        "category": "canonicalContext"
       }
     ],
     "skillsPrompts": [],

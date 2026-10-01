@@ -1,6 +1,6 @@
 # DESIGN.md
 
-Design rules for **Job Application Tracker** (design system name: **Marker**).
+Design rules for **Tarn** (design system name: **Marker**).
 Read this before creating or changing any UI. Follow it exactly. If a rule here conflicts with a default from shadcn/ui, Tailwind, or your own habits, this file wins.
 
 Source-of-truth order when documents disagree:
@@ -10,6 +10,10 @@ Source-of-truth order when documents disagree:
 4. `apps/web/src/index.css` (the actual token values)
 
 A live reference with every component rendered is in `design-system.html`.
+
+**Naming.** The product is **Tarn**. The design system is **Marker**. They are different things: Marker is never used as a product name, and Tarn is never used as a design-system name. The files that still carry the old `job-application-tracker-*` prefix are historical filenames, not a naming rule — do not propagate the retired name "Job Application Tracker" into any new file, component, package, or user-facing string.
+
+**Token file location.** Tokens belong in `apps/web/src/index.css`. As of 2026-10-01 that file does not exist yet and the tokens are still in `index.css` at the repository root; the move happens as the first step of the monorepo scaffold. Until then, read the root `index.css` for token values.
 
 ---
 

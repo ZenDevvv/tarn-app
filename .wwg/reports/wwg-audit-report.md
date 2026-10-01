@@ -30,7 +30,7 @@
 - Main implemented features: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no feature headings or routes detected)
 - User roles/surfaces: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no clear user roles detected)
 - Data persistence: NEEDS_CONFIRMATION - No persistence layer detected Evidence: repository scan (no database/schema/migration indicators)
-- Auth/security: CONFIRMED - governance/security-review.md Evidence: governance/security-review.md (auth/security indicator)
+- Auth/security: CONFIRMED - governance/security-review.md, wiki/decisions/D-0002-mvp-authentication.md Evidence: governance/security-review.md (auth/security indicator)
 - Payments/billing: NEEDS_CONFIRMATION - No payments/billing implementation detected Evidence: repository scan (no payment/billing indicators)
 - Deployment/runtime: NEEDS_CONFIRMATION - No deployment config detected Evidence: repository scan (no Docker/Vercel/Netlify/GitHub Actions config detected)
 

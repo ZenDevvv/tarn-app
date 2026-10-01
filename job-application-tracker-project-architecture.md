@@ -1,4 +1,4 @@
-# Job Application Tracker — Project Architecture
+# Tarn - Project Architecture
 
 **Document Type:** Technical Architecture / Project Structure  
 **Version:** 1.0  
@@ -9,7 +9,7 @@
 
 # 1. Architecture Overview
 
-The Job Application Tracker will be built as a **full-stack TypeScript modular monolith** with a React frontend and Node.js backend.
+Tarn will be built as a **full-stack TypeScript modular monolith** with a React frontend and Node.js backend.
 
 The architecture is intentionally designed to:
 
@@ -235,18 +235,20 @@ Each module owns its business logic while sharing a single application runtime a
 
 Use a **monorepo**.
 
-Recommended package manager:
+Package manager:
 
 ```text
 pnpm workspaces
 ```
+
+> **Confirmed 2026-10-01.** `pnpm` is the accepted package manager, not merely a recommendation. The root must contain `pnpm-workspace.yaml` and `packageManager` in `package.json`; commit `pnpm-lock.yaml`. Do not introduce npm or yarn lockfiles.
 
 ---
 
 # 6. Root Project Structure
 
 ```text
-job-application-tracker/
+tarn/
 │
 ├── apps/
 │   │
@@ -261,6 +263,7 @@ job-application-tracker/
 │   │   │   ├── routes/
 │   │   │   ├── types/
 │   │   │   ├── utils/
+│   │   │   ├── index.css
 │   │   │   └── main.tsx
 │   │   │
 │   │   ├── public/
@@ -325,10 +328,14 @@ job-application-tracker/
 ├── .env.example
 ├── docker-compose.yml
 ├── package.json
+├── packageManager (pnpm, pinned)
+├── pnpm-lock.yaml
 ├── pnpm-workspace.yaml
 ├── tsconfig.base.json
 └── README.md
 ```
+
+> **Note on the token file.** The design tokens currently live in `index.css` at the repository root. By owner decision (2026-10-01) they move to `apps/web/src/index.css` as the first step of the scaffold, making `DESIGN.md` §1 literally true. Until the scaffold lands, root `index.css` is the working token source and the two locations are in `CONFLICTING` state in `.wwg/wiki/project-truth.md`.
 
 ---
 
@@ -1291,29 +1298,34 @@ application_tags
 
 # 35. MVP Database Tables
 
-Start with:
+The MVP ships with authentication (PRD §7.1, §35 item 1), so `users` and the ownership boundary in §36 are required from the first migration — not deferred.
+
+MVP tables:
 
 ```text
 users
 companies
 jobs
+skills
+job_skills
 applications
+saved_jobs
 timeline_events
 follow_ups
+offers
 ```
 
-Then add:
+Then add, in later phases:
 
 ```text
 interviews
 contacts
 resumes
 cover_letters
-offers
 notifications
 ```
 
-in later phases.
+> **Amended 2026-10-01.** `saved_jobs`, `skills`, `job_skills`, and `offers` were promoted into the MVP by owner decision. `notifications` is explicitly deferred to Phase 2 — do not create the table, a delivery channel, or notification UI in MVP. Note that the Skill entity ships in MVP while AI skill extraction and matching remain Phase 3 (PRD §8.2).
 
 ---
 

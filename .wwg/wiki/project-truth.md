@@ -1,12 +1,13 @@
 # Project Truth
 
 Adoption status: ADOPTED_FROM_EXISTING_PROJECT
-Status: Accepted truth, ingested from existing project documentation.
+Status: Accepted truth, ingested from existing project documentation, amended by owner decision.
 Truth confidence: MEDIUM
 Last truth ingestion: 2026-10-01
+Last owner decision batch: 2026-10-01 (product name, MVP auth, package manager, MVP schema scope, token path)
 Last adoption audit: 2026-10-01
 
-This file was populated by ingesting the existing project documents into governed truth.
+This file was populated by ingesting the existing project documents into governed truth, then amended by explicit owner decisions recorded in PRD §38 and `.wwg/wiki/decisions/`.
 
 Evidence sources used for this ingestion:
 
@@ -44,18 +45,22 @@ Consequence that agents must respect: every architecture, stack, data-model, aut
 
 ## Product Identity
 
-- Product name: Job Application Tracker
-  - Status: CONFIRMED_AS_WORKING_TITLE
-  - Evidence: `job-application-tracker-brd-prd.md` §1.1 — "**Job Application Tracker** … > Working title. The final product name can be decided separately."
-- Final product name: NEEDS_CONFIRMATION
-  - Status: NEEDS_CONFIRMATION
-  - Evidence: PRD §1.1 explicitly defers the naming decision.
+- Product name: Tarn
+  - Status: CONFIRMED
+  - Evidence: owner decision 2026-10-01; recorded in `job-application-tracker-brd-prd.md` §1.1 and §38 Decision Log.
+  - Note: always capitalized `Tarn`. The former name "Job Application Tracker" is **retired** — do not use it as the product name in any new file, component, package, or user-facing string. Filenames such as `job-application-tracker-brd-prd.md` are historical and are not a naming rule.
+- Retired product name: Job Application Tracker
+  - Status: RETIRED
+  - Evidence: was a working title in PRD §1.1; superseded 2026-10-01.
+  - Caution: `Tarn` is also an ordinary English noun (a patina on metal) and verb. In any sentence where it could be read as the common word, prefer a noun phrase ("the Tarn app", "Tarn's dashboard") to keep the reading unambiguous.
 - Design system name: Marker
   - Status: CONFIRMED
-  - Evidence: `DESIGN.md` line 3 — "Design rules for **Job Application Tracker** (design system name: **Marker**)."
+  - Evidence: `DESIGN.md` line 3 — "Design rules for **Tarn** (design system name: **Marker**)"; 46 references in `design-system.html`, 18 in `index.css`.
+  - Rule: **Marker is never the product name. Tarn is never a design-system name.** These are distinct namespaces.
 - Repository/directory name: `applicant-tracking-system`
-  - Status: CONFIRMED
+  - Status: CONFIRMED_STALE
   - Evidence: folder name and git repository root.
+  - Note: the directory name does not match the product name. Renaming the directory is a deferred decision, not a blocker. Never infer the product name from the folder name — see the retirement note above.
 - Long-term positioning: personal **Applicant Tracking System (ATS)** focused on the job seeker; long-term vision is a personal **Job Search Operating System**.
   - Status: CONFIRMED
   - Evidence: PRD §1.2 and §36.
@@ -84,14 +89,16 @@ Consequence that agents must respect: every architecture, stack, data-model, aut
 - Admin, moderator, employer, and analytics-operator roles: not in scope.
   - Status: CONFIRMED
   - Evidence: PRD §3 defines one persona; §32/§33 describe strict per-user ownership with no privileged roles.
-- Authentication model: single-role authenticated user; no role-based permission tiers are specified.
-  - Status: INFERRED
-  - Evidence: PRD §7.1, §10.2, architecture §39.
+- Authentication model: authenticated single-role user; no role-based permission tiers are specified. **Authentication ships in MVP.**
+  - Status: CONFIRMED
+  - Evidence: PRD §7.1 (FR-AUTH-001…006), §10.2, §35 item 1, §37 matrix ("Authentication ✓ MVP"); architecture §37–§39 and §35 (`users` in the first migration).
+  - Decision note: a proposal on 2026-10-01 to ship MVP **without** authentication was raised and then **rejected by the owner**. Authentication, server-side authorization, and the ownership boundary are MVP requirements, not deferrals. See `.wwg/wiki/decisions/D-0002-mvp-authentication.md`.
 
 ## Canonical Scope
 
-Currently includes — Phase 1 MVP (CONFIRMED, PRD §6):
+Currently includes — Phase 1 MVP (CONFIRMED, PRD §6 and §37 matrix as amended 2026-10-01):
 
+- Authentication and account management (PRD §7.1) — **confirmed MVP scope**
 - Dashboard
 - Applications (create, edit, manage)
 - Application details view
@@ -104,14 +111,20 @@ Currently includes — Phase 1 MVP (CONFIRMED, PRD §6):
 - Application date, follow-up date, notes
 - Search and filtering
 - Basic analytics
-- Authentication and account management (PRD §7.1)
+- **Saved jobs** — promoted into MVP on 2026-10-01
+- **Offers** — promoted into MVP on 2026-10-01
+- **Skills (capture only)** — the Skill entity ships in MVP; AI skill extraction and matching remain Phase 3
 
-Deferred — must not be built into MVP (CONFIRMED):
+Deferred — must not be built into MVP (CONFIRMED, PRD §6 and §37):
 
-- Phase 2 — Job Search Management: interview tracker, recruiter/contact tracker, resume versions, cover-letter tracking, saved jobs, follow-up notifications, expanded analytics.
+- Phase 2 — Job Search Management: interview tracker, recruiter/contact tracker, resume versions, cover-letter tracking, follow-up notifications, in-app notification records, expanded analytics.
 - Phase 3 — Intelligence: AI job-description analyzer, skill extraction, skill matching, interview preparation, automatic JD extraction, application insights.
 - Phase 4 — Automation & Integrations: Gmail integration, calendar integration, Telegram/Discord notifications, browser extension, officially supported job-platform integrations, automated application-confirmation detection.
   - Evidence: PRD §6, §8, §9; architecture §86–§89.
+
+**Notification boundary (explicit, 2026-10-01):** `Notification` is deferred to Phase 2. MVP must contain no notification table, no delivery channel, and no notification UI. `notifications` appears in the "later phases" list in architecture §35. Follow-up *dates* are MVP; follow-up *notifications* are not.
+
+**Skill scope split:** the Skill entity and the `job_skills` join ship in MVP so skills can be captured and stored against jobs. AI-driven extraction and matching stay Phase 3 (PRD §8.2). Do not build an AI call into the MVP skill path.
 
 Explicit non-goals (CONFIRMED, PRD §2.4):
 
@@ -177,6 +190,7 @@ Architectural style (CONFIRMED, architecture §4):
 Repository strategy (CONFIRMED, architecture §5):
 
 - **Monorepo** using `pnpm workspaces`.
+- **`pnpm` is the confirmed package manager**, not a recommendation (owner decision 2026-10-01). The root must carry `pnpm-workspace.yaml` and a pinned `packageManager` field in `package.json`; commit `pnpm-lock.yaml`. Do not introduce npm or yarn lockfiles.
 
 Planned repository structure (CONFIRMED_AS_PLAN, architecture §6):
 
@@ -277,20 +291,24 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 
 ## Known Conflicts and Drift Risks
 
-- CONFLICTING — Token file location: `DESIGN.md` §1 states tokens live in `apps/web/src/index.css`, but the file actually present is `index.css` at the repository root and `apps/` does not exist.
-  - Status: CONFLICTING
-  - Evidence: `DESIGN.md` §1 vs working-tree scan.
-  - Resolution: treat the DESIGN.md path as the *intended* post-scaffold location and root `index.css` as the current pre-scaffold location. This conflict should close when the monorepo scaffold is created.
+- RESOLVED_PENDING_SCAFFOLD — Token file location: `DESIGN.md` §1 and architecture §6 both state tokens live in `apps/web/src/index.css`, but the file actually present is `index.css` at the repository root and `apps/` does not exist.
+  - Status: RESOLVED_PENDING_SCAFFOLD (was CONFLICTING)
+  - Evidence: `DESIGN.md` §1 and new note; architecture §6 and new note; working-tree scan.
+  - Decision: the move to `apps/web/src/index.css` is **confirmed** and happens as the first step of the monorepo scaffold (owner decision 2026-10-01). Do not create a phantom `apps/web` tree before the scaffold exists. Until the move lands, root `index.css` is the working token source. This conflict closes automatically once the scaffold is created — re-verify the path at that point.
 - STALE — Root `README.md` does not exist. The front door of the project is undocumented.
   - Status: STALE
   - Evidence: working-tree scan; `.wwg/reports/wwg-maintenance-review.md`.
 - STALE — No `CHANGELOG.md`; no release memory exists yet. Acceptable at documentation stage.
   - Status: STALE
   - Evidence: working-tree scan.
-- CONFLICTING — Design-system name `Marker` (DESIGN.md) vs product positioning terms `Job Application Tracker` and `Applicant Tracking System` (PRD). Three names coexist; `Marker` is a component-system name, not a product name.
-  - Status: CONFLICTING
-  - Evidence: `DESIGN.md` line 3 vs PRD §1.1/§1.2.
-  - Resolution: `Marker` is canonical **only** as the design-system name. Never use it as a product name.
+- RESOLVED — Design-system name `Marker` (DESIGN.md) vs product name `Tarn` (PRD §1.1). Previously three names coexisted; the product name is now Tarn and `Marker` is scoped to the design system only.
+  - Status: RESOLVED
+  - Evidence: `DESIGN.md` line 3 and the new Naming note; PRD §1.1.
+  - Resolution: `Tarn` is the product name. `Marker` is the design-system name only. Never use `Marker` as a product name. See `.wwg/wiki/terminology.md`.
+- RETIRED — "Job Application Tracker" as a product name.
+  - Status: RETIRED
+  - Evidence: superseded by Tarn on 2026-10-01 (PRD §1.1, §38).
+  - Note: the two canonical source files keep their historical `job-application-tracker-*` filenames. Do not treat those filenames as a naming rule, and do not propagate the retired name into new files or user-facing strings.
 - NEEDS_CONFIRMATION — No tests, CI, lint, type-check, or package manifests exist. The testing strategy in architecture §62 and CI plan in §63 are specified but not yet implemented.
   - Status: NEEDS_CONFIRMATION
   - Evidence: working-tree scan; architecture §62–§63.
@@ -300,27 +318,27 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 
 ## Open Questions
 
-- Question: What is the final product name?
-  - Why it matters: naming affects terminology, package names, README, and user-facing copy; the PRD explicitly defers this.
-  - Evidence / uncertainty: PRD §1.1 marks it a working title.
-- Question: Does the MVP ship with authentication, or is a single-user/no-auth mode allowed first?
-  - Why it matters: authentication and authorization are approval-sensitive and are item 1 of the MVP Definition of Done.
-  - Evidence / uncertainty: PRD §7.1 and §35 both assume accounts exist, but §2.4 and the personal-tool framing leave a single-user option open. Needs owner decision.
+All seven questions from the initial ingestion have been answered by the owner on 2026-10-01. They are retained below as decision history with pointers to the decision records.
+
+Resolved on 2026-10-01:
+
+1. Final product name → **Tarn**. PRD §1.1 and §38 updated. See `.wwg/wiki/decisions/D-0001-product-name-tarn.md`.
+2. MVP authentication → **auth is in the MVP**; the no-auth proposal was rejected. PRD §7.1/§35/§37 unchanged and now authoritative. See `.wwg/wiki/decisions/D-0002-mvp-authentication.md`.
+3. Package manager → **pnpm confirmed**. Architecture §5 updated. See `.wwg/wiki/decisions/D-0003-package-manager-pnpm.md`.
+4. MVP schema scope → **`saved_jobs`, `skills`, `job_skills`, `offers` in MVP; `notifications` deferred to Phase 2.** PRD §6/§37 and architecture §35 updated. See `.wwg/wiki/decisions/D-0004-mvp-schema-scope.md`.
+5. Token path conflict → **move `index.css` to `apps/web/src/index.css` at scaffold time**, not now. See `.wwg/wiki/decisions/D-0005-token-file-location.md`.
+
+Still open:
+
 - Question: Which deployment vendors are actually chosen?
   - Why it matters: infrastructure cost and hosting boundaries depend on this; also relevant to file storage and secrets handling.
   - Evidence / uncertainty: architecture §65 lists recommendations only; no `vercel.json`, `railway.json`, or equivalent exists.
-- Question: Is `pnpm` confirmed as the package manager?
-  - Why it matters: it determines lockfile, CI setup, and contributor onboarding.
-  - Evidence / uncertainty: architecture §5 recommends `pnpm workspaces`; no `pnpm-workspace.yaml` or `package.json` exists to confirm.
-- Question: Should root `index.css` move to `apps/web/src/index.css` during scaffold?
-  - Why it matters: DESIGN.md §1 makes the token path a hard rule; leaving it at root would create permanent drift.
-  - Evidence / uncertainty: CONFLICTING item recorded above.
+- Question: Should the repository directory be renamed from `applicant-tracking-system` to `tarn`?
+  - Why it matters: the directory name no longer matches the product name, which is a recurring source of confusion and a risk of the retired name being resurrected by tooling. Renaming also breaks local git remotes and CI config.
+  - Evidence / uncertainty: directory is currently `applicant-tracking-system`; nothing depends on the name yet since no remote or CI exists. Low risk now, higher cost later.
 - Question: What is the confirmed MVP testing/verification gate?
   - Why it matters: WWG health and release readiness depend on a known validation path; currently no test infrastructure exists.
-  - Evidence / uncertainty: architecture §62–§63 specify a strategy that is not yet implemented.
-- Question: Are `SavedJob`, `Skill`, `Notification`, and `Offer` in or out of the MVP database scope?
-  - Why it matters: architecture §35 "MVP Database Tables" and PRD §6 disagree in emphasis; schema scope drives the first migration.
-  - Evidence / uncertainty: PRD §6 Phase 1 list vs architecture §35; needs owner confirmation.
+  - Evidence / uncertainty: architecture §62–§63 specify a strategy that is not yet implemented. See `.wwg/governance/test-enforcement.md`.
 
 ## Update Rules
 
@@ -335,6 +353,7 @@ Update this file when:
 - major product decisions become accepted truth
 - high-risk behavior, production claims, approval requirements, or verification expectations change
 - **implementation status changes** — in particular, promote this file away from "NOT YET IMPLEMENTED" the moment application source code lands, and convert planned architecture into observed architecture with evidence
+- the owner changes a product decision recorded in `.wwg/wiki/decisions/` — amend the PRD Decision Log in the same change so the two never disagree
 
 Evidence rules for this project:
 

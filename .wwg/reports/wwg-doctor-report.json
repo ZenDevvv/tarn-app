@@ -4,7 +4,7 @@
   "command": "wwg doctor --apply",
   "apply": true,
   "skipHandoff": false,
-  "generatedAt": "2026-10-01T07:11:53.359Z",
+  "generatedAt": "2026-10-01T09:12:29.609Z",
   "mode": "existing-adopted-project",
   "registryPresent": true,
   "steps": [
@@ -839,7 +839,7 @@
         {
           "severity": "info",
           "code": "markdown-contract-quality-report-generated",
-          "message": "Markdown contract quality report completed with 102 warning(s) and 77 suggestion(s).",
+          "message": "Markdown contract quality report completed with 107 warning(s) and 88 suggestion(s).",
           "path": "reports/context-skill-quality.md",
           "status": "PASS",
           "category": "markdown-contracts",
@@ -954,7 +954,7 @@
         ".wwg/reports/wwg-agent-handoff.json",
         ".wwg/reports/wwg-handoff-to-codex.md",
         ".wwg/reports/wwg-handoff-to-codex.json",
-        ".wwg/reports/backups/wwg.project.20261001T071154Z.yaml",
+        ".wwg/reports/backups/wwg.project.20261001T091230Z.yaml",
         ".wwg/config/wwg.project.yaml"
       ],
       "filesSkipped": [],
@@ -1823,7 +1823,7 @@
   "filesCreated": [],
   "filesUpdated": [
     ".wwg/config/wwg.project.yaml",
-    ".wwg/reports/backups/wwg.project.20261001T071154Z.yaml",
+    ".wwg/reports/backups/wwg.project.20261001T091230Z.yaml",
     ".wwg/reports/readme-validation.md",
     ".wwg/reports/wwg-agent-handoff.json",
     ".wwg/reports/wwg-agent-handoff.md",
@@ -2634,7 +2634,7 @@
     {
       "severity": "info",
       "code": "markdown-contract-quality-report-generated",
-      "message": "Markdown contract quality report completed with 102 warning(s) and 77 suggestion(s).",
+      "message": "Markdown contract quality report completed with 107 warning(s) and 88 suggestion(s).",
       "path": "reports/context-skill-quality.md",
       "status": "PASS",
       "category": "markdown-contracts",

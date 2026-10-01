@@ -1,4 +1,4 @@
-# Job Application Tracker Web App
+# Tarn
 ## Business Requirements Document (BRD) + Product Requirements Document (PRD)
 
 **Document Version:** 1.0  
@@ -13,13 +13,13 @@
 
 ## 1.1 Product Name
 
-**Job Application Tracker**
+**Tarn**
 
-> Working title. The final product name can be decided separately.
+> The product name is **Tarn**, decided on 2026-10-01. Earlier drafts referred to it as a working title ("Job Application Tracker"); that name is retired and must not be used for the product.
 
 ## 1.2 Product Summary
 
-Job Application Tracker is a personal web application designed to help job seekers organize, monitor, and manage their entire job-search process from a single place.
+Tarn is a personal web application designed to help job seekers organize, monitor, and manage their entire job-search process from a single place.
 
 The application centralizes job opportunities and applications collected from platforms such as LinkedIn, Indeed, JobStreet, OnlineJobsPH, company career websites, referrals, and other sources.
 
@@ -224,6 +224,11 @@ The system should allow users to move applications between statuses without forc
 - Search
 - Filtering
 - Basic analytics
+- Saved jobs
+- Offers
+- Skills (capture only — no AI extraction or matching in MVP)
+
+Authentication and account management are also MVP scope (see §7.1 and §35). Saved jobs, offers, and skill capture were promoted into Phase 1 on 2026-10-01; see §38.
 
 ## Phase 2 — Job Search Management
 
@@ -231,9 +236,11 @@ The system should allow users to move applications between statuses without forc
 - Recruiter/contact tracker
 - Resume versions
 - Cover letter tracking
-- Saved jobs
 - Follow-up notifications
+- In-app notification records
 - Expanded analytics
+
+Notifications remain deferred to Phase 2 by decision of 2026-10-01. No notification table, delivery channel, or notification UI ships in MVP.
 
 ## Phase 3 — Intelligence
 
@@ -996,7 +1003,7 @@ Browser Extension
     ↓
 Detect job information
     ↓
-Save to Job Application Tracker
+Save to Tarn
 ```
 
 The extension must respect the terms and technical restrictions of the target website.
@@ -1838,7 +1845,7 @@ The product is ready for MVP release when:
 
 # 36. Future Product Vision
 
-The long-term vision is to make Job Application Tracker a personal **Job Search Operating System**.
+The long-term vision is to make Tarn a personal **Job Search Operating System**.
 
 The user's workflow should eventually look like:
 
@@ -1898,15 +1905,16 @@ The system should remain centered around one principle:
 | Search & Filters | ✓ | | | |
 | Follow-ups | ✓ | | | |
 | Basic Analytics | ✓ | | | |
-| Saved Jobs | | ✓ | | |
+| Saved Jobs | ✓ | | | |
+| Offer Management | ✓ | | | |
+| Skills (capture) | ✓ | | | |
 | Interviews | | ✓ | | |
 | Contacts | | ✓ | | |
 | Resume Versions | | ✓ | | |
 | Cover Letters | | ✓ | | |
 | Notifications | | ✓ | | |
-| Offer Management | | ✓ | | |
+| Skill Extraction & Matching | | | ✓ | |
 | AI JD Analyzer | | | ✓ | |
-| Skill Matching | | | ✓ | |
 | Interview Preparation | | | ✓ | |
 | Gmail Integration | | | | ✓ |
 | Calendar Integration | | | | ✓ |
@@ -1914,13 +1922,28 @@ The system should remain centered around one principle:
 | Messaging Integrations | | | | ✓ |
 | Platform Integrations | | | | ✓ |
 
+Saved Jobs, Offer Management, and Skills (capture) moved into MVP on 2026-10-01. Notifications remain Phase 2. Skill *extraction and matching* remain Phase 3 even though the Skill entity ships in MVP.
+
 ---
 
 # 38. Document Status
 
-**Current Status:** Product requirements baseline established.
+**Current Status:** Product requirements baseline established. Amended 2026-10-01 by owner decisions (see Decision Log below).
 
 This document should be treated as the initial product source of truth. Technical implementation decisions, database schema details, API contracts, UI component specifications, and deployment architecture should be documented separately during development.
+
+## Decision Log
+
+| Date | Decision | Effect on this document |
+|---|---|---|
+| 2026-10-01 | Product name is **Tarn** | §1.1. "Job Application Tracker" retired as a product name. |
+| 2026-10-01 | **Authentication is in scope for MVP** | Confirms §7.1 and §35 item 1. An earlier proposal to ship MVP without auth was rejected; the ownership boundary in §33 and PRD §35 item 12 stand. |
+| 2026-10-01 | **SavedJob, Skill, and Offer are in MVP scope** | §6 Phase 1, §37 matrix. Promoted from Phase 2. |
+| 2026-10-01 | **Notification deferred to Phase 2** | §6 Phase 2, §37 matrix. No notification table, channel, or UI in MVP. |
+| 2026-10-01 | **pnpm confirmed** as package manager | Recorded in `job-application-tracker-project-architecture.md` §5. |
+| 2026-10-01 | Design tokens move to `apps/web/src/index.css` at scaffold time | Recorded in `DESIGN.md` §1. Not yet executed; the token file is currently at repository root. |
+
+Notes on the Skill scope split: the **Skill** entity ships in MVP so skills can be captured and stored against jobs. AI-driven skill **extraction** and **matching** remain Phase 3 (§8.2).
 
 **Next recommended artifacts:**
 

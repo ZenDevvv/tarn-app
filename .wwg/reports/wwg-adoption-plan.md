@@ -33,6 +33,12 @@ conservative
 | reports/adoption-regression-report.md | governance artifact | regression_guardrails | medium |
 | reports/context-skill-quality.md | canonical context | project_master_context | medium |
 | wiki | context root | project_master_context | medium |
+| wiki/decisions | ADR directory | reference_history | medium |
+| wiki/decisions/D-0001-product-name-tarn.md | decision history | reference_history | medium |
+| wiki/decisions/D-0002-mvp-authentication.md | decision history | reference_history | medium |
+| wiki/decisions/D-0003-package-manager-pnpm.md | decision history | reference_history | medium |
+| wiki/decisions/D-0004-mvp-schema-scope.md | decision history | reference_history | medium |
+| wiki/decisions/D-0005-token-file-location.md | decision history | reference_history | medium |
 | workspace/testing/manual-verification-checklist.md | governance artifact | test_plan | medium |
 | workspace/testing/manual-verification-evidence.json | governance artifact | test_plan | medium |
 | workspace/testing/non-technical-regression-checklist.md | governance artifact | regression_guardrails | medium |
@@ -79,6 +85,12 @@ conservative
 - reports/adoption-regression-report.md
 - reports/context-skill-quality.md
 - wiki
+- wiki/decisions
+- wiki/decisions/D-0001-product-name-tarn.md
+- wiki/decisions/D-0002-mvp-authentication.md
+- wiki/decisions/D-0003-package-manager-pnpm.md
+- wiki/decisions/D-0004-mvp-schema-scope.md
+- wiki/decisions/D-0005-token-file-location.md
 - workspace/testing/manual-verification-checklist.md
 - workspace/testing/manual-verification-evidence.json
 - workspace/testing/non-technical-regression-checklist.md

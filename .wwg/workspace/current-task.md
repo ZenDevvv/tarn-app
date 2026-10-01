@@ -1,104 +1,77 @@
 # Current Task
 
-Status: DONE — WWG truth ingestion of existing project documentation.
-Task mode: Existing Project Adoption (truth ingestion + governance repair)
+Status: DONE — owner decision batch applied to truth and canonical documents.
+Task mode: Existing Project Adoption (decision propagation)
 Last updated: 2026-10-01
 
 ## Task Summary
 
 - Status: DONE
-- Task mode: Existing Project Adoption
+- Task mode: Existing Project Adoption (decision propagation)
 - User request:
-  - Confirm whether WWG was set up successfully and whether all existing files were adopted; then ingest the existing project files into WWG.
+  - Set the product name to "Tarn".
+  - Decide MVP authentication.
+  - Confirm pnpm.
+  - Scope SavedJob, Skill, and Offer into MVP; defer Notification.
+  - Resolve the `index.css` token-path conflict.
+  - Update the existing docs as well as the WWG truth surfaces.
 
-## What Was Wrong At Start
+## Owner Decisions Recorded
 
-The initial `wwg adopt --mode infer --apply` run reported success but captured almost nothing:
+| ID | Decision | Status |
+|---|---|---|
+| D-0001 | Product name is **Tarn**; "Job Application Tracker" retired | Accepted |
+| D-0002 | **Authentication is in the MVP** (no-auth proposal raised then rejected) | Accepted |
+| D-0003 | **pnpm** confirmed as package manager | Accepted |
+| D-0004 | **`saved_jobs`, `skills`, `job_skills`, `offers` in MVP; `notifications` deferred to Phase 2** | Accepted |
+| D-0005 | Move `index.css` → `apps/web/src/index.css` **at scaffold time**, not now | Accepted, pending execution |
 
-- Adoption readiness score 23/100, confidence LOW
-- `.wwg/wiki/project-truth.md` contained 29 `NEEDS_CONFIRMATION` labels, 7 `INFERRED`, and 0 `CONFIRMED`
-- The only real evidence used was `DESIGN.md` plus the repository **folder name**
-- The two authoritative documents in the repo — `job-application-tracker-brd-prd.md` (1377 lines) and `job-application-tracker-project-architecture.md` (2273 lines) — were never read
-- `wwg validate` was failing (1 HIGH): `wwg-maintenance-review.md` lacked required WWG Truth Synchronization fields
-- 3 Must Have governance artifacts were missing, including `test-enforcement.md`
+Decision records live in `.wwg/wiki/decisions/`.
 
-## Evidence Sources Ingested
+### Important reversal
 
-- `job-application-tracker-brd-prd.md` — 38 sections; product source of truth per §38
-- `job-application-tracker-project-architecture.md` — 94 sections; technical source of truth
-- `DESIGN.md` — 15 sections; design rules and source-of-truth order
-- `design-system.html`, `index.css` — design reference and tokens
-- Working-tree scan — confirmed documentation-only state
+D-0002 reversed within the same session. The owner first directed "let's make the first mvp with no auth", then answered the data-model fork with "lets just have the auth for the first mvp". **Authentication is MVP scope.** The original instruction is void; it is recorded in D-0002 only so a future reader of the chat log does not treat it as active.
 
-## Truth Captured
+## Canonical Documents Amended
 
-- Product identity: Job Application Tracker (working title), design system Marker, long-term "personal ATS"
-- Category: personal job-search web application
-- Roles: single persona — Active Job Seeker
-- Scope: Phase 1 MVP, with Phases 2–4 explicitly deferred
-- Lifecycle: 9-stage happy path + REJECTED / WITHDRAWN / NO_RESPONSE exits
-- Canonical status, priority, follow-up state, and interview status vocabularies
-- Architecture plan: modular monolith, pnpm monorepo, React/Vite/Tailwind/shadcn + Express/Prisma/PostgreSQL
-- 12 binding architecture rules
-- Security, ownership, and privacy boundaries
-- Product risks and mitigations
-- 6 product principles, 12 architecture rules, 5 design ideas, accessibility baseline
+Owner approved edits to the canonical docs (root `AGENTS.md` otherwise forbids WWG from rewriting them):
 
-Labels used: `CONFIRMED`, `CONFIRMED_AS_WORKING_TITLE`, `CONFIRMED_AS_PLAN`, `INFERRED`, `NEEDS_CONFIRMATION`, `CONFLICTING`, `STALE`.
+- `job-application-tracker-brd-prd.md` — §1 title, §1.1 product name, §1.2 summary, §6 Phase 1/2 scope, §37 phase matrix, §38 new Decision Log
+- `job-application-tracker-project-architecture.md` — title, §1 overview, §5 pnpm confirmed, §6 structure (`tarn/`, `index.css`, `pnpm-lock.yaml`, token note), §35 MVP tables rewritten
+- `DESIGN.md` — header product name, new Naming note, new Token file location note
+- `index.css` — header comment (product name, scaffold note, `npm i` → `pnpm add -D`)
+- `design-system.html` — `<title>` and lede
 
-## Files Created or Updated
+Diff footprint: 5 files, 66 insertions, 24 deletions. No application source was touched, because none exists.
 
-Truth:
+## Truth Surfaces Updated
 
-- `.wwg/wiki/project-truth.md` — rewritten with accepted truth
-- `.wwg/wiki/terminology.md` — rewritten with canonical domain, UI, and technical vocabulary
+- `.wwg/wiki/project-truth.md` — product identity, auth model, MVP scope, notification boundary, skill scope split, pnpm, token conflict → `RESOLVED_PENDING_SCAFFOLD`, conflicts register, open questions
+- `.wwg/wiki/terminology.md` — Naming Context table, phase-status markers on `SavedJob`/`Skill`/`Offer`/`Notification`, conflicts register now has resolutions, added two new conflicts
+- `.wwg/wiki/decisions/` — 5 new decision records
+- `.wwg/wiki/principles/plan-vs-implementation-truth.md` — risk 2 updated to reflect D-0005
+- `.wwg/config/wwg.project.yaml` — canonical artifact map
 
-Principles:
+## Naming Rules Now In Force
 
-- `.wwg/wiki/principles/product-principles.md` — active
-- `.wwg/wiki/principles/ui-ux-simplicity-principles.md` — active
-- `.wwg/wiki/principles/accessibility-principles.md` — active
-- `.wwg/wiki/principles/architecture-restraint-principles.md` — active
-- `.wwg/wiki/principles/plan-vs-implementation-truth.md` — active
+- Product name: **Tarn**, always capitalized.
+- **Marker** is the design system name only; never a product name.
+- "Job Application Tracker" is **retired**. It survives in exactly three places, all deliberate retirement notices: PRD §1.1, PRD §38 Decision Log, `DESIGN.md` Naming note.
+- The `job-application-tracker-*.md` filenames are historical and are **not** a naming rule.
+- The repository directory is still `applicant-tracking-system` — a recorded open question, not an oversight.
 
-Governance:
+## Remaining Open Questions
 
-- `.wwg/governance/test-enforcement.md` — authored (WWG 0.6.6 generator gap)
-- 21 governance files generated by `wwg generate-governance`
-
-Reports and state:
-
-- `.wwg/reports/wwg-maintenance-review.md` — WWG Truth Synchronization section added
-- `.wwg/reports/README.md` — created by `wwg doctor --apply`
-- `.wwg/reports/wwg-agent-handoff.md`, `wwg-handoff-to-codex.md` — created
-- `.wwg/reports/wwg-audit-report.md`, `wwg-doctor-report.md` — created
-- `.wwg/config/wwg.project.yaml` — canonical artifacts mapped to real source documents
-
-## The Central Finding
-
-**This project has no application source code.** The repository is documentation-only.
-
-Every architecture, stack, data-model, auth, and deployment statement in Project Truth is therefore labeled `CONFIRMED_AS_PLAN`, not implemented. This was the single largest gap in the original adoption and is now recorded as the first section agents will read.
-
-## Follow-Up Needed
-
-Owner decisions, in priority order:
-
-1. Confirm the final product name (PRD §1.1 defers it).
-2. Decide whether MVP ships with authentication (PRD §7.1 and §35 assume accounts; a personal single-user mode remains open).
-3. Confirm `pnpm` as the package manager (architecture §5 recommends it; nothing is installed).
-4. Confirm deployment vendors (architecture §65 is a recommendation only).
-5. Confirm whether `SavedJob`, `Skill`, `Notification`, `Offer` are in or out of MVP schema scope (PRD §6 vs architecture §35).
-6. Resolve the `index.css` vs `apps/web/src/index.css` token-path conflict during scaffold.
-7. Create root `README.md` and `CHANGELOG.md` (`wwg readme generate --dry-run`, `wwg changelog generate --dry-run`).
-8. Decide the MVP verification gate once code exists (see `.wwg/governance/test-enforcement.md`).
+1. Which deployment vendors are chosen (architecture §65 is recommendation only)?
+2. Rename the repository directory from `applicant-tracking-system` to `tarn`?
+3. What is the confirmed MVP testing/verification gate? See `.wwg/governance/test-enforcement.md`.
 
 ## Close-Out Notes
 
-- Truth Alignment Status: GREEN for confirmed facts, with 7 open owner questions and 4 recorded conflicts/stale items
-- Execution Gate: warn — no implementation exists, so nothing is verifiable
-- Test / verification plan: no executable verification path exists; see `.wwg/governance/test-enforcement.md`
-- Drift status: LOW after ingestion
-- Adoption confidence: MEDIUM (up from LOW) — raised by reading the primary documents, capped because nothing is implemented
-- Remaining issues: 7 open questions require owner confirmation; `README.md` and `CHANGELOG.md` missing
-- New recommendations: none added to `.wwg/governance/recommendation-registry.md` at this time; the follow-up list above is tracked here instead
+- Truth Alignment Status: GREEN. All five decisions propagated to both truth surfaces and canonical docs.
+- Execution Gate: warn — still no implementation, so nothing is verifiable.
+- Test / verification plan: unchanged; no executable path exists.
+- Drift status: LOW. The `index.css` conflict is now a scheduled migration rather than an open defect.
+- Adoption confidence: MEDIUM
+- D-0005 is **accepted but not executed**. It discharges when the monorepo scaffold is created; the four close-out steps are listed in the decision record.
+- New recommendations: none added to `.wwg/governance/recommendation-registry.md`. The three remaining questions are tracked here and in Project Truth.

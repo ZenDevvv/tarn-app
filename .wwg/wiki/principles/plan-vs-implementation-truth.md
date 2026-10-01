@@ -28,7 +28,7 @@ Agents must always distinguish three states and never collapse them:
 Three concrete risks:
 
 1. **Capability overstatement.** Writing "the app uses TanStack Query" when nothing is implemented produces reports, handoffs, and status output that lie to the owner.
-2. **Path hallucination.** The architecture document names `apps/web/src/index.css` and `DESIGN.md` §1 repeats it as a hard rule. That file does not exist; `index.css` is at the repository root. An agent reasoning from the doc alone will reference a nonexistent path and treat the conflict as a code bug.
+2. **Path hallucination.** The architecture document names `apps/web/src/index.css` and `DESIGN.md` §1 repeats it as a hard rule. That file does not exist; `index.css` is at the repository root. An agent reasoning from the doc alone will reference a nonexistent path and treat the conflict as a code bug. The path is now confirmed as correct by `.wwg/wiki/decisions/D-0005-token-file-location.md`, and the move is scheduled for the scaffold — so the mismatch is a *pending migration*, not an error to fix or a doc to distrust.
 3. **False readiness.** `wwg status` and readiness reports can show green checks that reflect WWG *structure*, not product *capability*. "WWG structure present" is not "MVP is working".
 
 ## Applies To
@@ -56,7 +56,8 @@ Three concrete risks:
 ## Related Truths
 
 - `.wwg/wiki/project-truth.md` — "Source-of-Truth Order", "Implementation Reality", "Safety and Production Boundaries", "Known Conflicts and Drift Risks"
-- `job-application-tracker-brd-prd.md` §35 (MVP Definition of Done), §38 (Document Status)
+- `.wwg/wiki/decisions/D-0005-token-file-location.md` — the confirmed token-path migration
+- `job-application-tracker-brd-prd.md` §35 (MVP Definition of Done), §38 (Document Status and Decision Log)
 - `job-application-tracker-project-architecture.md` §90 (Suggested Build Order)
 - `.wwg/governance/evidence-standards.md`
 - `.wwg/governance/operational-readiness-review.md`

@@ -360,25 +360,31 @@ No stale Review By items found.
 
 > Remediation note: this section is applied manually because `wwg maintain` in WWG 0.6.6 does not emit it, yet `wwg validate` requires it on any report that claims readiness or completion. See `.wwg/governance/tooling-known-issues.md` (issue WWG-TOOL-001). Re-apply this section after every `wwg maintain` run.
 
-- Task mode: Existing Project Adoption (truth ingestion and governance repair)
+- Task mode: Existing Project Adoption (decision propagation)
 - New truth detected: YES
 - Wiki updated: YES
 - Workspace updated: YES
 - Governance review completed: YES
-- Drift status: LOW — after ingestion. Before ingestion, drift was material: Project Truth carried 29 `NEEDS_CONFIRMATION` items and 0 `CONFIRMED` items because the primary project documents had never been read.
+- Drift status: LOW — five owner decisions propagated to both the WWG truth surfaces and the canonical product documents on 2026-10-01. The `index.css` token-path conflict moved from `CONFLICTING` to `RESOLVED_PENDING_SCAFFOLD`.
 - Canonical files changed:
-  - `.wwg/wiki/project-truth.md` — rewritten from inferred placeholders to accepted, evidence-cited truth.
-  - `.wwg/wiki/terminology.md` — rewritten with canonical domain, UI, and technical vocabulary.
-  - `.wwg/workspace/current-task.md` — rewritten to record the ingestion task.
-  - `.wwg/config/wwg.project.yaml` — canonical artifacts remapped to the real source documents.
+  - `job-application-tracker-brd-prd.md` — product name set to Tarn in §1/§1.1/§1.2, §6 MVP scope amended, §37 phase matrix amended, §38 Decision Log added.
+  - `job-application-tracker-project-architecture.md` — title/§1 renamed, §5 pnpm confirmed, §6 structure updated, §35 MVP tables rewritten.
+  - `DESIGN.md` — product name in header, Naming note and Token file location note added.
+  - `index.css` — header comment corrected (product name, scaffold note, `pnpm add -D`).
+  - `design-system.html` — `<title>` and lede updated.
+  - `.wwg/wiki/project-truth.md`, `.wwg/wiki/terminology.md`, `.wwg/workspace/current-task.md`, `.wwg/config/wwg.project.yaml`.
 - Implementation discoveries synced:
-  - The repository is documentation-stage: no `apps/`, no `packages/`, no `package.json`, no `docker-compose.yml`, no CI workflow. All architecture, stack, data-model, auth, and deployment truth is labeled as accepted plan, not implemented.
-  - `DESIGN.md` §1 names `apps/web/src/index.css` as the token path, but that file does not exist; tokens are currently at repository-root `index.css`. Recorded as `CONFLICTING`.
-  - Root `README.md` and `CHANGELOG.md` do not exist. Recorded as `STALE`.
-  - `test-enforcement.md` is required by the WWG readiness model and root `AGENTS.md` but is not emitted by the WWG 0.6.6 generator. Authored manually at `.wwg/governance/test-enforcement.md`.
+  - **Authentication is MVP scope.** A no-auth MVP was proposed and then rejected by the owner within the same session. The rejection is recorded so a future reader does not revive the earlier instruction. See `.wwg/wiki/decisions/D-0002-mvp-authentication.md`.
+  - MVP database tables are now `users, companies, jobs, skills, job_skills, applications, saved_jobs, timeline_events, follow_ups, offers`. `notifications` is explicitly deferred to Phase 2 — no table, channel, or UI in MVP.
+  - The Skill entity ships in MVP while AI skill extraction and matching remain Phase 3. The two must not be conflated.
+  - `pnpm` is confirmed, not recommended. Commit `pnpm-lock.yaml`; do not introduce npm or yarn lockfiles.
+  - "Job Application Tracker" is retired. It survives in exactly three places, all deliberate retirement notices.
+  - The repository directory `applicant-tracking-system` still does not match the product name Tarn. Recorded as an open question, not an oversight.
 - Remaining stale context:
-  - Seven owner decisions remain open in `.wwg/wiki/project-truth.md` (final product name, MVP authentication model, package manager, deployment vendors, MVP schema scope, token-path conflict, MVP verification gate).
+  - Three owner questions remain open: deployment vendors, whether to rename the repository directory, and the MVP verification gate.
+  - D-0005 is accepted but not executed; the token move discharges when the monorepo scaffold is created.
   - No test, CI, lint, or type-check infrastructure exists; regression evidence is manual or candidate-only.
+  - Root `README.md` and `CHANGELOG.md` still do not exist.
   - This report remains point-in-time evidence. Re-run `wwg maintain --target .` after further truth changes rather than treating it as current state, then re-apply this section.
 
 ## Follow-Up Modes

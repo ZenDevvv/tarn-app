@@ -28,7 +28,7 @@
 - Main implemented features: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no feature headings or routes detected)
 - User roles/surfaces: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no clear user roles detected)
 - Data persistence: NEEDS_CONFIRMATION - No persistence layer detected Evidence: repository scan (no database/schema/migration indicators)
-- Auth/security: CONFIRMED - governance/security-review.md Evidence: governance/security-review.md (auth/security indicator)
+- Auth/security: CONFIRMED - governance/security-review.md, wiki/decisions/D-0002-mvp-authentication.md Evidence: governance/security-review.md (auth/security indicator)
 - Payments/billing: NEEDS_CONFIRMATION - No payments/billing implementation detected Evidence: repository scan (no payment/billing indicators)
 - Deployment/runtime: NEEDS_CONFIRMATION - No deployment config detected Evidence: repository scan (no Docker/Vercel/Netlify/GitHub Actions config detected)
 
@@ -71,7 +71,7 @@ Labels used: CONFIRMED, INFERRED, NEEDS_CONFIRMATION, CONFLICTING, STALE.
 
 ## Legacy Registry Mapping Summary
 
-Detected 26 artifact(s). Registry-first mode: conservative.
+Detected 32 artifact(s). Registry-first mode: conservative.
 
 ## Observed Facts
 
@@ -171,6 +171,12 @@ wwg-native-project
 | reports/adoption-regression-report.md | governance artifact | regression_guardrails | medium |
 | reports/context-skill-quality.md | canonical context | project_master_context | medium |
 | wiki | context root | project_master_context | medium |
+| wiki/decisions | ADR directory | reference_history | medium |
+| wiki/decisions/D-0001-product-name-tarn.md | decision history | reference_history | medium |
+| wiki/decisions/D-0002-mvp-authentication.md | decision history | reference_history | medium |
+| wiki/decisions/D-0003-package-manager-pnpm.md | decision history | reference_history | medium |
+| wiki/decisions/D-0004-mvp-schema-scope.md | decision history | reference_history | medium |
+| wiki/decisions/D-0005-token-file-location.md | decision history | reference_history | medium |
 | workspace/testing/manual-verification-checklist.md | governance artifact | test_plan | medium |
 | workspace/testing/manual-verification-evidence.json | governance artifact | test_plan | medium |
 | workspace/testing/non-technical-regression-checklist.md | governance artifact | regression_guardrails | medium |

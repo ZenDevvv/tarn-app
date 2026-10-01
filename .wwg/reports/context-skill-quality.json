@@ -48,6 +48,11 @@
     ".wwg/reports/wwg-upgrade-history.md",
     ".wwg/reports/wwg-upgrade-report.md",
     ".wwg/reports/wwg-validate-report.md",
+    ".wwg/wiki/decisions/D-0001-product-name-tarn.md",
+    ".wwg/wiki/decisions/D-0002-mvp-authentication.md",
+    ".wwg/wiki/decisions/D-0003-package-manager-pnpm.md",
+    ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+    ".wwg/wiki/decisions/D-0005-token-file-location.md",
     ".wwg/wiki/principles/README.md",
     ".wwg/wiki/principles/accessibility-principles.md",
     ".wwg/wiki/principles/architecture-restraint-principles.md",
@@ -305,6 +310,31 @@
       "path": ".wwg/reports/wwg-validate-report.md",
       "fileType": "report",
       "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/wiki/decisions/D-0001-product-name-tarn.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
+    },
+    {
+      "path": ".wwg/wiki/decisions/D-0002-mvp-authentication.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
+    },
+    {
+      "path": ".wwg/wiki/decisions/D-0003-package-manager-pnpm.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
+    },
+    {
+      "path": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
+    },
+    {
+      "path": ".wwg/wiki/decisions/D-0005-token-file-location.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
     },
     {
       "path": ".wwg/wiki/principles/README.md",
@@ -1083,6 +1113,51 @@
       "severity": "warning",
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0001-product-name-tarn.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0002-mvp-authentication.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0003-package-manager-pnpm.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0005-token-file-location.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
       "affectedFile": ".wwg/wiki/principles/README.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
@@ -1167,7 +1242,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "FR-AUTH-001 — User Registration",
-      "line": 262,
+      "line": 269,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1177,7 +1252,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Dashboard Metrics",
-      "line": 299,
+      "line": 306,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1187,7 +1262,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Required Application Information",
-      "line": 340,
+      "line": 347,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1197,7 +1272,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Columns",
-      "line": 385,
+      "line": 392,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1207,7 +1282,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Sections",
-      "line": 410,
+      "line": 417,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1217,7 +1292,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Follow-Up Fields",
-      "line": 505,
+      "line": 512,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1227,7 +1302,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Saved Job Information",
-      "line": 538,
+      "line": 545,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1237,7 +1312,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Company Information",
-      "line": 567,
+      "line": 574,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1247,7 +1322,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Contact Fields",
-      "line": 611,
+      "line": 618,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1257,7 +1332,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Interview Fields",
-      "line": 631,
+      "line": 638,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1267,7 +1342,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Preparation Sections",
-      "line": 671,
+      "line": 678,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1277,7 +1352,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Resume Fields",
-      "line": 690,
+      "line": 697,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1287,7 +1362,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Fields",
-      "line": 717,
+      "line": 724,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1297,7 +1372,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Information",
-      "line": 735,
+      "line": 742,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1307,7 +1382,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Core Metrics",
-      "line": 791,
+      "line": 798,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1317,7 +1392,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Offer Fields",
-      "line": 859,
+      "line": 866,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -1327,7 +1402,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Product Metrics",
-      "line": 1546,
+      "line": 1553,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     }
   ],
@@ -1716,6 +1791,16 @@
       "severity": "suggestion",
       "code": "markdown-repeated-heading",
       "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 63,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
       "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
       "fileType": "report",
       "affectedSection": "0.6.6 to 0.6.6",
@@ -1731,6 +1816,61 @@
       "affectedSection": "0.6.6 to 0.6.6",
       "line": 45,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 63,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 19,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 23,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 40,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 57,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 58,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
       "severity": "suggestion",
@@ -1771,7 +1911,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 93,
+      "line": 99,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -1780,7 +1920,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 111,
+      "line": 116,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -1789,7 +1929,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 112,
+      "line": 120,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -1798,7 +1938,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 113,
+      "line": 121,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -1807,7 +1947,34 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 255,
+      "line": 122,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "line": 52,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "line": 132,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "line": 133,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -1816,7 +1983,16 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 38,
+      "line": 26,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "line": 39,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -1843,7 +2019,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Mitigation",
-      "line": 1785,
+      "line": 1792,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -1853,7 +2029,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Mitigation",
-      "line": 1800,
+      "line": 1807,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -1863,7 +2039,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Mitigation",
-      "line": 1806,
+      "line": 1813,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -1873,7 +2049,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Mitigation",
-      "line": 1812,
+      "line": 1819,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -1883,7 +2059,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "7. Functional Requirements",
-      "line": 258,
+      "line": 265,
       "recommendedFix": "Fill the section or state 'Not applicable' with a short reason."
     },
     {
@@ -1909,7 +2085,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
-      "line": 198,
+      "line": 201,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -1918,7 +2094,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
-      "line": 208,
+      "line": 203,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -1927,7 +2103,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
-      "line": 217,
+      "line": 213,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -1936,7 +2112,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
-      "line": 786,
+      "line": 215,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -1946,7 +2122,7 @@
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
       "affectedSection": "Frontend",
-      "line": 2097,
+      "line": 2109,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -1956,7 +2132,7 @@
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
       "affectedSection": "Backend",
-      "line": 2103,
+      "line": 2115,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -1966,7 +2142,7 @@
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
       "affectedSection": "Frontend",
-      "line": 2788,
+      "line": 2800,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -1976,7 +2152,7 @@
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
       "affectedSection": "Backend",
-      "line": 2802,
+      "line": 2814,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -1986,7 +2162,7 @@
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
       "affectedSection": "Storage",
-      "line": 2818,
+      "line": 2830,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -1995,7 +2171,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
-      "line": 233,
+      "line": 237,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2004,7 +2180,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
-      "line": 248,
+      "line": 252,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2013,7 +2189,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
-      "line": 1376,
+      "line": 617,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2022,7 +2198,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
-      "line": 1386,
+      "line": 1382,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2031,7 +2207,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
-      "line": 1398,
+      "line": 1392,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     }
   ],
@@ -2724,6 +2900,51 @@
       "severity": "warning",
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0001-product-name-tarn.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0002-mvp-authentication.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0003-package-manager-pnpm.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0005-token-file-location.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
       "affectedFile": ".wwg/wiki/principles/README.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
@@ -2804,6 +3025,96 @@
   ],
   "skillFindings": [],
   "contextFindings": [
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0001-product-name-tarn.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0002-mvp-authentication.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0003-package-manager-pnpm.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 19,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 23,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 40,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 57,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 58,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0005-token-file-location.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
     {
       "severity": "warning",
       "code": "context-contract-missing-sections",
@@ -2906,7 +3217,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 93,
+      "line": 99,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2915,7 +3226,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 111,
+      "line": 116,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2924,7 +3235,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 112,
+      "line": 120,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2933,7 +3244,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 113,
+      "line": 121,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2942,7 +3253,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 255,
+      "line": 122,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2953,6 +3264,33 @@
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Decisions, Constraints, References",
       "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "line": 52,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "line": 132,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "line": 133,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     }
   ],
   "governanceFindings": [
@@ -3996,6 +4334,16 @@
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 63,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
       "severity": "warning",
       "code": "report-contract-missing-sections",
       "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
@@ -4022,6 +4370,16 @@
       "fileType": "report",
       "affectedSection": "0.6.6 to 0.6.6",
       "line": 45,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 63,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -4450,6 +4808,16 @@
       "severity": "suggestion",
       "code": "markdown-repeated-heading",
       "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 63,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
       "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
       "fileType": "report",
       "affectedSection": "0.6.6 to 0.6.6",
@@ -4465,6 +4833,61 @@
       "affectedSection": "0.6.6 to 0.6.6",
       "line": 45,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 63,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 19,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 23,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 40,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 57,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/decisions/D-0004-mvp-schema-scope.md",
+      "fileType": "context",
+      "line": 58,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
       "severity": "suggestion",
@@ -4505,7 +4928,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 93,
+      "line": 99,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4514,7 +4937,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 111,
+      "line": 116,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4523,7 +4946,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 112,
+      "line": 120,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4532,7 +4955,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 113,
+      "line": 121,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4541,7 +4964,34 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 255,
+      "line": 122,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "line": 52,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "line": 132,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "line": 133,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4550,7 +5000,16 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 38,
+      "line": 26,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "line": 39,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4577,7 +5036,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "FR-AUTH-001 — User Registration",
-      "line": 262,
+      "line": 269,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4587,7 +5046,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Dashboard Metrics",
-      "line": 299,
+      "line": 306,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4597,7 +5056,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Required Application Information",
-      "line": 340,
+      "line": 347,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4607,7 +5066,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Columns",
-      "line": 385,
+      "line": 392,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4617,7 +5076,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Sections",
-      "line": 410,
+      "line": 417,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4627,7 +5086,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Follow-Up Fields",
-      "line": 505,
+      "line": 512,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4637,7 +5096,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Saved Job Information",
-      "line": 538,
+      "line": 545,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4647,7 +5106,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Company Information",
-      "line": 567,
+      "line": 574,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4657,7 +5116,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Contact Fields",
-      "line": 611,
+      "line": 618,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4667,7 +5126,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Interview Fields",
-      "line": 631,
+      "line": 638,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4677,7 +5136,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Preparation Sections",
-      "line": 671,
+      "line": 678,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4687,7 +5146,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Resume Fields",
-      "line": 690,
+      "line": 697,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4697,7 +5156,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Fields",
-      "line": 717,
+      "line": 724,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4707,7 +5166,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Information",
-      "line": 735,
+      "line": 742,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4717,7 +5176,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Core Metrics",
-      "line": 791,
+      "line": 798,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4727,7 +5186,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Offer Fields",
-      "line": 859,
+      "line": 866,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4737,7 +5196,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Product Metrics",
-      "line": 1546,
+      "line": 1553,
       "recommendedFix": "Use sequential heading levels so agents can parse document structure reliably."
     },
     {
@@ -4747,7 +5206,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Mitigation",
-      "line": 1785,
+      "line": 1792,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -4757,7 +5216,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Mitigation",
-      "line": 1800,
+      "line": 1807,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -4767,7 +5226,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Mitigation",
-      "line": 1806,
+      "line": 1813,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -4777,7 +5236,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "Mitigation",
-      "line": 1812,
+      "line": 1819,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -4787,7 +5246,7 @@
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
       "affectedSection": "7. Functional Requirements",
-      "line": 258,
+      "line": 265,
       "recommendedFix": "Fill the section or state 'Not applicable' with a short reason."
     },
     {
@@ -4813,7 +5272,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
-      "line": 198,
+      "line": 201,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4822,7 +5281,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
-      "line": 208,
+      "line": 203,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4831,7 +5290,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
-      "line": 217,
+      "line": 213,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4840,7 +5299,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-brd-prd.md",
       "fileType": "unknown",
-      "line": 786,
+      "line": 215,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4850,7 +5309,7 @@
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
       "affectedSection": "Frontend",
-      "line": 2097,
+      "line": 2109,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -4860,7 +5319,7 @@
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
       "affectedSection": "Backend",
-      "line": 2103,
+      "line": 2115,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -4870,7 +5329,7 @@
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
       "affectedSection": "Frontend",
-      "line": 2788,
+      "line": 2800,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -4880,7 +5339,7 @@
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
       "affectedSection": "Backend",
-      "line": 2802,
+      "line": 2814,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -4890,7 +5349,7 @@
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
       "affectedSection": "Storage",
-      "line": 2818,
+      "line": 2830,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -4899,7 +5358,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
-      "line": 233,
+      "line": 237,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4908,7 +5367,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
-      "line": 248,
+      "line": 252,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4917,7 +5376,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
-      "line": 1376,
+      "line": 617,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4926,7 +5385,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
-      "line": 1386,
+      "line": 1382,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4935,7 +5394,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "job-application-tracker-project-architecture.md",
       "fileType": "unknown",
-      "line": 1398,
+      "line": 1392,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     }
   ],
@@ -5022,13 +5481,13 @@
   ],
   "metadataPolicyApplied": "Option C: Skill Registry metadata is canonical; skill files may include lightweight metadata when beneficial, and package-side skills do not require frontmatter.",
   "summary": {
-    "checkedFileCount": 64,
+    "checkedFileCount": 69,
     "skippedFileCount": 1,
     "errorCount": 0,
-    "warningCount": 102,
-    "suggestionCount": 77,
+    "warningCount": 107,
+    "suggestionCount": 88,
     "classificationCounts": {
-      "context": 8,
+      "context": 13,
       "skill": 0,
       "governance": 28,
       "report": 20,
