@@ -22,7 +22,8 @@ test.describe('app shell', () => {
     await page.goto('/dashboard');
 
     await expect(page.getByRole('banner')).toBeVisible();
-    await expect(page.getByText('Tarn')).toBeVisible();
+    // `exact` matters: "Tarn" also appears inside "Connected to tarn-api."
+    await expect(page.getByText('Tarn', { exact: true })).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Primary' })).toBeVisible();
   });
 
@@ -154,30 +155,52 @@ test.describe('responsive (DESIGN.md §13)', () => {
     expect(overflow).toBeLessThanOrEqual(1);
   });
 
-  test('interactive targets are at least 44px on mobile', async ({ page }) => {
+  test('interactive targets are at least 44px', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 740 });
     await page.goto('/dashboard');
 
     const tooSmall = await page.evaluate(() => {
+      // Elements clipped to 1x1 by `sr-only` are not pointer-reachable while
+      // hidden, so they are out of scope for a pointer-target check. The skip
+      // link is asserted separately, in its focused state, by the next test.
+      const isVisuallyHidden = (el: HTMLElement): boolean => {
+        const rect = el.getBoundingClientRect();
+        return rect.width <= 1 && rect.height <= 1;
+      };
+
       const targets = Array.from(
         document.querySelectorAll<HTMLElement>('a[href], button, input, select'),
-      ).filter((el) => el.offsetParent !== null);
+      ).filter((el) => el.offsetParent !== null && !isVisuallyHidden(el));
 
       return targets
         .map((el) => {
           const rect = el.getBoundingClientRect();
-          return { name: el.textContent?.trim() || el.tagName, width: rect.width, height: rect.height };
+          return {
+            name: el.textContent?.trim() || el.tagName,
+            width: Math.round(rect.width),
+            height: Math.round(rect.height),
+          };
         })
-        // Nav links are inline text links; WCAG 2.2 target-size applies to
-        // pointer targets, and an inline link in a sentence is exempt. Only
-        // block-level controls are measured strictly.
         .filter((t) => t.height > 0 && t.height < 44)
-        .map((t) => `${t.name} ${Math.round(t.width)}x${Math.round(t.height)}`);
+        .map((t) => `${t.name} ${t.width}x${t.height}`);
     });
 
-    // Report what was measured so the exemption is visible rather than implicit.
-    if (tooSmall.length > 0) {
-      console.log(`Targets under 44px (inline links are exempt): ${tooSmall.join(', ')}`);
-    }
+    // DESIGN.md §11 states a 44px minimum with no exemption for nav links.
+    // An earlier version of this test logged undersized targets instead of
+    // failing, which hid a real violation in the primary navigation.
+    expect(tooSmall, `targets under 44px: ${tooSmall.join(', ')}`).toEqual([]);
+  });
+
+  test('the revealed skip link meets the 44px target minimum', async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 740 });
+    await page.goto('/dashboard');
+
+    const skip = page.getByRole('link', { name: /skip to content/i });
+    await skip.focus();
+
+    const box = await skip.boundingBox();
+    expect(box, 'skip link should be visible once focused').not.toBeNull();
+    // A hidden-then-revealed control is only usable if it is big enough once shown.
+    expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
   });
 });

@@ -8,21 +8,33 @@ This governance file is required by root `AGENTS.md` and the WWG readiness model
 
 ## Current State
 
-**A full verification path now exists.** As of 2026-10-01:
+**A full verification path exists and runs.** As of 2026-10-01:
 
 - Vitest 3.2 runs across all six workspace packages.
 - **90 tests pass**: 7 types, 13 auth/password, 23 validation, 24 database (17 schema scope + 7 integration), 13 API, 10 React.
+- **Playwright passes 24 assertions** across a desktop and a 360px project, in a real browser.
 - `pnpm lint` is clean and gated in CI (ESLint 9 flat config).
-- `pnpm typecheck` is clean, including `tests/tsconfig.json` for Playwright specs.
+- `pnpm typecheck` is clean, including `tests/tsconfig.json` for the Playwright specs.
 - `pnpm build` succeeds for both apps.
 - GitHub Actions runs install, `db:generate`, `migrate deploy`, lint, typecheck, test, and build against a Postgres service.
 
-Still absent or unverified:
+Still absent:
 
-- **Playwright specs have never been executed.** The Chromium download is blocked in this environment. Contrast, focus-order, and touch-target assertions are unproven.
 - No API tests against a real database at the *route* level yet — the database integration tests cover the persistence layer, not HTTP handlers with auth.
 - No React tests for real features, because no features exist.
 - Husky / lint-staged not installed.
+
+## Running the browser tests locally
+
+`playwright install chromium` fails in this environment (the download is blocked). The suite therefore drives the **system-installed** Microsoft Edge by default:
+
+```bash
+npx playwright test                     # uses Edge
+PW_CHANNEL=chrome npx playwright test   # use Chrome instead
+PW_CHANNEL= npx playwright test         # require bundled Chromium
+```
+
+CI keeps the pinned bundled Chromium for reproducibility — do not switch CI to `channel`.
 
 ## Required Strategy Once Implementation Begins
 
@@ -35,7 +47,7 @@ Per `job-application-tracker-project-architecture.md` §62 and §63, the accepte
 | Database integration | Vitest + Postgres | cascades, cross-user isolation, unique constraints, hash verification | ✅ installed, 7 tests, skips loudly without a DB |
 | API | Vitest + Supertest | authentication, ownership validation, application CRUD, filters, status updates, timeline creation, follow-ups | ⚠️ 13 smoke/envelope/CORS/error tests. **No auth or CRUD route tests yet** — those arrive with the features. |
 | React component | React Testing Library + jsdom | application form, filters, status display, loading/error states | ⚠️ installed, 10 tests covering the shell and dashboard placeholder only |
-| End-to-End | Playwright | register, login, create application, move status, create follow-up, search/filter, logout | ❌ installed and authored, **never executed** — browser download blocked |
+| End-to-End | Playwright | app shell, landmarks, focus order, contrast in both themes, 360px layout, 44px targets | ✅ **24 passing** across desktop + 360px. MVP journeys (register, login, create application, move status, follow-up, search/filter, logout) not written — those features do not exist yet. |
 
 CI (GitHub Actions) runs install, Prisma generate, `migrate deploy`, lint, typecheck, test, and build. Playwright is intentionally excluded (architecture §63) but the specs exist and type-check.
 
@@ -51,6 +63,17 @@ Two bugs were found and fixed during the scaffold. Each has a regression test, p
 `packages/database/prisma/schema.test.ts` is a standing scope guard rather than a bug regression: it fails if `notifications` or any other deferred table appears, if an MVP table is renamed, if a user-owned table loses `userId`, if the canonical enums drift, or if the §78 indexes are dropped.
 
 `packages/database/tests/integration.test.ts` uses **top-level await** to probe the database before registering the suite. Note the pattern: Vitest collects suites synchronously, so an async wrapper around `describe` does not work. When no database is reachable the suite is registered as `describe.skip` and prints a loud warning — never a silent pass.
+
+## Accessibility Defects Found By These Tests
+
+Running the browser suite immediately paid for itself. Two real violations of the 44px touch-target rule in `DESIGN.md` §11 were found and fixed in `apps/web/src/layouts/app-layout.tsx`:
+
+| Defect | Fix |
+|---|---|
+| Primary navigation link was 67×19px | Added `inline-flex min-h-11 items-center` — 44px tall, no visual change |
+| Focused skip link was under 44px | Added `focus:min-h-11`; it now grows when revealed |
+
+A process note worth keeping: the first version of the touch-target test **logged** undersized targets instead of failing, on the assumption that inline links were exempt. That reasoning silenced a real defect in the project's own navigation. `DESIGN.md` §11 states a flat 44px minimum with no exemption, so the test now fails instead. The only exclusion is elements clipped to 1×1 by `sr-only`, which are not pointer-reachable while hidden — and the skip link is asserted separately in its focused state.
 
 ## Enforcement Rules
 
@@ -70,13 +93,13 @@ Two bugs were found and fixed during the scaffold. Each has a regression test, p
 
 ## Current WWG Regression Posture
 
-As of 2026-10-01, after the migration and gap-closure work:
+As of 2026-10-01:
 
 - Regression baseline: present
-- Executable tests: **90 passing** across 6 packages, including 7 against a live database
-- Database migration: committed and applied; verified table set matches D-0004 exactly
-- Open gaps: Playwright never executed; no auth or CRUD route tests (features do not exist yet); no Husky/lint-staged
-- The WWG-generated regression gap list predates all of this and does not reflect the new tests. Regenerate with `wwg adopt refresh-regression` or `wwg maintain`.
+- Executable tests: **90 unit/integration + 24 browser = 114 assertions**
+- Database migration: committed and applied; verified table set matches the MVP scope exactly
+- Open gaps: no auth or CRUD route tests (those features do not exist yet); no Husky/lint-staged
+- The WWG-generated regression gap list predates all of this and does not reflect the current tests. Regenerate with `wwg adopt refresh-regression` or `wwg maintain`.
 
 ## Related Truths
 

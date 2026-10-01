@@ -1,17 +1,107 @@
 # Current Task
 
-Status: DONE — database migrated and all flagged gaps addressed.
-Task mode: Existing Project Adoption (continued) → Meaningful feature (database + verification hardening)
+Status: DONE — scrypt confirmed, Playwright gap closed, truth re-synced.
+Task mode: Existing Project Adoption (continued) → decision ratification and verification closure
 Instance type: existing-project (adopted; this work continues the adoption lifecycle)
 Last updated: 2026-10-01
 
 ## Task Summary
 
 - Status: DONE
-- Task mode: Existing Project Adoption (continued) — Meaningful feature, architecture §90 Step 2 plus gap closure
-- Instance type: `existing-project`. This repository was adopted into WWG rather than created by it. Truth lives in `.wwg/wiki/`, decisions in `.wwg/wiki/decisions/`, and the canonical product documents remain authoritative for product meaning.
-- User request: "continue. dont forget to address the gaps you mentioned too"
-- Preceding work: truth ingestion → owner decision batch D-0001…D-0005 → monorepo scaffold.
+- User requests:
+  1. "scrypt is confirmed"
+  2. "what to do with the playwright gap?"
+  3. Report scope and docs by name rather than by reference number.
+
+## 1. Password hashing confirmed
+
+The scrypt decision is now **accepted**, not proposed. Owner instruction recorded as "scrypt is confirmed" (2026-10-01).
+
+Decision record: `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md`, status `accepted`, ratified 2026-10-01.
+
+What was settled: Node's built-in `crypto.scrypt` at `N=32768, r=8, p=1`, 16-byte salt, 64-byte key, self-describing `scrypt$N$r$p$salt$hash` storage format, in `packages/auth/src/password.ts`.
+
+What remains open but is *not* blocked by this: an external security review before launch. The owner's confirmation settles the algorithm, not the launch gate. Scrypt cost parameters and cookie settings have not been independently reviewed.
+
+## 2. Playwright gap — solved, not just explained
+
+The bundled Chromium download is blocked in this environment. Rather than accept an unverified accessibility story, the suite now drives the **system-installed browser**:
+
+- `playwright.config.ts` uses Playwright's `channel` option, defaulting to `msedge` (Microsoft Edge, present on all Windows machines).
+- `PW_CHANNEL=chrome` switches to Chrome. `PW_CHANNEL=` (empty) falls back to bundled Chromium.
+- **CI deliberately keeps the pinned bundled Chromium** for reproducibility — noted in the config so nobody "helpfully" switches it.
+
+Result: **24 assertions passing** across a desktop project and a 360px project, in a real browser.
+
+Verified in-browser: landmarks present and unique, skip link focusable and ≥44px once revealed, every interactive control has an accessible name, text contrast ≥4.5:1 in **both light and dark themes**, no horizontal page scroll at 360px, every pointer target ≥44px, and the frontend reaches the API.
+
+### Two real defects found and fixed
+
+Both in `apps/web/src/layouts/app-layout.tsx`, both against the 44px touch-target rule in `DESIGN.md` §11:
+
+1. The primary navigation link measured **67×19px**.
+2. The skip link, once focused, was under 44px.
+
+Fixes: `inline-flex min-h-11 items-center` on the nav link (44px tall, no visual change) and `focus:min-h-11` on the skip link.
+
+### A process failure worth recording
+
+The first version of the touch-target test **logged** undersized targets instead of failing, reasoning that "inline links are exempt". That reasoning silenced a genuine violation in the project's own navigation. The design doc states a flat 44px minimum with no exemption, so the test now fails. The only exclusion is elements clipped to 1×1 by `sr-only`, which are not pointer-reachable while hidden — and the skip link is asserted separately in its focused state. Written up in `.wwg/governance/test-enforcement.md` so it is not repeated.
+
+Also fixed: an ambiguous locator (`getByText('Tarn')` also matched "Connected to **tarn**-api") — now `exact: true`.
+
+## 3. Reference style
+
+Owner feedback: reference scope and documents **by name**, not by number — "§90 Step 3" and "D-0002" were not resolvable without looking them up.
+
+Applied from now on in conversation and in docs I author:
+
+| Instead of | Say |
+|---|---|
+| §90 Step 3 | the authentication step in the architecture document's build order |
+| D-0002 | the decision that authentication is in the MVP |
+| §35 | the MVP database tables section of the architecture document |
+| §11 of DESIGN.md | the accessibility section of the design document |
+| D-0004 | the MVP schema scope decision |
+
+Decision-record **filenames remain self-describing** (for example `D-0006-password-hashing-scrypt.md`) because a stable identifier is genuinely useful for cross-referencing. The number is always paired with the plain-language subject, never used alone.
+
+## Verification
+
+| Gate | Result |
+|---|---|
+| `pnpm lint` | clean |
+| `pnpm typecheck` | clean, including Playwright specs |
+| `pnpm test` | **90 passing** |
+| `npx playwright test` | **24 passing** (desktop + 360px, real browser) |
+| `pnpm build` | both apps green |
+| `wwg validate` | PASS |
+
+## Truth Surfaces Updated
+
+- `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md` — accepted, with rejected alternatives recorded
+- `.wwg/wiki/project-truth.md` — hashing confirmed; Playwright moved from OPEN to RESOLVED; browser accessibility results recorded; two accessibility defects logged; open questions rewritten
+- `.wwg/governance/test-enforcement.md` — 24 browser assertions, local browser instructions, the test-integrity failure written up
+- `.wwg/workspace/current-task.md`, `.wwg/reports/wwg-maintenance-review.md`, `.wwg/config/wwg.project.yaml`
+
+## Remaining Open Questions
+
+1. When should an external security review happen? Not blocking the algorithm, but it is a launch gate.
+2. Which deployment vendors?
+3. Rename the repository directory `applicant-tracking-system` to `tarn`?
+4. Husky and lint-staged now, or after the first feature?
+
+## Next Step
+
+**Authentication** — the next step in the architecture document's build order, and MVP scope under the decision that authentication belongs in the MVP. It needs an auth module under `apps/api/src/modules/auth/` following the fixed Route → Controller → Service → Repository layering, real cookie-based sessions replacing the current 501 stub, ownership enforcement, and cross-user access tests.
+
+## Close-Out Notes
+
+- Truth Alignment Status: GREEN
+- Execution Gate: pass — 114 assertions green, every previously open gap closed
+- Drift status: LOW
+- Implementation confidence: HIGH for foundation and data layer, **ZERO for product features**
+- New recommendations: none added to the recommendation registry
 
 ## Step 2 — Database migration
 

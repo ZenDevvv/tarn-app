@@ -3,10 +3,31 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * Playwright configuration (architecture §62, §63).
  *
- * Scope note: the MVP user journeys from PRD §62 — register, login, create
- * application, move status, follow-up, search/filter, logout — are **not**
- * written yet, because none of those features exist. What runs today is a
- * smoke suite plus the accessibility checks that jsdom cannot perform
+ * ## Why `channel` instead of the bundled browser
+ *
+ * `playwright install chromium` fails in this environment — the Chromium
+ * download is blocked. Rather than leave E2E unverified, the suite drives the
+ * **system-installed** Chrome or Edge via Playwright's `channel` option, which
+ * requires no download.
+ *
+ * `PW_CHANNEL` selects which one:
+ *   - `msedge` (default) — ships with Windows, so it is always present
+ *   - `chrome`            — use if you prefer Chrome
+ *   - unset               — fall back to Playwright's bundled Chromium, which is
+ *                           what CI will use after `playwright install --with-deps`
+ *
+ * The installed-browser path is a *local convenience*. CI should use the pinned
+ * bundled Chromium so results are reproducible against a known engine version.
+ */
+const channel = process.env.PW_CHANNEL ?? 'msedge';
+
+const browser = channel ? { channel } : {};
+
+/**
+ * Scope note: the MVP user journeys from architecture §62 — register, login,
+ * create application, move status, follow-up, search/filter, logout — are
+ * **not** written yet, because none of those features exist. What runs today is
+ * a smoke suite plus the accessibility checks that jsdom cannot perform
  * (DESIGN.md §11 requires a real browser for contrast, focus order and touch
  * targets).
  *
@@ -25,6 +46,7 @@ export default defineConfig({
     baseURL: 'http://localhost:5173',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
+    ...browser,
   },
 
   projects: [
@@ -35,8 +57,8 @@ export default defineConfig({
     {
       // DESIGN.md §11 requires every component to work at 360px. This project
       // enforces it rather than leaving it to manual review.
-      name: 'mobile',
-      use: { ...devices['Pixel 5'] },
+      name: 'mobile-360',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 360, height: 740 } },
     },
   ],
 

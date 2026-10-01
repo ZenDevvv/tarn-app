@@ -360,28 +360,25 @@ No stale Review By items found.
 
 > Remediation note: this section is applied manually because `wwg maintain` in WWG 0.6.6 does not emit it, yet `wwg validate` requires it on any report that claims readiness or completion. See `.wwg/governance/tooling-known-issues.md` (issue WWG-TOOL-001). Re-apply this section after every `wwg maintain` run.
 
-- Task mode: Existing Project Adoption (continued) — Meaningful feature, database migration and verification hardening
+- Task mode: Existing Project Adoption (continued) — decision ratification and verification closure
 - New truth detected: YES
 - Wiki updated: YES
 - Workspace updated: YES
 - Governance review completed: YES
-- Drift status: LOW — the database migration was applied and every gap previously flagged as open has been addressed or explicitly recorded as still open. Implementation status moved from "foundation-scaffolded" to "database-migrated-no-features".
+- Drift status: LOW — the scrypt decision was ratified by the owner and the last open verification gap (Playwright) was closed by driving the system-installed browser. Every previously flagged gap is now either resolved or explicitly recorded as still open.
 - Canonical files changed:
-  - `.wwg/wiki/project-truth.md` — Implementation Reality rewritten; `[OBSERVED]` markers added; `packages/auth` deviation recorded; real scaffold risks replaced the closed ones; six conflict-register entries added or resolved.
-  - `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md` — new, **proposed, awaiting owner sign-off**.
-  - `.wwg/governance/test-enforcement.md` — real test counts, per-layer status, regression register, top-level-await pattern.
+  - `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md` — status `proposed` → `accepted`, owner confirmation recorded, rejected alternatives written up.
+  - `.wwg/wiki/project-truth.md` — hashing confirmed; Playwright moved from OPEN to RESOLVED; browser accessibility results recorded; two accessibility defects logged.
+  - `.wwg/governance/test-enforcement.md` — 24 browser assertions, local browser instructions, and the test-integrity failure written up.
   - `.wwg/workspace/current-task.md`, `.wwg/config/wwg.project.yaml` updated.
 - Implementation discoveries synced:
-  - **Migration `20261001095704_init_mvp_schema` is committed and applied.** Verified against live Postgres 16: exactly the 10 MVP tables exist, and `notifications`, `interviews`, `contacts`, `resumes`, `cover_letters` do not. Seed is idempotent.
-  - **The `sha256:` password placeholder is closed.** Replaced with Node's built-in scrypt in a new `packages/auth`, covered by 13 unit tests and verified at rest in the seeded row. The *algorithm choice* is security-sensitive and is recorded as D-0006 **proposed, not approved**.
-  - **A duplicate Vite install was breaking the build.** Vitest 2 pulled Vite 5 alongside the app's Vite 6, so `vite.config.ts` failed to typecheck with a deeply nested overload error. Fixed by upgrading Vitest to 3.2.7 across all packages.
-  - **The API could not load the root `.env`.** Prisma runs from `packages/database`. Fixed with `dotenv-cli`; verified it tolerates a missing file so CI works from workflow env.
-  - ESLint 9 flat config now enforces a real gate, proven by seeding a deliberate violation and reverting it.
-  - Two of my own implementations were wrong and were rewritten: a busy-wait spin loop faking synchronous scrypt, and an async wrapper around `describe` that Vitest cannot collect.
+  - **Playwright now runs.** The bundled Chromium download is blocked in this environment, so the suite drives the system-installed Microsoft Edge via Playwright's `channel` option. 24 assertions pass across a desktop and a 360px project. CI keeps the pinned bundled browser for reproducibility.
+  - **Two real accessibility defects were found by running those tests**, both against the 44px touch-target rule in the accessibility section of the design document: the primary navigation link measured 67×19px, and the focused skip link was under 44px. Both fixed in `apps/web/src/layouts/app-layout.tsx`.
+  - **A test-integrity failure occurred and is recorded.** The first touch-target test logged undersized targets instead of failing, on the assumption that inline links were exempt. That silenced a genuine defect in the project's own navigation. The test now fails; the only exclusion is elements clipped to 1×1 by `sr-only`.
+  - Contrast is verified at 4.5:1 or better in both light and dark themes, in a real browser.
 - Remaining stale context:
-  - **Playwright specs have never been executed.** The Chromium download is blocked in this environment. Accessibility claims derived from them are unproven.
-  - D-0006 awaits owner ratification. Password hashing is approval-sensitive under root `AGENTS.md`.
-  - Four owner questions remain open: D-0006 ratification, Playwright verification, deployment vendors, and the repository directory rename.
+  - Four owner questions remain open: external security review timing, deployment vendors, repository directory rename, and Husky/lint-staged wiring.
+  - The owner's confirmation of scrypt settles the algorithm choice but **not** the launch security gate. An external review has not taken place.
   - No auth or CRUD route tests exist, because no features exist.
   - The WWG regression gap list predates all of this; regenerate with `wwg adopt refresh-regression`.
   - This report remains point-in-time evidence. Re-run `wwg maintain --target .` after further truth changes rather than treating it as current state, then re-apply this section.

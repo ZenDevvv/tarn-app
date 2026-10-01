@@ -67,7 +67,7 @@ What does **not** exist yet:
 - **No auth module.** No register, login, or logout routes. `requireAuth` still returns 501, so no protected route is reachable.
 - No applications, pipeline/Kanban, timeline, follow-ups, dashboard metrics, analytics, search, saved jobs, skills UI, or offers UI.
 - No React component tests beyond the shell and dashboard placeholder; no API tests against a real database beyond persistence-layer integration tests.
-- **Playwright specs exist but have never been executed** — the browser download is blocked in this environment (`playwright install chromium` fails). They type-check but are unverified.
+- Playwright E2E now runs and passes — see "Verified on 2026-10-01 by execution".
 - No deployment configuration (architecture §65 vendors remain undecided).
 
 Verified on 2026-10-01 by execution:
@@ -75,12 +75,17 @@ Verified on 2026-10-01 by execution:
 - `pnpm lint` — clean (ESLint 9 flat config; gate proven to fail on a seeded violation, then reverted)
 - `pnpm typecheck` — clean, including `tests/tsconfig.json` for the Playwright specs
 - `pnpm test` — **90 tests passing**: 7 types, 13 auth/password, 23 validation, 24 database (17 schema scope + 7 integration), 13 API, 10 React
+- `npx playwright test` — **24 passing** across desktop and 360px projects, in a real browser
 - `pnpm build` — both apps build; web 251 kB (81 kB gzip)
 - `pnpm db:migrate` — migration created and applied
 - `pnpm db:seed` — idempotent, produces the documented counts
 - API boots only when env is valid, and fails closed naming each missing variable
 
-Consequence that agents must respect: a green build and 90 passing tests describe the **foundation**, not the product. No user-facing capability exists. Do not describe a feature as working because the scaffold is healthy.
+Accessibility verified in a real browser (Playwright, 24 assertions): landmarks present and unique, skip link focusable and ≥44px once revealed, every interactive control has an accessible name, text contrast ≥4.5:1 in **both** light and dark themes, no horizontal page scroll at 360px, and every pointer target ≥44px.
+
+Two accessibility defects were found by these tests and fixed in `apps/web/src/layouts/app-layout.tsx`: the primary navigation link was 19px tall and the focused skip link was under 44px, both violating the 44px touch-target rule in `DESIGN.md` §11.
+
+Consequence that agents must respect: a green build and 114 passing assertions describe the **foundation**, not the product. No user-facing capability exists. Do not describe a feature as working because the scaffold is healthy.
 
 ## Product Identity
 
@@ -323,10 +328,10 @@ Security posture observed in the scaffold:
 
 Known scaffold-level risks:
 
-- **Password hashing uses Node's built-in scrypt, not bcrypt or Argon2.** This closes the `sha256:` placeholder gap, but the choice itself is a security decision that has not been through owner sign-off or an external security review. Cost parameters are `N=32768, r=8, p=1` and are tunable in `packages/auth/src/password.ts`. The stored format is self-describing, so parameters or algorithm can change later without invalidating existing hashes. See `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md`.
+- **Password hashing is scrypt — owner-confirmed.** Node's built-in `crypto.scrypt` at `N=32768, r=8, p=1`, 16-byte salt, 64-byte key, self-describing storage format. This replaced a `sha256:` placeholder that was never acceptable. Parameters are tunable in `packages/auth/src/password.ts`, and the format means they can change without invalidating existing hashes. See `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md`. An external security review before launch is still recommended — the owner's confirmation settles the algorithm choice, not the launch gate.
 - The seed prints the test password to stdout. Acceptable for local development only; never run the seed against a shared environment.
 - `apps/api` sets `trust proxy` to 1. That is correct behind a single known proxy and wrong behind multiple; revisit per environment (architecture §55).
-- Playwright specs are **unverified**. They type-check and are structurally sound, but a green Playwright run has never happened. Treat any accessibility claim derived from them as unproven until they execute once.
+- Playwright runs locally against the **system-installed** Microsoft Edge because the bundled Chromium download is blocked in this environment. CI uses the pinned bundled browser for reproducibility. A local `PW_CHANNEL=chrome` run is also supported.
 - `package.json#prisma` is deprecated in Prisma 6 and warns on every database command. It still works; migrate to `prisma.config.ts` before upgrading to Prisma 7.
 - Vitest was upgraded 2.1.9 → 3.2.7 to remove a duplicate Vite install that broke `vite.config.ts` typing. Any future Vite upgrade must keep Vitest compatible or the duplicate returns.
 
@@ -397,9 +402,13 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 - RESOLVED — No database-backed tests. `packages/database/tests/integration.test.ts` runs against real Postgres and covers cascades, cross-user isolation, unique constraints, and hash verification. It skips loudly, never silently, when no database is reachable. CI runs it against a Postgres service.
   - Status: RESOLVED
   - Evidence: `packages/database/tests/integration.test.ts`; `.github/workflows/ci.yml`.
-- OPEN — Playwright specs exist and type-check but have never run; the Chromium download is blocked in this environment. Contrast, focus order, and touch-target assertions in `tests/e2e/smoke.spec.ts` are unproven until one green run happens.
-  - Status: OPEN
-  - Evidence: `playwright install chromium` fails with a download error in this environment.
+- RESOLVED — Playwright could not run because the bundled Chromium download is blocked. The suite now drives the **system-installed Microsoft Edge** (and Chrome on request) via Playwright's `channel`, which needs no download. 24 assertions pass across desktop and 360px. CI keeps using the pinned bundled browser for reproducibility.
+  - Status: RESOLVED
+  - Evidence: `playwright.config.ts` (`PW_CHANNEL`); `tests/e2e/smoke.spec.ts`.
+  - Two real accessibility defects were found this way and fixed: a 19px-tall nav link and an undersized focused skip link, both against the 44px rule in `DESIGN.md` §11.
+- RESOLVED — Password hashing scheme. Owner confirmed scrypt. See `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md`.
+  - Status: RESOLVED
+  - Evidence: owner instruction "scrypt is confirmed", 2026-10-01; `packages/auth/src/password.ts`; 13 unit tests; verified at rest in the seeded row.
 - NEEDS_CONFIRMATION — Deployment target is recommended, not decided: frontend → Vercel, API → Railway/Render, PostgreSQL → Neon/Supabase, object storage → Cloudflare R2 (architecture §65). No deployment configuration exists.
   - Status: NEEDS_CONFIRMATION
   - Evidence: architecture §65–§66; working-tree scan.
@@ -427,12 +436,12 @@ Still open:
 - Question: Should the repository directory be renamed from `applicant-tracking-system` to `tarn`?
   - Why it matters: the directory name no longer matches the product name, which is a recurring source of confusion and a risk of the retired name being resurrected by tooling. The scaffold has now made this more visible: the root `package.json` is named `tarn` while the directory is not.
   - Evidence / uncertainty: directory is `applicant-tracking-system`; no remote or CI target exists yet, so renaming is still cheap. The cost grows once a git remote or branch protection is configured.
-- Question: What password hashing scheme replaces the seed's `sha256:` placeholder?
-  - Why it matters: the development seed stores `sha256:<hex>` as `passwordHash`. That is not a password hashing scheme and must not survive into real auth work. See `.wwg/governance/security-review.md`.
-  - Evidence / uncertainty: architecture §55 requires password hashing but names no algorithm.
-- Question: Should ESLint and Husky be wired up now, or after the first feature?
-  - Why it matters: `pnpm lint` currently enforces nothing because no ESLint config exists, and CI runs `typecheck`, `test`, and `build` but no lint gate. The gap is real but not blocking until there is code worth linting.
+- Question: Should Husky and lint-staged be wired up now, or after the first feature?
+  - Why it matters: pre-commit hooks stop broken work reaching main. CI already gates lint, typecheck, tests, and build, so hooks are a convenience rather than a safety net.
   - Evidence / uncertainty: architecture §2.4 lists both as recommended tooling.
+- Question: When should an external security review happen?
+  - Why it matters: the password hashing scheme is now owner-confirmed, but scrypt cost parameters, cookie settings, and the ownership boundary have not been independently reviewed. PRD §34 treats security as a live risk area.
+  - Evidence / uncertainty: no review has taken place; the launch gate in PRD §35 is unmet regardless.
 
 ## Update Rules
 

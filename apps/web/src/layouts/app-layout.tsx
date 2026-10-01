@@ -15,7 +15,9 @@ export function AppLayout() {
     <div className="min-h-dvh bg-background text-foreground">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-card focus:px-3 focus:py-2"
+        // Visually hidden until focused. `focus:min-h-11` gives it a 44px
+        // touch/keyboard target once revealed (DESIGN.md §11).
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:inline-flex focus:min-h-11 focus:items-center focus:rounded focus:bg-card focus:px-3 focus:py-2"
       >
         Skip to content
       </a>
@@ -29,7 +31,11 @@ export function AppLayout() {
                 <NavLink
                   to={item.to}
                   className={({ isActive }) =>
-                    isActive ? 'text-foreground underline underline-offset-4' : 'text-muted-foreground'
+                    // min-h-11 gives a 44px touch target (DESIGN.md §11) without
+                    // changing the visual weight of the label.
+                    `inline-flex min-h-11 items-center ${
+                      isActive ? 'text-foreground underline underline-offset-4' : 'text-muted-foreground'
+                    }`
                   }
                 >
                   {item.label}
