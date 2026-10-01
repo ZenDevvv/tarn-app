@@ -1,0 +1,287 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+# CodeRabbit review configuration for Tarn.
+#
+# Rationale: this project has no human reviewer on pull requests (deliberately
+# deferred — see `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`),
+# so this configuration is tuned to be assertive and to enforce the project's own
+# documented architecture rules rather than generic style advice.
+#
+# Authoritative project rules live in:
+#   DESIGN.md                                          design rules
+#   job-application-tracker-project-architecture.md     architecture
+#   .wwg/wiki/project-truth.md                          canonical truth
+#   .wwg/wiki/terminology.md                            canonical vocabulary
+#   .wwg/wiki/principles/                              durable reasoning
+
+language: 'en-US'
+early_access: false
+
+reviews:
+  # Assertive suits a solo project: there is no second pair of eyes, so the
+  # reviewer should err toward flagging rather than staying quiet.
+  profile: assertive
+
+  # Never block. CodeRabbit should inform, not gate. CI is the gate.
+  request_changes_workflow: false
+
+  high_level_summary: true
+  review_status: true
+  review_details: false
+  collapse_walkthrough: true
+
+  # This project already has its own documentation conventions. Generating
+  # docstrings on top of them produces noise, not value.
+  enable_prompt_for_ai_agents: false
+
+  chat:
+    auto_reply: true
+
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    drafts: false
+    labels:
+      - '!wip'
+      - '!skip-review'
+    base_branches:
+      - '^main$'
+      - '^develop$'
+
+  # Generated and irrelevant files. Keeps the review focused on authored code.
+  path_filters:
+    - '!pnpm-lock.yaml'
+    - '!**/dist/**'
+    - '!**/node_modules/**'
+    - '!**/coverage/**'
+    - '!**/playwright-report/**'
+    - '!**/test-results/**'
+    - '!**/.wwg/reports/**'      # generated WWG artefacts, reviewed by wwg validate
+    - '!**/.wwg/governance/**'   # generated governance
+    - '!design-system.html'      # static design reference page
+
+  path_instructions:
+    # -----------------------------------------------------------------------
+    # The API is where the ownership boundary lives. This is the single highest
+    # -risk area in the project: one missing `userId` filter on one endpoint
+    # exposes every user's applications, resumes, salary, and interview notes.
+    # -----------------------------------------------------------------------
+    - path: 'apps/api/src/**'
+      instructions: |
+        Architecture is a modular monolith. Layering is fixed and must not be
+        bypassed: Route → Middleware → Controller → Service → Repository.
+
+        Flag as blocking:
+        - Business logic inside Express route files. Move it to a service.
+        - Prisma imported or called outside a repository or service.
+        - Any database query that reads or writes user data without a userId
+          filter or ownership check. This is the project's most important
+          security property; a missing filter leaks the whole database.
+        - Authorization checks done in the client, or derived from a
+          client-supplied id.
+        - Validation trusted from the client instead of re-run server-side.
+        - Internal error details or stack traces returned in a response body.
+        - Secrets read from process.env in the frontend, or any VITE_-prefixed
+          value that is not public by design.
+
+        Also flag:
+        - New infrastructure (cache, queue, second database, service) added
+          without a concrete current requirement.
+        - `any`, or a type assertion used to silence the compiler.
+        - A missing await, or a floating promise.
+
+        Error messages are user-facing copy. They must state what happened and
+        what to do next. They must never apologise, never say "Oops", and never
+        expose internals.
+
+    # -----------------------------------------------------------------------
+    # Prisma schema. Scope is decided, not negotiable: the MVP table set is
+    # fixed and a test enforces it. Flag anything that drifts.
+    # -----------------------------------------------------------------------
+    - path: 'packages/database/prisma/**'
+      instructions: |
+        The MVP table set is decided and enforced by schema.test.ts:
+        users, companies, jobs, skills, job_skills, applications, saved_jobs,
+        timeline_events, follow_ups, offers.
+
+        Flag as blocking:
+        - Adding a Phase 2+ table. `notifications`, `interviews`, `contacts`,
+          `resumes`, `cover_letters`, `user_skills`, and `application_skills`
+          must NOT exist. Notifications in particular were explicitly deferred.
+        - Removing or renaming an MVP table.
+        - Adding a `Notification` model or enum.
+        - A user-owned table without a `userId` column.
+        - Dropping the indexes on (userId, status), (nextActionDueAt),
+          (appliedAt), or (userId, state, dueAt).
+
+        Also flag:
+        - A migration that mutates data instead of only changing schema.
+        - Removing an index, a unique constraint, or an onDelete rule.
+        - A model created without `@@map` to its snake_case table name.
+
+    # -----------------------------------------------------------------------
+    # Frontend. DESIGN.md is strict and tokens-only. It also has a mandatory
+    # accessibility section that is easy to regress.
+    # -----------------------------------------------------------------------
+    - path: 'apps/web/src/**'
+      instructions: |
+        Read DESIGN.md before flagging anything style-related; it is the design
+        source of truth and wins over any framework default.
+
+        Flag as blocking:
+        - A hard-coded hex colour, or any colour not from a design token.
+          Components must use token classes like `bg-card` or
+          `text-muted-foreground`, or `var(--token)`.
+        - Status displayed as a coloured pill or badge. Status must use
+          `ApplicationStatusBadge` / `StageRing`, always paired with a visible
+          text label so status is not conveyed by shape alone.
+        - The design-system marker used for emphasis, selection, or branding.
+          It is reserved for the next action.
+        - A new font, radius, shadow, or colour value introduced instead of
+          extending the token stylesheet.
+        - Drop shadows on cards, inputs, or buttons.
+
+        Accessibility is a requirement, not a nicety (DESIGN.md §11):
+        - `outline-none` with no replacement focus style.
+        - An interactive element with no accessible name.
+        - An icon-only button with no aria-label.
+        - A dynamic update (status change, toast, timeline entry) that does not
+          announce politely via aria-live.
+        - A dialog that does not trap focus and return it on close.
+        - A touch target under 44px.
+        - Raw div/span used where a semantic element exists.
+
+        State handling (architecture §92):
+        - TanStack Query used for local UI state.
+        - Server state mirrored into React state or Zustand.
+        - A feature importing deep internals from another feature. Features go
+          through shared API/types instead.
+
+        Copy follows DESIGN.md §12: plain verbs, active voice, sentence case,
+        second person, no filler, no exclamation marks, no emoji.
+
+    # -----------------------------------------------------------------------
+    # Shared packages.
+    # -----------------------------------------------------------------------
+    - path: 'packages/validation/**'
+      instructions: |
+        Validation copy is user-facing, not developer-facing. Messages must tell
+        a person what to do. Never return Zod's default wording such as
+        "Required" or "Invalid input".
+
+        Flag:
+        - A validation message that is not actionable.
+        - A cuid field that does not use the `cuidField()` helper. A bare
+          `z.string().cuid({ message })` only overrides the *format* error, so a
+          missing field silently falls back to "Required". This was a real bug.
+        - A refine() applied to a schema that is later .partial()'d. refine()
+          returns a ZodEffects, which has no .partial(). Use the base schema.
+        - A schema that accepts a client-supplied userId or any other ownership
+          field. Ownership must come from the session, never the body.
+
+    - path: 'packages/auth/**'
+      instructions: |
+        Password handling is security-sensitive and owner-approved as scrypt.
+
+        Flag as blocking:
+        - Any change to the hashing algorithm, cost parameters, salt size, or
+          key length without updating the decision record and its tests.
+        - Passwords logged, returned in a response, or included in an error.
+        - Use of a fast digest (md5, sha1, plain sha256) instead of scrypt.
+        - A change that breaks the self-describing storage format, which is what
+          makes a future parameter change non-breaking.
+        - Timing-unsafe comparison of secrets.
+
+    - path: 'packages/types/**'
+      instructions: |
+        This package is the frontend-facing contract and must stay decoupled
+        from Prisma. Never re-export or import Prisma model types here.
+
+        Flag:
+        - An import from @prisma/client.
+        - The API response envelope being redefined locally instead of imported
+          from this package.
+
+    # -----------------------------------------------------------------------
+    # Tests are a required part of the gate here, not an optional extra.
+    # -----------------------------------------------------------------------
+    - path: '**/*.test.ts'
+      instructions: |
+        Do not suggest weakening, skipping, or deleting a test to make a suite
+        pass. Flag any such suggestion as blocking.
+
+        Flag as blocking:
+        - A test that logs or tolerates a failure instead of failing.
+        - A removed or weakened assertion with no explanation.
+        - A test whose purpose is unclear from its name.
+
+        Also flag:
+        - A behaviour change without a corresponding test.
+        - Missing coverage for a cross-user access attempt on any endpoint that
+          touches user data. This is a required test case.
+        - A test that depends on execution order or on shared mutable state.
+
+    - path: '**/*.test.tsx'
+      instructions: |
+        Extend the TypeScript test rules above, and additionally:
+        - Query by role or accessible name rather than by test id or CSS class.
+        - Do not assert on implementation details.
+        - Remember jsdom has no layout engine, so visual claims belong in the
+          Playwright suite, not here.
+
+    # -----------------------------------------------------------------------
+    # Infrastructure.
+    # -----------------------------------------------------------------------
+    - path: '**/vite.config.*'
+      instructions: |
+        defineConfig must be imported from 'vitest/config', not 'vite', so the
+        `test` block type-checks. Keep the installed Vitest version compatible
+        with the installed Vite version — a mismatch duplicates Vite in the
+        pnpm store and produces unreadable overload errors.
+
+    - path: '**/playwright.config.ts'
+      instructions: |
+        Local runs intentionally use the system-installed browser via the
+        `channel` option, because the bundled download can be blocked. CI must
+        keep using the pinned bundled browser for reproducibility. Do not
+        suggest switching CI to `channel`.
+
+    - path: '.github/workflows/**'
+      instructions: |
+        Flag as blocking:
+        - `pull_request_target` combined with a checkout of the PR head. That is
+          a remote code execution vulnerability.
+        - `permissions:` widened beyond what the job needs.
+        - An action pinned only to a mutable tag where a commit SHA is used
+          elsewhere in the file.
+        - A secret exposed to a step that runs untrusted code.
+        - Removing or weakening a verification step without an explicit reason.
+
+        Also flag:
+        - `npm` or `yarn` used instead of `pnpm`. The package manager is a
+          confirmed decision.
+        - `prisma migrate dev` in CI. CI must use `migrate deploy`.
+
+    - path: '**/*.prisma'
+      instructions: |
+        Apply the Prisma schema rules from packages/database/prisma above.
+
+    # -----------------------------------------------------------------------
+    # Documentation. Truth-sync is a project requirement: a code change that
+    # alters product meaning must update the wiki, not just the code.
+    # -----------------------------------------------------------------------
+    - path: '*.md'
+      instructions: |
+        When a change alters product scope, terminology, architecture, or a
+        recorded decision, the corresponding files under .wwg/wiki/ must be
+        updated in the same change. Flag a code change that alters meaning
+        without a truth update.
+
+        Reference scope and documents by name, not by bare section or decision
+        number — for example "the MVP database tables section of the
+        architecture document" rather than a section symbol.
+
+# Optional: Prisma schema linting. Requires a plan that includes SAST support;
+# harmless to leave off otherwise.
+prismaLint:
+  enabled: false
