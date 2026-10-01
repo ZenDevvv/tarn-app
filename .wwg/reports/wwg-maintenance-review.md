@@ -360,29 +360,30 @@ No stale Review By items found.
 
 > Remediation note: this section is applied manually because `wwg maintain` in WWG 0.6.6 does not emit it, yet `wwg validate` requires it on any report that claims readiness or completion. See `.wwg/governance/tooling-known-issues.md` (issue WWG-TOOL-001). Re-apply this section after every `wwg maintain` run.
 
-- Task mode: Meaningful feature — repository foundation
+- Task mode: Existing Project Adoption (continued) — Meaningful feature, database migration and verification hardening
 - New truth detected: YES
 - Wiki updated: YES
 - Workspace updated: YES
 - Governance review completed: YES
-- Drift status: LOW — the monorepo scaffold was completed and Project Truth was re-synchronized against it. Implementation status moved from "not-yet-implemented" to "foundation-scaffolded-no-features".
+- Drift status: LOW — the database migration was applied and every gap previously flagged as open has been addressed or explicitly recorded as still open. Implementation status moved from "foundation-scaffolded" to "database-migrated-no-features".
 - Canonical files changed:
-  - `.wwg/wiki/project-truth.md` — Implementation Reality rewritten; architecture items marked `[OBSERVED]`; new scaffold-level security risks; D-0004 doc contradictions resolved; new open questions.
-  - `.wwg/wiki/decisions/D-0005-token-file-location.md` — marked executed; all four close-out steps satisfied.
-  - `.wwg/governance/test-enforcement.md` — rewritten with real test counts, a per-layer status table, and a regression-test register.
+  - `.wwg/wiki/project-truth.md` — Implementation Reality rewritten; `[OBSERVED]` markers added; `packages/auth` deviation recorded; real scaffold risks replaced the closed ones; six conflict-register entries added or resolved.
+  - `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md` — new, **proposed, awaiting owner sign-off**.
+  - `.wwg/governance/test-enforcement.md` — real test counts, per-layer status, regression register, top-level-await pattern.
   - `.wwg/workspace/current-task.md`, `.wwg/config/wwg.project.yaml` updated.
 - Implementation discoveries synced:
-  - The scaffold exists and is verified: 60 executable tests pass, typecheck is clean across 5 packages, both apps build, and the API boots and fails closed without env. **No product feature is implemented.**
-  - **Two real bugs were found and fixed.** `app.use('/api/v1', health)` treated a 2-arity handler as middleware, so every `/api/v1/*` request returned the health payload with 200; and an oversized body returned 500 instead of 413. Both now have regression tests.
-  - **Three D-0004 contradictions existed in the architecture document** and were amended: §61 seed listed interviews, §87 listed Saved Jobs and Offers as Phase 2, §88 listed `skills`/`job_skills` as Phase 3.
-  - **A weak-password placeholder was introduced knowingly.** The dev seed stores `sha256:<hex>` as `passwordHash`. This is not a password hashing scheme and must be replaced before auth ships. Recorded as an open question.
-  - `pnpm lint` currently enforces nothing because no ESLint config exists. CI has no lint gate. Recorded as a real gap.
-  - No migration has been applied: the Docker daemon was not running, so `prisma migrate diff` was used to validate the schema instead.
-  - D-0005 executed — design tokens now live at `apps/web/src/index.css`, and `DESIGN.md` §1 matches the tree.
+  - **Migration `20261001095704_init_mvp_schema` is committed and applied.** Verified against live Postgres 16: exactly the 10 MVP tables exist, and `notifications`, `interviews`, `contacts`, `resumes`, `cover_letters` do not. Seed is idempotent.
+  - **The `sha256:` password placeholder is closed.** Replaced with Node's built-in scrypt in a new `packages/auth`, covered by 13 unit tests and verified at rest in the seeded row. The *algorithm choice* is security-sensitive and is recorded as D-0006 **proposed, not approved**.
+  - **A duplicate Vite install was breaking the build.** Vitest 2 pulled Vite 5 alongside the app's Vite 6, so `vite.config.ts` failed to typecheck with a deeply nested overload error. Fixed by upgrading Vitest to 3.2.7 across all packages.
+  - **The API could not load the root `.env`.** Prisma runs from `packages/database`. Fixed with `dotenv-cli`; verified it tolerates a missing file so CI works from workflow env.
+  - ESLint 9 flat config now enforces a real gate, proven by seeding a deliberate violation and reverting it.
+  - Two of my own implementations were wrong and were rewritten: a busy-wait spin loop faking synchronous scrypt, and an async wrapper around `describe` that Vitest cannot collect.
 - Remaining stale context:
-  - Four owner questions remain open: deployment vendors, repository directory rename, password hashing scheme, and ESLint/Husky wiring.
-  - No DB-backed tests, no React component tests, no Playwright, no lint gate.
-  - The WWG regression gap list predates the scaffold and does not yet reflect the 60 new tests; regenerate with `wwg adopt refresh-regression`.
+  - **Playwright specs have never been executed.** The Chromium download is blocked in this environment. Accessibility claims derived from them are unproven.
+  - D-0006 awaits owner ratification. Password hashing is approval-sensitive under root `AGENTS.md`.
+  - Four owner questions remain open: D-0006 ratification, Playwright verification, deployment vendors, and the repository directory rename.
+  - No auth or CRUD route tests exist, because no features exist.
+  - The WWG regression gap list predates all of this; regenerate with `wwg adopt refresh-regression`.
   - This report remains point-in-time evidence. Re-run `wwg maintain --target .` after further truth changes rather than treating it as current state, then re-apply this section.
 
 ## Follow-Up Modes

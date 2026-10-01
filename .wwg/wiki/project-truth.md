@@ -38,38 +38,49 @@ This ordering is itself accepted truth and governs every conflict below.
 
 ## Implementation Reality
 
-- Implementation status: **FOUNDATION SCAFFOLDED. NO PRODUCT FEATURE IS IMPLEMENTED.**
+- Implementation status: **FOUNDATION SCAFFOLDED AND DATABASE MIGRATED. NO PRODUCT FEATURE IS IMPLEMENTED.**
 - Status: CONFIRMED
 - Evidence: working-tree scan plus executed verification on 2026-10-01.
 - Last verified: 2026-10-01
 
 What exists now:
 
-- Monorepo root: `pnpm-workspace.yaml`, `package.json` (pnpm 9.15.4), `tsconfig.base.json`, `docker-compose.yml`, `.env.example`, `.gitignore`, `README.md`, `.github/workflows/ci.yml`
+- Monorepo root: `pnpm-workspace.yaml`, `package.json` (pnpm 9.15.4), `tsconfig.base.json`, `docker-compose.yml`, `.env.example`, `.gitignore`, `README.md`, `.github/workflows/ci.yml`, `eslint.config.mjs`, `.prettierrc.json`, `.editorconfig`, `playwright.config.ts`
 - `apps/web` — React + Vite + Tailwind v4 app; renders a shell with a dashboard placeholder that calls the API health endpoint
 - `apps/api` — Express app; exposes `GET /api/v1/health` only
-- `packages/database` — Prisma schema for the 10 MVP tables, centralized client, idempotent seed
+- `packages/auth` — password hashing (scrypt). **Deviation from architecture §6**, recorded below
+- `packages/database` — Prisma schema, centralized client, **committed migration**, idempotent seed, schema-scope tests, database integration tests
 - `packages/validation` — shared Zod schemas
 - `packages/types` — shared domain types and the API response envelope
-- Design tokens now at `apps/web/src/index.css` (moved from repository root; D-0005 executed)
+- Design tokens at `apps/web/src/index.css` (D-0005 executed)
+
+Database state **[OBSERVED]**:
+
+- First migration `20261001095704_init_mvp_schema` is committed at `packages/database/prisma/migrations/` and applied to local Postgres 16 via docker compose.
+- Verified table set: `users`, `companies`, `jobs`, `skills`, `job_skills`, `applications`, `saved_jobs`, `timeline_events`, `follow_ups`, `offers` — exactly the 10 MVP tables.
+- Verified absent: `notifications`, `interviews`, `contacts`, `resumes`, `cover_letters` (0 rows in `information_schema.tables`), confirming D-0004.
+- Seed verified: 1 user, 2 companies, 2 jobs, 2 skills, 2 job_skills, 3 applications, 2 timeline events, 2 follow-ups, 1 saved job, 1 offer. Re-running the seed is idempotent — counts unchanged.
+- Seeded password verified to be `scrypt$…`, not the old `sha256:` placeholder.
 
 What does **not** exist yet:
 
-- No migrations have been committed. `prisma migrate diff` confirms the schema generates valid DDL, but no migration has been applied because the Docker daemon was not running during the scaffold.
-- No auth. `requireAuth` deliberately returns 501 so protected routes cannot be reached without an owner.
+- **No auth module.** No register, login, or logout routes. `requireAuth` still returns 501, so no protected route is reachable.
 - No applications, pipeline/Kanban, timeline, follow-ups, dashboard metrics, analytics, search, saved jobs, skills UI, or offers UI.
-- No React component tests, no API tests against a real database, no Playwright.
+- No React component tests beyond the shell and dashboard placeholder; no API tests against a real database beyond persistence-layer integration tests.
+- **Playwright specs exist but have never been executed** — the browser download is blocked in this environment (`playwright install chromium` fails). They type-check but are unverified.
 - No deployment configuration (architecture §65 vendors remain undecided).
 
-Verified on 2026-10-01 by execution, not assumption:
+Verified on 2026-10-01 by execution:
 
-- `pnpm typecheck` — clean across all 5 workspace packages
-- `pnpm test` — 60 tests passing (7 types, 17 schema scope, 23 validation, 13 API)
-- `pnpm build` — both apps build; web bundle 251 kB (81 kB gzip)
-- API boots only when env is valid, and fails closed with a specific message otherwise
-- `GET /api/v1/health` → 200; `GET /api/v1/nope` → 404 with the error envelope
+- `pnpm lint` — clean (ESLint 9 flat config; gate proven to fail on a seeded violation, then reverted)
+- `pnpm typecheck` — clean, including `tests/tsconfig.json` for the Playwright specs
+- `pnpm test` — **90 tests passing**: 7 types, 13 auth/password, 23 validation, 24 database (17 schema scope + 7 integration), 13 API, 10 React
+- `pnpm build` — both apps build; web 251 kB (81 kB gzip)
+- `pnpm db:migrate` — migration created and applied
+- `pnpm db:seed` — idempotent, produces the documented counts
+- API boots only when env is valid, and fails closed naming each missing variable
 
-Consequence that agents must respect: the architecture and stack items below were `CONFIRMED_AS_PLAN` and are now **partly observed**. Anything not listed above remains a plan. Do not describe a feature as working because the scaffold builds.
+Consequence that agents must respect: a green build and 90 passing tests describe the **foundation**, not the product. No user-facing capability exists. Do not describe a feature as working because the scaffold is healthy.
 
 ## Product Identity
 
@@ -229,11 +240,14 @@ apps/api          Express backend (config, lib, middleware, modules, routes, typ
 packages/database Prisma schema, migrations, seed, client
 packages/validation Shared Zod schemas
 packages/types    Shared TypeScript types
-tests/e2e         Playwright end-to-end tests (planned)
+packages/auth     Password hashing (scrypt) — DEVIATION, see below
+tests/e2e         Playwright specs (authored, never executed)
 .github/workflows GitHub Actions
 ```
 
-`packages/config` from architecture §6 was **not** created. Shared config lives in `tsconfig.base.json` and each package's `tsconfig.json` extends it, which removes the need for a separate package. If a real need for a shared runtime config package appears, add it then (architecture §92 rule 11).
+**Deviation — `packages/auth` added.** Architecture §6 does not list it. Rationale: password hashing is needed by two workspaces (the API auth module and the development seed), and a shared package is the correct seam. It contains only `hashPassword`, `verifyPassword`, and `needsRehash`. Justified by a real requirement (auth is MVP scope, D-0002), consistent with architecture §92 rule 11. Amend architecture §6 to include it when that document is next revised.
+
+**`packages/config` deliberately not created.** Shared config is covered by `tsconfig.base.json` inheritance, which removes the need. Same rule-11 reasoning. Add it only if a real need appears.
 
 Frontend stack (CONFIRMED as plan, architecture §2.1) **[OBSERVED — react, react-router-dom, @tanstack/react-query, tailwindcss v4 installed]**:
 
@@ -243,24 +257,26 @@ Backend stack (CONFIRMED as plan, architecture §2.2) **[OBSERVED — express, z
 
 Node.js, TypeScript, Express, Zod, Prisma, PostgreSQL, JWT/session in httpOnly cookies, S3-compatible storage, Pino or Winston. Not yet installed: cookie signing beyond `cookie-parser`, structured logging, S3 storage, and real JWT verification.
 
-Testing stack (CONFIRMED as plan, architecture §2.3) **[PARTLY OBSERVED]**:
+Testing stack (CONFIRMED as plan, architecture §2.3) **[OBSERVED]**:
 
-Vitest (unit, validation, schema, API) is installed and running. Not yet installed: React Testing Library, Playwright.
+Vitest 3.2 across all six packages, React Testing Library + jsdom for components, Supertest for API tests, Playwright 1.63 configured with desktop and 360px projects. Playwright is installed and the specs type-check, but **no spec has ever been executed** because the browser binary cannot be downloaded in this environment.
 
-Tooling (CONFIRMED as plan, architecture §2.4) **[OBSERVED — pnpm, TypeScript, Prettier, Docker, GitHub Actions]**:
+Tooling (CONFIRMED as plan, architecture §2.4) **[OBSERVED]**:
 
-pnpm, TypeScript, ESLint, Prettier, Husky, lint-staged, Docker, Docker Compose, GitHub Actions. Not yet installed: Husky, lint-staged. ESLint config files are not yet written — the root `lint` script exists but there is no flat config to run.
+pnpm, TypeScript, ESLint 9 (flat config, enforced in CI), Prettier, Docker, Docker Compose, GitHub Actions (with a Postgres service and `migrate deploy`). Not yet installed: Husky, lint-staged.
 
-Database (CONFIRMED, architecture §3.1) **[OBSERVED — schema only]**:
+Database (CONFIRMED, architecture §3.1) **[OBSERVED — migrated and verified]**:
 
-**PostgreSQL**, chosen over MongoDB because the domain is heavily relational. Schema is written and validated; no migration has been applied yet.
+**PostgreSQL 16** via docker compose, chosen over MongoDB because the domain is heavily relational. The first migration is committed and applied; local dev and CI both run against a real Postgres.
 
-Planned data model (architecture §34–§35, PRD §11) **[OBSERVED in `packages/database/prisma/schema.prisma`]**:
+Planned data model (architecture §34–§35, PRD §11) **[OBSERVED and migrated]**:
 
-Implemented: `User`, `Company`, `Job`, `Skill`, `JobSkill`, `Application`, `SavedJob`, `TimelineEvent`, `FollowUp`, `Offer`.
-Deferred and absent by design (D-0004): `Interview`, `Contact`, `Resume`, `CoverLetter`, `Notification`, `UserSkill`, `ApplicationSkill`.
+Implemented and migrated: `User`, `Company`, `Job`, `Skill`, `JobSkill`, `Application`, `SavedJob`, `TimelineEvent`, `FollowUp`, `Offer`.
+Deferred and absent by design (D-0004): `Interview`, `Contact`, `Resume`, `CoverLetter`, `Notification`, `UserSkill`, `ApplicationSkill`. Verified absent in the live database.
 
 `packages/database/prisma/schema.test.ts` enforces this: it fails if a deferred table appears, if an MVP table is renamed or dropped, if the canonical enums change, if a user-owned table loses its `userId`, or if the architecture §78 indexes are removed.
+
+`packages/database/tests/integration.test.ts` runs against a real database and covers referential integrity, cascade deletes, cross-user isolation, unique constraints, and password hashing at rest. It **skips loudly** (never silently passes) when no database is reachable.
 
 Architecture rules — hard constraints agents must follow (CONFIRMED, architecture §92):
 
@@ -307,11 +323,12 @@ Security posture observed in the scaffold:
 
 Known scaffold-level risks:
 
-- The development seed stores `sha256:<hex>` as `passwordHash`. This is a **placeholder, not a password hashing scheme**. No real login path exists, but the seed must be replaced with a proper hash (bcrypt or argon2) before any auth work ships. Do not treat the seeded hash as acceptable.
+- **Password hashing uses Node's built-in scrypt, not bcrypt or Argon2.** This closes the `sha256:` placeholder gap, but the choice itself is a security decision that has not been through owner sign-off or an external security review. Cost parameters are `N=32768, r=8, p=1` and are tunable in `packages/auth/src/password.ts`. The stored format is self-describing, so parameters or algorithm can change later without invalidating existing hashes. See `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md`.
 - The seed prints the test password to stdout. Acceptable for local development only; never run the seed against a shared environment.
 - `apps/api` sets `trust proxy` to 1. That is correct behind a single known proxy and wrong behind multiple; revisit per environment (architecture §55).
-- ESLint is installed but no config exists, so `pnpm lint` has nothing to enforce. This is a real gap in the CI story, not a cosmetic one.
+- Playwright specs are **unverified**. They type-check and are structurally sound, but a green Playwright run has never happened. Treat any accessibility claim derived from them as unproven until they execute once.
 - `package.json#prisma` is deprecated in Prisma 6 and warns on every database command. It still works; migrate to `prisma.config.ts` before upgrading to Prisma 7.
+- Vitest was upgraded 2.1.9 → 3.2.7 to remove a duplicate Vite install that broke `vite.config.ts` typing. Any future Vite upgrade must keep Vitest compatible or the duplicate returns.
 
 Security requirements that are accepted truth and will govern implementation (CONFIRMED, PRD §10.2/§32/§33; architecture §55):
 
@@ -357,10 +374,10 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
   - Status: RESOLVED (executed 2026-10-01)
   - Evidence: the file was moved to `apps/web/src/index.css` as the first step of the scaffold; the root copy was deleted, so there is no duplicate token source. `DESIGN.md` and architecture §6 now match the working tree.
   - See D-0005.
-- STALE — Root `README.md` does not exist. The front door of the project is undocumented.
-  - Status: STALE
-  - Evidence: working-tree scan; `.wwg/reports/wwg-maintenance-review.md`.
-- STALE — No `CHANGELOG.md`; no release memory exists yet. Acceptable at documentation stage.
+- RESOLVED — Root `README.md` did not exist. A factual README now exists, documenting stack, commands, MVP scope, and the fact that no feature is implemented.
+  - Status: RESOLVED
+  - Evidence: `README.md` at repository root.
+- STALE — No `CHANGELOG.md`; no release memory exists yet. Acceptable pre-release, since nothing has been versioned or deployed.
   - Status: STALE
   - Evidence: working-tree scan.
 - RESOLVED — Design-system name `Marker` (DESIGN.md) vs product name `Tarn` (PRD §1.1). Previously three names coexisted; the product name is now Tarn and `Marker` is scoped to the design system only.
@@ -371,9 +388,18 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
   - Status: RETIRED
   - Evidence: superseded by Tarn on 2026-10-01 (PRD §1.1, §38).
   - Note: the two canonical source files keep their historical `job-application-tracker-*` filenames. Do not treat those filenames as a naming rule, and do not propagate the retired name into new files or user-facing strings.
-- NEEDS_CONFIRMATION — No React component tests, no Playwright E2E, no database-backed API tests, and no ESLint config exist yet. Vitest unit, validation, schema-scope and API tests do exist and pass.
-  - Status: NEEDS_CONFIRMATION
-  - Evidence: architecture §62–§63; `.wwg/governance/test-enforcement.md`; working-tree scan 2026-10-01.
+- RESOLVED — No ESLint config and no lint gate. `eslint.config.mjs` (ESLint 9 flat config) now enforces typescript-eslint recommended plus project rules including `no-explicit-any`; `pnpm lint` runs from the repo root and is a required CI step. The gate was proven to fail by seeding a deliberate `any` and an unused variable, then reverted.
+  - Status: RESOLVED
+  - Evidence: `eslint.config.mjs`; `.github/workflows/ci.yml` lint step.
+- RESOLVED — The `sha256:` password-hash placeholder. Replaced with Node's built-in scrypt via `packages/auth`, covered by 13 unit tests and verified at rest in the seeded database. The algorithm choice is itself still open for owner sign-off — see D-0006.
+  - Status: RESOLVED (algorithm pending sign-off)
+  - Evidence: `packages/auth/src/password.ts`; `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md`.
+- RESOLVED — No database-backed tests. `packages/database/tests/integration.test.ts` runs against real Postgres and covers cascades, cross-user isolation, unique constraints, and hash verification. It skips loudly, never silently, when no database is reachable. CI runs it against a Postgres service.
+  - Status: RESOLVED
+  - Evidence: `packages/database/tests/integration.test.ts`; `.github/workflows/ci.yml`.
+- OPEN — Playwright specs exist and type-check but have never run; the Chromium download is blocked in this environment. Contrast, focus order, and touch-target assertions in `tests/e2e/smoke.spec.ts` are unproven until one green run happens.
+  - Status: OPEN
+  - Evidence: `playwright install chromium` fails with a download error in this environment.
 - NEEDS_CONFIRMATION — Deployment target is recommended, not decided: frontend → Vercel, API → Railway/Render, PostgreSQL → Neon/Supabase, object storage → Cloudflare R2 (architecture §65). No deployment configuration exists.
   - Status: NEEDS_CONFIRMATION
   - Evidence: architecture §65–§66; working-tree scan.

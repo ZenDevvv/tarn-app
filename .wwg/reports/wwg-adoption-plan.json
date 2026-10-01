@@ -201,6 +201,13 @@
         "suggestedRole": "reference_history",
         "confidence": "medium",
         "category": "canonicalContext"
+      },
+      {
+        "path": "wiki/decisions/D-0006-password-hashing-scrypt.md",
+        "kind": "decision history",
+        "suggestedRole": "reference_history",
+        "confidence": "medium",
+        "category": "canonicalContext"
       }
     ],
     "skillsPrompts": [],
@@ -400,6 +407,13 @@
       },
       {
         "path": "packages",
+        "kind": "project structure",
+        "suggestedRole": "impact_zone",
+        "confidence": "medium",
+        "category": "projectStructure"
+      },
+      {
+        "path": "packages/auth",
         "kind": "project structure",
         "suggestedRole": "impact_zone",
         "confidence": "medium",

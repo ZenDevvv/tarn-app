@@ -7,16 +7,16 @@
 - Target: C:\Users\Zen\Desktop\MY PROJECTS\applicant-tracking-system
 - Date: 2026-10-01
 - Recommended adoption mode: infer
-- Adoption readiness score: 91 / 100
+- Adoption readiness score: 94 / 100
 - Confidence: HIGH
 - Command: `wwg audit --existing`
 
 ## Evidence Reviewed
 
 - README/docs: DESIGN.md, README.md, governance/README.md, reports/README.md, wiki/principles/README.md
-- Package/config files: apps/api/package.json, apps/web/package.json, package.json, packages/database/package.json, packages/types/package.json, packages/validation/package.json, pnpm-workspace.yaml
-- Source folders: apps, apps/api, apps/api/src, apps/api/src/config, apps/api/src/middleware, apps/api/src/routes, apps/api/src/types, apps/web, apps/web/public, apps/web/src, apps/web/src/app, apps/web/src/components, apps/web/src/components/ui, apps/web/src/features, apps/web/src/hooks, apps/web/src/layouts, apps/web/src/lib, apps/web/src/routes, apps/web/src/types, apps/web/src/utils, packages, packages/database, packages/database/prisma, packages/database/src, packages/types, packages/types/src, packages/validation, packages/validation/src
-- Tests: apps/api/src/app.test.ts, packages/database/prisma/schema.test.ts, packages/types/src/index.test.ts, packages/validation/src/index.test.ts
+- Package/config files: apps/api/package.json, apps/web/package.json, package.json, packages/auth/package.json, packages/database/package.json, packages/types/package.json, packages/validation/package.json, pnpm-workspace.yaml
+- Source folders: apps, apps/api, apps/api/src, apps/api/src/config, apps/api/src/middleware, apps/api/src/routes, apps/api/src/types, apps/web, apps/web/public, apps/web/src, apps/web/src/app, apps/web/src/components, apps/web/src/components/ui, apps/web/src/features, apps/web/src/hooks, apps/web/src/layouts, apps/web/src/lib, apps/web/src/routes, apps/web/src/test, apps/web/src/types, apps/web/src/utils, packages, packages/auth, packages/auth/src, packages/database, packages/database/prisma, packages/database/prisma/migrations, packages/database/prisma/migrations/20261001095704_init_mvp_schema, packages/database/src, packages/database/tests
+- Tests: apps/api/src/app.test.ts, apps/web/src/layouts/app-layout.test.tsx, apps/web/src/routes/dashboard-page.test.tsx, apps/web/src/test/setup.ts, packages/auth/src/password.test.ts, packages/database/prisma/schema.test.ts, packages/database/tests/integration.test.ts, packages/types/src/index.test.ts, packages/validation/src/index.test.ts, tests/e2e/smoke.spec.ts, tests/tsconfig.json
 - Deployment/config: .github/workflows/ci.yml, docker-compose.yml
 - Existing agent/context files: .wwg/changelog/config.yml, .wwg/changelog/state.json, .wwg/readme/config.yml, .wwg/readme/state.json, AGENTS.md
 
@@ -25,12 +25,12 @@
 - Product/app identity: CONFIRMED - tarn Evidence: package.json (package name)
 - Product category: INFERRED - Web3 eCommerce prototype Evidence: README/source (Web3, commerce, cart/checkout, or crypto wallet terms detected)
 - Tech stack: CONFIRMED - typescript Evidence: package/config (dependencies and config files)
-- Runtime/build tools: CONFIRMED - dev, build, typecheck, lint, test, test:e2e, db:generate, db:migrate, db:deploy, db:seed, db:studio, format, format:check Evidence: package.json (scripts)
-- Main entry points: CONFIRMED - apps/api/src/app.ts, apps/api/src/server.ts, apps/web/src/main.tsx, packages/types/src/index.ts, packages/validation/src/index.ts Evidence: apps/api/src/app.ts (entry point candidate); apps/api/src/server.ts (entry point candidate); apps/web/src/main.tsx (entry point candidate); packages/types/src/index.ts (entry point candidate); packages/validation/src/index.ts (entry point candidate)
+- Runtime/build tools: CONFIRMED - dev, build, typecheck, typecheck:e2e, lint, lint:fix, test, test:e2e, db:generate, db:migrate, db:deploy, db:seed, db:studio, format, format:check Evidence: package.json (scripts)
+- Main entry points: CONFIRMED - apps/api/src/app.ts, apps/api/src/server.ts, apps/web/src/main.tsx, packages/auth/src/index.ts, packages/types/src/index.ts, packages/validation/src/index.ts Evidence: apps/api/src/app.ts (entry point candidate); apps/api/src/server.ts (entry point candidate); apps/web/src/main.tsx (entry point candidate); packages/auth/src/index.ts (entry point candidate); packages/types/src/index.ts (entry point candidate); packages/validation/src/index.ts (entry point candidate)
 - Main implemented features: INFERRED - Status, Stack, Requirements, Getting started, Layout, MVP scope, Documentation, Working with agents Evidence: README.md (README headings or route files)
-- User roles/surfaces: INFERRED - user, owner, agent Evidence: README/source (role-like terms detected)
-- Data persistence: CONFIRMED - packages/database/package.json, packages/database/prisma/schema.prisma, packages/database/prisma/schema.test.ts, packages/database/prisma/seed.ts, packages/database/src/client.ts, packages/database/tsconfig.json Evidence: packages/database/package.json (persistence indicator)
-- Auth/security: CONFIRMED - apps/api/src/middleware/auth.ts, apps/api/src/middleware/error-handler.ts, apps/api/src/middleware/request-id.ts, governance/security-review.md, wiki/decisions/D-0002-mvp-authentication.md Evidence: apps/api/src/middleware/auth.ts (auth/security indicator)
+- User roles/surfaces: INFERRED - user, owner, agent, developer Evidence: README/source (role-like terms detected)
+- Data persistence: CONFIRMED - packages/database/package.json, packages/database/prisma/migrations/20261001095704_init_mvp_schema/migration.sql, packages/database/prisma/migrations/migration_lock.toml, packages/database/prisma/schema.prisma, packages/database/prisma/schema.test.ts, packages/database/prisma/seed.ts, packages/database/src/client.ts, packages/database/tests/integration.test.ts Evidence: packages/database/package.json (persistence indicator)
+- Auth/security: CONFIRMED - apps/api/src/middleware/auth.ts, apps/api/src/middleware/error-handler.ts, apps/api/src/middleware/request-id.ts, governance/security-review.md, packages/auth/package.json, packages/auth/src/index.ts, packages/auth/src/password.test.ts, packages/auth/src/password.ts Evidence: apps/api/src/middleware/auth.ts (auth/security indicator)
 - Payments/billing: NEEDS_CONFIRMATION - No payments/billing implementation detected Evidence: repository scan (no payment/billing indicators)
 - Deployment/runtime: CONFIRMED - .github/workflows/ci.yml, docker-compose.yml Evidence: .github/workflows/ci.yml (deployment config); docker-compose.yml (deployment config)
 
@@ -38,17 +38,17 @@
 
 - Product identity: INFERRED - tarn Evidence: package.json (package name)
 - Product category: INFERRED - Web3 eCommerce prototype Evidence: README/source (Web3, commerce, cart/checkout, or crypto wallet terms detected)
-- Primary users: INFERRED - user, owner, agent Evidence: README/source (role-like terms detected)
+- Primary users: INFERRED - user, owner, agent, developer Evidence: README/source (role-like terms detected)
 - Core features: INFERRED - Status, Stack, Requirements, Getting started, Layout, MVP scope, Documentation, Working with agents Evidence: README.md (README headings or route files)
 - Architecture: INFERRED - source folders: apps, apps/api, apps/api/src, apps/api/src/config, apps/api/src/middleware, apps/api/src/routes, apps/api/src/types, apps/web; package-managed runtime Evidence: source/config (folders and package metadata)
-- Safety/production boundaries: NEEDS_CONFIRMATION - Production boundaries need owner confirmation Evidence: repository scan (no explicit mock/demo/production boundary detected)
+- Safety/production boundaries: INFERRED - mock/demo crypto checkout and stablecoin wallet boundary, mock/demo behavior mentioned Evidence: README/source/package (safety boundary indicators)
 
 ## Conflicts and Drift Risks
 
 - README vs code: CONFIRMED - No direct issue detected by lightweight audit.
 - UI/copy vs implementation: CONFIRMED - No direct issue detected by lightweight audit.
 - package metadata vs actual stack: CONFIRMED - No direct issue detected by lightweight audit.
-- mock/demo vs production claims: CONFIRMED - No direct issue detected by lightweight audit.
+- mock/demo vs production claims: CONFLICTING - Mock/demo and production/live language both appear in scanned text. Recommendation: Separate demo boundaries from production claims in project truth and public docs.
 - terminology drift: CONFIRMED - No direct issue detected by lightweight audit.
 - stale/generated files: CONFIRMED - No direct issue detected by lightweight audit.
 - missing tests/checks: CONFIRMED - No direct issue detected by lightweight audit.
@@ -56,7 +56,7 @@
 ## Open Questions
 
 - Confirm product category. Why: Category affects profile selection, architecture defaults, and governance gates. Evidence: INFERRED: Web3 eCommerce prototype
-- Confirm primary users and role names. Why: Roles affect permissions, UX, terminology, and task routing. Evidence: INFERRED: user, owner, agent
+- Confirm primary users and role names. Why: Roles affect permissions, UX, terminology, and task routing. Evidence: INFERRED: user, owner, agent, developer
 - Confirm payments/billing boundary. Why: Payments and billing are approval-sensitive. Evidence: NEEDS_CONFIRMATION: No payments/billing implementation detected
 
 ## Recommended Adoption Plan
@@ -210,7 +210,7 @@ Must Have items are required for agent-safe operation. Other Features are recomm
   - Reason: Build, deploy, env, or infrastructure indicators were detected.
   - Agent action: Inspect infrastructure readiness before deployment-related work.
   - CLI support: `wwg infra check`
-  - Evidence: `package.json scripts`, `.env.example`, `docker-compose.yml`, `.github/workflows`
+  - Evidence: `package.json scripts`, `.env`, `.env.example`, `docker-compose.yml`, `.github/workflows`
 - [ ] GitHub publishing readiness not checked (available)
   - Reason: Git or GitHub context exists.
   - Agent action: Do not publish without explicit approval; review readiness and secret safety first.

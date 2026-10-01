@@ -146,7 +146,7 @@ Must Have items are required for agent-safe operation. Other Features are recomm
   - Reason: Build, deploy, env, or infrastructure indicators were detected.
   - Agent action: Inspect infrastructure readiness before deployment-related work.
   - CLI support: `wwg infra check`
-  - Evidence: `package.json scripts`, `.env.example`, `docker-compose.yml`, `.github/workflows`
+  - Evidence: `package.json scripts`, `.env`, `.env.example`, `docker-compose.yml`, `.github/workflows`
 - [ ] GitHub publishing readiness not checked (available)
   - Reason: Git or GitHub context exists.
   - Agent action: Do not publish without explicit approval; review readiness and secret safety first.

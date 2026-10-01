@@ -5,31 +5,30 @@
  * notifications are Phase 2 and have no tables, so they must not appear here.
  *
  * Uses upsert so the seed is idempotent and safe to re-run.
+ *
+ * The test user's password is hashed with scrypt via `@tarn/auth`. The seed
+ * originally stored `sha256:<hex>`, which is not a password hashing scheme —
+ * a single fast digest is trivially brute-forced offline.
  */
 import { PrismaClient, type ApplicationStatus, type JobPlatform, type OfferStatus } from '@prisma/client';
-import { createHash } from 'node:crypto';
+import { hashPassword } from '@tarn/auth';
 
 const prisma = new PrismaClient();
 
-const TEST_EMAIL = 'sam@example.com';
-const TEST_PASSWORD = 'tarn-dev-password';
-
-/**
- * Placeholder hash. Real hashing (bcrypt/argon2) belongs to the auth module —
- * the scaffold must not invent a hashing scheme (architecture §92 rule 12).
- */
-function placeholderHash(password: string): string {
-  return `sha256:${createHash('sha256').update(password).digest('hex')}`;
-}
+const TEST_EMAIL = process.env.SEED_USER_EMAIL ?? 'sam@example.com';
+const TEST_PASSWORD = process.env.SEED_USER_PASSWORD ?? 'tarn-dev-password';
 
 async function main(): Promise<void> {
+  // Hash once and reuse: scrypt is deliberately slow.
+  const passwordHash = await hashPassword(TEST_PASSWORD);
+
   const user = await prisma.user.upsert({
     where: { email: TEST_EMAIL },
     update: { name: 'Sam Rivera' },
     create: {
       email: TEST_EMAIL,
       name: 'Sam Rivera',
-      passwordHash: placeholderHash(TEST_PASSWORD),
+      passwordHash,
     },
   });
 
@@ -244,6 +243,7 @@ async function main(): Promise<void> {
   console.info('Seed complete.');
   console.info(`  user:   ${TEST_EMAIL} / ${TEST_PASSWORD}`);
   console.info('  companies, jobs, skills, applications, timeline events, follow-ups, saved job, offer');
+  console.info('  password hashed with scrypt (N=32768, r=8, p=1)');
 }
 
 main()

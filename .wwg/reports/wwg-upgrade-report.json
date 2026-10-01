@@ -306,6 +306,7 @@
         "reason": "Build, deploy, env, or infrastructure indicators were detected.",
         "evidence": [
           "package.json scripts",
+          ".env",
           ".env.example",
           "docker-compose.yml",
           ".github/workflows"

@@ -13,6 +13,29 @@ jobs:
   verify:
     runs-on: ubuntu-latest
 
+    # Database-backed integration tests need Postgres (architecture §62).
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: tarn
+          POSTGRES_PASSWORD: tarn
+          POSTGRES_DB: tarn
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U tarn -d tarn"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://tarn:tarn@localhost:5432/tarn?schema=public
+      JWT_SECRET: ci-only-jwt-secret
+      COOKIE_SECRET: ci-only-cookie-secret
+      WEB_ORIGIN: http://localhost:5173
+      NODE_ENV: test
+
     steps:
       - uses: actions/checkout@v4
 
@@ -34,18 +57,21 @@ jobs:
       - name: Generate Prisma client
         run: pnpm db:generate
 
+      # Use `db:deploy`, never `migrate dev` in CI (architecture §60).
+      - name: Apply migrations
+        run: pnpm --filter @tarn/database exec prisma migrate deploy
+
+      - name: Lint
+        run: pnpm lint
+
       - name: Type check
         run: pnpm typecheck
 
-      - name: Unit and API tests
+      - name: Tests
         run: pnpm test
 
       - name: Build
         run: pnpm build
-
-      - name: Format check
-        run: pnpm format:check
-        continue-on-error: true
 
       # E2E is intentionally not run yet: there are no implemented workflows to
       # drive (architecture §63 lists Playwright as optional at first).

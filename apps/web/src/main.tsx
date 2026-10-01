@@ -7,15 +7,26 @@ import { DashboardPage } from './routes/dashboard-page';
 import { queryClient } from './lib/query-client';
 import './index.css';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      element: <AppLayout />,
+      children: [
+        { index: true, loader: () => redirect('/dashboard') },
+        { path: 'dashboard', element: <DashboardPage /> },
+      ],
+    },
+  ],
   {
-    element: <AppLayout />,
-    children: [
-      { index: true, loader: () => redirect('/dashboard') },
-      { path: 'dashboard', element: <DashboardPage /> },
-    ],
+    // Opt in early so v7 splat-path behaviour is what we develop against.
+    // `createBrowserRouter` types its options against @remix-run/router's
+    // FutureConfig, which does not include `v7_startTransition` in this
+    // version — so only the supported flag is set here.
+    future: {
+      v7_relativeSplatPath: true,
+    },
   },
-]);
+);
 
 const container = document.getElementById('root');
 
