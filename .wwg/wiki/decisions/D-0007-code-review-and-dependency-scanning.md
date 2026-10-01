@@ -18,9 +18,9 @@ The owner asked about three distinct things. They are recorded separately becaus
 
 | Decision | Outcome |
 |---|---|
-| Automated dependency scanning in CI | **Confirmed and implemented.** Free. Running now. |
+| Automated dependency scanning in CI | **Confirmed and implemented.** Free. Running on GitHub. |
 | Independent human code reviewer | **Consciously deferred.** Not "pending" — a decision not to do it now. |
-| AI code reviewer on every pull request | **Recorded, not yet installable.** Needs one question answered. |
+| AI code reviewer on every pull request | **CodeRabbit, free tier.** Repository is public, so the free tier applies. Config committed; only the GitHub App install remains. |
 
 ---
 
@@ -147,6 +147,26 @@ Two things are needed:
 
 1. **Create the GitHub repository and add the remote.** I will not create a remote or publish anything without explicit instruction — root `AGENTS.md` treats publishing as approval-gated.
 2. **Confirm public or private.** This single answer decides whether CodeRabbit is free or $24/month.
+
+### Outcome: published public, CodeRabbit confirmed
+
+The owner resolved this on 2026-10-01: publish **public** and **unlicensed**, and use **CodeRabbit**. Because the repository is public, CodeRabbit's free tier applies in full — no cost.
+
+The repository is live at **https://github.com/ZenDevvv/tarn-app**.
+
+`.coderabbit.yaml` is committed and tuned to this project (assertive profile, 13 path-specific instruction sets encoding the project's own documented rules). **The GitHub App still has to be installed manually** at <https://github.com/apps/coderabbitai> — that step requires a browser and cannot be scripted.
+
+**Licence:** the owner chose to stay unlicensed. Public is not open source; without a licence nobody may legally reuse the code. Recorded as a deliberate choice, not an omission.
+
+### Two bugs this uncovered on the first real run
+
+Publishing immediately exposed problems that were invisible while everything ran locally:
+
+1. **Dependabot opened 22 pull requests in under a minute**, including TypeScript 5 → 7, Vite 6 → 8, `@types/node` 22 → 26, Zod 3 → 4, Prisma 6 → 7, and three GitHub Actions majors at once. Root cause: `update-types` placed **inside** a `groups` block controls only how updates are bundled, not whether a major is proposed. The cap must sit on the update entry. Fixed by moving `update-types: [minor, patch]` to every entry, including the `github-actions` ecosystem which had been missed. All 22 pull requests were closed with an explanation.
+
+2. **Dependency Review failed on every pull request** with `Invalid license(s) in allow-licenses`, because SPDX identifiers are **case-sensitive** — `mit` and `bsd-2-clause` are rejected where `MIT` and `BSD-2-Clause` are required. After correcting the casing a second error appeared: the repository's dependency graph was disabled, so the action refused to run at all. Enabled via `PUT /repos/ZenDevvv/tarn-app/vulnerability-alerts`. Both checks now pass.
+
+Neither bug could have been found without publishing. The lesson is recorded: a pipeline that has never run on the hosting platform is not a verified pipeline.
 
 ### What is already in place regardless of the tool
 

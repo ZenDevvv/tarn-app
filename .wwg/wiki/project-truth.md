@@ -103,10 +103,25 @@ Consequence that agents must respect: a green build and 114 passing assertions d
   - Status: CONFIRMED
   - Evidence: `DESIGN.md` line 3 — "Design rules for **Tarn** (design system name: **Marker**)"; 46 references in `design-system.html`, 18 in `index.css`.
   - Rule: **Marker is never the product name. Tarn is never a design-system name.** These are distinct namespaces.
-- Repository/directory name: `applicant-tracking-system`
+- Repository identity: the **GitHub repository is `ZenDevvv/tarn-app`**; the local folder is still `applicant-tracking-system`.
   - Status: CONFIRMED_STALE
-  - Evidence: folder name and git repository root.
-  - Note: the directory name does not match the product name. Renaming the directory is a deferred decision, not a blocker. Never infer the product name from the folder name — see the retirement note above.
+  - Evidence: `git remote -v` → `https://github.com/ZenDevvv/tarn-app.git`, confirmed via the GitHub API on 2026-10-01.
+  - **Three different names now coexist.** Only the first is the product name:
+
+    | Name | Where | Is it the product name? |
+    |---|---|---|
+    | `Tarn` | Product name, used in code and UI | Yes |
+    | `tarn-app` | GitHub repository | No |
+    | `applicant-tracking-system` | Local folder path | No — and it contains a **retired** name |
+
+  - Consequence: never infer the product name from the repository or folder name. Do not propagate `applicant-tracking-system` into new files, CI configuration, or documentation.
+- Repository visibility: **public**
+  - Status: CONFIRMED
+  - Evidence: GitHub API reports `visibility: PUBLIC`, `isPrivate: false`, 2026-10-01.
+- Repository licence: **none — unlicensed, all rights reserved**
+  - Status: CONFIRMED_BY_OWNER
+  - Evidence: owner instruction "leave it public and unlicensed", 2026-10-01. `licenseInfo` is empty in the GitHub API response.
+  - Note: public is **not** the same as open source. Without a licence nobody may legally reuse this code. This is a deliberate choice, not an omission.
 - Long-term positioning: personal **Applicant Tracking System (ATS)** focused on the job seeker; long-term vision is a personal **Job Search Operating System**.
   - Status: CONFIRMED
   - Evidence: PRD §1.2 and §36.
@@ -413,10 +428,19 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 - RESOLVED — Password hashing scheme. Owner confirmed scrypt. See `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md`.
   - Status: RESOLVED
   - Evidence: owner instruction "scrypt is confirmed", 2026-10-01; `packages/auth/src/password.ts`; 13 unit tests; verified at rest in the seeded row.
-- RESOLVED — No dependency vulnerability scanning. Dependabot (weekly security + version updates, grouped), a lockfile-diff dependency review on every pull request, and a whole-tree `pnpm audit --audit-level=high` gate in CI. All free.
+- RESOLVED — No dependency vulnerability scanning. Dependabot (weekly security + version updates, grouped), a lockfile-diff dependency review on every pull request, and a whole-tree `pnpm audit --audit-level=high` gate in CI. All free, all live.
   - Status: RESOLVED
-  - Evidence: `.github/dependabot.yml`; `.github/workflows/dependency-review.yml`; audit step in `ci.yml`; `pnpm audit` reports **no known vulnerabilities**.
+  - Evidence: `.github/dependabot.yml`; `.github/workflows/dependency-review.yml`; audit step in `ci.yml`; `pnpm audit` reports **no known vulnerabilities**; both GitHub checks pass.
   - Found and fixed on first run: 1 high (`deepmerge-ts`, transitive via Prisma) and 4 moderate (`react-router` ×2, `vitest` ×2). All cleared via a `pnpm.overrides` entry and two major upgrades.
+- RESOLVED — No git remote. The repository is published at **https://github.com/ZenDevvv/tarn-app**, public, with `main` tracking `origin/main`.
+  - Status: RESOLVED
+  - Evidence: `git remote -v`; GitHub API on 2026-10-01.
+- RESOLVED — CI had never actually run. It has now. Both the `verify` job (lint, dependency audit, typecheck, tests, build — against a live Postgres service in CI) and the `Dependency Review` job pass on GitHub.
+  - Status: RESOLVED
+  - Evidence: verified 2026-10-01 on a real pull request; both checks reported `pass`.
+- OPEN — CodeRabbit is not installed yet. The repository is public so the free tier applies, but the GitHub App must be installed by the owner in a browser; that cannot be done from the command line.
+  - Status: OPEN
+  - Evidence: `.coderabbit.yaml` is committed and ready; install at <https://github.com/apps/coderabbitai>.
 - RESOLVED — Independent human security review. **Consciously deferred** by the owner, not overlooked. Recorded so it is not rediscovered as an oversight.
   - Status: RESOLVED_DEFERRED
   - Evidence: owner instruction "independent human reviewer, not for now", 2026-10-01; `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
@@ -454,8 +478,8 @@ Still open:
   - Why it matters: pre-commit hooks stop broken work reaching main. CI already gates lint, typecheck, tests, and build, so hooks are a convenience rather than a safety net.
   - Evidence / uncertainty: architecture §2.4 lists both as recommended tooling.
 - Question: Will the repository be public or private, and what AI reviewer should run on pull requests?
-  - Why it matters: this is the single fact that decides the cost. CodeRabbit's free tier gives full review only on **public** repositories; on a private repository the free tier gives PR summarisation only, and real review costs $24/month. A genuinely free option for private repositories exists (PR-Agent self-hosted, or Qodo Merge's 75-reviews-per-month free tier).
-  - Blocked because: the repository has **no git remote configured**, so no GitHub App can be installed. See `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
+  - Resolved 2026-10-01: the repository is **public** and the owner chose **CodeRabbit**. The free tier applies to public repositories, so there is no cost. The configuration is committed.
+  - Remaining: install the GitHub App at <https://github.com/apps/coderabbitai>. That step needs a browser and cannot be scripted.
 - Question: When should the ownership boundary be reviewed by someone other than the implementing agent?
   - Why it matters: an independent human review of the authentication and data-access code was **consciously deferred** by the owner, not overlooked. The residual risk is concentrated in one property — a single missing `userId` filter on one endpoint would expose the whole database.
   - Evidence / uncertainty: mitigated by required cross-user isolation tests, not eliminated. Deterministic mitigations are in place: dependency scanning, lint, typecheck, 90 unit/integration tests, 24 browser tests.
