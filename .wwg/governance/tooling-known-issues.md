@@ -1,8 +1,10 @@
 # Tooling Known Issues
 
 Status: active
-Last reviewed: 2026-10-01
+Last reviewed: 2026-10-02
 Applies to: WWG 0.6.6 (`@homedesk/wwg`)
+
+Recorded defects: WWG-TOOL-001 (open), WWG-TOOL-002 (resolved locally), WWG-TOOL-003 (open), WWG-TOOL-004 (open), WWG-TOOL-005 (open), WWG-TOOL-006 (open).
 
 Human-authored governance note. This file is **not** emitted by `wwg generate-governance`, so regeneration will not overwrite it. It records defects in the WWG tooling itself that this project must work around, so agents do not rediscover them each session or misdiagnose them as project drift.
 
@@ -110,3 +112,106 @@ Treat adoption as suspect when the audit reports low confidence and produces zer
 Always re-run `wwg validate --target .` and read the live exit code rather than trusting the stored report. Note that `wwg adopt` can write a validate report describing the adopt command, not a full validation.
 
 **Status:** open, upstream behavior. Read live output, not stored reports.
+
+---
+
+## WWG-TOOL-005 — `wwg brief` ignores `product.*` in the project registry, so handoffs report "TBD" and "Not published"
+
+**Severity:** medium — it makes the agent handoff contradict settled project truth.
+
+**Symptom**
+
+`.wwg/reports/wwg-agent-handoff.md` and `wwg-handoff-to-codex.md` emitted:
+
+```
+## GitHub Repository
+Not published.
+
+## Project Summary
+- Project: TBD
+- Summary: TBD
+- Status: TBD
+```
+
+…along with `Users and Roles: TBD`, `MVP Features: TBD`, `Pages / Screens: TBD`,
+`Architecture and Hosting Preferences: TBD`, and `Design Preferences: TBD` — while
+`.wwg/wiki/project-truth.md` had all of it as CONFIRMED and the repository was in fact
+published at `ZenDevvv/tarn-app`.
+
+**Root cause**
+
+`wwg brief` does not read the `product:` key this project uses. In
+`dist/core/agent-handoff.js` (v0.6.6):
+
+- `projectSummary()` reads `registry.project.name`, `registry.project.description`,
+  `registry.project.status` — then falls back to `intake.answers.yaml`.
+- `githubRepoFromRegistry()` reads `registry.github.repository`, then
+  `registry.reports.github_repo` — then returns the literal `"Not published."`.
+
+`.wwg/config/wwg.project.yaml` defined `product.name: Tarn` and a `product.*` block, which
+no code path consults. `.wwg/config/intake.answers.yaml` did not exist, so every fallback
+resolved to `TBD`.
+
+**Workaround (current procedure)**
+
+Two changes, both applied 2026-10-02:
+
+1. `.wwg/config/wwg.project.yaml` gained a `github:` block with `repository`.
+2. `.wwg/config/intake.answers.yaml` was authored with `app_name`, `app_summary`, `status`,
+   `users`, `roles`, `mvp_features`, `core_features`, `pages`, `hosting`, `design_style`,
+   and `open_questions`. These values are restatements of Project Truth with evidence
+   cited in-file, not new decisions.
+
+Recognised answer keys, from `dist/core/agent-handoff.js`:
+`app_name`, `app_summary`, `status`, `users`, `roles`, `mvp_features`, `core_features`,
+`pages`, `hosting`, `design_style`, `design_tone`, `open_questions`.
+
+Values render as: arrays are joined with `", "`; a plain string is used verbatim.
+
+**Do not** fix this by hand-editing the generated handoff prose. The next `wwg brief` run
+overwrites it. Fix the registry or the intake answers.
+
+**Status:** open, upstream schema mismatch. Re-check after any `@homedesk/wwg` upgrade — if
+a future version reads `product.*`, reconcile the two representations rather than keeping
+both.
+
+---
+
+## WWG-TOOL-006 — `wwg maintain` can report a `Stop` execution gate with zero critical findings
+
+**Severity:** medium — an agent obeying the gate literally halts all work.
+
+**Symptom**
+
+`.wwg/reports/wwg-maintenance-review.md` reported all of the following **simultaneously**:
+
+```
+WWG STATUS: Critical Alignment Break
+Truth Alignment Status: RED / Critical Alignment Break
+EXECUTION GATE: Stop
+
+- Critical: 0
+- High: 0
+- Medium: 1
+- Warnings 1  (console)
+- Advisory 17 (console)
+```
+
+**Root cause**
+
+The Drift Score (6/10) that feeds the alignment level is computed from heuristic
+categories, including `Documentation Lag` and `Regression / Quality Drift`. The latter
+fires on "governance, audit, report, history, or regression evidence appears to be removed
+without documented approval" — which triggers on ordinary artifact-registration bookkeeping
+and did not correspond to any actual removal or truth conflict.
+
+**Workaround (current procedure)**
+
+Read the finding counts and the per-finding tables, not the header block. Treat a
+`Stop` gate as advisory when Critical and High are both 0 and the named categories are
+report-bookkeeping. Logged as REC-0004.
+
+**Do not** resolve this by editing the header to a lower severity. That would falsify
+generated evidence. Record the discrepancy instead, as REC-0004 does.
+
+**Status:** open, upstream behavior.

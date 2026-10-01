@@ -45,6 +45,7 @@
     ".wwg/reports/wwg-handoff-to-codex.md",
     ".wwg/reports/wwg-maintenance-review.md",
     ".wwg/reports/wwg-migration-history.md",
+    ".wwg/reports/wwg-report-classification-review.md",
     ".wwg/reports/wwg-upgrade-history.md",
     ".wwg/reports/wwg-upgrade-report.md",
     ".wwg/reports/wwg-validate-report.md",
@@ -296,6 +297,11 @@
     },
     {
       "path": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-report-classification-review.md",
       "fileType": "report",
       "reason": "Report directory path."
     },
@@ -1104,6 +1110,15 @@
       "severity": "warning",
       "code": "report-contract-missing-sections",
       "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-report-classification-review.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
       "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
@@ -1499,6 +1514,14 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/governance/regression-gaps.md",
+      "fileType": "governance",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-todo-without-owner-or-reason",
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
@@ -1570,6 +1593,51 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 118,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 131,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 132,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 133,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 136,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-repeated-heading",
       "message": "Heading 'Inferred Truth' repeats at the same level.",
       "affectedFile": ".wwg/reports/adoption-audit.md",
@@ -1598,11 +1666,19 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-todo-without-owner-or-reason",
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
       "fileType": "report",
-      "line": 199,
+      "line": 239,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -1611,7 +1687,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
       "fileType": "report",
-      "line": 200,
+      "line": 308,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -1620,25 +1696,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
       "fileType": "report",
-      "line": 201,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
-      "fileType": "report",
-      "line": 212,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
-      "fileType": "report",
-      "line": 216,
+      "line": 324,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -1783,7 +1841,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
       "fileType": "report",
-      "line": 197,
+      "line": 237,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -1792,7 +1850,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
       "fileType": "report",
-      "line": 198,
+      "line": 304,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -1801,25 +1859,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
       "fileType": "report",
-      "line": 199,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
-      "fileType": "report",
-      "line": 210,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
-      "fileType": "report",
-      "line": 214,
+      "line": 315,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -2143,6 +2183,41 @@
       "affectedFile": ".wwg/wiki/terminology.md",
       "fileType": "context",
       "line": 133,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "line": 20,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "line": 43,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "line": 109,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3031,6 +3106,15 @@
       "severity": "warning",
       "code": "report-contract-missing-sections",
       "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-report-classification-review.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
       "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
@@ -3892,6 +3976,14 @@
       "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
     },
     {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/governance/regression-gaps.md",
+      "fileType": "governance",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
       "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
@@ -4107,6 +4199,51 @@
       "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
     },
     {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 118,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 131,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 132,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 133,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 136,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
       "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
@@ -4264,11 +4401,19 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-todo-without-owner-or-reason",
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
       "fileType": "report",
-      "line": 199,
+      "line": 239,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -4277,7 +4422,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
       "fileType": "report",
-      "line": 200,
+      "line": 308,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -4286,25 +4431,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
       "fileType": "report",
-      "line": 201,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
-      "fileType": "report",
-      "line": 212,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
-      "fileType": "report",
-      "line": 216,
+      "line": 324,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -4494,7 +4621,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
       "fileType": "report",
-      "line": 197,
+      "line": 237,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -4503,7 +4630,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
       "fileType": "report",
-      "line": 198,
+      "line": 304,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -4512,25 +4639,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
       "fileType": "report",
-      "line": 199,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
-      "fileType": "report",
-      "line": 210,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
-      "fileType": "report",
-      "line": 214,
+      "line": 315,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -4628,6 +4737,15 @@
       "affectedSection": "0.6.6 to 0.6.6",
       "line": 135,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-report-classification-review.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
     },
     {
       "severity": "warning",
@@ -4807,6 +4925,14 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/governance/regression-gaps.md",
+      "fileType": "governance",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-todo-without-owner-or-reason",
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
@@ -4878,6 +5004,51 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 118,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 131,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 132,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 133,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "line": 136,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-repeated-heading",
       "message": "Heading 'Inferred Truth' repeats at the same level.",
       "affectedFile": ".wwg/reports/adoption-audit.md",
@@ -4906,11 +5077,19 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-todo-without-owner-or-reason",
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
       "fileType": "report",
-      "line": 199,
+      "line": 239,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -4919,7 +5098,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
       "fileType": "report",
-      "line": 200,
+      "line": 308,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -4928,25 +5107,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
       "fileType": "report",
-      "line": 201,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
-      "fileType": "report",
-      "line": 212,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
-      "fileType": "report",
-      "line": 216,
+      "line": 324,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -5091,7 +5252,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
       "fileType": "report",
-      "line": 197,
+      "line": 237,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -5100,7 +5261,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
       "fileType": "report",
-      "line": 198,
+      "line": 304,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -5109,25 +5270,7 @@
       "message": "TODO/TBD appears without an owner, reason, or open-question context.",
       "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
       "fileType": "report",
-      "line": 199,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
-      "fileType": "report",
-      "line": 210,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
-      "fileType": "report",
-      "line": 214,
+      "line": 315,
       "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
@@ -5451,6 +5594,41 @@
       "affectedFile": ".wwg/wiki/terminology.md",
       "fileType": "context",
       "line": 133,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "line": 20,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "line": 43,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "line": 109,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5930,16 +6108,16 @@
   ],
   "metadataPolicyApplied": "Option C: Skill Registry metadata is canonical; skill files may include lightweight metadata when beneficial, and package-side skills do not require frontmatter.",
   "summary": {
-    "checkedFileCount": 72,
+    "checkedFileCount": 73,
     "skippedFileCount": 1,
     "errorCount": 0,
-    "warningCount": 110,
-    "suggestionCount": 100,
+    "warningCount": 111,
+    "suggestionCount": 107,
     "classificationCounts": {
       "context": 15,
       "skill": 0,
       "governance": 28,
-      "report": 20,
+      "report": 21,
       "public_doc": 1,
       "agent_instruction": 1,
       "changelog_governance": 0,

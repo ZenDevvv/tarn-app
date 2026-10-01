@@ -147,11 +147,6 @@ Must Have items are required for agent-safe operation. Other Features are recomm
   - Agent action: Inspect infrastructure readiness before deployment-related work.
   - CLI support: `wwg infra check`
   - Evidence: `package.json scripts`, `.env`, `.env.example`, `docker-compose.yml`, `.github/workflows`
-- [ ] GitHub publishing readiness not checked (available)
-  - Reason: Git or GitHub context exists.
-  - Agent action: Do not publish without explicit approval; review readiness and secret safety first.
-  - CLI support: `wwg publish github --dry-run`
-  - Evidence: `.git`, `.github`, `package.json repository`
 - [ ] Current version, optional candidate review (available)
   - Reason: Workspace is current. Optional semantic/candidate review artifacts exist; run only if adopting candidate surfaces.
   - Agent action: Treat candidate/review artifacts as optional review surfaces unless the user asks to promote them.
@@ -173,7 +168,7 @@ C:\Users\Zen\Desktop\MY PROJECTS\applicant-tracking-system
 
 ## GitHub Repository
 
-Not published.
+ZenDevvv/tarn-app
 
 ## Selected Profiles
 
@@ -194,9 +189,9 @@ WWG generated runtime skill candidates only. WWG did not activate these skills. 
 
 ## Project Summary
 
-- Project: TBD
-- Summary: TBD
-- Status: TBD
+- Project: Tarn
+- Summary: A personal web application that lets an individual job seeker organize, monitor, and manage their entire job-search process — applications, job descriptions, companies, recruiters, interviews, resumes, follow-ups, and offers — in one place instead of scattered spreadsheets, bookmarks, notes, emails, and calendars.
+- Status: FOUNDATION SCAFFOLDED AND DATABASE MIGRATED. NO PRODUCT FEATURE IS IMPLEMENTED. The auth module is not built; requireAuth returns 501 by design. Do not describe any user-facing capability as working because the scaffold is healthy.
 
 ## Key Decisions
 
@@ -207,23 +202,23 @@ WWG generated runtime skill candidates only. WWG did not activate these skills. 
 
 ## Users and Roles
 
-TBD
+Active Job Seeker — the primary and sole MVP persona. Applies to multiple positions per week, holds multiple resume versions, and needs to remember interview schedules and follow up professionally. Recruiter / Hiring Contact is tracked as data, not as a system user. Admin, moderator, employer, and analytics-operator roles are out of scope. Authentication ships in the MVP (D-0002).
 
 ## MVP Features
 
-TBD
+Authentication and account management, Dashboard, Applications (create, edit, manage), Application details view, Status pipeline / Kanban, Application timeline, Job information and job-description storage, Company information, Platform / source tracking, Salary information, Application date, follow-up date, notes, Search and filtering, Basic analytics, Saved jobs, Offers, Skills (capture only; AI extraction and matching stay Phase 3)
 
 ## Pages / Screens
 
-TBD
+Dashboard, Applications list, Application detail (timeline + follow-ups), Kanban pipeline, Companies, Saved jobs, Offers, and auth screens. None are implemented yet; the web app currently renders a shell with a dashboard placeholder.
 
 ## Architecture and Hosting Preferences
 
-TBD
+Modular monolith, single API runtime, single PostgreSQL 16 database, pnpm monorepo. DEPLOYMENT VENDORS ARE UNDECIDED: architecture section 65 recommends Vercel (web), Railway or Render (api), Neon or Supabase (Postgres), and Cloudflare R2 (storage), but none has been chosen and no deployment configuration exists.
 
 ## Design Preferences
 
-TBD
+Marker design system. Bricolage Grotesque and Instrument Sans variable fonts only. lucide-react icons only, 16px in controls and nav, 20px in the mobile tab bar, stroke 1.5, currentColor. Plain, quiet, personal design — explicitly not enterprise chrome, gradients, or confetti. Minimum 44px pointer targets. Tokens live in apps/web/src/index.css; never hard-code a hex value in a component.
 
 ## Sources and References
 
@@ -306,18 +301,23 @@ Recommendations are candidate work only. They are not project truth, active work
 
 ## WWG Truth Synchronization
 
-- Task mode: TBD
-- New truth detected: YES / NO
-- Wiki updated: YES / NO / N/A
-- Workspace updated: YES / NO
-- Governance review completed: YES / NO
-- Drift status: NONE / LOW / MEDIUM / HIGH
+> Hand-applied 2026-10-02. Mirrors `.wwg/reports/wwg-agent-handoff.md`. `wwg brief` emits this section as unfilled `TBD` placeholders.
+
+- Task mode: Existing Project Adoption (continued) — governance/report refresh. No application source touched.
+- New truth detected: NO — Project Truth was already accurate; generated reports and the registry were the stale surfaces.
+- Wiki updated: NO — no product identity, scope, architecture, or boundary changed.
+- Workspace updated: YES — `.wwg/workspace/current-task.md` rewritten.
+- Governance review completed: YES — `wwg validate --target .` exits 0, Critical 0 / High 0.
+- Drift status: LOW
 - Canonical files changed:
-  - TBD
+  - `.wwg/config/wwg.project.yaml`, `.wwg/config/intake.answers.yaml`, `.wwg/governance/recommendation-registry.md`, `.wwg/governance/regression-gaps.md`, `.wwg/reports/README.md`, `.gitignore`.
 - Implementation discoveries synced:
-  - TBD
+  - `wwg brief` reads `project.*` and `github.repository`, not `product.*`; this project used `product:`, so handoffs reported "Project: TBD" and "Not published." WWG-TOOL-005.
+  - `wwg maintain` can report `RED / Stop` alongside Critical 0 / High 0. REC-0004.
 - Remaining stale context:
-  - TBD
+  - 7 regression gaps open (see the human note on `.wwg/governance/regression-gaps.md`).
+  - Deployment vendors, directory rename, and CHANGELOG.md unresolved.
+  - Next task is the auth module; NOT started.
 
 Reports cannot override `.wwg/wiki/project-truth.md`. If this handoff or another report conflicts with project truth, update the stale report or leave a drift finding.
 
@@ -329,12 +329,18 @@ Reports cannot override `.wwg/wiki/project-truth.md`. If this handoff or another
 - Missing planning input: .wwg/wiki/07-ux/screens.md.
 - Missing planning input: .wwg/wiki/11-synthesis/open-questions.md.
 - Missing planning input: .wwg/wiki/11-synthesis/planning-summary.md.
+- Should Husky and lint-staged be wired up now, or after the first feature?
+- Should the local directory be renamed from applicant-tracking-system to tarn?
+- When should the ownership boundary be reviewed by someone other than the implementing agent?
+- Which deployment vendors are chosen?
 
 ## Generated WWG Files
 
+- .wwg/config/intake.answers.yaml
 - .wwg/config/wwg.project.yaml
 - .wwg/governance
 - .wwg/governance/drift-guard.md
+- .wwg/reports/README.md
 - .wwg/reports/adoption-audit.md
 - .wwg/reports/adoption-regression-report.json
 - .wwg/reports/adoption-regression-report.md
@@ -344,9 +350,8 @@ Reports cannot override `.wwg/wiki/project-truth.md`. If this handoff or another
 - .wwg/reports/wwg-audit-report.md
 - .wwg/reports/wwg-doctor-report.md
 - .wwg/reports/wwg-generate-governance-report.md
-- .wwg/reports/wwg-generate-workspace-report.md
-- .wwg/reports/wwg-refresh-context-report.md
-- .wwg/reports/wwg-refresh-skills-report.md
+- .wwg/reports/wwg-maintenance-review.md
+- .wwg/reports/wwg-report-classification-review.md
 - .wwg/reports/wwg-upgrade-history.md
 - .wwg/reports/wwg-upgrade-report.md
 - .wwg/reports/wwg-validate-report.md
@@ -363,7 +368,6 @@ Reports cannot override `.wwg/wiki/project-truth.md`. If this handoff or another
 
 ## Missing Inputs
 
-- .wwg/config/intake.answers.yaml
 - .wwg/config/skill-manifest.yaml
 - .wwg/reports/truth-reconciliation-candidates.json
 - .wwg/reports/truth-reconciliation-candidates.md
@@ -379,7 +383,6 @@ Reports cannot override `.wwg/wiki/project-truth.md`. If this handoff or another
 - .wwg/wiki/07-ux/screens.md
 - .wwg/wiki/11-synthesis/open-questions.md
 - .wwg/wiki/11-synthesis/planning-summary.md
-- intake answers
 
 ## Validation Result
 

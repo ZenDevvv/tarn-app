@@ -33,3 +33,6 @@ Thumbs.db
 
 # WWG
 # .wwg/ is intentionally committed: it is the project's governed truth.
+# Exception: WWG writes timestamped config backups on every registry change.
+# Those are transient working copies, not evidence, so they stay untracked.
+.wwg/reports/backups/

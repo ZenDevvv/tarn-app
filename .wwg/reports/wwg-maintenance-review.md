@@ -30,17 +30,17 @@ wwg regression-check
 
 ## Summary
 
-- Total findings: 12
+- Total findings: 18
 - Critical: 0
 - High: 0
 - Medium: 1
-- Low: 5
-- Info: 6
+- Low: 4
+- Info: 13
 - Safe-to-apply recommendations: 0
-- Requires-user-confirmation: 7
+- Requires-user-confirmation: 13
 - Archive candidates: 0
 - Merge candidates: 2
-- Rename candidates: 0
+- Rename candidates: 7
 - Stale context candidates: 3
 - Drift Score: 6/10
 - Truth Alignment Status: Critical Alignment Break
@@ -49,7 +49,7 @@ wwg regression-check
 ## Scope
 
 - Target path: .
-- Timestamp: 2026-10-01T07:10:44.955Z
+- Timestamp: 2026-10-01T16:25:13.285Z
 - Command: `wwg maintain --target C:\Users\Zen\Desktop\MY PROJECTS\applicant-tracking-system`
 - Dry-run status: true
 - Safety: no deletes, moves, archives, renames, broad rewrites, or apply behavior were performed.
@@ -88,8 +88,7 @@ Use it to decide which recommendations should become:
 
 - fragmented-guidance: 2
 - generated-artifact-freshness: 3
-- gitignore-policy-drift: 1
-- naming-drift: 1
+- naming-drift: 8
 - regression-governance: 1
 - report-policy-drift: 2
 - truth-loop-drift: 2
@@ -118,9 +117,8 @@ These findings are signals agents should notice during ordinary truth-loop work 
 
 - LOW Expected context or readiness artifact is missing (.wwg/workspace/context/project-context.md): This pass reports missing artifacts only; generation or handoff refresh should be explicit.
 - LOW Expected context or readiness artifact is missing (.wwg/workspace/skills/skill-index.md): This pass reports missing artifacts only; generation or handoff refresh should be explicit.
-- LOW Report policy drift (.gitignore): Add a narrow ignore rule for `.wwg/reports/backups/` or `.wwg/.gitignore` `reports/backups/`.
 - LOW Changelog project memory is missing (CHANGELOG.md): Run `wwg changelog generate --target . --from-git --weekly --dry-run` before creating or applying changelog history.
-- LOW README front door is missing (README.md): Run `wwg readme generate --target . --dry-run` before creating README.md.
+- LOW README front door needs governance review (README.md): Run `wwg readme preview --target .` and `wwg readme route-docs --target . --dry-run`.
 - INFO Potential fragmented guidance: readiness (.wwg/governance/operational-readiness-review.md): This is a consolidation candidate only; template, dogfood, docs, and compatibility boundaries must be reviewed before merging guidance.
 - INFO Potential fragmented guidance: principles (.wwg/governance/recommendation-policy.md): This is a consolidation candidate only; template, dogfood, docs, and compatibility boundaries must be reviewed before merging guidance.
 - INFO Skill Manifest is not generated (.wwg/config/skill-manifest.yaml): Run `wwg refresh-skills --target .` when governed project skill state should be refreshed.
@@ -133,8 +131,7 @@ These findings were produced by the explicit `wwg maintain` review. They are rec
 
 - fragmented-guidance: 2
 - generated-artifact-freshness: 3
-- gitignore-policy-drift: 1
-- naming-drift: 1
+- naming-drift: 8
 - regression-governance: 1
 - report-policy-drift: 2
 - truth-loop-drift: 2
@@ -146,13 +143,19 @@ These findings were produced by the explicit `wwg maintain` review. They are rec
 | .wwg/workspace/testing/regression-candidate-review.md | regression-governance | Regression candidates need confirmation evidence | review | low | no | yes | Review `.wwg/workspace/testing/regression-candidate-review.md` and record explicit manual/process, executable, or waiver evidence in `.wwg/workspace/testing/manual-verification-evidence.json`. |
 | .wwg/workspace/context/project-context.md | generated-artifact-freshness | Expected context or readiness artifact is missing | refresh | low | no | no | This pass reports missing artifacts only; generation or handoff refresh should be explicit. |
 | .wwg/workspace/skills/skill-index.md | generated-artifact-freshness | Expected context or readiness artifact is missing | refresh | low | no | no | This pass reports missing artifacts only; generation or handoff refresh should be explicit. |
-| .gitignore | gitignore-policy-drift | Report policy drift | review | low | no | yes | Add a narrow ignore rule for `.wwg/reports/backups/` or `.wwg/.gitignore` `reports/backups/`. |
 | CHANGELOG.md | truth-loop-drift | Changelog project memory is missing | create | low | no | no | Run `wwg changelog generate --target . --from-git --weekly --dry-run` before creating or applying changelog history. |
-| README.md | truth-loop-drift | README front door is missing | create | low | no | no | Run `wwg readme generate --target . --dry-run` before creating README.md. |
+| README.md | truth-loop-drift | README front door needs governance review | review | low | no | no | Run `wwg readme preview --target .` and `wwg readme route-docs --target . --dry-run`. |
 | .wwg/governance/operational-readiness-review.md | fragmented-guidance | Potential fragmented guidance: readiness | merge | medium | no | yes | This is a consolidation candidate only; template, dogfood, docs, and compatibility boundaries must be reviewed before merging guidance. |
 | .wwg/governance/recommendation-policy.md | fragmented-guidance | Potential fragmented guidance: principles | merge | medium | no | yes | This is a consolidation candidate only; template, dogfood, docs, and compatibility boundaries must be reviewed before merging guidance. |
 | .wwg/config/skill-manifest.yaml | generated-artifact-freshness | Skill Manifest is not generated | refresh | low | no | no | Run `wwg refresh-skills --target .` when governed project skill state should be refreshed. |
 | .wwg/reports/adoption-audit.md | naming-drift | Report filename has unclear purpose suffix | review | low | no | yes | Ambiguous report names should be indexed or renamed only through a deliberate report policy pass. |
+| .wwg/wiki/decisions/D-0001-product-name-tarn.md | naming-drift | WWG-owned file is not lowercase kebab-case | rename-candidate | medium | no | yes | Naming changes should be reviewed for links, registry references, generated markers, and historical context. |
+| .wwg/wiki/decisions/D-0002-mvp-authentication.md | naming-drift | WWG-owned file is not lowercase kebab-case | rename-candidate | medium | no | yes | Naming changes should be reviewed for links, registry references, generated markers, and historical context. |
+| .wwg/wiki/decisions/D-0003-package-manager-pnpm.md | naming-drift | WWG-owned file is not lowercase kebab-case | rename-candidate | medium | no | yes | Naming changes should be reviewed for links, registry references, generated markers, and historical context. |
+| .wwg/wiki/decisions/D-0004-mvp-schema-scope.md | naming-drift | WWG-owned file is not lowercase kebab-case | rename-candidate | medium | no | yes | Naming changes should be reviewed for links, registry references, generated markers, and historical context. |
+| .wwg/wiki/decisions/D-0005-token-file-location.md | naming-drift | WWG-owned file is not lowercase kebab-case | rename-candidate | medium | no | yes | Naming changes should be reviewed for links, registry references, generated markers, and historical context. |
+| .wwg/wiki/decisions/D-0006-password-hashing-scrypt.md | naming-drift | WWG-owned file is not lowercase kebab-case | rename-candidate | medium | no | yes | Naming changes should be reviewed for links, registry references, generated markers, and historical context. |
+| .wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md | naming-drift | WWG-owned file is not lowercase kebab-case | rename-candidate | medium | no | yes | Naming changes should be reviewed for links, registry references, generated markers, and historical context. |
 |  | report-policy-drift | Report policy drift | review | low | no | yes | Run `wwg reports --target .` and review the Ambiguous / Needs Review section. |
 | .wwg/reports/adoption-regression-report.json | report-policy-drift | Ambiguous JSON reports need classification | review | low | no | yes | JSON reports are not promoted by default; classify as compatibility JSON, promoted JSON, routine generated JSON, transient JSON, or ambiguous JSON before committing policy decisions. |
 
@@ -175,13 +178,19 @@ Allowlisted historical references:
 
 ## Report Policy Review
 
-- LOW Report policy drift (.gitignore): Add a narrow ignore rule for `.wwg/reports/backups/` or `.wwg/.gitignore` `reports/backups/`.
 - INFO Report policy drift: Run `wwg reports --target .` and review the Ambiguous / Needs Review section.
 - INFO Ambiguous JSON reports need classification (.wwg/reports/adoption-regression-report.json): JSON reports are not promoted by default; classify as compatibility JSON, promoted JSON, routine generated JSON, transient JSON, or ambiguous JSON before committing policy decisions.
 
 ## Naming Drift
 
 - INFO Report filename has unclear purpose suffix (.wwg/reports/adoption-audit.md): Ambiguous report names should be indexed or renamed only through a deliberate report policy pass.
+- INFO WWG-owned file is not lowercase kebab-case (.wwg/wiki/decisions/D-0001-product-name-tarn.md): Naming changes should be reviewed for links, registry references, generated markers, and historical context.
+- INFO WWG-owned file is not lowercase kebab-case (.wwg/wiki/decisions/D-0002-mvp-authentication.md): Naming changes should be reviewed for links, registry references, generated markers, and historical context.
+- INFO WWG-owned file is not lowercase kebab-case (.wwg/wiki/decisions/D-0003-package-manager-pnpm.md): Naming changes should be reviewed for links, registry references, generated markers, and historical context.
+- INFO WWG-owned file is not lowercase kebab-case (.wwg/wiki/decisions/D-0004-mvp-schema-scope.md): Naming changes should be reviewed for links, registry references, generated markers, and historical context.
+- INFO WWG-owned file is not lowercase kebab-case (.wwg/wiki/decisions/D-0005-token-file-location.md): Naming changes should be reviewed for links, registry references, generated markers, and historical context.
+- INFO WWG-owned file is not lowercase kebab-case (.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md): Naming changes should be reviewed for links, registry references, generated markers, and historical context.
+- INFO WWG-owned file is not lowercase kebab-case (.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md): Naming changes should be reviewed for links, registry references, generated markers, and historical context.
 
 ## Context and Skill Freshness
 
@@ -218,7 +227,7 @@ Allowlisted historical references:
 ## Principle and Truth Loop Review
 
 - LOW Changelog project memory is missing (CHANGELOG.md): Run `wwg changelog generate --target . --from-git --weekly --dry-run` before creating or applying changelog history.
-- LOW README front door is missing (README.md): Run `wwg readme generate --target . --dry-run` before creating README.md.
+- LOW README front door needs governance review (README.md): Run `wwg readme preview --target .` and `wwg readme route-docs --target . --dry-run`.
 - INFO Potential fragmented guidance: readiness (.wwg/governance/operational-readiness-review.md): This is a consolidation candidate only; template, dogfood, docs, and compatibility boundaries must be reviewed before merging guidance.
 - INFO Potential fragmented guidance: principles (.wwg/governance/recommendation-policy.md): This is a consolidation candidate only; template, dogfood, docs, and compatibility boundaries must be reviewed before merging guidance.
 
@@ -267,16 +276,16 @@ Must Have items are required for agent-safe operation. Other Features are recomm
 
 ### Other Features
 
-- [ ] README missing (missing)
-  - Reason: The project front door is not present.
-  - Agent action: Prepare a README handoff or reviewed scaffold; do not invent final README prose.
-  - CLI support: `wwg readme generate --dry-run`
-  - Evidence: `README.md`
 - [ ] Changelog missing (missing)
   - Reason: Package, product, or git history signals make release memory relevant.
   - Agent action: Prepare or review release narrative before treating changelog wording as final.
   - CLI support: `wwg changelog generate --from-git --weekly --dry-run`
   - Evidence: `CHANGELOG.md`
+- [ ] Infrastructure readiness not checked (available)
+  - Reason: Build, deploy, env, or infrastructure indicators were detected.
+  - Agent action: Inspect infrastructure readiness before deployment-related work.
+  - CLI support: `wwg infra check`
+  - Evidence: `package.json scripts`, `.env`, `.env.example`, `docker-compose.yml`, `.github/workflows`
 - [ ] GitHub publishing readiness not checked (available)
   - Reason: Git or GitHub context exists.
   - Agent action: Do not publish without explicit approval; review readiness and secret safety first.
@@ -356,37 +365,6 @@ No stale Review By items found.
 
 - Automation: maintain summarized the registry only; it did not promote, implement, or rewrite recommendations.
 
-## WWG Truth Synchronization
-
-> Remediation note: this section is applied manually because `wwg maintain` in WWG 0.6.6 does not emit it, yet `wwg validate` requires it on any report that claims readiness or completion. See `.wwg/governance/tooling-known-issues.md` (issue WWG-TOOL-001). Re-apply this section after every `wwg maintain` run.
-
-- Task mode: Existing Project Adoption (continued) — security and pull-request policy
-- New truth detected: YES
-- Wiki updated: YES
-- Workspace updated: YES
-- Governance review completed: YES
-- Drift status: LOW — dependency scanning is implemented and running, the human-review deferral is recorded as a decision rather than an open question, and the AI reviewer is documented with the one fact that blocks it.
-- Canonical files changed:
-  - `.github/dependabot.yml` — new; weekly grouped security and version updates, plus GitHub Actions self-monitoring.
-  - `.github/workflows/dependency-review.yml` — new; blocks a PR that introduces a vulnerable dependency.
-  - `.github/workflows/ci.yml` — added a whole-tree `pnpm audit --audit-level=high` step.
-  - `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md` — new; records all three decisions.
-  - `.wwg/wiki/project-truth.md`, `.wwg/governance/test-enforcement.md`, `README.md`, `package.json` updated.
-- Implementation discoveries synced:
-  - **Dependency scanning found five real vulnerabilities on its first run**, including one high-severity: `deepmerge-ts`, transitive through Prisma. Fixed with a `pnpm.overrides` entry after verifying Prisma generation, `migrate status`, and `db:seed` still work. Four moderate advisories in `react-router` and `vitest` were cleared by two major upgrades. **`pnpm audit` now reports no known vulnerabilities.**
-  - **Two major version upgrades were performed and fully re-verified:** `react-router-dom` 6.30.6 → 7.18.4 (v7 future flags removed, since that behaviour is now the default) and Vitest 3.2.7 → 5.0.3.
-  - **A pnpm workspace trap was found and recorded:** the root `package.json` pinned Vitest and silently overrode five per-package upgrade attempts. Only `pnpm why vitest` exposed it. A root-level pin wins in a workspace.
-  - **CodeRabbit's free tier does not cover private repositories** for real review — it is a public-repository benefit. On a private repo the free tier gives PR summarisation only, and full review costs $24/month. This inverts the owner's initial plan unless the repository goes public.
-  - **GitHub CodeQL is not free on private repositories** — it requires GitHub Advanced Security. The dependency review action is free on private repositories and was chosen instead.
-  - An independent human security review was **consciously deferred** by the owner. Recorded as a decision, with the specific unreviewed items listed so the deferral is bounded rather than open-ended.
-  - Corrected a provenance error: the earlier "external security review" concept does not appear anywhere in the requirements, architecture, or design documents.
-- Remaining stale context:
-  - **The repository has no git remote**, so no AI reviewer can be installed and **CI has never actually run**. Every workflow passes locally but is unverified in practice.
-  - Browser tests are not wired into CI.
-  - Five owner questions remain open: create the remote, public or private, deployment vendors, directory rename, and Husky/lint-staged.
-  - No auth or CRUD route tests exist, because no features exist.
-  - This report remains point-in-time evidence. Re-run `wwg maintain --target .` after further truth changes rather than treating it as current state, then re-apply this section.
-
 ## Follow-Up Modes
 
 - Update truth/governance now
@@ -404,3 +382,32 @@ No stale Review By items found.
 - Run `wwg reports --target .` before any report archive or promotion work.
 - Run `wwg brief --target .` if generic or compatibility agent brief readiness is missing.
 - Refresh Workspace/Governance outputs only through explicit generation or refresh commands.
+
+## WWG Truth Synchronization
+
+> Remediation note: this section is applied manually because `wwg maintain` in WWG 0.6.6 does not emit it, yet `wwg validate` requires it on any report that claims readiness or completion. See `.wwg/governance/tooling-known-issues.md` (issue WWG-TOOL-001). Re-apply this section after every `wwg maintain` run.
+
+- Task mode: Docs-only / governance-only — stale WWG report refresh. No application source was touched.
+- New truth detected: NO — Project Truth was already accurate. The defect was in generated reports and the project registry lagging behind it, not in the truth itself.
+- Wiki updated: NO — no product identity, scope, architecture, or boundary changed. `.wwg/wiki/project-truth.md` was verified against the working tree and required no change.
+- Workspace updated: YES — `.wwg/workspace/current-task.md` rewritten to record this pass.
+- Governance review completed: YES
+- Drift status: LOW — two findings were genuinely fixed (`gitignore-policy-drift` cleared, false "README front door is missing" finding corrected to "needs governance review"). The remaining findings are report-bookkeeping heuristics, not truth conflicts.
+- Canonical files changed:
+  - `.wwg/config/wwg.project.yaml` — corrected four stale fields at the source so future regenerations are right: `design_tokens` pointed at root `index.css` instead of `apps/web/src/index.css`; `node_requirement` said `>=20.11.0` against an actual `engines` of `>=22`; removed three `reports.*` keys pointing at artifacts that were never written; added repository, auth-status, and delivery-pipeline facts so the handoff generator stops emitting "Not published".
+  - `.wwg/governance/recommendation-registry.md` — removed the templated `REC-0001` placeholder that made the registry look populated while `wwg maintain` counted zero recommendations; added eight real entries.
+  - `.wwg/governance/regression-gaps.md` — human note added outside the generated block.
+  - `.wwg/reports/README.md` — corrected the index, which listed six artifact groups that do not exist.
+  - `.gitignore` — added a narrow `.wwg/reports/backups/` rule.
+- Implementation discoveries synced:
+  - **The handoff reports said "Not published" and "Project: TBD" because they were generated before the registry knew the product name.** Root cause was the registry, not the generator. Fixing `wwg.project.yaml` fixes every future regeneration; hand-editing the report prose would have hidden it and returned on the next run.
+  - **`wwg maintain` reports `RED / Critical Alignment Break` with `EXECUTION GATE: Stop` while simultaneously reporting Critical 0, High 0, Warnings 1, Advisory 17.** The score is driven by "Documentation Lag" and "Regression / Quality Drift" heuristics about artifact registration. An agent obeying the gate literally would halt all implementation over report bookkeeping. Logged as REC-0004; not treated as a real truth conflict.
+  - **`regression-gaps.md` is written once during adoption and no later command refreshes it.** It still asserts "No existing tests" against a repository with 90 unit/integration and 24 browser assertions. It cannot be regenerated away, so it is documented in a human note rather than edited inside the generated block.
+  - **`wwg reports` classified the adoption regression baseline as "ambiguous"** despite `AGENTS.md` and `regression-gaps.md` both citing it as the source baseline. Classified as promoted in the registry.
+  - `pnpm test` re-verified on 2026-10-02: **90 passing**, matching Project Truth exactly.
+- Remaining stale context:
+  - **7 regression gaps remain open** and are recorded in the human note on `regression-gaps.md`. Four are genuinely open, one is superseded, one is partially covered, and one (`payment`) is not applicable to a project with no payment surface.
+  - **Squash-merge CI gap, unchanged and still unrecorded as a regression gap.** Branch protection uses squash merge, so the commit landing on `main` is newly generated and CI never runs against it. Strict mode guarantees checks passed on the latest *pull request* commit only. Known limit, flagged by CodeRabbit, recorded in Project Truth.
+  - `CHANGELOG.md` still missing (REC-0007).
+  - Deployment vendors undecided (REC-0005); directory rename undecided (REC-0006).
+  - No auth or CRUD route tests exist, because no product feature exists. This report remains point-in-time evidence — re-run `wwg maintain --target .` after further truth changes rather than treating it as current state, then re-apply this section.
