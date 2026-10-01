@@ -255,9 +255,9 @@
         "id": "readme-support",
         "label": "README missing",
         "category": "other-feature",
-        "status": "missing",
-        "severity": "warning",
-        "show": true,
+        "status": "present",
+        "severity": "success",
+        "show": false,
         "reason": "The project front door is not present.",
         "evidence": [
           "README.md"
@@ -302,9 +302,14 @@
         "category": "other-feature",
         "status": "available",
         "severity": "warning",
-        "show": false,
+        "show": true,
         "reason": "Build, deploy, env, or infrastructure indicators were detected.",
-        "evidence": [],
+        "evidence": [
+          "package.json scripts",
+          ".env.example",
+          "docker-compose.yml",
+          ".github/workflows"
+        ],
         "cliAction": "wwg infra check",
         "agentAction": "Inspect infrastructure readiness before deployment-related work."
       },

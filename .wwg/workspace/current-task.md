@@ -1,77 +1,102 @@
 # Current Task
 
-Status: DONE — owner decision batch applied to truth and canonical documents.
-Task mode: Existing Project Adoption (decision propagation)
+Status: DONE — monorepo scaffolded and verified.
+Task mode: Existing Project Adoption → Meaningful feature (implementation — repository foundation)
+Instance type: existing-project (adopted; this work continues the adoption lifecycle)
 Last updated: 2026-10-01
 
 ## Task Summary
 
 - Status: DONE
-- Task mode: Existing Project Adoption (decision propagation)
-- User request:
-  - Set the product name to "Tarn".
-  - Decide MVP authentication.
-  - Confirm pnpm.
-  - Scope SavedJob, Skill, and Offer into MVP; defer Notification.
-  - Resolve the `index.css` token-path conflict.
-  - Update the existing docs as well as the WWG truth surfaces.
+- Task mode: Existing Project Adoption (continued) — Meaningful feature, repository foundation
+- Instance type: `existing-project`. This repository was adopted into WWG rather than created by it. The scaffold task below is the first **implementation** task in that adopted project, so adoption context still governs it: truth lives in `.wwg/wiki/`, decisions in `.wwg/wiki/decisions/`, and the canonical product documents remain authoritative for product meaning.
+- User request: "proceed to scaffold the monorepo"
+- Preceding adoption work: truth ingestion of the PRD, architecture doc and DESIGN.md (2026-10-01), then the owner decision batch D-0001…D-0005 (2026-10-01).
 
-## Owner Decisions Recorded
+## What Was Built
 
-| ID | Decision | Status |
-|---|---|---|
-| D-0001 | Product name is **Tarn**; "Job Application Tracker" retired | Accepted |
-| D-0002 | **Authentication is in the MVP** (no-auth proposal raised then rejected) | Accepted |
-| D-0003 | **pnpm** confirmed as package manager | Accepted |
-| D-0004 | **`saved_jobs`, `skills`, `job_skills`, `offers` in MVP; `notifications` deferred to Phase 2** | Accepted |
-| D-0005 | Move `index.css` → `apps/web/src/index.css` **at scaffold time**, not now | Accepted, pending execution |
+Repository foundation per architecture §5, §6 and §90 Step 1, plus D-0003 and D-0005.
 
-Decision records live in `.wwg/wiki/decisions/`.
+```text
+pnpm-workspace.yaml, package.json (pnpm 9.15.4), tsconfig.base.json
+apps/web          React + Vite + Tailwind v4 + Router + TanStack Query
+apps/api          Express + Zod, health route only
+packages/database Prisma schema (10 MVP tables), client, idempotent seed
+packages/validation  shared Zod schemas
+packages/types       shared domain types + API envelope
+.github/workflows/ci.yml
+docker-compose.yml (Postgres only), .env.example, .gitignore, README.md
+.prettierrc.json, .prettierignore, .editorconfig
+```
 
-### Important reversal
+D-0005 executed: `index.css` moved from the repository root to `apps/web/src/index.css`, root copy deleted. `DESIGN.md` §1 and architecture §6 now match the tree.
 
-D-0002 reversed within the same session. The owner first directed "let's make the first mvp with no auth", then answered the data-model fork with "lets just have the auth for the first mvp". **Authentication is MVP scope.** The original instruction is void; it is recorded in D-0002 only so a future reader of the chat log does not treat it as active.
+## Verification (executed, not assumed)
 
-## Canonical Documents Amended
+| Check | Result |
+|---|---|
+| `pnpm install` | 416 packages resolved, `pnpm-lock.yaml` written |
+| `pnpm typecheck` | clean across 5 packages |
+| `pnpm test` | **60 passing** — 7 types, 17 schema scope, 23 validation, 13 API |
+| `pnpm build` | both apps build; web 251 kB (81 kB gzip) |
+| `prisma validate` + `migrate diff` | schema generates valid DDL; exactly the 10 MVP tables, zero deferred |
+| API boot, no env | fails closed, naming all 4 missing variables |
+| API boot, valid env | listens; `/api/v1/health` → 200; `/api/v1/nope` → 404 error envelope |
 
-Owner approved edits to the canonical docs (root `AGENTS.md` otherwise forbids WWG from rewriting them):
+Not verified: no migration was applied, because the Docker daemon was not running on this machine.
 
-- `job-application-tracker-brd-prd.md` — §1 title, §1.1 product name, §1.2 summary, §6 Phase 1/2 scope, §37 phase matrix, §38 new Decision Log
-- `job-application-tracker-project-architecture.md` — title, §1 overview, §5 pnpm confirmed, §6 structure (`tarn/`, `index.css`, `pnpm-lock.yaml`, token note), §35 MVP tables rewritten
-- `DESIGN.md` — header product name, new Naming note, new Token file location note
-- `index.css` — header comment (product name, scaffold note, `npm i` → `pnpm add -D`)
-- `design-system.html` — `<title>` and lede
+## Bugs Found and Fixed
 
-Diff footprint: 5 files, 66 insertions, 24 deletions. No application source was touched, because none exists.
+Three real defects, each now covered by a regression test:
+
+1. **Routing swallowed.** `app.use('/api/v1', health)` treated the 2-arity health handler as middleware, so every `/api/v1/*` request returned the health payload with 200. Found by live curl. Fixed with `app.get`. Regression test: `apps/api/src/app.test.ts` → "routing is not swallowed by the health route".
+2. **Oversized body returned 500.** Body-parser errors fell through to the generic handler. Fixed with an explicit branch → 413. Regression test: same file → "rejects an oversized JSON body with 413, not 500".
+3. **Helpful error copy was being lost.** `z.string().cuid({ message })` only overrides the format error, so a *missing* cuid field reported Zod's default "Required", violating DESIGN.md §12. Fixed with a `cuidField()` helper. Caught by a test, not by review.
+
+Also fixed before scaffolding: D-0004 had left three contradictions in the architecture doc (§61 seed listed interviews, §87 listed Saved Jobs and Offers as Phase 2, §88 listed `skills`/`job_skills` as Phase 3). All three amended to match D-0004.
+
+## Deviations From The Architecture Document
+
+| Deviation | Reason |
+|---|---|
+| `packages/config` not created | Shared config is covered by `tsconfig.base.json` inheritance. Architecture §92 rule 11: no speculative infrastructure. Add it if a real need appears. |
+| ESLint config not written | Flagged as an open question rather than guessed at. `pnpm lint` currently enforces nothing — recorded as a real gap, not hidden. |
+| No Husky / lint-staged | Not needed until there are commits worth guarding. |
+| `apps/api` uses Express 4, not 5 | Stability choice; the architecture doc names neither version. |
+| Seed uses `sha256:` placeholder hashing | The scaffold must not invent a password hashing scheme. **Must be replaced before real auth ships** — recorded as an open question. |
 
 ## Truth Surfaces Updated
 
-- `.wwg/wiki/project-truth.md` — product identity, auth model, MVP scope, notification boundary, skill scope split, pnpm, token conflict → `RESOLVED_PENDING_SCAFFOLD`, conflicts register, open questions
-- `.wwg/wiki/terminology.md` — Naming Context table, phase-status markers on `SavedJob`/`Skill`/`Offer`/`Notification`, conflicts register now has resolutions, added two new conflicts
-- `.wwg/wiki/decisions/` — 5 new decision records
-- `.wwg/wiki/principles/plan-vs-implementation-truth.md` — risk 2 updated to reflect D-0005
-- `.wwg/config/wwg.project.yaml` — canonical artifact map
-
-## Naming Rules Now In Force
-
-- Product name: **Tarn**, always capitalized.
-- **Marker** is the design system name only; never a product name.
-- "Job Application Tracker" is **retired**. It survives in exactly three places, all deliberate retirement notices: PRD §1.1, PRD §38 Decision Log, `DESIGN.md` Naming note.
-- The `job-application-tracker-*.md` filenames are historical and are **not** a naming rule.
-- The repository directory is still `applicant-tracking-system` — a recorded open question, not an oversight.
+- `.wwg/wiki/project-truth.md` — Implementation Reality rewritten (plan → observed), architecture items marked `[OBSERVED]`, new scaffold-level security risks, conflicts resolved, new open questions
+- `.wwg/wiki/decisions/D-0005-token-file-location.md` — marked executed, four close-out steps satisfied
+- `.wwg/governance/test-enforcement.md` — current state rewritten with real numbers, regression-test table, per-layer status
+- `.wwg/reports/wwg-maintenance-review.md` — truth-sync block updated
+- `.wwg/config/wwg.project.yaml` — `implementation_status` updated
 
 ## Remaining Open Questions
 
-1. Which deployment vendors are chosen (architecture §65 is recommendation only)?
-2. Rename the repository directory from `applicant-tracking-system` to `tarn`?
-3. What is the confirmed MVP testing/verification gate? See `.wwg/governance/test-enforcement.md`.
+1. Which deployment vendors are chosen?
+2. Rename the repository directory `applicant-tracking-system` → `tarn`? Cheapest now — no git remote or CI target exists yet.
+3. What password hashing scheme replaces the `sha256:` seed placeholder?
+4. Wire up ESLint and Husky now, or after the first feature?
 
 ## Close-Out Notes
 
-- Truth Alignment Status: GREEN. All five decisions propagated to both truth surfaces and canonical docs.
-- Execution Gate: warn — still no implementation, so nothing is verifiable.
-- Test / verification plan: unchanged; no executable path exists.
-- Drift status: LOW. The `index.css` conflict is now a scheduled migration rather than an open defect.
-- Adoption confidence: MEDIUM
-- D-0005 is **accepted but not executed**. It discharges when the monorepo scaffold is created; the four close-out steps are listed in the decision record.
-- New recommendations: none added to `.wwg/governance/recommendation-registry.md`. The three remaining questions are tracked here and in Project Truth.
+- Truth Alignment Status: GREEN
+- Execution Gate: pass — scaffold verified by execution
+- Test / verification plan: 60 executable tests; `pnpm typecheck`, `pnpm test`, `pnpm build` are the gate
+- Drift status: LOW
+- Implementation confidence: HIGH for the foundation, **ZERO for product features** — none exist
+- New recommendations: none added to `.wwg/governance/recommendation-registry.md`
+
+## Next Step
+
+Architecture §90 Step 2 is the database migration. That needs Docker running:
+
+```bash
+docker compose up -d
+pnpm db:migrate
+pnpm db:seed
+```
+
+Then Step 3 is authentication (D-0002), which is MVP scope and must not be deferred.

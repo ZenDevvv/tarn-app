@@ -1,0 +1,303 @@
+// Tarn database schema — MVP scope.
+//
+// Source of truth: `job-application-tracker-project-architecture.md` §35
+// (MVP tables, amended by D-0004) and §43 (status enums).
+// Canonical vocabulary: `.wwg/wiki/terminology.md`.
+//
+// Tables are declared with snake_case `@@map` names; Prisma models stay
+// PascalCase per architecture §84.
+//
+// DELIBERATELY ABSENT — Phase 2/3/4 (architecture §87-§89):
+//   interviews, contacts, resumes, cover_letters, notifications,
+//   user_skills, application_skills
+// `notifications` in particular must not appear here (D-0004).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums (architecture §43)
+// ---------------------------------------------------------------------------
+
+enum ApplicationStatus {
+  SAVED
+  APPLIED
+  APPLICATION_VIEWED
+  RECRUITER_CONTACTED
+  HR_INTERVIEW
+  TECHNICAL_INTERVIEW
+  FINAL_INTERVIEW
+  OFFER
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+  NO_RESPONSE
+}
+
+enum ApplicationPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum FollowUpState {
+  PENDING
+  DUE_TODAY
+  OVERDUE
+  COMPLETED
+  SNOOZED
+}
+
+enum OfferStatus {
+  RECEIVED
+  UNDER_REVIEW
+  ACCEPTED
+  DECLINED
+  NEGOTIATING
+}
+
+enum JobPlatform {
+  LINKEDIN
+  INDEED
+  JOBSTREET
+  ONLINEJOBSPH
+  COMPANY_WEBSITE
+  REFERRAL
+  OTHER
+}
+
+// ---------------------------------------------------------------------------
+// User (MVP — D-0002; authentication is not deferred)
+// ---------------------------------------------------------------------------
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  applications  Application[]
+  companies     Company[]
+  jobs          Job[]
+  savedJobs     SavedJob[]
+  skills        Skill[]
+  timelineEvents TimelineEvent[]
+  followUps     FollowUp[]
+  offers        Offer[]
+
+  @@map("users")
+}
+
+// ---------------------------------------------------------------------------
+// Company (PRD §7.9)
+// ---------------------------------------------------------------------------
+
+model Company {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  website   String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobs      Job[]
+  savedJobs SavedJob[]
+
+  @@index([userId])
+  @@map("companies")
+}
+
+// ---------------------------------------------------------------------------
+// Job (PRD §7.15) — the role description, distinct from Application
+// ---------------------------------------------------------------------------
+
+model Job {
+  id             String      @id @default(cuid())
+  userId         String
+  companyId      String?
+  title          String
+  platform       JobPlatform
+  location       String?
+  salaryMin      Int?
+  salaryMax      Int?
+  salaryCurrency String?
+  description    String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company   Company?   @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  skills    JobSkill[]
+  applications Application[]
+  savedJobs SavedJob[]
+
+  @@index([userId])
+  @@index([companyId])
+  @@map("jobs")
+}
+
+// ---------------------------------------------------------------------------
+// Skill (MVP capture only; extraction + matching are Phase 3 — D-0004)
+// ---------------------------------------------------------------------------
+
+model Skill {
+  id    String @id @default(cuid())
+  userId String
+  name  String
+
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobs   JobSkill[]
+
+  // A skill is unique per user, not globally.
+  @@unique([userId, name])
+  @@index([userId])
+  @@map("skills")
+}
+
+model JobSkill {
+  jobId    String
+  skillId  String
+  required Boolean @default(true)
+
+  job   Job   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([jobId, skillId])
+  @@index([skillId])
+  @@map("job_skills")
+}
+
+// ---------------------------------------------------------------------------
+// Application (PRD §7.3) — the core record
+// ---------------------------------------------------------------------------
+
+model Application {
+  id              String              @id @default(cuid())
+  userId          String
+  jobId           String
+  status          ApplicationStatus   @default(APPLIED)
+  priority        ApplicationPriority?
+  appliedAt       DateTime?
+  nextAction      String?
+  nextActionDueAt DateTime?
+  notes           String?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job            Job             @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  timelineEvents TimelineEvent[]
+  followUps      FollowUp[]
+  offers         Offer[]
+
+  // Architecture §78: dashboard and Kanban both filter by owner + status/date.
+  @@index([userId])
+  @@index([userId, status])
+  @@index([jobId])
+  @@index([appliedAt])
+  @@index([nextActionDueAt])
+  @@map("applications")
+}
+
+// ---------------------------------------------------------------------------
+// SavedJob (MVP — D-0004)
+// ---------------------------------------------------------------------------
+
+model SavedJob {
+  id        String      @id @default(cuid())
+  userId    String
+  companyId String?
+  jobId     String?
+  title     String
+  platform  JobPlatform
+  url       String?
+  notes     String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  job     Job?     @relation(fields: [jobId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@map("saved_jobs")
+}
+
+// ---------------------------------------------------------------------------
+// TimelineEvent (PRD §7.6) — append-only history
+// ---------------------------------------------------------------------------
+
+model TimelineEvent {
+  id            String   @id @default(cuid())
+  userId        String
+  applicationId String
+  type          String
+  note          String?
+  occurredAt    DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([applicationId, occurredAt])
+  @@map("timeline_events")
+}
+
+// ---------------------------------------------------------------------------
+// FollowUp (PRD §7.7) — a date, not a notification (D-0004)
+// ---------------------------------------------------------------------------
+
+model FollowUp {
+  id            String       @id @default(cuid())
+  userId        String
+  applicationId String
+  title         String
+  dueAt         DateTime
+  state         FollowUpState @default(PENDING)
+  completedAt   DateTime?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, state, dueAt])
+  @@index([applicationId])
+  @@map("follow_ups")
+}
+
+// ---------------------------------------------------------------------------
+// Offer (MVP — D-0004)
+// ---------------------------------------------------------------------------
+
+model Offer {
+  id            String      @id @default(cuid())
+  userId        String
+  applicationId String
+  status        OfferStatus @default(RECEIVED)
+  salary        Int?
+  currency      String?
+  notes         String?
+  receivedAt    DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  application Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([applicationId])
+  @@map("offers")
+}

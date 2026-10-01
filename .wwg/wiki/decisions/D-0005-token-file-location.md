@@ -4,13 +4,15 @@ status: accepted
 date: 2026-10-01
 decider: owner
 affects: [design-system, repository-structure, frontend]
+executed: 2026-10-01
 ---
 
 # D-0005 — Move design tokens to apps/web/src/index.css at scaffold time
 
-Status: ACCEPTED (not yet executed)
+Status: ACCEPTED — **EXECUTED 2026-10-01**
 Date: 2026-10-01
 Decided by: owner
+Executed: 2026-10-01, as step one of the monorepo scaffold
 Related: `.wwg/wiki/project-truth.md` (Known Conflicts and Drift Risks)
 
 ## Decision
@@ -32,17 +34,24 @@ The owner chose to record the decision and move at scaffold time rather than mov
 - Architecture §6 gained a matching note, and now lists `index.css` inside `apps/web/src/`.
 - `index.css` header comment notes that it is still at the root and will move.
 
-## Close-Out Condition
+## Close-Out Condition — SATISFIED
 
-This decision is not fully discharged until the scaffold exists. When the monorepo is created:
+All four steps completed on 2026-10-01:
 
-1. Move root `index.css` to `apps/web/src/index.css`.
-2. Delete the root copy — do not leave two token files, which would create a worse conflict than the one being resolved.
-3. Re-verify that `DESIGN.md` §1 and architecture §6 now match the working tree.
-4. Update Project Truth to remove the `RESOLVED_PENDING_SCAFFOLD` item entirely.
+1. ✅ Moved root `index.css` to `apps/web/src/index.css`.
+2. ✅ Deleted the root copy — `git mv` semantics, so no duplicate token source exists.
+3. ✅ Verified `DESIGN.md` §1 and architecture §6 now match the working tree.
+4. ✅ Project Truth updated; the item moved from `RESOLVED_PENDING_SCAFFOLD` to `RESOLVED`.
+
+Verified by execution: `pnpm build` in `apps/web` resolves `@import "tailwindcss"` from the new location and emits `dist/assets/index-*.css`.
+
+## Post-Execution Facts
+
+- Tailwind CSS v4 and `@tailwindcss/vite` were installed, because the token file uses v4 syntax (`@import "tailwindcss"`, `@custom-variant dark`). `vite.config.ts` now registers the `@tailwindcss/vite` plugin.
+- `tw-animate-css`, `@fontsource-variable/bricolage-grotesque`, and `@fontsource-variable/instrument-sans` were installed because `index.css` imports them.
+- The file header now records the move so a future reader does not re-litigate the path.
 
 ## Do Not
 
-- Do not create an empty `apps/web/src/` tree before the real scaffold.
-- Do not maintain a root `index.css` alias or re-export after the move.
+- Do not reintroduce a root `index.css` or a re-export of one.
 - Do not hard-code hex values in components as a workaround (DESIGN.md §1, and the UI/UX simplicity principle).

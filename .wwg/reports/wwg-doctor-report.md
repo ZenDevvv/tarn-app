@@ -2,7 +2,7 @@
 
 ## Summary
 
-Generated at: 2026-10-01T09:12:29.609Z
+Generated at: 2026-10-01T09:33:42.507Z
 Mode: existing-adopted-project
 Apply mode: true
 Registry present: true
@@ -13,9 +13,9 @@ This doctor report is a point-in-time diagnostic for the target path below. Find
 
 ## Repair Result
 
-- Repaired/refreshed WWG-owned generated surfaces: .wwg/config/wwg.project.yaml, .wwg/reports/backups/wwg.project.20261001T091230Z.yaml, .wwg/reports/readme-validation.md, .wwg/reports/wwg-agent-handoff.json, .wwg/reports/wwg-agent-handoff.md, .wwg/reports/wwg-handoff-to-codex.json, .wwg/reports/wwg-handoff-to-codex.md
+- Repaired/refreshed WWG-owned generated surfaces: .wwg/config/wwg.project.yaml, .wwg/reports/backups/wwg.project.20261001T093343Z.yaml, .wwg/reports/readme-validation.md, .wwg/reports/wwg-agent-handoff.json, .wwg/reports/wwg-agent-handoff.md, .wwg/reports/wwg-handoff-to-codex.json, .wwg/reports/wwg-handoff-to-codex.md
 - Did not repair semantic project truth: Project Truth, Terminology, Drift Guard meaning, accepted decisions, principles meaning, current task meaning, runtime evidence, and runtime skill activation remain review-only.
-- Review-only or candidate/optional findings remaining: 48
+- Review-only or candidate/optional findings remaining: 47
 - Skipped/already-current surfaces: .wwg/reports/README.md
 - Validate after doctor: pass (expected to pass)
 
@@ -47,14 +47,14 @@ Next command: `wwg audit --upgrade-candidates`
 - LOW maintenance-matrix-missing (.wwg/wiki/12-maintenance/self-maintenance-loop.md): Maintenance matrix artifact is missing.
 - LOW public-discovery-review-missing (governance-template/base/public-discovery-review.md): Expected policy or coverage artifact is missing.
 - LOW readme-agent-routing-missing (README.md): WWG is present but README.md does not route agents to AGENTS.md and .wwg context.
-- LOW readme-docs-map-missing (README.md): README.md is missing a documentation map.
-- LOW readme-missing (README.md): README.md is missing, so the project front door is not present.
 - LOW runtime-monitoring-missing (wiki-template/base/08-operations/monitoring.md): Expected policy or coverage artifact is missing.
+- LOW scoped-agents-recommended (apps/api/AGENTS.md): Scoped AGENTS.md candidate has a clean local ownership boundary.
+- LOW scoped-agents-recommended (apps/web/AGENTS.md): Scoped AGENTS.md candidate has a clean local ownership boundary.
 - LOW truth-conflict-policy-missing (governance-template/base/truth-conflict-resolution.md): Expected policy or coverage artifact is missing.
-- MEDIUM readme-missing (README.md): README.md is missing.
 - LOW readme-section-missing (README.md): README is missing expected front-door section: Install.
-- LOW readme-section-missing (README.md): README is missing expected front-door section: Documentation.
-- ... 22 more.
+- LOW readme-section-missing (README.md): README is missing expected front-door section: Current Status.
+- LOW readme-section-missing (README.md): README is missing expected front-door section: License.
+- ... 21 more.
 
 ### Candidate-only Warning
 These warnings describe candidate handoff metadata only. WWG did not activate runtime skills.
@@ -91,9 +91,9 @@ Next: No command required.
 - INFO public-surface-artifact (.wwg/changelog/config.yml): Public surface or discovery artifact detected.
 - INFO public-surface-artifact (.wwg/changelog/state.json): Public surface or discovery artifact detected.
 - INFO public-surface-detected: Detected 2 public surface/public discovery artifact(s).
+- INFO readme-detected (README.md): README.md was detected at 117 lines.
 - INFO recommendation-governance-present (.wwg/governance/recommendation-registry.md): Recommendation capture is available through the Governance registry and policy.
-- INFO root-agents-detected (AGENTS.md): Root agent instructions were detected.
-- ... 80 more.
+- ... 82 more.
 
 ## WWG Readiness
 
@@ -136,16 +136,16 @@ Must Have items are required for agent-safe operation. Other Features are recomm
 
 ### Other Features
 
-- [ ] README missing (missing)
-  - Reason: The project front door is not present.
-  - Agent action: Prepare a README handoff or reviewed scaffold; do not invent final README prose.
-  - CLI support: `wwg readme generate --dry-run`
-  - Evidence: `README.md`
 - [ ] Changelog missing (missing)
   - Reason: Package, product, or git history signals make release memory relevant.
   - Agent action: Prepare or review release narrative before treating changelog wording as final.
   - CLI support: `wwg changelog generate --from-git --weekly --dry-run`
   - Evidence: `CHANGELOG.md`
+- [ ] Infrastructure readiness not checked (available)
+  - Reason: Build, deploy, env, or infrastructure indicators were detected.
+  - Agent action: Inspect infrastructure readiness before deployment-related work.
+  - CLI support: `wwg infra check`
+  - Evidence: `package.json scripts`, `.env.example`, `docker-compose.yml`, `.github/workflows`
 - [ ] GitHub publishing readiness not checked (available)
   - Reason: Git or GitHub context exists.
   - Agent action: Do not publish without explicit approval; review readiness and secret safety first.
@@ -195,7 +195,7 @@ Agents should follow Must Have items first. Missing Other Features are not block
 ## Files Updated
 
 - .wwg/config/wwg.project.yaml
-- .wwg/reports/backups/wwg.project.20261001T091230Z.yaml
+- .wwg/reports/backups/wwg.project.20261001T093343Z.yaml
 - .wwg/reports/readme-validation.md
 - .wwg/reports/wwg-agent-handoff.json
 - .wwg/reports/wwg-agent-handoff.md
@@ -245,9 +245,9 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - low: public-discovery-review-missing - Expected policy or coverage artifact is missing. (governance-template/base/public-discovery-review.md) Recommendation: Restore the policy artifact or document an equivalent canonical source.
 - low: public-surface-review-missing - Expected policy or coverage artifact is missing. (governance-template/base/public-surface-review.md) Recommendation: Restore the policy artifact or document an equivalent canonical source.
 - low: readme-agent-routing-missing - WWG is present but README.md does not route agents to AGENTS.md and .wwg context. (README.md) Recommendation: Add a short For Agents section.
-- low: readme-docs-map-missing - README.md is missing a documentation map. (README.md) Recommendation: Add a concise Documentation section.
-- low: readme-missing - README.md is missing, so the project front door is not present. (README.md) Recommendation: Run `wwg readme generate --target . --dry-run` before creating one.
 - low: runtime-monitoring-missing - Expected policy or coverage artifact is missing. (wiki-template/base/08-operations/monitoring.md) Recommendation: Restore the policy artifact or document an equivalent canonical source.
+- low: scoped-agents-recommended - Scoped AGENTS.md candidate has a clean local ownership boundary. (apps/api/AGENTS.md) Recommendation: Recommend only; do not auto-create during Phase 2B.
+- low: scoped-agents-recommended - Scoped AGENTS.md candidate has a clean local ownership boundary. (apps/web/AGENTS.md) Recommendation: Recommend only; do not auto-create during Phase 2B.
 - low: truth-conflict-policy-missing - Expected policy or coverage artifact is missing. (governance-template/base/truth-conflict-resolution.md) Recommendation: Restore the policy artifact or document an equivalent canonical source.
 - info: agent-ready-artifacts-present - Agent-ready structure and evidence reports are present. Recommendation: No action required.
 - info: ambiguous-report-classification - Some report-like files need human classification. Recommendation: Run `wwg reports --target .` and review the Ambiguous / Needs Review section.
@@ -266,6 +266,7 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - info: public-surface-artifact - Public surface or discovery artifact detected. (.wwg/changelog/config.yml) Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
 - info: public-surface-artifact - Public surface or discovery artifact detected. (.wwg/changelog/state.json) Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
 - info: public-surface-detected - Detected 2 public surface/public discovery artifact(s). Recommendation: Map existing public discovery sources before proposing new ones.
+- info: readme-detected - README.md was detected at 117 lines. (README.md) Recommendation: Validate it with `wwg readme validate --target .`.
 - info: recommendation-governance-present - Recommendation capture is available through the Governance registry and policy. (.wwg/governance/recommendation-registry.md) Recommendation: Use the registry for useful future work discovered by agents, audits, maintenance runs, or closeouts; do not promote recommendations automatically.
 - info: root-agents-detected - Root agent instructions were detected. (AGENTS.md) Recommendation: Map this file as canonical_artifacts.root_agents.
 - info: runtime-skill-candidates-not-generated - Runtime skill candidate contract: not generated. (.wwg/reports/runtime-skill-candidates.json) Recommendation: No action required. Candidate artifacts are optional and absence is valid.
@@ -296,15 +297,14 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - info: markdown-readable - Markdown files are non-empty and readable.
 - info: ambiguous-report-classification - Some report-like files need human classification. Recommendation: Run `wwg reports --target .` and review the Ambiguous / Needs Review section.
 - info: gitignore-native-report-backups-missing - Report policy expects `.wwg/reports/backups/` to be ignored. (.gitignore) Recommendation: Add a narrow ignore rule for `.wwg/reports/backups/` or `.wwg/.gitignore` `reports/backups/`.
-- info: markdown-contract-quality-report-generated - Markdown contract quality report completed with 107 warning(s) and 88 suggestion(s). (reports/context-skill-quality.md) Recommendation: Review `.wwg/reports/context-skill-quality.md` during focused documentation remediation.
-- medium: readme-missing - README.md is missing. (README.md) Recommendation: Run `wwg readme generate --target . --dry-run` before creating one.
+- info: markdown-contract-quality-report-generated - Markdown contract quality report completed with 108 warning(s) and 91 suggestion(s). (reports/context-skill-quality.md) Recommendation: Review `.wwg/reports/context-skill-quality.md` during focused documentation remediation.
 - low: readme-section-missing - README is missing expected front-door section: Install. (README.md) Recommendation: Add a concise section or route readers to the matching docs page.
-- low: readme-section-missing - README is missing expected front-door section: Documentation. (README.md) Recommendation: Add a concise section or route readers to the matching docs page.
 - low: readme-section-missing - README is missing expected front-door section: Current Status. (README.md) Recommendation: Add a concise section or route readers to the matching docs page.
 - low: readme-section-missing - README is missing expected front-door section: License. (README.md) Recommendation: Add a concise section or route readers to the matching docs page.
 - low: readme-section-missing - README is missing expected front-door section: For Agents. (README.md) Recommendation: Add a concise section or route readers to the matching docs page.
 - low: readme-section-missing - README is missing expected front-door section: What It Is. (README.md) Recommendation: Add a concise section or route readers to the matching docs page.
 - low: readme-section-missing - README is missing expected front-door section: Why It Exists. (README.md) Recommendation: Add a concise section or route readers to the matching docs page.
+- low: readme-status-stale - Package version 0.0.0 is not mentioned in README status. (README.md) Recommendation: Review Current Status and version wording.
 - info: handoff-input-missing - .wwg/config/intake.answers.yaml was not available for the handoff report. (.wwg/config/intake.answers.yaml) Recommendation: Leave as an open question until planning truth exists.
 - info: handoff-input-missing - .wwg/config/skill-manifest.yaml was not available for the handoff report. (.wwg/config/skill-manifest.yaml) Recommendation: Leave as an open question until planning truth exists.
 - info: handoff-input-missing - .wwg/reports/truth-reconciliation-candidates.json was not available for the handoff report. (.wwg/reports/truth-reconciliation-candidates.json) Recommendation: Leave as an open question until planning truth exists.
@@ -340,9 +340,9 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - low: public-discovery-review-missing - Expected policy or coverage artifact is missing. (governance-template/base/public-discovery-review.md) Recommendation: Restore the policy artifact or document an equivalent canonical source.
 - low: public-surface-review-missing - Expected policy or coverage artifact is missing. (governance-template/base/public-surface-review.md) Recommendation: Restore the policy artifact or document an equivalent canonical source.
 - low: readme-agent-routing-missing - WWG is present but README.md does not route agents to AGENTS.md and .wwg context. (README.md) Recommendation: Add a short For Agents section.
-- low: readme-docs-map-missing - README.md is missing a documentation map. (README.md) Recommendation: Add a concise Documentation section.
-- low: readme-missing - README.md is missing, so the project front door is not present. (README.md) Recommendation: Run `wwg readme generate --target . --dry-run` before creating one.
 - low: runtime-monitoring-missing - Expected policy or coverage artifact is missing. (wiki-template/base/08-operations/monitoring.md) Recommendation: Restore the policy artifact or document an equivalent canonical source.
+- low: scoped-agents-recommended - Scoped AGENTS.md candidate has a clean local ownership boundary. (apps/api/AGENTS.md) Recommendation: Recommend only; do not auto-create during Phase 2B.
+- low: scoped-agents-recommended - Scoped AGENTS.md candidate has a clean local ownership boundary. (apps/web/AGENTS.md) Recommendation: Recommend only; do not auto-create during Phase 2B.
 - low: truth-conflict-policy-missing - Expected policy or coverage artifact is missing. (governance-template/base/truth-conflict-resolution.md) Recommendation: Restore the policy artifact or document an equivalent canonical source.
 - info: agent-ready-artifacts-present - Agent-ready structure and evidence reports are present. Recommendation: No action required.
 - info: ambiguous-report-classification - Some report-like files need human classification. Recommendation: Run `wwg reports --target .` and review the Ambiguous / Needs Review section.
@@ -361,6 +361,7 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - info: public-surface-artifact - Public surface or discovery artifact detected. (.wwg/changelog/config.yml) Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
 - info: public-surface-artifact - Public surface or discovery artifact detected. (.wwg/changelog/state.json) Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
 - info: public-surface-detected - Detected 2 public surface/public discovery artifact(s). Recommendation: Map existing public discovery sources before proposing new ones.
+- info: readme-detected - README.md was detected at 117 lines. (README.md) Recommendation: Validate it with `wwg readme validate --target .`.
 - info: recommendation-governance-present - Recommendation capture is available through the Governance registry and policy. (.wwg/governance/recommendation-registry.md) Recommendation: Use the registry for useful future work discovered by agents, audits, maintenance runs, or closeouts; do not promote recommendations automatically.
 - info: root-agents-detected - Root agent instructions were detected. (AGENTS.md) Recommendation: Map this file as canonical_artifacts.root_agents.
 - info: runtime-skill-candidates-not-generated - Runtime skill candidate contract: not generated. (.wwg/reports/runtime-skill-candidates.json) Recommendation: No action required. Candidate artifacts are optional and absence is valid.
@@ -396,7 +397,7 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - Remaining stale context:
   - Review doctor findings above.
 - Generated By: WWG
-- Generated At: 2026-10-01T09:12:29.609Z
+- Generated At: 2026-10-01T09:33:42.507Z
 - Canonical Truth Impact: none; report evidence does not rewrite `.wwg/wiki`.
 - Requires Review: review findings or candidates before promoting any semantic truth.
 - Vorter runtime evidence accepted as WWG truth: NO

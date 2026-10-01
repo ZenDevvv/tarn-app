@@ -8,7 +8,8 @@
     ".wwg/wiki/principles/ui-ux-simplicity-principles.md",
     ".wwg/wiki/project-truth.md",
     ".wwg/wiki/terminology.md",
-    "AGENTS.md"
+    "AGENTS.md",
+    "README.md"
   ],
   "missingFiles": [
     ".wwg/wiki/project-truth-summary.md",
@@ -50,6 +51,12 @@
     },
     {
       "file": "AGENTS.md",
+      "reason": "File either carries project-specific truth, lacks reliable unchanged-template evidence, or has upgrade-readiness findings.",
+      "recommendation": "Review and merge manually. Do not apply an automatic overwrite.",
+      "riskLevel": "medium"
+    },
+    {
+      "file": "README.md",
       "reason": "File either carries project-specific truth, lacks reliable unchanged-template evidence, or has upgrade-readiness findings.",
       "recommendation": "Review and merge manually. Do not apply an automatic overwrite.",
       "riskLevel": "medium"

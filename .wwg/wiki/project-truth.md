@@ -1,10 +1,11 @@
 # Project Truth
 
 Adoption status: ADOPTED_FROM_EXISTING_PROJECT
-Status: Accepted truth, ingested from existing project documentation, amended by owner decision.
+Status: Accepted truth, ingested from existing project documentation, amended by owner decision, and synchronized against the scaffolded foundation.
 Truth confidence: MEDIUM
 Last truth ingestion: 2026-10-01
 Last owner decision batch: 2026-10-01 (product name, MVP auth, package manager, MVP schema scope, token path)
+Last implementation sync: 2026-10-01 (monorepo scaffold complete; verified by typecheck, 60 passing tests, and build)
 Last adoption audit: 2026-10-01
 
 This file was populated by ingesting the existing project documents into governed truth, then amended by explicit owner decisions recorded in PRD §38 and `.wwg/wiki/decisions/`.
@@ -37,11 +38,38 @@ This ordering is itself accepted truth and governs every conflict below.
 
 ## Implementation Reality
 
-- Implementation status: NOT YET IMPLEMENTED. The repository currently contains documentation and design assets only.
+- Implementation status: **FOUNDATION SCAFFOLDED. NO PRODUCT FEATURE IS IMPLEMENTED.**
 - Status: CONFIRMED
-- Evidence: working-tree scan — root contains `.git/`, `.wwg/`, `AGENTS.md`, `DESIGN.md`, `design-system.html`, `index.css`, `job-application-tracker-brd-prd.md`, `job-application-tracker-project-architecture.md`. No `apps/`, no `packages/`, no `package.json`, no `pnpm-workspace.yaml`, no `docker-compose.yml`.
+- Evidence: working-tree scan plus executed verification on 2026-10-01.
+- Last verified: 2026-10-01
 
-Consequence that agents must respect: every architecture, stack, data-model, auth, and deployment item in this file is labeled `CONFIRMED_AS_PLAN` (accepted plan), not observed implementation. Do not describe the stack as "running", "implemented", or "shipped". Do not claim any feature exists in code.
+What exists now:
+
+- Monorepo root: `pnpm-workspace.yaml`, `package.json` (pnpm 9.15.4), `tsconfig.base.json`, `docker-compose.yml`, `.env.example`, `.gitignore`, `README.md`, `.github/workflows/ci.yml`
+- `apps/web` — React + Vite + Tailwind v4 app; renders a shell with a dashboard placeholder that calls the API health endpoint
+- `apps/api` — Express app; exposes `GET /api/v1/health` only
+- `packages/database` — Prisma schema for the 10 MVP tables, centralized client, idempotent seed
+- `packages/validation` — shared Zod schemas
+- `packages/types` — shared domain types and the API response envelope
+- Design tokens now at `apps/web/src/index.css` (moved from repository root; D-0005 executed)
+
+What does **not** exist yet:
+
+- No migrations have been committed. `prisma migrate diff` confirms the schema generates valid DDL, but no migration has been applied because the Docker daemon was not running during the scaffold.
+- No auth. `requireAuth` deliberately returns 501 so protected routes cannot be reached without an owner.
+- No applications, pipeline/Kanban, timeline, follow-ups, dashboard metrics, analytics, search, saved jobs, skills UI, or offers UI.
+- No React component tests, no API tests against a real database, no Playwright.
+- No deployment configuration (architecture §65 vendors remain undecided).
+
+Verified on 2026-10-01 by execution, not assumption:
+
+- `pnpm typecheck` — clean across all 5 workspace packages
+- `pnpm test` — 60 tests passing (7 types, 17 schema scope, 23 validation, 13 API)
+- `pnpm build` — both apps build; web bundle 251 kB (81 kB gzip)
+- API boots only when env is valid, and fails closed with a specific message otherwise
+- `GET /api/v1/health` → 200; `GET /api/v1/nope` → 404 with the error envelope
+
+Consequence that agents must respect: the architecture and stack items below were `CONFIRMED_AS_PLAN` and are now **partly observed**. Anything not listed above remains a plan. Do not describe a feature as working because the scaffold builds.
 
 ## Product Identity
 
@@ -179,20 +207,21 @@ Note: `Job` and `Application` are distinct entities and must never be conflated 
 
 ## Architecture Truth
 
-All items below are labeled `CONFIRMED_AS_PLAN` (accepted plan), not observed code. See "Implementation Reality".
+All items below are labeled `CONFIRMED_AS_PLAN` (accepted plan). Items marked **[OBSERVED]** were verified by execution during the 2026-10-01 scaffold.
 
-Architectural style (CONFIRMED, architecture §4):
+Architectural style (CONFIRMED, architecture §4) **[OBSERVED — directory layout matches]**:
 
 - Backend is a **modular monolith**. Do not begin with microservices.
 - Explicitly not needed initially: Kafka, RabbitMQ, Kubernetes, service mesh, multiple databases.
-- Single API runtime and single database; modules own their business logic.
+- Single API runtime and single database; modules own their business logic. `apps/api/src/app.ts` mounts per-module routers behind `requireAuth`; the `modules/` directory is created as modules are built.
 
-Repository strategy (CONFIRMED, architecture §5):
+Repository strategy (CONFIRMED, architecture §5) **[OBSERVED]**:
 
 - **Monorepo** using `pnpm workspaces`.
-- **`pnpm` is the confirmed package manager**, not a recommendation (owner decision 2026-10-01). The root must carry `pnpm-workspace.yaml` and a pinned `packageManager` field in `package.json`; commit `pnpm-lock.yaml`. Do not introduce npm or yarn lockfiles.
+- **`pnpm` is the confirmed package manager**, not a recommendation (owner decision 2026-10-01). The root carries `pnpm-workspace.yaml` and a pinned `packageManager` field in `package.json`; commit `pnpm-lock.yaml`. Do not introduce npm or yarn lockfiles.
+- Note: pnpm is not yet a hard requirement of the repo — `corepack enable` fails on this machine without admin rights, so pnpm 9.15.4 was installed to the user-global prefix. Contributors need `pnpm` on PATH.
 
-Planned repository structure (CONFIRMED_AS_PLAN, architecture §6):
+Planned repository structure (architecture §6) **[OBSERVED — created]**:
 
 ```text
 apps/web          React frontend (app, components, features, hooks, layouts, lib, routes, types, utils)
@@ -200,22 +229,38 @@ apps/api          Express backend (config, lib, middleware, modules, routes, typ
 packages/database Prisma schema, migrations, seed, client
 packages/validation Shared Zod schemas
 packages/types    Shared TypeScript types
-packages/config   Shared configuration
-tests/e2e         Playwright end-to-end tests
+tests/e2e         Playwright end-to-end tests (planned)
 .github/workflows GitHub Actions
 ```
 
-Frontend stack (CONFIRMED_AS_PLAN, architecture §2.1): TypeScript, React, Vite, Tailwind CSS, shadcn/ui, React Router, TanStack Query, React Hook Form, Zod, Recharts, React state; Zustand only if global client state becomes necessary.
+`packages/config` from architecture §6 was **not** created. Shared config lives in `tsconfig.base.json` and each package's `tsconfig.json` extends it, which removes the need for a separate package. If a real need for a shared runtime config package appears, add it then (architecture §92 rule 11).
 
-Backend stack (CONFIRMED_AS_PLAN, architecture §2.2): Node.js, TypeScript, Express, Zod, Prisma, PostgreSQL, JWT/session in httpOnly cookies, S3-compatible storage, Pino or Winston.
+Frontend stack (CONFIRMED as plan, architecture §2.1) **[OBSERVED — react, react-router-dom, @tanstack/react-query, tailwindcss v4 installed]**:
 
-Testing stack (CONFIRMED_AS_PLAN, architecture §2.3): Vitest (unit), React Testing Library (component), Vitest/Supertest (API), Playwright (E2E).
+TypeScript, React, Vite, Tailwind CSS v4, shadcn/ui, React Router, TanStack Query, React Hook Form, Zod, Recharts, React state; Zustand only if global client state becomes necessary. Not yet installed: shadcn/ui, React Hook Form, Recharts, Zustand — none are used yet.
 
-Tooling (CONFIRMED_AS_PLAN, architecture §2.4): pnpm, TypeScript, ESLint, Prettier, Husky, lint-staged, Docker, Docker Compose, GitHub Actions.
+Backend stack (CONFIRMED as plan, architecture §2.2) **[OBSERVED — express, zod, prisma installed]**:
 
-Database (CONFIRMED, architecture §3.1): **PostgreSQL**, chosen over MongoDB because the domain is heavily relational and needs foreign keys, transactions, unique constraints, joins, aggregations, and strong indexing.
+Node.js, TypeScript, Express, Zod, Prisma, PostgreSQL, JWT/session in httpOnly cookies, S3-compatible storage, Pino or Winston. Not yet installed: cookie signing beyond `cookie-parser`, structured logging, S3 storage, and real JWT verification.
 
-Planned data model (CONFIRMED_AS_PLAN, PRD §11; architecture §34–§35): User, Application, Company, Job, SavedJob, Contact, Interview, TimelineEvent, FollowUp, Resume, CoverLetter, Skill, JobSkill, Offer, Tag, ApplicationTag, Notification.
+Testing stack (CONFIRMED as plan, architecture §2.3) **[PARTLY OBSERVED]**:
+
+Vitest (unit, validation, schema, API) is installed and running. Not yet installed: React Testing Library, Playwright.
+
+Tooling (CONFIRMED as plan, architecture §2.4) **[OBSERVED — pnpm, TypeScript, Prettier, Docker, GitHub Actions]**:
+
+pnpm, TypeScript, ESLint, Prettier, Husky, lint-staged, Docker, Docker Compose, GitHub Actions. Not yet installed: Husky, lint-staged. ESLint config files are not yet written — the root `lint` script exists but there is no flat config to run.
+
+Database (CONFIRMED, architecture §3.1) **[OBSERVED — schema only]**:
+
+**PostgreSQL**, chosen over MongoDB because the domain is heavily relational. Schema is written and validated; no migration has been applied yet.
+
+Planned data model (architecture §34–§35, PRD §11) **[OBSERVED in `packages/database/prisma/schema.prisma`]**:
+
+Implemented: `User`, `Company`, `Job`, `Skill`, `JobSkill`, `Application`, `SavedJob`, `TimelineEvent`, `FollowUp`, `Offer`.
+Deferred and absent by design (D-0004): `Interview`, `Contact`, `Resume`, `CoverLetter`, `Notification`, `UserSkill`, `ApplicationSkill`.
+
+`packages/database/prisma/schema.test.ts` enforces this: it fails if a deferred table appears, if an MVP table is renamed or dropped, if the canonical enums change, if a user-owned table loses its `userId`, or if the architecture §78 indexes are removed.
 
 Architecture rules — hard constraints agents must follow (CONFIRMED, architecture §92):
 
@@ -243,13 +288,30 @@ Frontend file-placement rules (CONFIRMED, DESIGN.md §1):
 
 ## Safety and Production Boundaries
 
-This project is currently a **documentation-stage, pre-implementation** project. Nothing is implemented, so nothing is production-ready.
+This project is a **scaffolded foundation with no product feature implemented**. Nothing here is production-ready, and the build passing is not a readiness signal.
 
-Do not claim production readiness for (CONFIRMED by absence of code + explicit PRD §35 DoD):
+Do not claim production readiness for:
 
-- Any user-facing feature. The MVP Definition of Done (PRD §35) lists 14 criteria, none of which are met because no application exists.
-- Any claim that authentication, authorization, or data isolation works. These are specified (PRD §10.2, §32, §33) but unimplemented.
-- Any claim of performance, reliability, or accessibility conformance. Specified in PRD §10; unimplemented.
+- Any user-facing feature. The MVP Definition of Done (PRD §35) lists 14 criteria; none are met.
+- Authentication, authorization, or data isolation. `requireAuth` currently returns 501 by design, so no protected route is reachable at all.
+- Any performance, reliability, or accessibility conformance claim. The accessibility checks in `.wwg/wiki/principles/accessibility-principles.md` have not been run against a real screen.
+
+Security posture observed in the scaffold:
+
+- The API refuses to boot without `DATABASE_URL`, `JWT_SECRET`, `COOKIE_SECRET`, and `WEB_ORIGIN`, and names each missing variable (architecture §57). Verified by execution.
+- Body size is capped at 1 MB and an oversized body returns 413 rather than 500.
+- CORS echoes only configured origins and sets `Access-Control-Allow-Credentials`.
+- Every request carries an `x-request-id` correlation header (architecture §54).
+- Unhandled errors return a generic message; internals are logged, not returned (architecture §53).
+- `notifications`, `interviews`, `contacts`, `resumes`, `cover_letters` tables do not exist, so there is no unaudited data surface for them.
+
+Known scaffold-level risks:
+
+- The development seed stores `sha256:<hex>` as `passwordHash`. This is a **placeholder, not a password hashing scheme**. No real login path exists, but the seed must be replaced with a proper hash (bcrypt or argon2) before any auth work ships. Do not treat the seeded hash as acceptable.
+- The seed prints the test password to stdout. Acceptable for local development only; never run the seed against a shared environment.
+- `apps/api` sets `trust proxy` to 1. That is correct behind a single known proxy and wrong behind multiple; revisit per environment (architecture §55).
+- ESLint is installed but no config exists, so `pnpm lint` has nothing to enforce. This is a real gap in the CI story, not a cosmetic one.
+- `package.json#prisma` is deprecated in Prisma 6 and warns on every database command. It still works; migrate to `prisma.config.ts` before upgrading to Prisma 7.
 
 Security requirements that are accepted truth and will govern implementation (CONFIRMED, PRD §10.2/§32/§33; architecture §55):
 
@@ -291,10 +353,10 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 
 ## Known Conflicts and Drift Risks
 
-- RESOLVED_PENDING_SCAFFOLD — Token file location: `DESIGN.md` §1 and architecture §6 both state tokens live in `apps/web/src/index.css`, but the file actually present is `index.css` at the repository root and `apps/` does not exist.
-  - Status: RESOLVED_PENDING_SCAFFOLD (was CONFLICTING)
-  - Evidence: `DESIGN.md` §1 and new note; architecture §6 and new note; working-tree scan.
-  - Decision: the move to `apps/web/src/index.css` is **confirmed** and happens as the first step of the monorepo scaffold (owner decision 2026-10-01). Do not create a phantom `apps/web` tree before the scaffold exists. Until the move lands, root `index.css` is the working token source. This conflict closes automatically once the scaffold is created — re-verify the path at that point.
+- RESOLVED — Token file location: `DESIGN.md` §1 and architecture §6 both named `apps/web/src/index.css` while the file sat at repository root.
+  - Status: RESOLVED (executed 2026-10-01)
+  - Evidence: the file was moved to `apps/web/src/index.css` as the first step of the scaffold; the root copy was deleted, so there is no duplicate token source. `DESIGN.md` and architecture §6 now match the working tree.
+  - See D-0005.
 - STALE — Root `README.md` does not exist. The front door of the project is undocumented.
   - Status: STALE
   - Evidence: working-tree scan; `.wwg/reports/wwg-maintenance-review.md`.
@@ -309,12 +371,15 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
   - Status: RETIRED
   - Evidence: superseded by Tarn on 2026-10-01 (PRD §1.1, §38).
   - Note: the two canonical source files keep their historical `job-application-tracker-*` filenames. Do not treat those filenames as a naming rule, and do not propagate the retired name into new files or user-facing strings.
-- NEEDS_CONFIRMATION — No tests, CI, lint, type-check, or package manifests exist. The testing strategy in architecture §62 and CI plan in §63 are specified but not yet implemented.
+- NEEDS_CONFIRMATION — No React component tests, no Playwright E2E, no database-backed API tests, and no ESLint config exist yet. Vitest unit, validation, schema-scope and API tests do exist and pass.
   - Status: NEEDS_CONFIRMATION
-  - Evidence: working-tree scan; architecture §62–§63.
+  - Evidence: architecture §62–§63; `.wwg/governance/test-enforcement.md`; working-tree scan 2026-10-01.
 - NEEDS_CONFIRMATION — Deployment target is recommended, not decided: frontend → Vercel, API → Railway/Render, PostgreSQL → Neon/Supabase, object storage → Cloudflare R2 (architecture §65). No deployment configuration exists.
   - Status: NEEDS_CONFIRMATION
   - Evidence: architecture §65–§66; working-tree scan.
+- STALE — The design token file was moved from repository root to `apps/web/src/index.css` on 2026-10-01, so `DESIGN.md` §1 and architecture §6 now match the working tree. Any agent assuming a root `index.css` is out of date.
+  - Status: STALE
+  - Evidence: working-tree scan; D-0005.
 
 ## Open Questions
 
@@ -334,11 +399,14 @@ Still open:
   - Why it matters: infrastructure cost and hosting boundaries depend on this; also relevant to file storage and secrets handling.
   - Evidence / uncertainty: architecture §65 lists recommendations only; no `vercel.json`, `railway.json`, or equivalent exists.
 - Question: Should the repository directory be renamed from `applicant-tracking-system` to `tarn`?
-  - Why it matters: the directory name no longer matches the product name, which is a recurring source of confusion and a risk of the retired name being resurrected by tooling. Renaming also breaks local git remotes and CI config.
-  - Evidence / uncertainty: directory is currently `applicant-tracking-system`; nothing depends on the name yet since no remote or CI exists. Low risk now, higher cost later.
-- Question: What is the confirmed MVP testing/verification gate?
-  - Why it matters: WWG health and release readiness depend on a known validation path; currently no test infrastructure exists.
-  - Evidence / uncertainty: architecture §62–§63 specify a strategy that is not yet implemented. See `.wwg/governance/test-enforcement.md`.
+  - Why it matters: the directory name no longer matches the product name, which is a recurring source of confusion and a risk of the retired name being resurrected by tooling. The scaffold has now made this more visible: the root `package.json` is named `tarn` while the directory is not.
+  - Evidence / uncertainty: directory is `applicant-tracking-system`; no remote or CI target exists yet, so renaming is still cheap. The cost grows once a git remote or branch protection is configured.
+- Question: What password hashing scheme replaces the seed's `sha256:` placeholder?
+  - Why it matters: the development seed stores `sha256:<hex>` as `passwordHash`. That is not a password hashing scheme and must not survive into real auth work. See `.wwg/governance/security-review.md`.
+  - Evidence / uncertainty: architecture §55 requires password hashing but names no algorithm.
+- Question: Should ESLint and Husky be wired up now, or after the first feature?
+  - Why it matters: `pnpm lint` currently enforces nothing because no ESLint config exists, and CI runs `typecheck`, `test`, and `build` but no lint gate. The gap is real but not blocking until there is code worth linting.
+  - Evidence / uncertainty: architecture §2.4 lists both as recommended tooling.
 
 ## Update Rules
 

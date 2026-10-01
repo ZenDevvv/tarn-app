@@ -8,28 +8,46 @@ This governance file is required by root `AGENTS.md` and the WWG readiness model
 
 ## Current State
 
-**No test infrastructure exists.** This repository contains documentation and design assets only. There is no `package.json`, no test runner, no CI workflow, and no `apps/` or `packages/` tree.
+**A runnable test path now exists.** As of the 2026-10-01 scaffold:
 
-Consequently:
+- Vitest is installed at the workspace root and runs across all packages.
+- 60 tests pass: 7 (`@tarn/types`), 17 (`@tarn/database` schema scope), 23 (`@tarn/validation`), 13 (`@tarn/api`).
+- `pnpm typecheck` is clean across all five workspace packages.
+- `pnpm build` succeeds for both apps.
+- GitHub Actions runs install, `db:generate`, typecheck, test, and build.
 
-- There are zero executable tests.
-- There is no runnable verification path (no `pnpm test`, no `npm test`, no `vitest`, no `playwright`).
-- WWG's automated regression gates cannot execute. All current regression evidence is manual or candidate-only.
+Still absent:
 
-This is acceptable **at documentation stage** and is recorded as `NEEDS_CONFIRMATION` in `.wwg/wiki/project-truth.md`. It stops being acceptable the moment application code lands.
+- No React component tests (React Testing Library not installed).
+- No Playwright E2E.
+- No database-backed API tests — the current API suite injects env and does not touch Postgres.
+- **No ESLint config**, so `pnpm lint` enforces nothing and CI has no lint gate.
+- No migration has been applied, so no test has run against a real database.
 
 ## Required Strategy Once Implementation Begins
 
 Per `job-application-tracker-project-architecture.md` §62 and §63, the accepted test stack is:
 
-| Layer | Tool | Scope |
-|---|---|---|
-| Unit | Vitest | utilities, status transitions, analytics calculations, validation schemas, business-rule helpers |
-| API | Vitest + Supertest | authentication, ownership validation, application CRUD, filters, status updates, timeline creation, follow-ups |
-| React component | React Testing Library | application form, filters, status display, loading/error states, interactive components |
-| End-to-End | Playwright | register, login, create application, update application, move status, create follow-up, search/filter, logout |
+| Layer | Tool | Scope | Status |
+|---|---|---|---|
+| Unit | Vitest | utilities, status transitions, analytics calculations, validation schemas, business-rule helpers | ✅ installed, 30 tests |
+| Schema scope | Vitest | MVP table set, enums, ownership columns, required indexes | ✅ installed, 17 tests |
+| API | Vitest + Supertest | authentication, ownership validation, application CRUD, filters, status updates, timeline creation, follow-ups | ⚠️ Supertest installed; only smoke/envelope/CORS/error tests exist (13). No DB-backed CRUD or auth tests yet. |
+| React component | React Testing Library | application form, filters, status display, loading/error states, interactive components | ❌ not installed |
+| End-to-End | Playwright | register, login, create application, update application, move status, create follow-up, search/filter, logout | ❌ not installed |
 
-CI (GitHub Actions) is planned to run: install dependencies, type check, lint, unit tests, build frontend, build backend, API tests. Playwright E2E is optional at first.
+CI (GitHub Actions) runs install, Prisma generate, typecheck, test, and build. Playwright E2E is intentionally excluded for now (architecture §63). Lint is **not** enforced because no ESLint config exists.
+
+## Existing Regression Tests
+
+Two bugs were found and fixed during the scaffold. Each has a regression test, per rule 2:
+
+| Bug | Regression test |
+|---|---|
+| `app.use('/api/v1', health)` treated the 2-arity health handler as middleware, so **every** `/api/v1/*` request returned the health payload with 200 instead of 404 | `apps/api/src/app.test.ts` → "routing is not swallowed by the health route" |
+| An oversized request body returned **500** instead of **413**, because the body-parser error fell through to the generic handler | `apps/api/src/app.test.ts` → "rejects an oversized JSON body with 413, not 500" |
+
+`packages/database/prisma/schema.test.ts` is a standing scope guard rather than a bug regression: it fails if `notifications` or any other deferred table appears, if an MVP table is renamed, if a user-owned table loses `userId`, if the canonical enums drift, or if the §78 indexes are dropped.
 
 ## Enforcement Rules
 
@@ -49,13 +67,13 @@ CI (GitHub Actions) is planned to run: install dependencies, type check, lint, u
 
 ## Current WWG Regression Posture
 
-As of 2026-10-01:
+As of 2026-10-01, after the scaffold:
 
-- Regression baseline: present (`.wwg/governance/regression-manifest.md`)
-- Open regression gaps: 7 (0 critical, 0 high)
-- Traceability: 0 covered, 0 partial, 0 uncovered, 0 unknown — because no code exists to trace
-- Regression candidates: 10 proposed, 0 confirmed, 0 waived
-- Executable evidence detected: 0
+- Regression baseline: present
+- Executable tests: 60 passing across 4 packages
+- Open regression gaps: the WWG-generated gap list predates the scaffold and does not yet reflect the new test files. Re-run `wwg adopt refresh-regression` or `wwg maintain` to regenerate it.
+- Manual evidence confirmed: 0 for application behaviour (there is no application behaviour yet)
+- Known gaps: no DB-backed tests, no React tests, no E2E, no lint gate
 
 ## Related Truths
 

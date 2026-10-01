@@ -5,7 +5,7 @@
 Risk level: medium.
 Safe additions: 2.
 Safe updates: 0.
-Merge/review required: 4.
+Merge/review required: 5.
 Never-overwrite entries: 9.
 
 ## Read-Only Guarantee
@@ -17,7 +17,7 @@ This review is read-only for project files. WWG writes only this report and its 
 - Project path: C:\Users\Zen\Desktop\MY PROJECTS\applicant-tracking-system
 - Detected WWG version: 0.6.6
 - Generated template version: 0.6.6
-- Checked files: 6
+- Checked files: 7
 
 ## Missing Compact Surfaces
 
@@ -39,6 +39,7 @@ This review is read-only for project files. WWG writes only this report and its 
 - .wwg/wiki/project-truth.md | risk: high | File either carries project-specific truth, lacks reliable unchanged-template evidence, or has upgrade-readiness findings. Recommendation: Review and merge manually. Do not apply an automatic overwrite.
 - .wwg/wiki/terminology.md | risk: high | File either carries project-specific truth, lacks reliable unchanged-template evidence, or has upgrade-readiness findings. Recommendation: Review and merge manually. Do not apply an automatic overwrite.
 - AGENTS.md | risk: medium | File either carries project-specific truth, lacks reliable unchanged-template evidence, or has upgrade-readiness findings. Recommendation: Review and merge manually. Do not apply an automatic overwrite.
+- README.md | risk: medium | File either carries project-specific truth, lacks reliable unchanged-template evidence, or has upgrade-readiness findings. Recommendation: Review and merge manually. Do not apply an automatic overwrite.
 
 ## Never-Overwrite Files
 

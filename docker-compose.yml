@@ -1,0 +1,26 @@
+# Tarn — local development services.
+#
+# Architecture §59: Postgres only. "Do not add services before they are required."
+# mailpit / redis / minio are intentionally absent — see §87.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: tarn-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: tarn
+      POSTGRES_PASSWORD: tarn
+      POSTGRES_DB: tarn
+    ports:
+      - '5432:5432'
+    volumes:
+      - tarn-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U tarn -d tarn']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  tarn-postgres-data:

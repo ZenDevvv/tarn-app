@@ -2,8 +2,8 @@
    Marker design system: Tarn
    apps/web/src/index.css  (Tailwind CSS v4 + shadcn/ui)
 
-   NOTE (2026-10-01): this file is still at the repository root. It moves to
-   apps/web/src/index.css as the first step of the monorepo scaffold.
+   This file moved here from the repository root on 2026-10-01 as the first
+   step of the monorepo scaffold, closing D-0005 and DESIGN.md §1.
 
    pnpm add -D @fontsource-variable/bricolage-grotesque @fontsource-variable/instrument-sans
    Tailwind v3? Move the :root / .dark blocks as-is and map the @theme values

@@ -360,31 +360,29 @@ No stale Review By items found.
 
 > Remediation note: this section is applied manually because `wwg maintain` in WWG 0.6.6 does not emit it, yet `wwg validate` requires it on any report that claims readiness or completion. See `.wwg/governance/tooling-known-issues.md` (issue WWG-TOOL-001). Re-apply this section after every `wwg maintain` run.
 
-- Task mode: Existing Project Adoption (decision propagation)
+- Task mode: Meaningful feature — repository foundation
 - New truth detected: YES
 - Wiki updated: YES
 - Workspace updated: YES
 - Governance review completed: YES
-- Drift status: LOW — five owner decisions propagated to both the WWG truth surfaces and the canonical product documents on 2026-10-01. The `index.css` token-path conflict moved from `CONFLICTING` to `RESOLVED_PENDING_SCAFFOLD`.
+- Drift status: LOW — the monorepo scaffold was completed and Project Truth was re-synchronized against it. Implementation status moved from "not-yet-implemented" to "foundation-scaffolded-no-features".
 - Canonical files changed:
-  - `job-application-tracker-brd-prd.md` — product name set to Tarn in §1/§1.1/§1.2, §6 MVP scope amended, §37 phase matrix amended, §38 Decision Log added.
-  - `job-application-tracker-project-architecture.md` — title/§1 renamed, §5 pnpm confirmed, §6 structure updated, §35 MVP tables rewritten.
-  - `DESIGN.md` — product name in header, Naming note and Token file location note added.
-  - `index.css` — header comment corrected (product name, scaffold note, `pnpm add -D`).
-  - `design-system.html` — `<title>` and lede updated.
-  - `.wwg/wiki/project-truth.md`, `.wwg/wiki/terminology.md`, `.wwg/workspace/current-task.md`, `.wwg/config/wwg.project.yaml`.
+  - `.wwg/wiki/project-truth.md` — Implementation Reality rewritten; architecture items marked `[OBSERVED]`; new scaffold-level security risks; D-0004 doc contradictions resolved; new open questions.
+  - `.wwg/wiki/decisions/D-0005-token-file-location.md` — marked executed; all four close-out steps satisfied.
+  - `.wwg/governance/test-enforcement.md` — rewritten with real test counts, a per-layer status table, and a regression-test register.
+  - `.wwg/workspace/current-task.md`, `.wwg/config/wwg.project.yaml` updated.
 - Implementation discoveries synced:
-  - **Authentication is MVP scope.** A no-auth MVP was proposed and then rejected by the owner within the same session. The rejection is recorded so a future reader does not revive the earlier instruction. See `.wwg/wiki/decisions/D-0002-mvp-authentication.md`.
-  - MVP database tables are now `users, companies, jobs, skills, job_skills, applications, saved_jobs, timeline_events, follow_ups, offers`. `notifications` is explicitly deferred to Phase 2 — no table, channel, or UI in MVP.
-  - The Skill entity ships in MVP while AI skill extraction and matching remain Phase 3. The two must not be conflated.
-  - `pnpm` is confirmed, not recommended. Commit `pnpm-lock.yaml`; do not introduce npm or yarn lockfiles.
-  - "Job Application Tracker" is retired. It survives in exactly three places, all deliberate retirement notices.
-  - The repository directory `applicant-tracking-system` still does not match the product name Tarn. Recorded as an open question, not an oversight.
+  - The scaffold exists and is verified: 60 executable tests pass, typecheck is clean across 5 packages, both apps build, and the API boots and fails closed without env. **No product feature is implemented.**
+  - **Two real bugs were found and fixed.** `app.use('/api/v1', health)` treated a 2-arity handler as middleware, so every `/api/v1/*` request returned the health payload with 200; and an oversized body returned 500 instead of 413. Both now have regression tests.
+  - **Three D-0004 contradictions existed in the architecture document** and were amended: §61 seed listed interviews, §87 listed Saved Jobs and Offers as Phase 2, §88 listed `skills`/`job_skills` as Phase 3.
+  - **A weak-password placeholder was introduced knowingly.** The dev seed stores `sha256:<hex>` as `passwordHash`. This is not a password hashing scheme and must be replaced before auth ships. Recorded as an open question.
+  - `pnpm lint` currently enforces nothing because no ESLint config exists. CI has no lint gate. Recorded as a real gap.
+  - No migration has been applied: the Docker daemon was not running, so `prisma migrate diff` was used to validate the schema instead.
+  - D-0005 executed — design tokens now live at `apps/web/src/index.css`, and `DESIGN.md` §1 matches the tree.
 - Remaining stale context:
-  - Three owner questions remain open: deployment vendors, whether to rename the repository directory, and the MVP verification gate.
-  - D-0005 is accepted but not executed; the token move discharges when the monorepo scaffold is created.
-  - No test, CI, lint, or type-check infrastructure exists; regression evidence is manual or candidate-only.
-  - Root `README.md` and `CHANGELOG.md` still do not exist.
+  - Four owner questions remain open: deployment vendors, repository directory rename, password hashing scheme, and ESLint/Husky wiring.
+  - No DB-backed tests, no React component tests, no Playwright, no lint gate.
+  - The WWG regression gap list predates the scaffold and does not yet reflect the 60 new tests; regenerate with `wwg adopt refresh-regression`.
   - This report remains point-in-time evidence. Re-run `wwg maintain --target .` after further truth changes rather than treating it as current state, then re-apply this section.
 
 ## Follow-Up Modes

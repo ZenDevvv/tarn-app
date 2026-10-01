@@ -5,40 +5,40 @@
 - Target: C:\Users\Zen\Desktop\MY PROJECTS\applicant-tracking-system
 - Date: 2026-10-01
 - Recommended adoption mode: infer
-- Adoption readiness score: 29 / 100
-- Confidence: LOW
+- Adoption readiness score: 91 / 100
+- Confidence: HIGH
 - Command: `wwg audit --existing`
 
 ## Evidence Reviewed
 
-- README/docs: DESIGN.md, governance/README.md, reports/README.md, wiki/principles/README.md
-- Package/config files: None detected
-- Source folders: None detected
-- Tests: None detected
-- Deployment/config: None detected
+- README/docs: DESIGN.md, README.md, governance/README.md, reports/README.md, wiki/principles/README.md
+- Package/config files: apps/api/package.json, apps/web/package.json, package.json, packages/database/package.json, packages/types/package.json, packages/validation/package.json, pnpm-workspace.yaml
+- Source folders: apps, apps/api, apps/api/src, apps/api/src/config, apps/api/src/middleware, apps/api/src/routes, apps/api/src/types, apps/web, apps/web/public, apps/web/src, apps/web/src/app, apps/web/src/components, apps/web/src/components/ui, apps/web/src/features, apps/web/src/hooks, apps/web/src/layouts, apps/web/src/lib, apps/web/src/routes, apps/web/src/types, apps/web/src/utils, packages, packages/database, packages/database/prisma, packages/database/src, packages/types, packages/types/src, packages/validation, packages/validation/src
+- Tests: apps/api/src/app.test.ts, packages/database/prisma/schema.test.ts, packages/types/src/index.test.ts, packages/validation/src/index.test.ts
+- Deployment/config: .github/workflows/ci.yml, docker-compose.yml
 - Existing agent/context files: .wwg/changelog/config.yml, .wwg/changelog/state.json, .wwg/readme/config.yml, .wwg/readme/state.json, AGENTS.md
 
 ## Observed Reality
 
-- Product/app identity: CONFIRMED - applicant-tracking-system Evidence: . (folder name)
-- Product category: NEEDS_CONFIRMATION - Software project Evidence: repository scan (not enough category-specific evidence)
-- Tech stack: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: package/config (no known stack metadata detected)
-- Runtime/build tools: NEEDS_CONFIRMATION - No package scripts detected Evidence: package.json (package scripts not found)
-- Main entry points: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: source scan (no conventional entry point detected)
-- Main implemented features: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no feature headings or routes detected)
-- User roles/surfaces: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no clear user roles detected)
-- Data persistence: NEEDS_CONFIRMATION - No persistence layer detected Evidence: repository scan (no database/schema/migration indicators)
-- Auth/security: CONFIRMED - governance/security-review.md, wiki/decisions/D-0002-mvp-authentication.md Evidence: governance/security-review.md (auth/security indicator)
+- Product/app identity: CONFIRMED - tarn Evidence: package.json (package name)
+- Product category: INFERRED - Web3 eCommerce prototype Evidence: README/source (Web3, commerce, cart/checkout, or crypto wallet terms detected)
+- Tech stack: CONFIRMED - typescript Evidence: package/config (dependencies and config files)
+- Runtime/build tools: CONFIRMED - dev, build, typecheck, lint, test, test:e2e, db:generate, db:migrate, db:deploy, db:seed, db:studio, format, format:check Evidence: package.json (scripts)
+- Main entry points: CONFIRMED - apps/api/src/app.ts, apps/api/src/server.ts, apps/web/src/main.tsx, packages/types/src/index.ts, packages/validation/src/index.ts Evidence: apps/api/src/app.ts (entry point candidate); apps/api/src/server.ts (entry point candidate); apps/web/src/main.tsx (entry point candidate); packages/types/src/index.ts (entry point candidate); packages/validation/src/index.ts (entry point candidate)
+- Main implemented features: INFERRED - Status, Stack, Requirements, Getting started, Layout, MVP scope, Documentation, Working with agents Evidence: README.md (README headings or route files)
+- User roles/surfaces: INFERRED - user, owner, agent Evidence: README/source (role-like terms detected)
+- Data persistence: CONFIRMED - packages/database/package.json, packages/database/prisma/schema.prisma, packages/database/prisma/schema.test.ts, packages/database/prisma/seed.ts, packages/database/src/client.ts, packages/database/tsconfig.json Evidence: packages/database/package.json (persistence indicator)
+- Auth/security: CONFIRMED - apps/api/src/middleware/auth.ts, apps/api/src/middleware/error-handler.ts, apps/api/src/middleware/request-id.ts, governance/security-review.md, wiki/decisions/D-0002-mvp-authentication.md Evidence: apps/api/src/middleware/auth.ts (auth/security indicator)
 - Payments/billing: NEEDS_CONFIRMATION - No payments/billing implementation detected Evidence: repository scan (no payment/billing indicators)
-- Deployment/runtime: NEEDS_CONFIRMATION - No deployment config detected Evidence: repository scan (no Docker/Vercel/Netlify/GitHub Actions config detected)
+- Deployment/runtime: CONFIRMED - .github/workflows/ci.yml, docker-compose.yml Evidence: .github/workflows/ci.yml (deployment config); docker-compose.yml (deployment config)
 
 ## Inferred Truth
 
-- Product identity: INFERRED - applicant-tracking-system Evidence: . (folder name)
-- Product category: NEEDS_CONFIRMATION - Software project Evidence: repository scan (not enough category-specific evidence)
-- Primary users: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no clear user roles detected)
-- Core features: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no feature headings or routes detected)
-- Architecture: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: repository scan (architecture could not be inferred safely)
+- Product identity: INFERRED - tarn Evidence: package.json (package name)
+- Product category: INFERRED - Web3 eCommerce prototype Evidence: README/source (Web3, commerce, cart/checkout, or crypto wallet terms detected)
+- Primary users: INFERRED - user, owner, agent Evidence: README/source (role-like terms detected)
+- Core features: INFERRED - Status, Stack, Requirements, Getting started, Layout, MVP scope, Documentation, Working with agents Evidence: README.md (README headings or route files)
+- Architecture: INFERRED - source folders: apps, apps/api, apps/api/src, apps/api/src/config, apps/api/src/middleware, apps/api/src/routes, apps/api/src/types, apps/web; package-managed runtime Evidence: source/config (folders and package metadata)
 - Safety/production boundaries: NEEDS_CONFIRMATION - Production boundaries need owner confirmation Evidence: repository scan (no explicit mock/demo/production boundary detected)
 
 ## Conflicts and Drift Risks
@@ -49,16 +49,13 @@
 - mock/demo vs production claims: CONFIRMED - No direct issue detected by lightweight audit.
 - terminology drift: CONFIRMED - No direct issue detected by lightweight audit.
 - stale/generated files: CONFIRMED - No direct issue detected by lightweight audit.
-- missing tests/checks: NEEDS_CONFIRMATION - No test files were detected by lightweight scan. Recommendation: Confirm testing strategy or add baseline checks.
+- missing tests/checks: CONFIRMED - No direct issue detected by lightweight audit.
 
 ## Open Questions
 
-- Confirm product category. Why: Category affects profile selection, architecture defaults, and governance gates. Evidence: NEEDS_CONFIRMATION: Software project
-- Confirm primary users and role names. Why: Roles affect permissions, UX, terminology, and task routing. Evidence: NEEDS_CONFIRMATION: NEEDS_CONFIRMATION
-- Confirm persistence boundary. Why: Data ownership and migration policy depend on this. Evidence: NEEDS_CONFIRMATION: No persistence layer detected
+- Confirm product category. Why: Category affects profile selection, architecture defaults, and governance gates. Evidence: INFERRED: Web3 eCommerce prototype
+- Confirm primary users and role names. Why: Roles affect permissions, UX, terminology, and task routing. Evidence: INFERRED: user, owner, agent
 - Confirm payments/billing boundary. Why: Payments and billing are approval-sensitive. Evidence: NEEDS_CONFIRMATION: No payments/billing implementation detected
-- Confirm deployment/runtime boundary. Why: Operational readiness depends on deployment truth. Evidence: NEEDS_CONFIRMATION: No deployment config detected
-- Confirm testing strategy. Why: WWG health depends on a known validation path. Evidence: No test files detected.
 
 ## Recommended Adoption Plan
 
@@ -71,7 +68,7 @@ Labels used: CONFIRMED, INFERRED, NEEDS_CONFIRMATION, CONFLICTING, STALE.
 
 ## Legacy Registry Mapping Summary
 
-Detected 32 artifact(s). Registry-first mode: conservative.
+Detected 42 artifact(s). Registry-first mode: conservative.
 
 ## Observed Facts
 
@@ -83,17 +80,13 @@ Detected 32 artifact(s). Registry-first mode: conservative.
 
 ## Conflicts
 
-- missing tests/checks: NEEDS_CONFIRMATION - No test files were detected by lightweight scan.
-- deployment/runtime: NEEDS_CONFIRMATION - No deployment config detected.
+- None detected by lightweight audit.
 
 ## Open Questions
 
-- Confirm product category. Evidence: NEEDS_CONFIRMATION: Software project
-- Confirm primary users and role names. Evidence: NEEDS_CONFIRMATION: NEEDS_CONFIRMATION
-- Confirm persistence boundary. Evidence: NEEDS_CONFIRMATION: No persistence layer detected
+- Confirm product category. Evidence: INFERRED: Web3 eCommerce prototype
+- Confirm primary users and role names. Evidence: INFERRED: user, owner, agent
 - Confirm payments/billing boundary. Evidence: NEEDS_CONFIRMATION: No payments/billing implementation detected
-- Confirm deployment/runtime boundary. Evidence: NEEDS_CONFIRMATION: No deployment config detected
-- Confirm testing strategy. Evidence: No test files detected.
 
 ## Recommended Follow-Up
 
@@ -104,7 +97,7 @@ Reports are reference history. `.wwg/wiki/project-truth.md` is the canonical cur
 
 ## Adoption Readiness Score
 
-Score: 40 / 105
+Score: 85 / 105
 
 ### Strengths
 
@@ -126,11 +119,11 @@ Score: 40 / 105
 | governance assets | 10 / 10 | Governance or operations assets detected. |
 | skills/prompts | 0 / 5 | No skills or prompts detected. |
 | public surface/discovery | 5 / 5 | Public surface or discovery assets detected. |
-| project structure clarity | 0 / 10 | No major implementation boundary detected. |
-| readme/docs quality | 0 / 10 | README/docs not detected. |
-| tests/checks | 0 / 10 | No tests/specs detected. |
-| deployment config | 0 / 10 | Deployment config not detected. |
-| entry point clarity | 0 / 5 | No conventional entry points detected. |
+| project structure clarity | 10 / 10 | Implementation boundaries detected. |
+| readme/docs quality | 10 / 10 | README or docs exist for product reality. |
+| tests/checks | 10 / 10 | Tests or specs detected. |
+| deployment config | 10 / 10 | Deployment/runtime config detected. |
+| entry point clarity | 5 / 5 | Conventional entry points detected. |
 | mock vs production boundaries | 0 / 5 | No explicit mock/demo boundary signals detected. |
 | registry/readiness | 5 / 5 | WWG registry exists. |
 
@@ -150,10 +143,16 @@ wwg-native-project
 
 | Existing artifact | Classification | Suggested WWG role | Confidence |
 |---|---|---|---|
+| .github/workflows | project structure | runtime_context | medium |
+| .github/workflows | project structure | impact_zone | medium |
 | .wwg/changelog/config.yml | public surface | public_surface_updates | medium |
 | .wwg/changelog/state.json | public surface | public_surface_updates | medium |
 | AGENTS.md | root agent policy | root_agents | high |
+| apps | project structure | impact_zone | medium |
+| apps/api | project structure | impact_zone | medium |
+| apps/web | project structure | impact_zone | medium |
 | DESIGN.md | design source | design_context | high |
+| docker-compose.yml | runtime structure | runtime_context | medium |
 | governance | governance root | quality_gates | medium |
 | governance/audit-log.md | governance artifact | audit_log | medium |
 | governance/context-drift-detection.md | canonical context | project_master_context | medium |
@@ -166,6 +165,10 @@ wwg-native-project
 | governance/release-checklist.md | governance artifact | release_checklist | medium |
 | governance/security-review.md | governance artifact | quality_gates | medium |
 | governance/test-plan.md | governance artifact | test_plan | medium |
+| packages | project structure | impact_zone | medium |
+| packages/database | project structure | impact_zone | medium |
+| packages/types | project structure | impact_zone | medium |
+| packages/validation | project structure | impact_zone | medium |
 | reports | governance root | reference_history | medium |
 | reports/adoption-regression-report.json | governance artifact | regression_guardrails | medium |
 | reports/adoption-regression-report.md | governance artifact | regression_guardrails | medium |
@@ -201,6 +204,8 @@ wwg-native-project
 - MEDIUM recommended-changelog (CHANGELOG.md): evidence=likely risk=medium Recommended artifact is not currently mapped or detected. Recommendation: Create only in a later explicit adoption/init phase.
 - MEDIUM recommended-maintenance_matrix (docs/ai-context/context-maintenance-matrix.md): evidence=likely risk=medium Recommended artifact is not currently mapped or detected. Recommendation: Create only in a later explicit adoption/init phase.
 - MEDIUM recommended-public_discovery_context (docs/ai-context/public-discovery-context.md): evidence=likely risk=medium Recommended artifact is not currently mapped or detected. Recommendation: Create only in a later explicit adoption/init phase.
+- LOW scoped-agents-recommended (apps/api/AGENTS.md): evidence=likely risk=medium Scoped AGENTS.md candidate has a clean local ownership boundary. Recommendation: Recommend only; do not auto-create during Phase 2B.
+- LOW scoped-agents-recommended (apps/web/AGENTS.md): evidence=likely risk=medium Scoped AGENTS.md candidate has a clean local ownership boundary. Recommendation: Recommend only; do not auto-create during Phase 2B.
 
 ### hypotheses
 
@@ -237,7 +242,10 @@ wwg-native-project
 
 ### Recommended
 
-- None.
+| Path | Reason |
+|---|---|
+| apps/api/AGENTS.md | recommended: apps/api has a clean local ownership boundary. |
+| apps/web/AGENTS.md | recommended: apps/web has a clean local ownership boundary. |
 
 ### Not Recommended / Cross-Cutting
 

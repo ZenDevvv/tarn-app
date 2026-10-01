@@ -87,6 +87,24 @@
       "risk": "low"
     },
     {
+      "severity": "low",
+      "code": "scoped-agents-recommended",
+      "message": "Scoped AGENTS.md candidate has a clean local ownership boundary.",
+      "path": "apps/api/AGENTS.md",
+      "evidence_level": "likely",
+      "recommendation": "Recommend only; do not auto-create during Phase 2B.",
+      "risk": "medium"
+    },
+    {
+      "severity": "low",
+      "code": "scoped-agents-recommended",
+      "message": "Scoped AGENTS.md candidate has a clean local ownership boundary.",
+      "path": "apps/web/AGENTS.md",
+      "evidence_level": "likely",
+      "recommendation": "Recommend only; do not auto-create during Phase 2B.",
+      "risk": "medium"
+    },
+    {
       "severity": "info",
       "code": "public-surface-detected",
       "message": "Detected 2 public surface/public discovery artifact(s).",
@@ -337,7 +355,78 @@
         "category": "publicSurface"
       }
     ],
-    "projectStructure": []
+    "projectStructure": [
+      {
+        "path": ".github/workflows",
+        "kind": "project structure",
+        "suggestedRole": "runtime_context",
+        "confidence": "medium",
+        "category": "projectStructure"
+      },
+      {
+        "path": ".github/workflows",
+        "kind": "project structure",
+        "suggestedRole": "impact_zone",
+        "confidence": "medium",
+        "category": "projectStructure"
+      },
+      {
+        "path": "apps",
+        "kind": "project structure",
+        "suggestedRole": "impact_zone",
+        "confidence": "medium",
+        "category": "projectStructure"
+      },
+      {
+        "path": "apps/api",
+        "kind": "project structure",
+        "suggestedRole": "impact_zone",
+        "confidence": "medium",
+        "category": "projectStructure"
+      },
+      {
+        "path": "apps/web",
+        "kind": "project structure",
+        "suggestedRole": "impact_zone",
+        "confidence": "medium",
+        "category": "projectStructure"
+      },
+      {
+        "path": "docker-compose.yml",
+        "kind": "runtime structure",
+        "suggestedRole": "runtime_context",
+        "confidence": "medium",
+        "category": "projectStructure"
+      },
+      {
+        "path": "packages",
+        "kind": "project structure",
+        "suggestedRole": "impact_zone",
+        "confidence": "medium",
+        "category": "projectStructure"
+      },
+      {
+        "path": "packages/database",
+        "kind": "project structure",
+        "suggestedRole": "impact_zone",
+        "confidence": "medium",
+        "category": "projectStructure"
+      },
+      {
+        "path": "packages/types",
+        "kind": "project structure",
+        "suggestedRole": "impact_zone",
+        "confidence": "medium",
+        "category": "projectStructure"
+      },
+      {
+        "path": "packages/validation",
+        "kind": "project structure",
+        "suggestedRole": "impact_zone",
+        "confidence": "medium",
+        "category": "projectStructure"
+      }
+    ]
   },
   "suggestedMappings": {
     "root_agents": "AGENTS.md",
@@ -350,7 +439,18 @@
     "public_discovery_context": "docs/ai-context/public-discovery-context.md"
   },
   "scopedAgents": {
-    "recommended": [],
+    "recommended": [
+      {
+        "path": "apps/api/AGENTS.md",
+        "recommendation": "recommended",
+        "reason": "apps/api has a clean local ownership boundary."
+      },
+      {
+        "path": "apps/web/AGENTS.md",
+        "recommendation": "recommended",
+        "reason": "apps/web has a clean local ownership boundary."
+      }
+    ],
     "notRecommended": [
       {
         "path": "auth",

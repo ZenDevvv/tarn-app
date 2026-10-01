@@ -1961,13 +1961,17 @@ Provide development seed data for:
 Test user
 Companies
 Jobs
+Skills
+Saved jobs
 Applications
 Timeline events
 Follow-ups
-Interviews
+Offers
 ```
 
 This helps frontend development and demos.
+
+> **Amended 2026-10-01.** The seed covers MVP scope only (§35, D-0004): `saved_jobs`, `skills`, `job_skills`, and `offers` are included; `interviews` is not, because interviews are Phase 2. Seeding a table that does not exist will fail, so keep this list in sync with §35.
 
 ---
 
@@ -2631,6 +2635,9 @@ Dashboard
 Analytics
 Search
 Filters
+Saved Jobs
+Offers
+Skills (capture only)
 ```
 
 Do not block MVP on:
@@ -2657,12 +2664,12 @@ Interviews
 Contacts
 Resumes
 Cover Letters
-Saved Jobs
-Offers
 Notifications
 ```
 
 Object storage becomes required here if file uploads are introduced.
+
+> **Amended 2026-10-01.** `Saved Jobs` and `Offers` were removed from this list — they are MVP scope per D-0004 and §35. `Notifications` remains Phase 2. Note that `SavedJob` records no uploaded file in MVP, so MVP does not depend on object storage; only `Resume` and `CoverLetter` do.
 
 ---
 
@@ -2681,11 +2688,11 @@ Interview preparation
 Potential new tables:
 
 ```text
-skills
-job_skills
 user_skills
 application_skills
 ```
+
+> **Amended 2026-10-01.** `skills` and `job_skills` were removed from this list — they ship in MVP per D-0004 and §35 so skills can be captured manually. Phase 3 adds the AI **extraction and matching** behavior over the existing tables, plus these two additional tables.
 
 ---
 

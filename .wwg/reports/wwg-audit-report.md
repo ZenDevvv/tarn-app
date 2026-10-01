@@ -7,40 +7,40 @@
 - Target: C:\Users\Zen\Desktop\MY PROJECTS\applicant-tracking-system
 - Date: 2026-10-01
 - Recommended adoption mode: infer
-- Adoption readiness score: 29 / 100
-- Confidence: LOW
+- Adoption readiness score: 91 / 100
+- Confidence: HIGH
 - Command: `wwg audit --existing`
 
 ## Evidence Reviewed
 
-- README/docs: DESIGN.md, governance/README.md, reports/README.md, wiki/principles/README.md
-- Package/config files: None detected
-- Source folders: None detected
-- Tests: None detected
-- Deployment/config: None detected
+- README/docs: DESIGN.md, README.md, governance/README.md, reports/README.md, wiki/principles/README.md
+- Package/config files: apps/api/package.json, apps/web/package.json, package.json, packages/database/package.json, packages/types/package.json, packages/validation/package.json, pnpm-workspace.yaml
+- Source folders: apps, apps/api, apps/api/src, apps/api/src/config, apps/api/src/middleware, apps/api/src/routes, apps/api/src/types, apps/web, apps/web/public, apps/web/src, apps/web/src/app, apps/web/src/components, apps/web/src/components/ui, apps/web/src/features, apps/web/src/hooks, apps/web/src/layouts, apps/web/src/lib, apps/web/src/routes, apps/web/src/types, apps/web/src/utils, packages, packages/database, packages/database/prisma, packages/database/src, packages/types, packages/types/src, packages/validation, packages/validation/src
+- Tests: apps/api/src/app.test.ts, packages/database/prisma/schema.test.ts, packages/types/src/index.test.ts, packages/validation/src/index.test.ts
+- Deployment/config: .github/workflows/ci.yml, docker-compose.yml
 - Existing agent/context files: .wwg/changelog/config.yml, .wwg/changelog/state.json, .wwg/readme/config.yml, .wwg/readme/state.json, AGENTS.md
 
 ## Observed Reality
 
-- Product/app identity: CONFIRMED - applicant-tracking-system Evidence: . (folder name)
-- Product category: NEEDS_CONFIRMATION - Software project Evidence: repository scan (not enough category-specific evidence)
-- Tech stack: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: package/config (no known stack metadata detected)
-- Runtime/build tools: NEEDS_CONFIRMATION - No package scripts detected Evidence: package.json (package scripts not found)
-- Main entry points: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: source scan (no conventional entry point detected)
-- Main implemented features: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no feature headings or routes detected)
-- User roles/surfaces: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no clear user roles detected)
-- Data persistence: NEEDS_CONFIRMATION - No persistence layer detected Evidence: repository scan (no database/schema/migration indicators)
-- Auth/security: CONFIRMED - governance/security-review.md, wiki/decisions/D-0002-mvp-authentication.md Evidence: governance/security-review.md (auth/security indicator)
+- Product/app identity: CONFIRMED - tarn Evidence: package.json (package name)
+- Product category: INFERRED - Web3 eCommerce prototype Evidence: README/source (Web3, commerce, cart/checkout, or crypto wallet terms detected)
+- Tech stack: CONFIRMED - typescript Evidence: package/config (dependencies and config files)
+- Runtime/build tools: CONFIRMED - dev, build, typecheck, lint, test, test:e2e, db:generate, db:migrate, db:deploy, db:seed, db:studio, format, format:check Evidence: package.json (scripts)
+- Main entry points: CONFIRMED - apps/api/src/app.ts, apps/api/src/server.ts, apps/web/src/main.tsx, packages/types/src/index.ts, packages/validation/src/index.ts Evidence: apps/api/src/app.ts (entry point candidate); apps/api/src/server.ts (entry point candidate); apps/web/src/main.tsx (entry point candidate); packages/types/src/index.ts (entry point candidate); packages/validation/src/index.ts (entry point candidate)
+- Main implemented features: INFERRED - Status, Stack, Requirements, Getting started, Layout, MVP scope, Documentation, Working with agents Evidence: README.md (README headings or route files)
+- User roles/surfaces: INFERRED - user, owner, agent Evidence: README/source (role-like terms detected)
+- Data persistence: CONFIRMED - packages/database/package.json, packages/database/prisma/schema.prisma, packages/database/prisma/schema.test.ts, packages/database/prisma/seed.ts, packages/database/src/client.ts, packages/database/tsconfig.json Evidence: packages/database/package.json (persistence indicator)
+- Auth/security: CONFIRMED - apps/api/src/middleware/auth.ts, apps/api/src/middleware/error-handler.ts, apps/api/src/middleware/request-id.ts, governance/security-review.md, wiki/decisions/D-0002-mvp-authentication.md Evidence: apps/api/src/middleware/auth.ts (auth/security indicator)
 - Payments/billing: NEEDS_CONFIRMATION - No payments/billing implementation detected Evidence: repository scan (no payment/billing indicators)
-- Deployment/runtime: NEEDS_CONFIRMATION - No deployment config detected Evidence: repository scan (no Docker/Vercel/Netlify/GitHub Actions config detected)
+- Deployment/runtime: CONFIRMED - .github/workflows/ci.yml, docker-compose.yml Evidence: .github/workflows/ci.yml (deployment config); docker-compose.yml (deployment config)
 
 ## Inferred Truth
 
-- Product identity: INFERRED - applicant-tracking-system Evidence: . (folder name)
-- Product category: NEEDS_CONFIRMATION - Software project Evidence: repository scan (not enough category-specific evidence)
-- Primary users: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no clear user roles detected)
-- Core features: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no feature headings or routes detected)
-- Architecture: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: repository scan (architecture could not be inferred safely)
+- Product identity: INFERRED - tarn Evidence: package.json (package name)
+- Product category: INFERRED - Web3 eCommerce prototype Evidence: README/source (Web3, commerce, cart/checkout, or crypto wallet terms detected)
+- Primary users: INFERRED - user, owner, agent Evidence: README/source (role-like terms detected)
+- Core features: INFERRED - Status, Stack, Requirements, Getting started, Layout, MVP scope, Documentation, Working with agents Evidence: README.md (README headings or route files)
+- Architecture: INFERRED - source folders: apps, apps/api, apps/api/src, apps/api/src/config, apps/api/src/middleware, apps/api/src/routes, apps/api/src/types, apps/web; package-managed runtime Evidence: source/config (folders and package metadata)
 - Safety/production boundaries: NEEDS_CONFIRMATION - Production boundaries need owner confirmation Evidence: repository scan (no explicit mock/demo/production boundary detected)
 
 ## Conflicts and Drift Risks
@@ -51,16 +51,13 @@
 - mock/demo vs production claims: CONFIRMED - No direct issue detected by lightweight audit.
 - terminology drift: CONFIRMED - No direct issue detected by lightweight audit.
 - stale/generated files: CONFIRMED - No direct issue detected by lightweight audit.
-- missing tests/checks: NEEDS_CONFIRMATION - No test files were detected by lightweight scan. Recommendation: Confirm testing strategy or add baseline checks.
+- missing tests/checks: CONFIRMED - No direct issue detected by lightweight audit.
 
 ## Open Questions
 
-- Confirm product category. Why: Category affects profile selection, architecture defaults, and governance gates. Evidence: NEEDS_CONFIRMATION: Software project
-- Confirm primary users and role names. Why: Roles affect permissions, UX, terminology, and task routing. Evidence: NEEDS_CONFIRMATION: NEEDS_CONFIRMATION
-- Confirm persistence boundary. Why: Data ownership and migration policy depend on this. Evidence: NEEDS_CONFIRMATION: No persistence layer detected
+- Confirm product category. Why: Category affects profile selection, architecture defaults, and governance gates. Evidence: INFERRED: Web3 eCommerce prototype
+- Confirm primary users and role names. Why: Roles affect permissions, UX, terminology, and task routing. Evidence: INFERRED: user, owner, agent
 - Confirm payments/billing boundary. Why: Payments and billing are approval-sensitive. Evidence: NEEDS_CONFIRMATION: No payments/billing implementation detected
-- Confirm deployment/runtime boundary. Why: Operational readiness depends on deployment truth. Evidence: NEEDS_CONFIRMATION: No deployment config detected
-- Confirm testing strategy. Why: WWG health depends on a known validation path. Evidence: No test files detected.
 
 ## Recommended Adoption Plan
 
@@ -77,7 +74,7 @@ Observed reality comes from code/docs/config. Inferred truth is not canonical un
 
 ## Summary
 
-critical: 0, high: 0, medium: 6, low: 16, info: 36
+critical: 0, high: 0, medium: 6, low: 16, info: 37
 
 ## Command
 
@@ -134,14 +131,14 @@ true
 
 ## README Governance
 
-- Found: no
-- Length: 0 lines
+- Found: yes
+- Length: 117 lines
 - Validation status: warn
 - Bloat detected: no
 - Phase/pass pollution: no
-- Missing docs map: yes
+- Missing docs map: no
 - Missing agent routing: yes
-- Recommended action: Run `wwg readme generate --target . --dry-run` before creating README.md.
+- Recommended action: Run `wwg readme preview --target .` before applying any README update.
 
 ## Recommendation Capture
 
@@ -156,7 +153,7 @@ true
 - Risk level: medium
 - Safe additions: 2
 - Safe updates: 0
-- Merge/review required: 4
+- Merge/review required: 5
 - Never-overwrite entries: 9
 - Markdown report: .wwg/reports/generated-project-upgrade-review.md
 - JSON report: .wwg/reports/generated-project-upgrade-review.json
@@ -204,16 +201,16 @@ Must Have items are required for agent-safe operation. Other Features are recomm
 
 ### Other Features
 
-- [ ] README missing (missing)
-  - Reason: The project front door is not present.
-  - Agent action: Prepare a README handoff or reviewed scaffold; do not invent final README prose.
-  - CLI support: `wwg readme generate --dry-run`
-  - Evidence: `README.md`
 - [ ] Changelog missing (missing)
   - Reason: Package, product, or git history signals make release memory relevant.
   - Agent action: Prepare or review release narrative before treating changelog wording as final.
   - CLI support: `wwg changelog generate --from-git --weekly --dry-run`
   - Evidence: `CHANGELOG.md`
+- [ ] Infrastructure readiness not checked (available)
+  - Reason: Build, deploy, env, or infrastructure indicators were detected.
+  - Agent action: Inspect infrastructure readiness before deployment-related work.
+  - CLI support: `wwg infra check`
+  - Evidence: `package.json scripts`, `.env.example`, `docker-compose.yml`, `.github/workflows`
 - [ ] GitHub publishing readiness not checked (available)
   - Reason: Git or GitHub context exists.
   - Agent action: Do not publish without explicit approval; review readiness and secret safety first.
@@ -262,9 +259,9 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - LOW public-discovery-review-missing | category: policy-coverage | evidence: confirmed | risk: low | auto_fix_available: false | path: governance-template/base/public-discovery-review.md - Expected policy or coverage artifact is missing. Recommendation: Restore the policy artifact or document an equivalent canonical source.
 - LOW public-surface-review-missing | category: policy-coverage | evidence: confirmed | risk: low | auto_fix_available: false | path: governance-template/base/public-surface-review.md - Expected policy or coverage artifact is missing. Recommendation: Restore the policy artifact or document an equivalent canonical source.
 - LOW readme-agent-routing-missing | category: readme-governance | evidence: confirmed | risk: low | auto_fix_available: false | path: README.md - WWG is present but README.md does not route agents to AGENTS.md and .wwg context. Recommendation: Add a short For Agents section.
-- LOW readme-docs-map-missing | category: readme-governance | evidence: confirmed | risk: low | auto_fix_available: false | path: README.md - README.md is missing a documentation map. Recommendation: Add a concise Documentation section.
-- LOW readme-missing | category: readme-governance | evidence: confirmed | risk: low | auto_fix_available: false | path: README.md - README.md is missing, so the project front door is not present. Recommendation: Run `wwg readme generate --target . --dry-run` before creating one.
 - LOW runtime-monitoring-missing | category: policy-coverage | evidence: confirmed | risk: low | auto_fix_available: false | path: wiki-template/base/08-operations/monitoring.md - Expected policy or coverage artifact is missing. Recommendation: Restore the policy artifact or document an equivalent canonical source.
+- LOW scoped-agents-recommended | category: existing-audit | evidence: likely | risk: medium | auto_fix_available: false | path: apps/api/AGENTS.md - Scoped AGENTS.md candidate has a clean local ownership boundary. Recommendation: Recommend only; do not auto-create during Phase 2B.
+- LOW scoped-agents-recommended | category: existing-audit | evidence: likely | risk: medium | auto_fix_available: false | path: apps/web/AGENTS.md - Scoped AGENTS.md candidate has a clean local ownership boundary. Recommendation: Recommend only; do not auto-create during Phase 2B.
 - LOW truth-conflict-policy-missing | category: policy-coverage | evidence: confirmed | risk: low | auto_fix_available: false | path: governance-template/base/truth-conflict-resolution.md - Expected policy or coverage artifact is missing. Recommendation: Restore the policy artifact or document an equivalent canonical source.
 - INFO agent-ready-artifacts-present | category: agent-readiness | evidence: confirmed | risk: low | auto_fix_available: false - Agent-ready structure and evidence reports are present. Recommendation: No action required.
 - INFO ambiguous-report-classification | category: report-policy | evidence: confirmed | risk: low | auto_fix_available: false - Some report-like files need human classification. Recommendation: Run `wwg reports --target .` and review the Ambiguous / Needs Review section.
@@ -283,6 +280,7 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - INFO public-surface-artifact | category: existing-audit | evidence: confirmed | risk: low | auto_fix_available: false | path: .wwg/changelog/config.yml - Public surface or discovery artifact detected. Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
 - INFO public-surface-artifact | category: existing-audit | evidence: confirmed | risk: low | auto_fix_available: false | path: .wwg/changelog/state.json - Public surface or discovery artifact detected. Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
 - INFO public-surface-detected | category: existing-audit | evidence: confirmed | risk: low | auto_fix_available: false - Detected 2 public surface/public discovery artifact(s). Recommendation: Map existing public discovery sources before proposing new ones.
+- INFO readme-detected | category: readme-governance | evidence: confirmed | risk: low | auto_fix_available: false | path: README.md - README.md was detected at 117 lines. Recommendation: Validate it with `wwg readme validate --target .`.
 - INFO recommendation-governance-present | category: recommendation-governance | evidence: confirmed | risk: low | auto_fix_available: false | path: .wwg/governance/recommendation-registry.md - Recommendation capture is available through the Governance registry and policy. Recommendation: Use the registry for useful future work discovered by agents, audits, maintenance runs, or closeouts; do not promote recommendations automatically.
 - INFO root-agents-detected | category: existing-audit | evidence: confirmed | risk: low | auto_fix_available: false | path: AGENTS.md - Root agent instructions were detected. Recommendation: Map this file as canonical_artifacts.root_agents.
 - INFO runtime-skill-candidates-not-generated | category: runtime-skill-candidates | evidence: confirmed | risk: low | auto_fix_available: false | path: .wwg/reports/runtime-skill-candidates.json - Runtime skill candidate contract: not generated. Recommendation: No action required. Candidate artifacts are optional and absence is valid.

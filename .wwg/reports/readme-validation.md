@@ -2,9 +2,9 @@
 
 ## Summary
 
-- Detected repository mode: NEW
-- README found: no
-- Current README length: 0 lines
+- Detected repository mode: IN_PROGRESS
+- README found: yes
+- Current README length: 117 lines
 - Current README command count: 0
 - Validation status: warn
 - Doctrine mode: deterministic inspection
@@ -26,7 +26,6 @@
 ## Missing Front-Door Sections
 
 - Install
-- Documentation
 - Current Status
 - License
 - For Agents
@@ -39,11 +38,25 @@
 
 ## Local Link Findings
 
-- None.
+- Link: .wwg/wiki/project-truth.md
+  Target: .wwg/wiki/project-truth.md
+  Exists: yes
+  Severity: info
+  Recommended action: No action needed.
+- Link: .wwg/wiki/decisions/D-0004-mvp-schema-scope.md
+  Target: .wwg/wiki/decisions/D-0004-mvp-schema-scope.md
+  Exists: yes
+  Severity: info
+  Recommended action: No action needed.
+- Link: .wwg/wiki/decisions/D-0001-product-name-tarn.md
+  Target: .wwg/wiki/decisions/D-0001-product-name-tarn.md
+  Exists: yes
+  Severity: info
+  Recommended action: No action needed.
 
 ## Stale Status / Version Findings
 
-- None.
+- Package version 0.0.0 is not mentioned in README status.
 
 ## Recommended README Outline
 
@@ -61,37 +74,69 @@
 
 ## Section Routing Decisions
 
-- README.md: human-review -> README.md
-  Reason: README is missing and should be generated from project evidence.
-  Signals: missing README.
+- Status: keep -> README.md
+  Reason: No routing-only content signals were detected; keep this README section unless a human review finds duplication elsewhere.
+  Signals: 9 lines, 0 commands, 1 links, mostly prose, concise section, links to deeper docs.
+  Confidence: high.
+- Stack: keep -> README.md
+  Reason: No routing-only content signals were detected; keep this README section unless a human review finds duplication elsewhere.
+  Signals: 11 lines, 0 commands, 0 links, mostly prose, concise section.
+  Confidence: high.
+- Requirements: keep -> README.md
+  Reason: No routing-only content signals were detected; keep this README section unless a human review finds duplication elsewhere.
+  Signals: 3 lines, 0 commands, 0 links, mostly bullets, concise section.
+  Confidence: high.
+- Getting started: move -> docs/wizard.md
+  Reason: Wizard operational details belong in the Wizard guide.
+  Signals: 11 lines, 0 commands, 0 links, mostly prose, concise section, wizard operational detail.
+  Confidence: medium.
+- Commands: move -> docs/infrastructure.md
+  Reason: Infrastructure readiness, cloud tooling, env, and secret-handling details belong in the infrastructure guide.
+  Signals: 13 lines, 0 commands, 0 links, mostly prose, infrastructure detail.
+  Confidence: medium.
+- Layout: keep -> README.md
+  Reason: No routing-only content signals were detected; keep this README section unless a human review finds duplication elsewhere.
+  Signals: 14 lines, 0 commands, 0 links, mostly prose.
+  Confidence: medium.
+- MVP scope: keep -> README.md
+  Reason: No routing-only content signals were detected; keep this README section unless a human review finds duplication elsewhere.
+  Signals: 10 lines, 0 commands, 1 links, mostly prose, concise section, links to deeper docs.
+  Confidence: high.
+- Documentation: keep -> README.md
+  Reason: Documentation is a concise front-door summary, so it should remain in README.md.
+  Signals: 10 lines, 0 commands, 1 links, mostly prose, front-door heading, concise section, links to deeper docs.
+  Confidence: high.
+- Working with agents: keep -> README.md
+  Reason: No routing-only content signals were detected; keep this README section unless a human review finds duplication elsewhere.
+  Signals: 2 lines, 0 commands, 0 links, mostly prose, concise section.
   Confidence: high.
 
 ## Docs Files Recommended to Create or Update
 
-- None.
+- docs/infrastructure.md
+- docs/wizard.md
 
 ## Planned README Edits
 
-- Generate a new concise README.md.
+- Route detailed sections out of README.md.
 - Repair README governance findings.
 - Handoff-first mode: README.md will not be changed unless explicit scaffold mode is used.
 
 ## Validation Findings
 
-- MEDIUM: readme-missing - README.md is missing. Recommendation: Run `wwg readme generate --target . --dry-run` before creating one.
 - LOW: readme-section-missing - README is missing expected front-door section: Install. Recommendation: Add a concise section or route readers to the matching docs page.
-- LOW: readme-section-missing - README is missing expected front-door section: Documentation. Recommendation: Add a concise section or route readers to the matching docs page.
 - LOW: readme-section-missing - README is missing expected front-door section: Current Status. Recommendation: Add a concise section or route readers to the matching docs page.
 - LOW: readme-section-missing - README is missing expected front-door section: License. Recommendation: Add a concise section or route readers to the matching docs page.
 - LOW: readme-section-missing - README is missing expected front-door section: For Agents. Recommendation: Add a concise section or route readers to the matching docs page.
 - LOW: readme-section-missing - README is missing expected front-door section: What It Is. Recommendation: Add a concise section or route readers to the matching docs page.
 - LOW: readme-section-missing - README is missing expected front-door section: Why It Exists. Recommendation: Add a concise section or route readers to the matching docs page.
+- LOW: readme-status-stale - Package version 0.0.0 is not mentioned in README status. Recommendation: Review Current Status and version wording.
 
 ## Proposed README
 
 ```md
 # Tarn
-A personal web application that lets an individual job seeker organize, monitor, and manage their entire job-search process — applications, job descriptions, companies, recruiters, interviews, resumes, follow-ups, and offers — in one place instead of scattered spreadsheets, bookmarks, notes, emails, and calendars.
+Tarn — a personal job-search tracker. Modular monolith monorepo.
 ## What It Is
 This repository is prepared with WWG, which separates project truth, agent operating context, and governance checks so humans and agents can continue work from shared evidence.
 ## Why It Exists
@@ -126,7 +171,7 @@ Before changing this repository, read `AGENTS.md` first. Use `.wwg/wiki/project-
 ## Documentation
 - `.wwg/wiki/project-truth.md` for canonical project truth.
 ## Current Status
-Initial WWG project setup is present. Project-specific details should be completed in Project Truth before implementation begins.
+Active project. Review the documentation map and changelog for current details.
 ## License
 See [LICENSE](LICENSE).
 ```
@@ -146,7 +191,7 @@ See [LICENSE](LICENSE).
 - Remaining stale context:
   - Review README validation findings above.
 - Generated By: WWG
-- Generated At: 2026-10-01T09:12:30.101Z
+- Generated At: 2026-10-01T09:33:43.052Z
 - Canonical Truth Impact: none; report evidence does not rewrite `.wwg/wiki`.
 - Requires Review: review findings or candidates before promoting any semantic truth.
 - Vorter runtime evidence accepted as WWG truth: NO

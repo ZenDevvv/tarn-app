@@ -137,16 +137,16 @@ Must Have items are required for agent-safe operation. Other Features are recomm
 
 ### Other Features
 
-- [ ] README missing (missing)
-  - Reason: The project front door is not present.
-  - Agent action: Prepare a README handoff or reviewed scaffold; do not invent final README prose.
-  - CLI support: `wwg readme generate --dry-run`
-  - Evidence: `README.md`
 - [ ] Changelog missing (missing)
   - Reason: Package, product, or git history signals make release memory relevant.
   - Agent action: Prepare or review release narrative before treating changelog wording as final.
   - CLI support: `wwg changelog generate --from-git --weekly --dry-run`
   - Evidence: `CHANGELOG.md`
+- [ ] Infrastructure readiness not checked (available)
+  - Reason: Build, deploy, env, or infrastructure indicators were detected.
+  - Agent action: Inspect infrastructure readiness before deployment-related work.
+  - CLI support: `wwg infra check`
+  - Evidence: `package.json scripts`, `.env.example`, `docker-compose.yml`, `.github/workflows`
 - [ ] GitHub publishing readiness not checked (available)
   - Reason: Git or GitHub context exists.
   - Agent action: Do not publish without explicit approval; review readiness and secret safety first.

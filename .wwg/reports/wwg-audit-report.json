@@ -197,9 +197,9 @@
           "id": "readme-support",
           "label": "README missing",
           "category": "other-feature",
-          "status": "missing",
-          "severity": "warning",
-          "show": true,
+          "status": "present",
+          "severity": "success",
+          "show": false,
           "reason": "The project front door is not present.",
           "evidence": [
             "README.md"
@@ -244,9 +244,14 @@
           "category": "other-feature",
           "status": "available",
           "severity": "warning",
-          "show": false,
+          "show": true,
           "reason": "Build, deploy, env, or infrastructure indicators were detected.",
-          "evidence": [],
+          "evidence": [
+            "package.json scripts",
+            ".env.example",
+            "docker-compose.yml",
+            ".github/workflows"
+          ],
           "cliAction": "wwg infra check",
           "agentAction": "Inspect infrastructure readiness before deployment-related work."
         },
@@ -343,14 +348,14 @@
       "riskLevel": "medium",
       "safeAdds": 2,
       "safeUpdates": 0,
-      "mergeRequired": 4,
+      "mergeRequired": 5,
       "neverOverwrite": 9,
       "reportPaths": {
         "markdown": ".wwg/reports/generated-project-upgrade-review.md",
         "json": ".wwg/reports/generated-project-upgrade-review.json"
       }
     },
-    "findingSummary": "critical: 0, high: 0, medium: 6, low: 16, info: 36"
+    "findingSummary": "critical: 0, high: 0, medium: 6, low: 16, info: 37"
   },
   "findings": [
     {
@@ -571,30 +576,6 @@
     },
     {
       "severity": "low",
-      "code": "readme-docs-map-missing",
-      "message": "README.md is missing a documentation map.",
-      "id": "readme-docs-map-missing",
-      "category": "readme-governance",
-      "path": "README.md",
-      "evidence_level": "confirmed",
-      "recommendation": "Add a concise Documentation section.",
-      "risk": "low",
-      "auto_fix_available": false
-    },
-    {
-      "severity": "low",
-      "code": "readme-missing",
-      "message": "README.md is missing, so the project front door is not present.",
-      "id": "readme-missing",
-      "category": "readme-governance",
-      "path": "README.md",
-      "evidence_level": "confirmed",
-      "recommendation": "Run `wwg readme generate --target . --dry-run` before creating one.",
-      "risk": "low",
-      "auto_fix_available": false
-    },
-    {
-      "severity": "low",
       "code": "runtime-monitoring-missing",
       "message": "Expected policy or coverage artifact is missing.",
       "id": "runtime-monitoring-missing",
@@ -603,6 +584,30 @@
       "evidence_level": "confirmed",
       "recommendation": "Restore the policy artifact or document an equivalent canonical source.",
       "risk": "low",
+      "auto_fix_available": false
+    },
+    {
+      "severity": "low",
+      "code": "scoped-agents-recommended",
+      "message": "Scoped AGENTS.md candidate has a clean local ownership boundary.",
+      "path": "apps/api/AGENTS.md",
+      "evidence_level": "likely",
+      "recommendation": "Recommend only; do not auto-create during Phase 2B.",
+      "risk": "medium",
+      "category": "existing-audit",
+      "id": "scoped-agents-recommended",
+      "auto_fix_available": false
+    },
+    {
+      "severity": "low",
+      "code": "scoped-agents-recommended",
+      "message": "Scoped AGENTS.md candidate has a clean local ownership boundary.",
+      "path": "apps/web/AGENTS.md",
+      "evidence_level": "likely",
+      "recommendation": "Recommend only; do not auto-create during Phase 2B.",
+      "risk": "medium",
+      "category": "existing-audit",
+      "id": "scoped-agents-recommended",
       "auto_fix_available": false
     },
     {
@@ -814,6 +819,18 @@
       "risk": "low",
       "category": "existing-audit",
       "id": "public-surface-detected",
+      "auto_fix_available": false
+    },
+    {
+      "severity": "info",
+      "code": "readme-detected",
+      "message": "README.md was detected at 117 lines.",
+      "id": "readme-detected",
+      "category": "readme-governance",
+      "path": "README.md",
+      "evidence_level": "confirmed",
+      "recommendation": "Validate it with `wwg readme validate --target .`.",
+      "risk": "low",
       "auto_fix_available": false
     },
     {

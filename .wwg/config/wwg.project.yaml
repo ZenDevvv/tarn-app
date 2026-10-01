@@ -36,9 +36,17 @@ product:
   name_status: confirmed
   design_system_name: Marker
   category: personal job-search web application
-  implementation_status: not-yet-implemented
-decisions:
+  implementation_status: foundation-scaffolded-no-features
+  implementation_verified: 2026-10-01
   package_manager: pnpm
+  package_manager_version: 9.15.4
+  node_requirement: ">=20.11.0"
+  verification_commands:
+    - pnpm typecheck
+    - pnpm test
+    - pnpm build
+  executable_tests: 60
+decisions:
   mvp_authentication: required
   mvp_tables:
     - users
@@ -58,6 +66,12 @@ decisions:
     - cover_letters
     - notifications
   design_token_path: apps/web/src/index.css
+workspace_layout:
+  - apps/web
+  - apps/api
+  - packages/database
+  - packages/validation
+  - packages/types
 recommended_artifacts:
   project_registry: wwg.project.yaml
   changelog: CHANGELOG.md
@@ -90,7 +104,7 @@ reports:
 handoff:
   agent_report: .wwg/reports/wwg-agent-handoff.md
   codex_report: .wwg/reports/wwg-handoff-to-codex.md
-  last_handoff_at: 2026-10-01T09:13:01.073Z
+  last_handoff_at: 2026-10-01T09:33:48.754Z
   recommended_prompt: Read AGENTS.md and .wwg/reports/wwg-agent-handoff.md. Follow the WWG operating
     loop, then continue from the WWG plan and begin implementation with your chosen implementation
     agent.
