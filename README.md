@@ -134,3 +134,7 @@ filenames. The product is named Tarn; see
 
 Read `AGENTS.md` first, then `.wwg/wiki/project-truth.md`. Governed truth,
 decisions, and principles live under `.wwg/`.
+## Branch protection
+
+\main\ is protected. Every change arrives through a pull request where CI, the dependency review, and CodeRabbit must all pass. Direct pushes and force pushes are rejected.
+
