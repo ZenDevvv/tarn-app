@@ -21,14 +21,16 @@ Names in this project, and what each one is allowed to mean:
 | Marker | Design system name | The component/token design system only. Never a product name | CONFIRMED | `DESIGN.md` line 3; `design-system.html` (46 refs) |
 | Applicant Tracking System (ATS) | Positioning phrase | The category Tarn evolves into; always qualified as "personal" and "focused on the job seeker" | CONFIRMED | PRD §1.2 |
 | Job Search Operating System | Vision phrase | The long-term aspiration. Never the current product name | CONFIRMED | PRD §36 |
-| `applicant-tracking-system` | Repository directory name | The code repository directory | CONFIRMED_STALE | working-tree scan; does not match the product name |
+| `tarn-app` | Repository and directory name | The GitHub repository and the local checkout directory | CONFIRMED | `git remote -v`; working-tree scan 2026-10-02; PR #35 |
+| `applicant-tracking-system` | Retired directory name | The former local directory. Must not be reintroduced | RETIRED | superseded 2026-10-02; PR #35 |
 | `job-application-tracker-*.md` | Historical filenames | The two canonical source documents. Filenames only, not a naming rule | CONFIRMED | working-tree scan |
 
 Rules:
 
 - Never use the retired name "Job Application Tracker" in a new file, component, package, or user-facing string.
 - Never propagate the `job-application-tracker-` filename prefix into new files.
-- Never infer the product name from the repository directory name.
+- Never use the retired directory name `applicant-tracking-system` in new files, configuration, or CI. It is superseded by `tarn-app`.
+- Never infer the product name from the repository or directory name.
 
 ## Canonical Terms
 
@@ -123,7 +125,7 @@ Note: `Completed` is a valid **FollowUp** state and a valid **Interview** status
 |---|---|---|
 | Product name: Tarn vs retired "Job Application Tracker" | D-0001; PRD §1.1, §38 | **RESOLVED.** `Tarn` is canonical. "Job Application Tracker" is RETIRED and must not appear as a product name. Historical filenames are not a naming rule. |
 | `Tarn` vs `Marker` as product name | `DESIGN.md` line 3 | **RESOLVED.** `Tarn` is the product; `Marker` is the design system. Neither is ever the other. |
-| Repository directory `applicant-tracking-system` vs product name Tarn | working-tree scan | **OPEN.** Directory rename is a pending owner decision. Until then, never infer the product name from the directory. |
+| Repository directory vs product name Tarn | working-tree scan 2026-10-02 | **RESOLVED.** The directory is now `tarn-app`, matching the repository. The former name `applicant-tracking-system` is RETIRED as a directory name. It survives only in generated WWG reports recording a past absolute path, and in the Compose project name of pre-2026-10-02 local volumes. |
 | `applicant` as a domain entity vs `Application` as the record | Repository directory name; PRD §11; architecture §34 | **RESOLVED in favor of `Application`.** Use "applicant" only when referring to the human job seeker in prose. Do not create an `Applicant` model. |
 | `index.css` vs `apps/web/src/index.css` | `DESIGN.md` §1; working-tree scan | **RESOLVED_PENDING_SCAFFOLD (D-0005).** Canonical path is `apps/web/src/index.css`. Root `index.css` is the working source until the scaffold lands; delete the root copy after the move. |
 | `Job` vs `Application` conflation risk | PRD §11; architecture §33 | **RESOLVED.** `Job` is the role description; `Application` is the user's submission/track record. Never merged. |

@@ -190,3 +190,128 @@ Do not assume the delivery gate covers browser tests. Record as
 ### Follow-up
 
 REC-0010, before the auth module lands.
+
+---
+
+## VER-0004 — The repository directory was renamed, and two silent failures came with it
+
+**Claim.** The local checkout directory was renamed from
+`applicant-tracking-system` to `tarn-app`. Canonical truth still described the
+old name, and the rename had broken the local toolchain in two ways that
+produce misleading errors.
+
+**Evidence level.** Confirmed for the directory rename and the two
+breakages. **Not confirmed** for the Compose volume behaviour, which requires
+a running Docker daemon.
+
+### Supporting evidence
+
+The directory itself, observed 2026-10-02:
+
+```text
+working directory: C:\Users\Zen\Desktop\MY PROJECTS\tarn-app
+```
+
+The compensating commit that the rename required existed on a branch with
+**no open pull request** — one commit ahead of `origin/main`, never merged:
+
+```bash
+git log origin/main..HEAD --oneline
+# 35ccdad chore(docker): pin the compose project name to the directory
+gh pr list --state open
+# (no pull requests)
+```
+
+**Breakage 1 — every pnpm junction pointed at the old path.** pnpm stores
+absolute paths inside `node_modules` symlinks, so moving the directory
+invalidates all of them. The symptom is a `MODULE_NOT_FOUND` in *every*
+workspace, which reads like a broken lockfile or a bad install rather than a
+moved folder:
+
+```
+packages/types test: Error: Cannot find module
+  'C:\Users\Zen\Desktop\MY PROJECTS\tarn-app\packages\types\node_modules\vitest\vitest.mjs'
+```
+
+The junction target proves the cause:
+
+```powershell
+Get-Item packages\types\node_modules\vitest |
+  Select-Object -ExpandProperty Target
+# ...\applicant-tracking-system\node_modules\.pnpm\vitest@5.0.3_...\node_modules\vitest
+```
+
+Fixed with `pnpm install --frozen-lockfile`. The lockfile was not modified.
+
+**Breakage 2 — the generated Prisma Client was stale.** After the reinstall,
+typecheck failed with errors that name real enums:
+
+```
+packages/database/prisma/seed.ts(13,29): error TS2305:
+  Module '"@prisma/client"' has no exported member 'ApplicationStatus'.
+```
+
+This is a misleading error: the enums exist in the schema, but the client had
+not been generated for the new location. Fixed with `pnpm db:generate`.
+
+**After both fixes, verified on 2026-10-02:**
+
+```text
+pnpm lint       clean
+pnpm typecheck  clean, all 6 workspaces
+pnpm build      web built
+docker compose config --quiet   exit 0
+```
+
+### The Compose pin, and the claim it does not support
+
+`docker-compose.yml` now sets `name: tarn-app`. The original commit message
+and comment claimed the volume name "does not change when the repository
+directory is renamed". **That is false for this rename.** Compose derives the
+project name from the containing directory, and the volume name from the
+project name, so the volume for the pre-rename checkout is
+`applicant-tracking-system_tarn-postgres-data` and will not be reused. The pin
+protects *future* renames only.
+
+CodeRabbit raised this independently as a Major data-integrity finding on
+pull request #35, and proposed pinning the volume name to
+`applicant-tracking-system_tarn-postgres-data`.
+
+**Why that suggestion was declined.** The local database holds only seeded
+development data, which `pnpm db:deploy && pnpm db:seed` reproduces exactly;
+both are idempotent. Pinning the volume name to the retired product name would
+embed `applicant-tracking-system` in the repository permanently, which is the
+opposite of what the rename was for. The trade-off is recorded in
+`docker-compose.yml` and in Project Truth.
+
+CodeRabbit then found three further defects in the recovery procedure written
+in response, all of which were real and are now fixed: a default `pg_dump`
+carries schema and would replay on top of a migrated database and partially
+fail; the old stack must be stopped with an explicit
+`-p applicant-tracking-system` because plain `docker compose down` would use
+the new name and leave the port bound; and `pg_dump`/`psql` must be pointed at
+the same database `pnpm db:deploy` reads from `.env`.
+
+### Missing evidence
+
+- **Docker Desktop was not running.** `docker compose up`, the volume reuse
+  behaviour, and the `pg_dump`/`psql` recovery commands were **not executed**.
+  They are reasoned from documented behaviour, not observed. The recovery
+  procedure in `README.md` carries an explicit "not executed" note for this
+  reason. Verify on a scratch database before relying on it.
+- The 7 database integration tests **skipped** rather than passed, so the
+  cross-user isolation coverage that the auth module depends on is currently
+  unverified on this machine.
+- Whether any *other* absolute path is baked into the local environment (for
+  example Playwright's browser registry, or `.env`) was not audited.
+
+### Recommendation
+
+Treat `pnpm install --frozen-lockfile` and `pnpm db:generate` as the first two
+commands after moving or renaming a checkout, before diagnosing anything else.
+Both errors are loud but misleading.
+
+### Follow-up
+
+REC-0006 (directory rename) — Done. REC-0011 (`format:check` not enforced in
+CI, fails on 50 files) — Proposed.

@@ -4,7 +4,7 @@
 
 Provide the active operating contract for agents working in this adopted WWG project.
 
-Project: applicant-tracking-system
+Project: Tarn (repository and directory: `tarn-app`)
 
 ## Existing Project Adoption Rule
 

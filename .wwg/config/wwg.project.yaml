@@ -34,7 +34,6 @@ canonical_artifacts:
   terminology: .wwg/wiki/terminology.md
   decisions: .wwg/wiki/decisions
   principles: .wwg/wiki/principles
-  changelog: CHANGELOG.md
   readme: README.md
 product:
   name: Tarn
@@ -43,9 +42,12 @@ product:
   design_system_name: Marker
   category: personal job-search web application
   implementation_status: database-migrated-no-features
-  implementation_verified: 2026-10-01
+  implementation_verified: 2026-10-02
   repository: ZenDevvv/tarn-app
   repository_url: https://github.com/ZenDevvv/tarn-app
+  repository_directory: tarn-app
+  repository_directory_previous: applicant-tracking-system
+  repository_directory_renamed_at: 2026-10-02
   repository_visibility: public
   repository_licence: none (all rights reserved)
   auth_module_status: not-implemented (requireAuth returns 501 by design)
@@ -60,18 +62,36 @@ product:
     - pnpm test
     - pnpm build
     - npx playwright test
+  # 90 requires a reachable database. Without one, 7 database integration
+  # tests skip loudly and the run reports 83. Re-verified 2026-10-02.
   executable_tests: 90
+  executable_tests_without_database: 83
+  executable_tests_skipped_without_database: 7
+  database_tests_require_docker: true
   browser_tests: 24
   browser_engine: system-installed (msedge default; CI uses pinned chromium)
+  format_gate: not enforced in CI; `pnpm format:check` currently fails on 50
+    pre-existing files. See REC-0011.
   delivery_pipeline:
     ci: verified on GitHub
-    required_checks:
+    # Observed value, not intent. The GitHub API reports these three contexts;
+    # `e2e` is NOT among them, so a red browser-test job does not block a
+    # merge. Project Truth records the discrepancy as CONFLICTING under
+    # REC-0010, pending an owner decision. Do not "fix" this to match
+    # Project Truth without that decision.
+    required_checks_observed:
+      - verify
+      - dependency-review
+      - CodeRabbit
+    required_checks_intended_per_project_truth:
       - verify
       - e2e
       - dependency-review
       - CodeRabbit
+    required_checks_conflict: true
+    e2e_runs_but_is_not_required: true
     branch_protection: main, strict mode, enforce_admins true
-    ci_last_verified: 2026-10-01
+    ci_last_verified: 2026-10-02
   database:
     engine: postgresql
     version: 16
@@ -118,10 +138,9 @@ scoped_agents: []
 reports:
   adoption_audit: .wwg/reports/adoption-audit.md
   adoption_audit_json: reports/wwg-existing-audit-report.json
-  adoption_plan: .wwg/reports/wwg-adoption-plan.md
-  adoption_plan_json: reports/wwg-adoption-plan.json
-  adoption_report: .wwg/reports/wwg-adoption-report.md
-  adoption_report_json: reports/wwg-adoption-report.json
+  # adoption_plan and adoption_report removed 2026-10-02: no WWG command in
+  # 0.6.6 writes them, so registering them made the project look more
+  # complete than it is. See REC-0012.
   adoption_regression_baseline: .wwg/reports/adoption-regression-report.md
   adoption_regression_baseline_json: .wwg/reports/adoption-regression-report.json
   regression_manifest: .wwg/governance/regression-manifest.md

@@ -3,6 +3,28 @@
 # Architecture §59: Postgres only. "Do not add services before they are required."
 # mailpit / redis / minio are intentionally absent — see §87.
 
+# Pin the compose project name so it is derived from the product, not from the
+# containing directory. Without this, a rename or a move silently changes the
+# project name — and therefore the Postgres volume name — which surfaces as
+# "the database is gone".
+#
+# This protects FUTURE renames. It does not preserve the volume across the
+# 2026-10-02 rename itself: the previous project name was
+# `applicant-tracking-system`, so any volume created before this pin is named
+# `applicant-tracking-system_tarn-postgres-data` and will NOT be reused. The
+# first `docker compose up` after this change starts from an empty volume.
+#
+# That is acceptable because the local database holds only seeded development
+# data, which is fully reproducible:
+#
+#     pnpm db:deploy && pnpm db:seed
+#
+# Both are idempotent. The alternative — pinning the volume name to
+# `applicant-tracking-system_tarn-postgres-data` to keep the old volume — would
+# permanently embed the retired product name in the repository, which is the
+# opposite of what the rename was for. Not done deliberately.
+name: tarn-app
+
 services:
   postgres:
     image: postgres:16-alpine
