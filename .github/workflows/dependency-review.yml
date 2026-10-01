@@ -30,6 +30,11 @@ jobs:
         uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: moderate
-          # Advisory DB coverage beyond npm's own audit.
-          allow-licenses: mit, apache-2.0, bsd-2-clause, bsd-3-clause, isc, 0bsd, unlicense
+          # SPDX identifiers are case-SENSITIVE. A previous run failed with
+          # "Invalid license(s) in allow-licenses" because these were written in
+          # lowercase. Correct forms: MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause,
+          # ISC, 0BSD, Unlicense.
+          allow-licenses: MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC, 0BSD, Unlicense
+          # Show which fixed version resolves an advisory.
+          show-patched-versions: true
           comment-summary-in-pr: on-failure

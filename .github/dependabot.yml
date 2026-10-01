@@ -4,27 +4,40 @@
 #   - security updates  (GitHub Advisory Database)
 #   - version updates   (keeps dependencies current without anyone checking)
 #
-# Scope note: this watches the workspace packages. The root is excluded because
-# its dependency block is workspace tooling, not shipped code.
+# ## Why update-types is set at the entry level
+#
+# Major version bumps are blocked on purpose. `update-types` placed *inside* a
+# `groups` block does NOT prevent a major from being proposed — it only controls
+# which updates get bundled together. That was learned the hard way: the first
+# run after publishing opened 15 pull requests, including TypeScript 5 → 7,
+# Vite 6 → 8, @types/node 22 → 26, and Zod 3 → 4, across every package.
+#
+# Setting `update-types: ["minor", "patch"]` on each update entry caps everything
+# at routine bumps. A major becomes deliberate, reviewed work instead of
+# something that arrives on a Monday and breaks the build.
+#
+# The ones already landed deliberately (and verified by hand) are noted below.
 
 version: 2
 
 updates:
-  # Root workspace tooling (TypeScript, ESLint, Vitest, Prettier, pnpm setup).
+  # Root workspace tooling.
   - package-ecosystem: npm
     directory: '/'
     schedule:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    update-types:
+      - minor
+      - patch
     labels:
       - dependencies
     groups:
-      # One PR for all dev tooling, so the repo is not flooded with noise.
       dev-tooling:
         applies-to: version-updates
         patterns:
-          - '@types/*'
+          - '@eslint/js'
           - 'eslint'
           - 'prettier'
           - 'typescript'
@@ -33,9 +46,9 @@ updates:
           - 'tsx'
           - 'dotenv-cli'
           - '@playwright/test'
-        update-types:
-          - minor
-          - patch
+          - '@types/node'
+          - 'typescript-eslint'
+          - 'globals'
 
   # Shared packages: Prisma, Zod, and the workspace links.
   - package-ecosystem: npm
@@ -44,6 +57,9 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    update-types:
+      - minor
+      - patch
     labels:
       - dependencies
     groups:
@@ -51,16 +67,6 @@ updates:
         patterns:
           - 'prisma'
           - '@prisma/*'
-    ignore:
-      # Prisma major bumps change the client generation model and require
-      # manual migration (see the `package.json#prisma` deprecation recorded in
-      # Project Truth). Handle deliberately.
-      - dependency-name: '@prisma/client'
-        update-types:
-          - version-update:semver-major
-      - dependency-name: 'prisma'
-        update-types:
-          - version-update:semver-major
 
   - package-ecosystem: npm
     directory: '/packages/validation'
@@ -68,6 +74,9 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    update-types:
+      - minor
+      - patch
     labels:
       - dependencies
 
@@ -77,6 +86,9 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    update-types:
+      - minor
+      - patch
     labels:
       - dependencies
 
@@ -86,6 +98,9 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    update-types:
+      - minor
+      - patch
     labels:
       - dependencies
 
@@ -96,6 +111,9 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    update-types:
+      - minor
+      - patch
     labels:
       - dependencies
     groups:
@@ -114,6 +132,9 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    update-types:
+      - minor
+      - patch
     labels:
       - dependencies
     groups:
@@ -124,12 +145,23 @@ updates:
           - 'react-router-dom'
           - '@tanstack/*'
 
-  # GitHub Actions themselves (CodeQL, checkout, setup-node, pnpm/action-setup).
+  # GitHub Actions themselves.
+  #
+  # Note: Dependabot proposed checkout 4 -> 7, setup-node 4 -> 7, and
+  # pnpm/action-setup 4 -> 6 on the first run after publishing. Those are NOT
+  # applied — this repo still pins v4 — because an unverified three-major
+  # jump to CI actions is not something to accept by accident. Revisit them as
+  # one deliberate piece of work: read each action's release notes, then
+  # upgrade them together and confirm CI still passes.
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
       interval: weekly
       day: monday
+    open-pull-requests-limit: 5
+    update-types:
+      - minor
+      - patch
     labels:
       - dependencies
       - ci
