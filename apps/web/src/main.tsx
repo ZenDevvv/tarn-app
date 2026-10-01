@@ -7,26 +7,18 @@ import { DashboardPage } from './routes/dashboard-page';
 import { queryClient } from './lib/query-client';
 import './index.css';
 
-const router = createBrowserRouter(
-  [
-    {
-      element: <AppLayout />,
-      children: [
-        { index: true, loader: () => redirect('/dashboard') },
-        { path: 'dashboard', element: <DashboardPage /> },
-      ],
-    },
-  ],
+// React Router 7 — `v7_relativeSplatPath` is now the default behaviour, so no
+// future flags are needed. Upgraded from 6.30.6 to 7.x to clear two advisories
+// (open redirect via `Link`/`useNavigate`, and SSR hydration deserialization).
+const router = createBrowserRouter([
   {
-    // Opt in early so v7 splat-path behaviour is what we develop against.
-    // `createBrowserRouter` types its options against @remix-run/router's
-    // FutureConfig, which does not include `v7_startTransition` in this
-    // version — so only the supported flag is set here.
-    future: {
-      v7_relativeSplatPath: true,
-    },
+    element: <AppLayout />,
+    children: [
+      { index: true, loader: () => redirect('/dashboard') },
+      { path: 'dashboard', element: <DashboardPage /> },
+    ],
   },
-);
+]);
 
 const container = document.getElementById('root');
 

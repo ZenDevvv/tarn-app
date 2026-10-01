@@ -40,6 +40,7 @@ conservative
 | wiki/decisions/D-0004-mvp-schema-scope.md | decision history | reference_history | medium |
 | wiki/decisions/D-0005-token-file-location.md | decision history | reference_history | medium |
 | wiki/decisions/D-0006-password-hashing-scrypt.md | decision history | reference_history | medium |
+| wiki/decisions/D-0007-code-review-and-dependency-scanning.md | decision history | reference_history | medium |
 | workspace/testing/manual-verification-checklist.md | governance artifact | test_plan | medium |
 | workspace/testing/manual-verification-evidence.json | governance artifact | test_plan | medium |
 | workspace/testing/non-technical-regression-checklist.md | governance artifact | regression_guardrails | medium |
@@ -93,6 +94,7 @@ conservative
 - wiki/decisions/D-0004-mvp-schema-scope.md
 - wiki/decisions/D-0005-token-file-location.md
 - wiki/decisions/D-0006-password-hashing-scrypt.md
+- wiki/decisions/D-0007-code-review-and-dependency-scanning.md
 - workspace/testing/manual-verification-checklist.md
 - workspace/testing/manual-verification-evidence.json
 - workspace/testing/non-technical-regression-checklist.md

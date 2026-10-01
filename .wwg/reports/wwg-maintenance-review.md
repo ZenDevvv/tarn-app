@@ -360,27 +360,31 @@ No stale Review By items found.
 
 > Remediation note: this section is applied manually because `wwg maintain` in WWG 0.6.6 does not emit it, yet `wwg validate` requires it on any report that claims readiness or completion. See `.wwg/governance/tooling-known-issues.md` (issue WWG-TOOL-001). Re-apply this section after every `wwg maintain` run.
 
-- Task mode: Existing Project Adoption (continued) — decision ratification and verification closure
+- Task mode: Existing Project Adoption (continued) — security and pull-request policy
 - New truth detected: YES
 - Wiki updated: YES
 - Workspace updated: YES
 - Governance review completed: YES
-- Drift status: LOW — the scrypt decision was ratified by the owner and the last open verification gap (Playwright) was closed by driving the system-installed browser. Every previously flagged gap is now either resolved or explicitly recorded as still open.
+- Drift status: LOW — dependency scanning is implemented and running, the human-review deferral is recorded as a decision rather than an open question, and the AI reviewer is documented with the one fact that blocks it.
 - Canonical files changed:
-  - `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md` — status `proposed` → `accepted`, owner confirmation recorded, rejected alternatives written up.
-  - `.wwg/wiki/project-truth.md` — hashing confirmed; Playwright moved from OPEN to RESOLVED; browser accessibility results recorded; two accessibility defects logged.
-  - `.wwg/governance/test-enforcement.md` — 24 browser assertions, local browser instructions, and the test-integrity failure written up.
-  - `.wwg/workspace/current-task.md`, `.wwg/config/wwg.project.yaml` updated.
+  - `.github/dependabot.yml` — new; weekly grouped security and version updates, plus GitHub Actions self-monitoring.
+  - `.github/workflows/dependency-review.yml` — new; blocks a PR that introduces a vulnerable dependency.
+  - `.github/workflows/ci.yml` — added a whole-tree `pnpm audit --audit-level=high` step.
+  - `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md` — new; records all three decisions.
+  - `.wwg/wiki/project-truth.md`, `.wwg/governance/test-enforcement.md`, `README.md`, `package.json` updated.
 - Implementation discoveries synced:
-  - **Playwright now runs.** The bundled Chromium download is blocked in this environment, so the suite drives the system-installed Microsoft Edge via Playwright's `channel` option. 24 assertions pass across a desktop and a 360px project. CI keeps the pinned bundled browser for reproducibility.
-  - **Two real accessibility defects were found by running those tests**, both against the 44px touch-target rule in the accessibility section of the design document: the primary navigation link measured 67×19px, and the focused skip link was under 44px. Both fixed in `apps/web/src/layouts/app-layout.tsx`.
-  - **A test-integrity failure occurred and is recorded.** The first touch-target test logged undersized targets instead of failing, on the assumption that inline links were exempt. That silenced a genuine defect in the project's own navigation. The test now fails; the only exclusion is elements clipped to 1×1 by `sr-only`.
-  - Contrast is verified at 4.5:1 or better in both light and dark themes, in a real browser.
+  - **Dependency scanning found five real vulnerabilities on its first run**, including one high-severity: `deepmerge-ts`, transitive through Prisma. Fixed with a `pnpm.overrides` entry after verifying Prisma generation, `migrate status`, and `db:seed` still work. Four moderate advisories in `react-router` and `vitest` were cleared by two major upgrades. **`pnpm audit` now reports no known vulnerabilities.**
+  - **Two major version upgrades were performed and fully re-verified:** `react-router-dom` 6.30.6 → 7.18.4 (v7 future flags removed, since that behaviour is now the default) and Vitest 3.2.7 → 5.0.3.
+  - **A pnpm workspace trap was found and recorded:** the root `package.json` pinned Vitest and silently overrode five per-package upgrade attempts. Only `pnpm why vitest` exposed it. A root-level pin wins in a workspace.
+  - **CodeRabbit's free tier does not cover private repositories** for real review — it is a public-repository benefit. On a private repo the free tier gives PR summarisation only, and full review costs $24/month. This inverts the owner's initial plan unless the repository goes public.
+  - **GitHub CodeQL is not free on private repositories** — it requires GitHub Advanced Security. The dependency review action is free on private repositories and was chosen instead.
+  - An independent human security review was **consciously deferred** by the owner. Recorded as a decision, with the specific unreviewed items listed so the deferral is bounded rather than open-ended.
+  - Corrected a provenance error: the earlier "external security review" concept does not appear anywhere in the requirements, architecture, or design documents.
 - Remaining stale context:
-  - Four owner questions remain open: external security review timing, deployment vendors, repository directory rename, and Husky/lint-staged wiring.
-  - The owner's confirmation of scrypt settles the algorithm choice but **not** the launch security gate. An external review has not taken place.
+  - **The repository has no git remote**, so no AI reviewer can be installed and **CI has never actually run**. Every workflow passes locally but is unverified in practice.
+  - Browser tests are not wired into CI.
+  - Five owner questions remain open: create the remote, public or private, deployment vendors, directory rename, and Husky/lint-staged.
   - No auth or CRUD route tests exist, because no features exist.
-  - The WWG regression gap list predates all of this; regenerate with `wwg adopt refresh-regression`.
   - This report remains point-in-time evidence. Re-run `wwg maintain --target .` after further truth changes rather than treating it as current state, then re-apply this section.
 
 ## Follow-Up Modes

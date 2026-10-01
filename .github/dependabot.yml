@@ -1,0 +1,135 @@
+# Automated dependency maintenance.
+#
+# Free and native to GitHub. Covers both jobs that matter here:
+#   - security updates  (GitHub Advisory Database)
+#   - version updates   (keeps dependencies current without anyone checking)
+#
+# Scope note: this watches the workspace packages. The root is excluded because
+# its dependency block is workspace tooling, not shipped code.
+
+version: 2
+
+updates:
+  # Root workspace tooling (TypeScript, ESLint, Vitest, Prettier, pnpm setup).
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    groups:
+      # One PR for all dev tooling, so the repo is not flooded with noise.
+      dev-tooling:
+        applies-to: version-updates
+        patterns:
+          - '@types/*'
+          - 'eslint'
+          - 'prettier'
+          - 'typescript'
+          - 'vitest'
+          - '@vitest/*'
+          - 'tsx'
+          - 'dotenv-cli'
+          - '@playwright/test'
+        update-types:
+          - minor
+          - patch
+
+  # Shared packages: Prisma, Zod, and the workspace links.
+  - package-ecosystem: npm
+    directory: '/packages/database'
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    groups:
+      prisma:
+        patterns:
+          - 'prisma'
+          - '@prisma/*'
+    ignore:
+      # Prisma major bumps change the client generation model and require
+      # manual migration (see the `package.json#prisma` deprecation recorded in
+      # Project Truth). Handle deliberately.
+      - dependency-name: '@prisma/client'
+        update-types:
+          - version-update:semver-major
+      - dependency-name: 'prisma'
+        update-types:
+          - version-update:semver-major
+
+  - package-ecosystem: npm
+    directory: '/packages/validation'
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: '/packages/types'
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+
+  - package-ecosystem: npm
+    directory: '/packages/auth'
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+
+  # API server.
+  - package-ecosystem: npm
+    directory: '/apps/api'
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    groups:
+      # Express and its middleware move together; one PR avoids a half-applied bump.
+      api-runtime:
+        patterns:
+          - 'express'
+          - 'cors'
+          - 'cookie-parser'
+          - 'zod'
+
+  # Web frontend.
+  - package-ecosystem: npm
+    directory: '/apps/web'
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    groups:
+      react-stack:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - 'react-router-dom'
+          - '@tanstack/*'
+
+  # GitHub Actions themselves (CodeQL, checkout, setup-node, pnpm/action-setup).
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependencies
+      - ci

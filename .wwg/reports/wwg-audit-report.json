@@ -825,7 +825,7 @@
     {
       "severity": "info",
       "code": "readme-detected",
-      "message": "README.md was detected at 117 lines.",
+      "message": "README.md was detected at 136 lines.",
       "id": "readme-detected",
       "category": "readme-governance",
       "path": "README.md",

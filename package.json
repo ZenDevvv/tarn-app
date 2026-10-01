@@ -7,6 +7,11 @@
   "engines": {
     "node": ">=20.11.0"
   },
+  "pnpm": {
+    "overrides": {
+      "deepmerge-ts": "^8.0.2"
+    }
+  },
   "scripts": {
     "dev": "pnpm --parallel --filter \"./apps/*\" dev",
     "build": "pnpm --filter \"./apps/*\" build",
@@ -28,7 +33,7 @@
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.63.0",
     "@types/node": "^22.10.5",
-    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/coverage-v8": "^5.0.3",
     "dotenv-cli": "^11.0.0",
     "eslint": "^9.18.0",
     "globals": "^17.13.0",
@@ -36,6 +41,6 @@
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.71.0",
-    "vitest": "^3.2.7"
+    "vitest": "^5.0.3"
   }
 }

@@ -17,7 +17,7 @@
 - Package/config files: apps/api/package.json, apps/web/package.json, package.json, packages/auth/package.json, packages/database/package.json, packages/types/package.json, packages/validation/package.json, pnpm-workspace.yaml
 - Source folders: apps, apps/api, apps/api/src, apps/api/src/config, apps/api/src/middleware, apps/api/src/routes, apps/api/src/types, apps/web, apps/web/public, apps/web/src, apps/web/src/app, apps/web/src/components, apps/web/src/components/ui, apps/web/src/features, apps/web/src/hooks, apps/web/src/layouts, apps/web/src/lib, apps/web/src/routes, apps/web/src/test, apps/web/src/types, apps/web/src/utils, packages, packages/auth, packages/auth/src, packages/database, packages/database/prisma, packages/database/prisma/migrations, packages/database/prisma/migrations/20261001095704_init_mvp_schema, packages/database/src, packages/database/tests
 - Tests: apps/api/src/app.test.ts, apps/web/src/layouts/app-layout.test.tsx, apps/web/src/routes/dashboard-page.test.tsx, apps/web/src/test/setup.ts, packages/auth/src/password.test.ts, packages/database/prisma/schema.test.ts, packages/database/tests/integration.test.ts, packages/types/src/index.test.ts, packages/validation/src/index.test.ts, tests/e2e/smoke.spec.ts, tests/tsconfig.json
-- Deployment/config: .github/workflows/ci.yml, docker-compose.yml
+- Deployment/config: .github/workflows/ci.yml, .github/workflows/dependency-review.yml, docker-compose.yml
 - Existing agent/context files: .wwg/changelog/config.yml, .wwg/changelog/state.json, .wwg/readme/config.yml, .wwg/readme/state.json, AGENTS.md
 
 ## Observed Reality
@@ -27,19 +27,19 @@
 - Tech stack: CONFIRMED - typescript Evidence: package/config (dependencies and config files)
 - Runtime/build tools: CONFIRMED - dev, build, typecheck, typecheck:e2e, lint, lint:fix, test, test:e2e, db:generate, db:migrate, db:deploy, db:seed, db:studio, format, format:check Evidence: package.json (scripts)
 - Main entry points: CONFIRMED - apps/api/src/app.ts, apps/api/src/server.ts, apps/web/src/main.tsx, packages/auth/src/index.ts, packages/types/src/index.ts, packages/validation/src/index.ts Evidence: apps/api/src/app.ts (entry point candidate); apps/api/src/server.ts (entry point candidate); apps/web/src/main.tsx (entry point candidate); packages/auth/src/index.ts (entry point candidate); packages/types/src/index.ts (entry point candidate); packages/validation/src/index.ts (entry point candidate)
-- Main implemented features: INFERRED - Status, Stack, Requirements, Getting started, Layout, MVP scope, Documentation, Working with agents Evidence: README.md (README headings or route files)
+- Main implemented features: INFERRED - Status, Stack, Requirements, Getting started, Quality gates, Layout, MVP scope, Documentation Evidence: README.md (README headings or route files)
 - User roles/surfaces: INFERRED - user, owner, agent, developer Evidence: README/source (role-like terms detected)
 - Data persistence: CONFIRMED - packages/database/package.json, packages/database/prisma/migrations/20261001095704_init_mvp_schema/migration.sql, packages/database/prisma/migrations/migration_lock.toml, packages/database/prisma/schema.prisma, packages/database/prisma/schema.test.ts, packages/database/prisma/seed.ts, packages/database/src/client.ts, packages/database/tests/integration.test.ts Evidence: packages/database/package.json (persistence indicator)
 - Auth/security: CONFIRMED - apps/api/src/middleware/auth.ts, apps/api/src/middleware/error-handler.ts, apps/api/src/middleware/request-id.ts, governance/security-review.md, packages/auth/package.json, packages/auth/src/index.ts, packages/auth/src/password.test.ts, packages/auth/src/password.ts Evidence: apps/api/src/middleware/auth.ts (auth/security indicator)
 - Payments/billing: NEEDS_CONFIRMATION - No payments/billing implementation detected Evidence: repository scan (no payment/billing indicators)
-- Deployment/runtime: CONFIRMED - .github/workflows/ci.yml, docker-compose.yml Evidence: .github/workflows/ci.yml (deployment config); docker-compose.yml (deployment config)
+- Deployment/runtime: CONFIRMED - .github/workflows/ci.yml, .github/workflows/dependency-review.yml, docker-compose.yml Evidence: .github/workflows/ci.yml (deployment config); .github/workflows/dependency-review.yml (deployment config); docker-compose.yml (deployment config)
 
 ## Inferred Truth
 
 - Product identity: INFERRED - tarn Evidence: package.json (package name)
 - Product category: INFERRED - Web3 eCommerce prototype Evidence: README/source (Web3, commerce, cart/checkout, or crypto wallet terms detected)
 - Primary users: INFERRED - user, owner, agent, developer Evidence: README/source (role-like terms detected)
-- Core features: INFERRED - Status, Stack, Requirements, Getting started, Layout, MVP scope, Documentation, Working with agents Evidence: README.md (README headings or route files)
+- Core features: INFERRED - Status, Stack, Requirements, Getting started, Quality gates, Layout, MVP scope, Documentation Evidence: README.md (README headings or route files)
 - Architecture: INFERRED - source folders: apps, apps/api, apps/api/src, apps/api/src/config, apps/api/src/middleware, apps/api/src/routes, apps/api/src/types, apps/web; package-managed runtime Evidence: source/config (folders and package metadata)
 - Safety/production boundaries: INFERRED - mock/demo crypto checkout and stablecoin wallet boundary, mock/demo behavior mentioned Evidence: README/source/package (safety boundary indicators)
 
@@ -132,7 +132,7 @@ true
 ## README Governance
 
 - Found: yes
-- Length: 117 lines
+- Length: 136 lines
 - Validation status: warn
 - Bloat detected: no
 - Phase/pass pollution: no
@@ -280,7 +280,7 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - INFO public-surface-artifact | category: existing-audit | evidence: confirmed | risk: low | auto_fix_available: false | path: .wwg/changelog/config.yml - Public surface or discovery artifact detected. Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
 - INFO public-surface-artifact | category: existing-audit | evidence: confirmed | risk: low | auto_fix_available: false | path: .wwg/changelog/state.json - Public surface or discovery artifact detected. Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
 - INFO public-surface-detected | category: existing-audit | evidence: confirmed | risk: low | auto_fix_available: false - Detected 2 public surface/public discovery artifact(s). Recommendation: Map existing public discovery sources before proposing new ones.
-- INFO readme-detected | category: readme-governance | evidence: confirmed | risk: low | auto_fix_available: false | path: README.md - README.md was detected at 117 lines. Recommendation: Validate it with `wwg readme validate --target .`.
+- INFO readme-detected | category: readme-governance | evidence: confirmed | risk: low | auto_fix_available: false | path: README.md - README.md was detected at 136 lines. Recommendation: Validate it with `wwg readme validate --target .`.
 - INFO recommendation-governance-present | category: recommendation-governance | evidence: confirmed | risk: low | auto_fix_available: false | path: .wwg/governance/recommendation-registry.md - Recommendation capture is available through the Governance registry and policy. Recommendation: Use the registry for useful future work discovered by agents, audits, maintenance runs, or closeouts; do not promote recommendations automatically.
 - INFO root-agents-detected | category: existing-audit | evidence: confirmed | risk: low | auto_fix_available: false | path: AGENTS.md - Root agent instructions were detected. Recommendation: Map this file as canonical_artifacts.root_agents.
 - INFO runtime-skill-candidates-not-generated | category: runtime-skill-candidates | evidence: confirmed | risk: low | auto_fix_available: false | path: .wwg/reports/runtime-skill-candidates.json - Runtime skill candidate contract: not generated. Recommendation: No action required. Candidate artifacts are optional and absence is valid.

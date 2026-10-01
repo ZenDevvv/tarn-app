@@ -1,0 +1,35 @@
+# Dependency vulnerability review
+#
+# Blocks a pull request that introduces a known-vulnerable dependency, using the
+# GitHub Advisory Database. Free for public and private repositories.
+#
+# This is deliberately separate from `ci.yml`:
+#   - this runs on pull requests and only inspects the *diff* of the lockfile
+#   - ci.yml runs on pushes and inspects the whole dependency tree
+#
+# Together they cover "did this PR make things worse" and "is the repo healthy".
+
+name: Dependency Review
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Review dependency changes for known vulnerabilities
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
+          # Advisory DB coverage beyond npm's own audit.
+          allow-licenses: mit, apache-2.0, bsd-2-clause, bsd-3-clause, isc, 0bsd, unlicense
+          comment-summary-in-pr: on-failure

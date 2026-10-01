@@ -2,7 +2,7 @@
 
 ## Summary
 
-Generated at: 2026-10-01T10:31:01.396Z
+Generated at: 2026-10-01T10:53:21.186Z
 Mode: existing-adopted-project
 Apply mode: true
 Registry present: true
@@ -13,7 +13,7 @@ This doctor report is a point-in-time diagnostic for the target path below. Find
 
 ## Repair Result
 
-- Repaired/refreshed WWG-owned generated surfaces: .wwg/config/wwg.project.yaml, .wwg/reports/backups/wwg.project.20261001T103102Z.yaml, .wwg/reports/readme-validation.md, .wwg/reports/wwg-agent-handoff.json, .wwg/reports/wwg-agent-handoff.md, .wwg/reports/wwg-handoff-to-codex.json, .wwg/reports/wwg-handoff-to-codex.md
+- Repaired/refreshed WWG-owned generated surfaces: .wwg/config/wwg.project.yaml, .wwg/reports/backups/wwg.project.20261001T105321Z.yaml, .wwg/reports/readme-validation.md, .wwg/reports/wwg-agent-handoff.json, .wwg/reports/wwg-agent-handoff.md, .wwg/reports/wwg-handoff-to-codex.json, .wwg/reports/wwg-handoff-to-codex.md
 - Did not repair semantic project truth: Project Truth, Terminology, Drift Guard meaning, accepted decisions, principles meaning, current task meaning, runtime evidence, and runtime skill activation remain review-only.
 - Review-only or candidate/optional findings remaining: 47
 - Skipped/already-current surfaces: .wwg/reports/README.md
@@ -91,7 +91,7 @@ Next: No command required.
 - INFO public-surface-artifact (.wwg/changelog/config.yml): Public surface or discovery artifact detected.
 - INFO public-surface-artifact (.wwg/changelog/state.json): Public surface or discovery artifact detected.
 - INFO public-surface-detected: Detected 2 public surface/public discovery artifact(s).
-- INFO readme-detected (README.md): README.md was detected at 117 lines.
+- INFO readme-detected (README.md): README.md was detected at 136 lines.
 - INFO recommendation-governance-present (.wwg/governance/recommendation-registry.md): Recommendation capture is available through the Governance registry and policy.
 - ... 82 more.
 
@@ -195,7 +195,7 @@ Agents should follow Must Have items first. Missing Other Features are not block
 ## Files Updated
 
 - .wwg/config/wwg.project.yaml
-- .wwg/reports/backups/wwg.project.20261001T103102Z.yaml
+- .wwg/reports/backups/wwg.project.20261001T105321Z.yaml
 - .wwg/reports/readme-validation.md
 - .wwg/reports/wwg-agent-handoff.json
 - .wwg/reports/wwg-agent-handoff.md
@@ -266,7 +266,7 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - info: public-surface-artifact - Public surface or discovery artifact detected. (.wwg/changelog/config.yml) Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
 - info: public-surface-artifact - Public surface or discovery artifact detected. (.wwg/changelog/state.json) Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
 - info: public-surface-detected - Detected 2 public surface/public discovery artifact(s). Recommendation: Map existing public discovery sources before proposing new ones.
-- info: readme-detected - README.md was detected at 117 lines. (README.md) Recommendation: Validate it with `wwg readme validate --target .`.
+- info: readme-detected - README.md was detected at 136 lines. (README.md) Recommendation: Validate it with `wwg readme validate --target .`.
 - info: recommendation-governance-present - Recommendation capture is available through the Governance registry and policy. (.wwg/governance/recommendation-registry.md) Recommendation: Use the registry for useful future work discovered by agents, audits, maintenance runs, or closeouts; do not promote recommendations automatically.
 - info: root-agents-detected - Root agent instructions were detected. (AGENTS.md) Recommendation: Map this file as canonical_artifacts.root_agents.
 - info: runtime-skill-candidates-not-generated - Runtime skill candidate contract: not generated. (.wwg/reports/runtime-skill-candidates.json) Recommendation: No action required. Candidate artifacts are optional and absence is valid.
@@ -297,7 +297,7 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - info: markdown-readable - Markdown files are non-empty and readable.
 - info: ambiguous-report-classification - Some report-like files need human classification. Recommendation: Run `wwg reports --target .` and review the Ambiguous / Needs Review section.
 - info: gitignore-native-report-backups-missing - Report policy expects `.wwg/reports/backups/` to be ignored. (.gitignore) Recommendation: Add a narrow ignore rule for `.wwg/reports/backups/` or `.wwg/.gitignore` `reports/backups/`.
-- info: markdown-contract-quality-report-generated - Markdown contract quality report completed with 109 warning(s) and 107 suggestion(s). (reports/context-skill-quality.md) Recommendation: Review `.wwg/reports/context-skill-quality.md` during focused documentation remediation.
+- info: markdown-contract-quality-report-generated - Markdown contract quality report completed with 110 warning(s) and 102 suggestion(s). (reports/context-skill-quality.md) Recommendation: Review `.wwg/reports/context-skill-quality.md` during focused documentation remediation.
 - low: readme-section-missing - README is missing expected front-door section: Install. (README.md) Recommendation: Add a concise section or route readers to the matching docs page.
 - low: readme-section-missing - README is missing expected front-door section: Current Status. (README.md) Recommendation: Add a concise section or route readers to the matching docs page.
 - low: readme-section-missing - README is missing expected front-door section: License. (README.md) Recommendation: Add a concise section or route readers to the matching docs page.
@@ -361,7 +361,7 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - info: public-surface-artifact - Public surface or discovery artifact detected. (.wwg/changelog/config.yml) Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
 - info: public-surface-artifact - Public surface or discovery artifact detected. (.wwg/changelog/state.json) Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
 - info: public-surface-detected - Detected 2 public surface/public discovery artifact(s). Recommendation: Map existing public discovery sources before proposing new ones.
-- info: readme-detected - README.md was detected at 117 lines. (README.md) Recommendation: Validate it with `wwg readme validate --target .`.
+- info: readme-detected - README.md was detected at 136 lines. (README.md) Recommendation: Validate it with `wwg readme validate --target .`.
 - info: recommendation-governance-present - Recommendation capture is available through the Governance registry and policy. (.wwg/governance/recommendation-registry.md) Recommendation: Use the registry for useful future work discovered by agents, audits, maintenance runs, or closeouts; do not promote recommendations automatically.
 - info: root-agents-detected - Root agent instructions were detected. (AGENTS.md) Recommendation: Map this file as canonical_artifacts.root_agents.
 - info: runtime-skill-candidates-not-generated - Runtime skill candidate contract: not generated. (.wwg/reports/runtime-skill-candidates.json) Recommendation: No action required. Candidate artifacts are optional and absence is valid.
@@ -397,7 +397,7 @@ Agents should follow Must Have items first. Missing Other Features are not block
 - Remaining stale context:
   - Review doctor findings above.
 - Generated By: WWG
-- Generated At: 2026-10-01T10:31:01.396Z
+- Generated At: 2026-10-01T10:53:21.186Z
 - Canonical Truth Impact: none; report evidence does not rewrite `.wwg/wiki`.
 - Requires Review: review findings or candidates before promoting any semantic truth.
 - Vorter runtime evidence accepted as WWG truth: NO

@@ -208,6 +208,13 @@
         "suggestedRole": "reference_history",
         "confidence": "medium",
         "category": "canonicalContext"
+      },
+      {
+        "path": "wiki/decisions/D-0007-code-review-and-dependency-scanning.md",
+        "kind": "decision history",
+        "suggestedRole": "reference_history",
+        "confidence": "medium",
+        "category": "canonicalContext"
       }
     ],
     "skillsPrompts": [],

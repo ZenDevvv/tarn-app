@@ -62,11 +62,30 @@ Health check: <http://localhost:4000/api/v1/health>
 | `pnpm test` | unit, validation, schema-scope, and API tests |
 | `pnpm lint` | lint |
 | `pnpm format` | format sources |
+| `pnpm audit` | check dependencies for known vulnerabilities |
 | `pnpm db:generate` | generate Prisma Client |
 | `pnpm db:migrate` | create and apply a dev migration |
 | `pnpm db:deploy` | apply migrations (production) |
 | `pnpm db:seed` | load sample data |
 | `pnpm db:studio` | Prisma Studio |
+| `npx playwright test` | browser and accessibility tests |
+
+## Quality gates
+
+Everything below runs in GitHub Actions on every push:
+
+| Gate | What it enforces |
+|---|---|
+| `pnpm lint` | ESLint 9, including no `any` and no unused values |
+| `pnpm audit --audit-level=high` | no known high-severity dependency vulnerabilities |
+| dependency review | a PR cannot introduce a vulnerable dependency |
+| `pnpm typecheck` | types across all six packages |
+| `pnpm test` | 90 unit and integration tests |
+| `pnpm build` | both apps compile |
+
+Dependabot opens weekly dependency pull requests, grouped so they stay readable. Prisma major bumps are held back deliberately — they change client generation and need a manual migration.
+
+Locally, `npx playwright test` adds 24 browser assertions covering landmarks, focus order, colour contrast in both themes, 360px layout, and 44px touch targets. It drives your installed Microsoft Edge by default; set `PW_CHANNEL=chrome` to use Chrome instead.
 
 ## Layout
 

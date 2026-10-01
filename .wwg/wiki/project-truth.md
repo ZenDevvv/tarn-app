@@ -77,8 +77,10 @@ Verified on 2026-10-01 by execution:
 - `pnpm test` — **90 tests passing**: 7 types, 13 auth/password, 23 validation, 24 database (17 schema scope + 7 integration), 13 API, 10 React
 - `npx playwright test` — **24 passing** across desktop and 360px projects, in a real browser
 - `pnpm build` — both apps build; web 251 kB (81 kB gzip)
-- `pnpm db:migrate` — migration created and applied
+- `pnpm audit` — **no known vulnerabilities**
+- `pnpm db:migrate` — migration created and applied; `migrate status` reports the schema is up to date
 - `pnpm db:seed` — idempotent, produces the documented counts
+- Prisma client generation, `migrate status`, and `db:seed` all still work with the `deepmerge-ts` override in place
 - API boots only when env is valid, and fails closed naming each missing variable
 
 Accessibility verified in a real browser (Playwright, 24 assertions): landmarks present and unique, skip link focusable and ≥44px once revealed, every interactive control has an accessible name, text contrast ≥4.5:1 in **both** light and dark themes, no horizontal page scroll at 360px, and every pointer target ≥44px.
@@ -264,11 +266,13 @@ Node.js, TypeScript, Express, Zod, Prisma, PostgreSQL, JWT/session in httpOnly c
 
 Testing stack (CONFIRMED as plan, architecture §2.3) **[OBSERVED]**:
 
-Vitest 3.2 across all six packages, React Testing Library + jsdom for components, Supertest for API tests, Playwright 1.63 configured with desktop and 360px projects. Playwright is installed and the specs type-check, but **no spec has ever been executed** because the browser binary cannot be downloaded in this environment.
+Vitest 5.0 across all six packages, React Testing Library + jsdom for components, Supertest for API tests, Playwright 1.63 configured with desktop and 360px projects. Playwright is installed and the suite passes against a real browser.
 
 Tooling (CONFIRMED as plan, architecture §2.4) **[OBSERVED]**:
 
-pnpm, TypeScript, ESLint 9 (flat config, enforced in CI), Prettier, Docker, Docker Compose, GitHub Actions (with a Postgres service and `migrate deploy`). Not yet installed: Husky, lint-staged.
+pnpm, TypeScript, ESLint 9 (flat config, enforced in CI), Prettier, Docker, Docker Compose, GitHub Actions (with a Postgres service and `migrate deploy`), Dependabot, GitHub dependency review. Not yet installed: Husky, lint-staged.
+
+Dependency state **[OBSERVED]**: `pnpm audit` reports **no known vulnerabilities**. Two major upgrades were performed to achieve this — `react-router-dom` 6.30.6 → 7.18.4, and Vitest 3.2.7 → 5.0.3 — plus a `pnpm.overrides` entry for the high-severity `deepmerge-ts` advisory. A note worth keeping: Vitest appeared stuck on 3.2.7 through five upgrade attempts because the **root** `package.json` pinned it and overrode every per-package upgrade; only `pnpm why vitest` exposed it. In a pnpm workspace, a root-level pin wins.
 
 Database (CONFIRMED, architecture §3.1) **[OBSERVED — migrated and verified]**:
 
@@ -331,9 +335,9 @@ Known scaffold-level risks:
 - **Password hashing is scrypt — owner-confirmed.** Node's built-in `crypto.scrypt` at `N=32768, r=8, p=1`, 16-byte salt, 64-byte key, self-describing storage format. This replaced a `sha256:` placeholder that was never acceptable. Parameters are tunable in `packages/auth/src/password.ts`, and the format means they can change without invalidating existing hashes. See `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md`. An external security review before launch is still recommended — the owner's confirmation settles the algorithm choice, not the launch gate.
 - The seed prints the test password to stdout. Acceptable for local development only; never run the seed against a shared environment.
 - `apps/api` sets `trust proxy` to 1. That is correct behind a single known proxy and wrong behind multiple; revisit per environment (architecture §55).
-- Playwright runs locally against the **system-installed** Microsoft Edge because the bundled Chromium download is blocked in this environment. CI uses the pinned bundled browser for reproducibility. A local `PW_CHANNEL=chrome` run is also supported.
+- Playwright runs locally against the **system-installed** Microsoft Edge because the bundled Chromium download is blocked in this environment. CI uses the pinned bundled browser for reproducibility. A local `PW_CHANNEL=chrome` run is also supported. Browser tests are **not yet wired into CI**, because CI has never actually run.
 - `package.json#prisma` is deprecated in Prisma 6 and warns on every database command. It still works; migrate to `prisma.config.ts` before upgrading to Prisma 7.
-- Vitest was upgraded 2.1.9 → 3.2.7 to remove a duplicate Vite install that broke `vite.config.ts` typing. Any future Vite upgrade must keep Vitest compatible or the duplicate returns.
+- **A `pnpm.overrides` entry pins `deepmerge-ts` to `^8.0.2`** to clear a high-severity advisory in Prisma's dependency tree. Prisma client generation, `migrate status`, and `db:seed` were all re-verified to still work afterwards. Remove the override only once a Prisma upgrade resolves the advisory upstream. Dependabot is configured to ignore Prisma major bumps for the same reason.
 
 Security requirements that are accepted truth and will govern implementation (CONFIRMED, PRD §10.2/§32/§33; architecture §55):
 
@@ -409,6 +413,16 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 - RESOLVED — Password hashing scheme. Owner confirmed scrypt. See `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md`.
   - Status: RESOLVED
   - Evidence: owner instruction "scrypt is confirmed", 2026-10-01; `packages/auth/src/password.ts`; 13 unit tests; verified at rest in the seeded row.
+- RESOLVED — No dependency vulnerability scanning. Dependabot (weekly security + version updates, grouped), a lockfile-diff dependency review on every pull request, and a whole-tree `pnpm audit --audit-level=high` gate in CI. All free.
+  - Status: RESOLVED
+  - Evidence: `.github/dependabot.yml`; `.github/workflows/dependency-review.yml`; audit step in `ci.yml`; `pnpm audit` reports **no known vulnerabilities**.
+  - Found and fixed on first run: 1 high (`deepmerge-ts`, transitive via Prisma) and 4 moderate (`react-router` ×2, `vitest` ×2). All cleared via a `pnpm.overrides` entry and two major upgrades.
+- RESOLVED — Independent human security review. **Consciously deferred** by the owner, not overlooked. Recorded so it is not rediscovered as an oversight.
+  - Status: RESOLVED_DEFERRED
+  - Evidence: owner instruction "independent human reviewer, not for now", 2026-10-01; `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
+- DEFERRED_BLOCKED — No AI code reviewer on pull requests. Recorded, but cannot be installed: the repository has no git remote, so no GitHub App can be installed. Whether the chosen tool is free depends on whether the repository is public or private.
+  - Status: DEFERRED_BLOCKED
+  - Evidence: `git remote -v` returns nothing; research summary and per-tool cost table in `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
 - NEEDS_CONFIRMATION — Deployment target is recommended, not decided: frontend → Vercel, API → Railway/Render, PostgreSQL → Neon/Supabase, object storage → Cloudflare R2 (architecture §65). No deployment configuration exists.
   - Status: NEEDS_CONFIRMATION
   - Evidence: architecture §65–§66; working-tree scan.
@@ -439,9 +453,12 @@ Still open:
 - Question: Should Husky and lint-staged be wired up now, or after the first feature?
   - Why it matters: pre-commit hooks stop broken work reaching main. CI already gates lint, typecheck, tests, and build, so hooks are a convenience rather than a safety net.
   - Evidence / uncertainty: architecture §2.4 lists both as recommended tooling.
-- Question: When should an external security review happen?
-  - Why it matters: the password hashing scheme is now owner-confirmed, but scrypt cost parameters, cookie settings, and the ownership boundary have not been independently reviewed. PRD §34 treats security as a live risk area.
-  - Evidence / uncertainty: no review has taken place; the launch gate in PRD §35 is unmet regardless.
+- Question: Will the repository be public or private, and what AI reviewer should run on pull requests?
+  - Why it matters: this is the single fact that decides the cost. CodeRabbit's free tier gives full review only on **public** repositories; on a private repository the free tier gives PR summarisation only, and real review costs $24/month. A genuinely free option for private repositories exists (PR-Agent self-hosted, or Qodo Merge's 75-reviews-per-month free tier).
+  - Blocked because: the repository has **no git remote configured**, so no GitHub App can be installed. See `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
+- Question: When should the ownership boundary be reviewed by someone other than the implementing agent?
+  - Why it matters: an independent human review of the authentication and data-access code was **consciously deferred** by the owner, not overlooked. The residual risk is concentrated in one property — a single missing `userId` filter on one endpoint would expose the whole database.
+  - Evidence / uncertainty: mitigated by required cross-user isolation tests, not eliminated. Deterministic mitigations are in place: dependency scanning, lint, typecheck, 90 unit/integration tests, 24 browser tests.
 
 ## Update Rules
 

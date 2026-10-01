@@ -10,19 +10,37 @@ This governance file is required by root `AGENTS.md` and the WWG readiness model
 
 **A full verification path exists and runs.** As of 2026-10-01:
 
-- Vitest 3.2 runs across all six workspace packages.
+- Vitest 5.0 runs across all six workspace packages.
 - **90 tests pass**: 7 types, 13 auth/password, 23 validation, 24 database (17 schema scope + 7 integration), 13 API, 10 React.
 - **Playwright passes 24 assertions** across a desktop and a 360px project, in a real browser.
 - `pnpm lint` is clean and gated in CI (ESLint 9 flat config).
 - `pnpm typecheck` is clean, including `tests/tsconfig.json` for the Playwright specs.
 - `pnpm build` succeeds for both apps.
-- GitHub Actions runs install, `db:generate`, `migrate deploy`, lint, typecheck, test, and build against a Postgres service.
+- `pnpm audit` reports **no known vulnerabilities**.
+- GitHub Actions runs install, `db:generate`, `migrate deploy`, lint, dependency audit, typecheck, test, and build against a Postgres service. Dependabot opens weekly dependency PRs, and a lockfile-diff dependency review runs on every pull request.
 
 Still absent:
 
+- **CI has never actually run.** No git remote exists yet, so every workflow is unverified in practice even though it passes locally.
+- **Browser tests are not in CI.** They pass locally but are excluded from the workflow.
 - No API tests against a real database at the *route* level yet — the database integration tests cover the persistence layer, not HTTP handlers with auth.
 - No React tests for real features, because no features exist.
 - Husky / lint-staged not installed.
+- No AI code reviewer on pull requests — see `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
+
+## Dependency Scanning
+
+Owner-confirmed and free. Three layers:
+
+| Layer | Where | What it catches |
+|---|---|---|
+| Dependabot | `.github/dependabot.yml` | Known advisories, plus routine version bumps. Grouped so they do not flood the repo. Watches the GitHub Actions themselves too. |
+| Dependency review | `.github/workflows/dependency-review.yml` | A pull request that *introduces* a vulnerable dependency. Fails at `moderate`. |
+| Whole-tree audit | `pnpm audit --audit-level=high` in `ci.yml` | Anything already on the branch. |
+
+Prisma major bumps are ignored by Dependabot on purpose: a Prisma major changes client generation and needs a manual migration.
+
+**This is a required part of the gate.** If a fix would require removing a test or lowering a threshold to make `pnpm audit` pass, that is a scope decision for the owner, not something to quietly work around.
 
 ## Running the browser tests locally
 

@@ -64,6 +64,11 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      # Whole-tree dependency scan (the lockfile-diff review for PRs lives in
+      # dependency-review.yml). Dependabot opens the update PRs.
+      - name: Audit dependencies for known vulnerabilities
+        run: pnpm audit --audit-level=high
+
       - name: Type check
         run: pnpm typecheck
 
