@@ -4,7 +4,7 @@
 
 Validation status: WARN.
 
-Checked 73 Markdown file(s), with 0 error(s), 111 warning(s), and 108 suggestion(s).
+Checked 74 Markdown file(s), with 0 error(s), 111 warning(s), and 117 suggestion(s).
 
 ## Overall Status
 
@@ -83,6 +83,7 @@ Checked 73 Markdown file(s), with 0 error(s), 111 warning(s), and 108 suggestion
 - .wwg/workspace/testing/manual-verification-checklist.md
 - .wwg/workspace/testing/non-technical-regression-checklist.md
 - .wwg/workspace/testing/regression-candidate-review.md
+- .wwg/workspace/testing/verification-evidence.md
 - AGENTS.md
 - DESIGN.md
 - README.md
@@ -103,7 +104,7 @@ Checked 73 Markdown file(s), with 0 error(s), 111 warning(s), and 108 suggestion
 | changelog_or_release_note | 0 |
 | design_contract | 0 |
 | template | 0 |
-| unknown | 7 |
+| unknown | 8 |
 
 ## Errors
 
@@ -309,6 +310,15 @@ Checked 73 Markdown file(s), with 0 error(s), 111 warning(s), and 108 suggestion
 - SUGGESTION markdown-todo-without-owner-or-reason (.wwg/workspace/current-task.md:20): TODO/TBD appears without an owner, reason, or open-question context. Recommendation: Add the owner, reason, or decision needed before resolving the placeholder.
 - SUGGESTION markdown-todo-without-owner-or-reason (.wwg/workspace/current-task.md:43): TODO/TBD appears without an owner, reason, or open-question context. Recommendation: Add the owner, reason, or decision needed before resolving the placeholder.
 - SUGGESTION markdown-possible-stale-current-language (.wwg/workspace/current-task.md:109): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
+- SUGGESTION markdown-repeated-heading (.wwg/workspace/testing/verification-evidence.md:99) [Supporting evidence]: Heading 'Supporting evidence' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
+- SUGGESTION markdown-repeated-heading (.wwg/workspace/testing/verification-evidence.md:115) [Missing evidence]: Heading 'Missing evidence' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
+- SUGGESTION markdown-repeated-heading (.wwg/workspace/testing/verification-evidence.md:121) [Recommendation]: Heading 'Recommendation' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
+- SUGGESTION markdown-repeated-heading (.wwg/workspace/testing/verification-evidence.md:126) [Follow-up]: Heading 'Follow-up' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
+- SUGGESTION markdown-repeated-heading (.wwg/workspace/testing/verification-evidence.md:140) [Supporting evidence]: Heading 'Supporting evidence' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
+- SUGGESTION markdown-repeated-heading (.wwg/workspace/testing/verification-evidence.md:159) [Missing evidence]: Heading 'Missing evidence' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
+- SUGGESTION markdown-repeated-heading (.wwg/workspace/testing/verification-evidence.md:165) [Recommendation]: Heading 'Recommendation' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
+- SUGGESTION markdown-repeated-heading (.wwg/workspace/testing/verification-evidence.md:170) [Follow-up]: Heading 'Follow-up' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
+- SUGGESTION markdown-possible-vague-pronouns (.wwg/workspace/testing/verification-evidence.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
 - SUGGESTION markdown-possible-stale-current-language (AGENTS.md:60): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
 - SUGGESTION markdown-possible-vague-pronouns (DESIGN.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
 - SUGGESTION markdown-repeated-heading (job-application-tracker-brd-prd.md:1792) [Mitigation]: Heading 'Mitigation' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.

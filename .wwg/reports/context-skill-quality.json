@@ -68,6 +68,7 @@
     ".wwg/workspace/testing/manual-verification-checklist.md",
     ".wwg/workspace/testing/non-technical-regression-checklist.md",
     ".wwg/workspace/testing/regression-candidate-review.md",
+    ".wwg/workspace/testing/verification-evidence.md",
     "AGENTS.md",
     "DESIGN.md",
     "README.md",
@@ -412,6 +413,11 @@
     },
     {
       "path": ".wwg/workspace/testing/regression-candidate-review.md",
+      "fileType": "unknown",
+      "reason": "No deterministic classification signal matched."
+    },
+    {
+      "path": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "reason": "No deterministic classification signal matched."
     },
@@ -2227,6 +2233,94 @@
       "fileType": "unknown",
       "line": 109,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Supporting evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Supporting evidence",
+      "line": 99,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 115,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Recommendation' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Recommendation",
+      "line": 121,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 126,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Supporting evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Supporting evidence",
+      "line": 140,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 159,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Recommendation' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Recommendation",
+      "line": 165,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 170,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
     },
     {
       "severity": "suggestion",
@@ -5657,6 +5751,94 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Supporting evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Supporting evidence",
+      "line": 99,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 115,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Recommendation' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Recommendation",
+      "line": 121,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 126,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Supporting evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Supporting evidence",
+      "line": 140,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 159,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Recommendation' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Recommendation",
+      "line": 165,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 170,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-possible-stale-current-language",
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "AGENTS.md",
@@ -6132,11 +6314,11 @@
   ],
   "metadataPolicyApplied": "Option C: Skill Registry metadata is canonical; skill files may include lightweight metadata when beneficial, and package-side skills do not require frontmatter.",
   "summary": {
-    "checkedFileCount": 73,
+    "checkedFileCount": 74,
     "skippedFileCount": 1,
     "errorCount": 0,
     "warningCount": 111,
-    "suggestionCount": 108,
+    "suggestionCount": 117,
     "classificationCounts": {
       "context": 15,
       "skill": 0,
@@ -6148,7 +6330,7 @@
       "changelog_or_release_note": 0,
       "design_contract": 0,
       "template": 0,
-      "unknown": 7
+      "unknown": 8
     }
   },
   "validationStatus": "warn",
