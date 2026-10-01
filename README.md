@@ -134,3 +134,4 @@ filenames. The product is named Tarn; see
 
 Read `AGENTS.md` first, then `.wwg/wiki/project-truth.md`. Governed truth,
 decisions, and principles live under `.wwg/`.
+<!-- dep-review-verification-2 -->
