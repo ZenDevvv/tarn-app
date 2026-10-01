@@ -19,7 +19,7 @@
     "test": "dotenv -e ../../.env -- vitest run"
   },
   "dependencies": {
-    "@prisma/client": "^6.2.1",
+    "@prisma/client": "^7.10.0",
     "@tarn/auth": "workspace:*"
   },
   "devDependencies": {
