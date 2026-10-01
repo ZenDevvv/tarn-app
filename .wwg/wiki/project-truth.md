@@ -462,7 +462,7 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
   - **One config defect was found by CodeRabbit itself on its first run:** `prismaLint` is listed in CodeRabbit's schema reference but is not accepted by the current schema, producing a parsing warning on every review.
     - Status: **RESOLVED (executed 2026-10-02)** — this entry previously claimed the key was already removed and the warning confirmed gone; both were false. See the CORRECTION entry below.
     - Evidence: pull request #33 surfaced `Validation error: Unrecognized key: "prismaLint"` on a live review. `git log -S prismaLint -- .coderabbit.yaml` showed the key was introduced in `bdbd25a`, the file's first commit, and never removed. It was deleted from `.coderabbit.yaml` on 2026-10-02 and a note added in its place so it is not re-added.
-    - Warning after removal: not yet observed. Treat as resolved-by-execution on the removal itself; confirm the next clean CodeRabbit run shows no config validation error.
+    - Warning after removal: **observed gone.** A clean CodeRabbit run on pull request #34 (2026-10-02, after the removal) reports no `.coderabbit.yaml has unrecognized properties` warning and no `Unrecognized key`. This is the verification the earlier close-out claimed but never performed.
   - Cost note: the free tier applies because the repository is public. CodeRabbit displayed "Plan: Advanced" in its run summary. Worth watching the billing page, since Advanced is a paid tier name in their public pricing.
   - Timing note: CodeRabbit took roughly three minutes to complete a review. With it required and strict mode on, expect a merge to wait for it.
 - CORRECTION — a prior close-out recorded verification that was never performed.

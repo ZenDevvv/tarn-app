@@ -158,7 +158,7 @@ The repository is live at **https://github.com/ZenDevvv/tarn-app**.
 
 CodeRabbit found a defect in its own input on the first run: `prismaLint` is listed in CodeRabbit's published schema reference but is **not accepted** by the current schema, so it produced `Validation error: Unrecognized key: "prismaLint"` on every review. Prisma schema rules remain enforced through the `packages/database/prisma/**` path instructions instead.
 
-> **CORRECTION (2026-10-02).** An earlier version of this record stated the key was "Removed, and the warning was confirmed gone on a follow-up run." **That statement was false.** The key was never removed: `git log -S prismaLint -- .coderabbit.yaml` returns exactly one commit, `bdbd25a`, the file's first. The validation error was still live on pull request #33 on 2026-10-02. The key was actually deleted on 2026-10-02, and whether the warning is now gone has **not yet been observed**. See the CORRECTION entry in `.wwg/wiki/project-truth.md` and REC-0009.
+> **CORRECTION (2026-10-02).** An earlier version of this record stated the key was "Removed, and the warning was confirmed gone on a follow-up run." **That statement was false.** The key was never removed: `git log -S prismaLint -- .coderabbit.yaml` returns exactly one commit, `bdbd25a`, the file's first. The validation error was still live on pull request #33 on 2026-10-02. The key was actually deleted on 2026-10-02, and a clean CodeRabbit run on pull request #34 that day confirmed the validation error no longer appears. See the CORRECTION entry in `.wwg/wiki/project-truth.md` and REC-0009.
 
 Worth noting as a general lesson: **the configuration reference is not a schema guarantee.** A key can be documented and still be rejected. Only running the tool proved it.
 
