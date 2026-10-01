@@ -1,115 +1,69 @@
 # Current Task
 
-Status: DONE — dependency scanning live, review policy documented.
-Task mode: Existing Project Adoption (continued) → security and pull-request policy
+Status: DONE — branch protection enforced on main, workflow proven end to end.
+Task mode: Existing Project Adoption (continued) → delivery governance
 Instance type: existing-project (adopted; this work continues the adoption lifecycle)
 Last updated: 2026-10-01
 
 ## Task Summary
 
 - Status: DONE
-- User requests:
-  1. "dependency scanning to CI is confirmed"
-  2. "independent human reviewer, not for now" — document it
-  3. "I want to set up an AI code reviewer for every PR… thinking of CodeRabbit but I haven't researched the costing yet, looking for free"
+- User request: "proceed with the branch protection"
 
-## 1. Dependency scanning — implemented
+## What was applied to `main`
 
-Three free layers, all running:
-
-| File | Purpose |
-|---|---|
-| `.github/dependabot.yml` | Weekly security + version updates, grouped; also watches the GitHub Actions. Prisma majors held back deliberately. |
-| `.github/workflows/dependency-review.yml` | Blocks a PR that introduces a vulnerable dependency; fails at moderate. |
-| `pnpm audit --audit-level=high` in `ci.yml` | Whole-tree scan on every push. |
-
-### It found real vulnerabilities on its first run
-
-| Severity | Package | Fix |
+| Setting | Value | Why |
 |---|---|---|
-| **HIGH** | `deepmerge-ts` (transitive via Prisma) | `pnpm.overrides` forcing `^8.0.2` |
-| MODERATE | `react-router` ×2 | Upgraded `react-router-dom` 6.30.6 → 7.18.4 |
-| MODERATE | `vitest`, `@vitest/mocker` | Upgraded Vitest 3.2.7 → 5.0.3 |
+| Required status checks | `verify`, `dependency-review`, `CodeRabbit` | Every gate must be green before merge |
+| Strict mode | on | The branch must be up to date, so the commit that merges is the one that passed — not an older passing commit |
+| Pull request required | yes, 0 approvals | Forces the PR workflow so CodeRabbit actually sees every change |
+| `enforce_admins` | **true** | Makes the gates bind the owner too |
+| Force pushes | disabled | No rewriting published history |
+| Branch deletion | disabled | `main` cannot be deleted |
+| Conversation resolution | required | No merging with unresolved review threads |
 
-**`pnpm audit` now reports no known vulnerabilities.** Prisma generation, `migrate status`, and `db:seed` were all re-verified after the override.
+## Verified by testing, not assumption
 
-### A workspace trap worth remembering
+1. **Direct push rejected.** Attempted a commit straight to `main`; GitHub refused with `GH006: Protected branch update failed`, and `main` was confirmed unmoved via the API.
+2. **The gate actually blocks.** On a real pull request the merge state was `BLOCKED` while CodeRabbit was still reviewing, then flipped to `CLEAN` only after all three checks passed.
+3. **The merge went through.** Squash-merged once green, and `main` advanced.
 
-Vitest appeared stuck on 3.2.7 through **five** upgrade attempts. Cause: the **root** `package.json` pinned `vitest: ^3.2.7`, and a root-level pin overrides every per-package upgrade in a pnpm workspace. Only `pnpm why vitest` exposed it. Recorded in Project Truth so it is not rediscovered.
+That is the complete path proven: branch → pull request → three checks → merge.
 
-## 2. Independent human reviewer — consciously deferred
+## One thing that did not go as planned
 
-Recorded as a **decision**, not an open question, so it is not rediscovered as an oversight. Rationale and the list of what the deferral does *not* cover are in `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
+The **first** protection configuration set `enforce_admins: false`, deliberately, as a safeguard so the owner could never be locked out of their own repository.
 
-Also corrected: the earlier "external security review" framing did not come from this project's documents. A search of the requirements doc, architecture doc, and design doc for "security review", "penetration test", "threat model", "security audit", and "vulnerability" returns **zero matches**. It was general industry practice, not a project requirement.
+Testing showed that made the gates **advisory rather than enforcing**: the owner is the sole admin, so a direct push still succeeded, with GitHub printing the warning messages but allowing it anyway.
 
-## 3. AI code reviewer — documented, blocked on one question
+That was reported to the owner with a choice, and they chose to be bound too. `enforce_admins` is now `true`.
 
-### The finding that changes the plan
+Escape hatch if CodeRabbit ever fails to report a status: an admin can edit or remove the protection rule in repository settings or via the API. This is friction, not a permanent lockout.
 
-**CodeRabbit's free tier gives full review on PUBLIC repositories only.** On a private repository the free tier provides PR summarisation only, not line-by-line review. Real review on a private repo is **$24/month**.
+## Operational consequences to expect
 
-This is a personal job-search tracker with no git remote. It is very likely to be private — so the free tier probably will not deliver what you want.
-
-### Options for a private repository
-
-| Option | Cost | Note |
-|---|---|---|
-| **Qodo Merge** (hosted) | Free, 75 PR reviews/month | Zero setup. Lowest-friction path to *actually having* review. |
-| **PR-Agent** (self-hosted) | Free forever | Needs an LLM endpoint; a local model needs a self-hosted runner. |
-| **CodeRabbit** | $24/month | Highest quality; free only if the repo goes public. |
-| GitHub Copilot review | Needs paid Copilot | Bundled with a broader assistant. |
-
-Note: **CodeQL is not free on private repos** — it needs GitHub Advanced Security. The dependency review action used instead *is* free on private repos, which is why it was chosen.
-
-### Blocked because there is no remote
-
-```
-$ git remote -v
-(no output)
-```
-
-Every one of these installs as a GitHub App or reads pull requests from GitHub. I will not create a remote or publish anything without explicit instruction — root `AGENTS.md` treats publishing as approval-gated.
-
-**Recommended default given "free": start with Qodo Merge's free tier.** Move to PR-Agent if the volume limit bites, or CodeRabbit if you later want the best quality and would rather pay than self-host.
-
-## Verification
-
-| Gate | Result |
-|---|---|
-| `pnpm lint` | clean |
-| `pnpm typecheck` | clean |
-| `pnpm audit --audit-level=high` | **no known vulnerabilities** |
-| `pnpm test` | 90 passing |
-| `pnpm build` | both apps green |
-| `npx playwright test` | 24 passing (desktop + 360px, real browser) |
-| Prisma generate / migrate status / seed | all still work with the override |
-| `wwg validate` | PASS |
+- **No more direct pushes to `main`.** Every change needs a branch and a pull request.
+- **Expect to wait.** CodeRabbit took roughly three minutes per review, and strict mode means a new push to an open pull request invalidates the checks and requires a re-run.
+- Squash merge is the path used so far, which keeps history readable.
 
 ## Truth Surfaces Updated
 
-- `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md` — new; all three decisions
-- `.wwg/wiki/project-truth.md` — dependency state, three new conflict-register entries, corrected risk list, updated open questions
-- `.wwg/governance/test-enforcement.md` — dependency scanning made part of the required gate
-- `README.md` — quality gates table and audit command
-- `.github/dependabot.yml`, `.github/workflows/dependency-review.yml`, `.github/workflows/ci.yml`, `package.json`
+- `.wwg/wiki/project-truth.md` — branch protection recorded as resolved, with the test evidence and the `enforce_admins` history
+- `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md` — CI checks now required
+- `README.md` — a short note describing the protected workflow
+- `.wwg/workspace/current-task.md`
 
-## Open Questions
+## Remaining Open Questions
 
-1. **Create the GitHub remote?** Publishing is approval-gated; not done.
-2. **Public or private?** This single answer decides CodeRabbit free vs $24/month.
-3. Which deployment vendors?
-4. Rename the repository directory `applicant-tracking-system` to `tarn`?
-5. Husky and lint-staged now or later?
-
-## Next Step
-
-Still the authentication module — MVP scope, and the next step in the architecture document's build order.
+1. Which deployment vendors?
+2. Rename the local folder `applicant-tracking-system` to something matching the product? (The GitHub repo is `tarn-app`, the product is `Tarn`.)
+3. Husky and lint-staged, now that merges are gated? Lower value now that CI blocks bad merges.
+4. When to get an external security review — still deferred, not forgotten.
 
 ## Close-Out Notes
 
 - Truth Alignment Status: GREEN
-- Execution Gate: pass — 114 assertions green, zero known vulnerabilities
+- Execution Gate: pass — verified on the real platform, not locally
 - Drift status: LOW
-- Implementation confidence: HIGH for foundation and data layer, **ZERO for product features**
+- Implementation confidence: HIGH for foundation, data layer, and delivery pipeline; **ZERO for product features**
 - New recommendations: none added to the recommendation registry

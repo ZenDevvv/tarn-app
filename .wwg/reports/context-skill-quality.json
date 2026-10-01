@@ -2158,15 +2158,6 @@
       "severity": "suggestion",
       "code": "markdown-possible-stale-current-language",
       "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/workspace/current-task.md",
-      "fileType": "unknown",
-      "line": 13,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "AGENTS.md",
       "fileType": "agent_instruction",
       "line": 60,
@@ -5493,15 +5484,6 @@
       "severity": "suggestion",
       "code": "markdown-possible-stale-current-language",
       "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/workspace/current-task.md",
-      "fileType": "unknown",
-      "line": 13,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": "AGENTS.md",
       "fileType": "agent_instruction",
       "line": 60,
@@ -5979,7 +5961,7 @@
     "skippedFileCount": 1,
     "errorCount": 0,
     "warningCount": 110,
-    "suggestionCount": 102,
+    "suggestionCount": 101,
     "classificationCounts": {
       "context": 15,
       "skill": 0,

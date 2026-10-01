@@ -4,7 +4,7 @@
 
 Validation status: WARN.
 
-Checked 72 Markdown file(s), with 0 error(s), 110 warning(s), and 102 suggestion(s).
+Checked 72 Markdown file(s), with 0 error(s), 110 warning(s), and 101 suggestion(s).
 
 ## Overall Status
 
@@ -300,7 +300,6 @@ Checked 72 Markdown file(s), with 0 error(s), 110 warning(s), and 102 suggestion
 - SUGGESTION markdown-possible-stale-current-language (.wwg/wiki/terminology.md:52): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
 - SUGGESTION markdown-possible-stale-current-language (.wwg/wiki/terminology.md:132): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
 - SUGGESTION markdown-possible-stale-current-language (.wwg/wiki/terminology.md:133): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
-- SUGGESTION markdown-possible-stale-current-language (.wwg/workspace/current-task.md:13): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
 - SUGGESTION markdown-possible-stale-current-language (AGENTS.md:60): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
 - SUGGESTION markdown-possible-vague-pronouns (DESIGN.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
 - SUGGESTION markdown-repeated-heading (job-application-tracker-brd-prd.md:1792) [Mitigation]: Heading 'Mitigation' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
