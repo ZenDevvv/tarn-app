@@ -19,10 +19,10 @@ This governance file is required by root `AGENTS.md` and the WWG readiness model
 - `pnpm audit` reports **no known vulnerabilities**.
 - GitHub Actions runs install, `db:generate`, `migrate deploy`, lint, dependency audit, typecheck, test, and build against a Postgres service. A parallel `e2e` job installs Chromium and runs the browser suite. Dependabot opens weekly dependency PRs, and a lockfile-diff dependency review runs on every pull request.
 - All four checks are required by branch protection on `main`, along with the CodeRabbit review, and admin enforcement is on.
+- **The `e2e` job has a proven green run on GitHub** — 2m47s, running the 24 browser and accessibility assertions in a real browser engine against a real Postgres. `verify` runs in 52s.
 
 Still absent:
 
-- **The `e2e` job has not yet had its first green run on GitHub.** It is required by branch protection, so the next pull request will prove it. Local runs are proven (24 passing).
 - No API tests against a real database at the *route* level yet — the database integration tests cover the persistence layer, not HTTP handlers with auth.
 - No React tests for real features, because no features exist.
 
@@ -73,6 +73,16 @@ Per `job-application-tracker-project-architecture.md` §62 and §63, the accepte
 CI runs install, Prisma generate, `migrate deploy`, lint, dependency audit, typecheck, test, and build, plus a parallel `e2e` job that installs Chromium and runs the browser suite. All four are required by branch protection.
 
 The `e2e` job sets `PW_CHANNEL: ''`. This matters: `playwright.config.ts` defaults to the system-installed browser for local convenience, and `msedge` does not exist on the ubuntu runner. Without the override the job would fail on browser launch rather than on anything meaningful.
+
+## Two GitHub Actions pitfalls this repo has already hit
+
+Both were found by running the workflow, not by reading it. They are recorded because the failure messages point somewhere unhelpful.
+
+**A job-level `env:` block replaces the top-level one; it does not merge.** The `e2e` job needed one extra variable (`PW_CHANNEL`) alongside five inherited ones. Declaring a job-level `env` silently dropped the other five, and the job failed with `Environment variable not found: DATABASE_URL`. Repeating all the values literally in the job is the fix. Referencing them as `${DATABASE_URL}` does not work either — GitHub does not substitute inside an `env` block, so it resolves to a literal string.
+
+**A workflow-level `services:` block produced runs GitHub would not dispatch.** Moving Postgres to workflow level yielded runs with zero jobs, no log, and `cannot be retried`. Reverting to per-job `services:` blocks worked immediately. The tidier arrangement is the broken one here, so the duplication stays and the reasoning is commented in the workflow file.
+
+The general lesson: a pipeline that has never executed on the platform is not a verified pipeline. Both of these looked correct when written.
 
 ## Existing Regression Tests
 
