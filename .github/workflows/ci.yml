@@ -9,11 +9,18 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# NOTE: each job declares its OWN `services:` block rather than sharing one at
+# workflow level. Sharing is the tidier option, but it produced runs that
+# GitHub refused to dispatch (zero jobs, no log). Duplicating the block is
+# verbose and explicit, and it is known to work — `verify` has always had its
+# own. GitHub starts one container per job either way, so there is no shared
+# state to lose.
+
 jobs:
   verify:
     runs-on: ubuntu-latest
 
-    # Database-backed integration tests need Postgres (architecture §62).
+    # Database-backed integration tests need Postgres.
     services:
       postgres:
         image: postgres:16-alpine
@@ -29,6 +36,9 @@ jobs:
           --health-timeout 5s
           --health-retries 10
 
+    # Top-level env is inherited by every job. Keep it as plain literal values:
+    # GitHub does not substitute `${VAR}` inside an env block, so a reference
+    # here would resolve to a literal string rather than the job's value.
     env:
       DATABASE_URL: postgresql://tarn:tarn@localhost:5432/tarn?schema=public
       JWT_SECRET: ci-only-jwt-secret
@@ -46,7 +56,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Single source of truth for the Node version. Keeping this as a bare
+          # number in two places is how they drift apart.
+          node-version-file: .nvmrc
           cache: pnpm
 
       - name: Install dependencies
@@ -78,5 +90,83 @@ jobs:
       - name: Build
         run: pnpm build
 
-      # E2E is intentionally not run yet: there are no implemented workflows to
-      # drive (architecture §63 lists Playwright as optional at first).
+  # Browser and accessibility tests.
+  #
+  # These cover the checks jsdom cannot do: colour contrast in a real engine,
+  # focus order, 360px layout, and 44px touch targets (DESIGN.md §11).
+  #
+  # Kept as a separate job from `verify` so the two run in parallel.
+  e2e:
+    runs-on: ubuntu-latest
+
+    # Its own Postgres, matching `verify`. A job-level `services:` block does
+    # not inherit the top-level `env`, and a job-level `env` block REPLACES the
+    # top-level one rather than merging — so the values are repeated literally.
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: tarn
+          POSTGRES_PASSWORD: tarn
+          POSTGRES_DB: tarn
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U tarn -d tarn"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      NODE_ENV: test
+      PORT: 4000
+      DATABASE_URL: postgresql://tarn:tarn@localhost:5432/tarn?schema=public
+      JWT_SECRET: ci-only-jwt-secret
+      COOKIE_SECRET: ci-only-cookie-secret
+      WEB_ORIGIN: http://localhost:5173
+      SEED_USER_EMAIL: ci-seed@example.com
+      SEED_USER_PASSWORD: ci-seed-password
+      # Force the bundled Chromium. playwright.config.ts defaults to the
+      # system-installed browser for local convenience (msedge), which does not
+      # exist on the ubuntu runner. An empty value selects the pinned download,
+      # which keeps results reproducible.
+      PW_CHANNEL: ''
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma client
+        run: pnpm db:generate
+
+      - name: Apply migrations
+        run: pnpm --filter @tarn/database exec prisma migrate deploy
+
+      - name: Seed reference data
+        run: pnpm db:seed
+
+      # --with-deps installs the Linux system libraries Chromium needs.
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run browser and accessibility tests
+        run: pnpm exec playwright test
+
+      - name: Upload failure artefacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

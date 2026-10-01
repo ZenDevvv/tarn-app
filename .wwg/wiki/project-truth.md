@@ -438,10 +438,19 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 - RESOLVED — CI had never actually run. It has now. Both the `verify` job (lint, dependency audit, typecheck, tests, build — against a live Postgres service in CI) and the `Dependency Review` job pass on GitHub, and both are now required by branch protection.
   - Status: RESOLVED
   - Evidence: verified 2026-10-01 on real pull requests; both checks reported `pass` and gated a real merge.
+- RESOLVED — Browser tests ran only locally. A dedicated `e2e` job now runs them in CI alongside `verify`.
+  - Status: RESOLVED
+  - Evidence: `.github/workflows/ci.yml`, `e2e` job.
+  - The job sets `PW_CHANNEL: ''` to force the pinned bundled Chromium. Without this it would inherit the local default of `msedge`, which does not exist on the ubuntu runner. That is a real trap, and it is why the override is explicit in the job.
+  - It installs Chromium with `--with-deps` for the Linux system libraries, applies migrations, and seeds reference data first.
+  - Failure artefacts (screenshots, traces) upload as artifacts so a browser regression is diagnosable from the run page.
+- RESOLVED — Node version was unpinned and inconsistent across three places: CI used 22, the local machine had 24, and `engines` claimed `>=20.11.0` — a floor never actually tested. Added `.nvmrc` containing `22`, pointed both CI jobs at it, and tightened `engines` to `>=22`.
+  - Status: RESOLVED
+  - Evidence: `.nvmrc`; both `actions/setup-node` steps use `node-version-file`; `package.json` engines.
 - RESOLVED — Nothing enforced CI. `main` now has branch protection with **admin enforcement on**.
   - Status: RESOLVED
   - Evidence: applied and verified 2026-10-01 via the GitHub API.
-  - Settings: required status checks `verify`, `dependency-review`, `CodeRabbit`; **strict mode** (the pull request branch must be up to date with the base branch before merging, and checks must pass on the latest commit SHA); pull request required with zero required approvals; `enforce_admins: true`; force pushes disabled; branch deletion disabled; conversation resolution required.
+  - Settings: required status checks `verify`, `e2e`, `dependency-review`, `CodeRabbit`; **strict mode** (the pull request branch must be up to date with the base branch before merging, and checks must pass on the latest commit SHA); pull request required with zero required approvals; `enforce_admins: true`; force pushes disabled; branch deletion disabled; conversation resolution required.
   - **Known limit, flagged by CodeRabbit:** with squash merge, the commit that lands on `main` is newly generated and CI never runs against it. Strict mode guarantees checks passed on the latest *pull request* commit, not on the squash result. If a guarantee on the merged SHA is wanted, use a merge commit or a post-merge re-run check instead of squash.
   - **Verified by testing, not assumption.** A direct push to `main` was rejected with `GH006: Protected branch update failed`. A real pull request went `BLOCKED` while CodeRabbit was still running, flipped to `CLEAN` once all three passed, and merged. That is the complete workflow proven end to end.
   - Owner chose admin enforcement knowingly. The first configuration deliberately set `enforce_admins: false` as a lockout safeguard; that made the gates advisory because the owner is the only admin, so it was changed to `true` on request.

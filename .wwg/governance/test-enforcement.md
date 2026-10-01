@@ -17,16 +17,19 @@ This governance file is required by root `AGENTS.md` and the WWG readiness model
 - `pnpm typecheck` is clean, including `tests/tsconfig.json` for the Playwright specs.
 - `pnpm build` succeeds for both apps.
 - `pnpm audit` reports **no known vulnerabilities**.
-- GitHub Actions runs install, `db:generate`, `migrate deploy`, lint, dependency audit, typecheck, test, and build against a Postgres service. Dependabot opens weekly dependency PRs, and a lockfile-diff dependency review runs on every pull request.
+- GitHub Actions runs install, `db:generate`, `migrate deploy`, lint, dependency audit, typecheck, test, and build against a Postgres service. A parallel `e2e` job installs Chromium and runs the browser suite. Dependabot opens weekly dependency PRs, and a lockfile-diff dependency review runs on every pull request.
+- All four checks are required by branch protection on `main`, along with the CodeRabbit review, and admin enforcement is on.
+- **The `e2e` job has a proven green run on GitHub** — 2m47s, running the 24 browser and accessibility assertions in a real browser engine against a real Postgres. `verify` runs in 52s.
 
 Still absent:
 
-- **CI has never actually run.** No git remote exists yet, so every workflow is unverified in practice even though it passes locally.
-- **Browser tests are not in CI.** They pass locally but are excluded from the workflow.
 - No API tests against a real database at the *route* level yet — the database integration tests cover the persistence layer, not HTTP handlers with auth.
 - No React tests for real features, because no features exist.
-- Husky / lint-staged not installed.
-- No AI code reviewer on pull requests — see `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
+
+Deliberately not installed:
+
+- **Husky and lint-staged.** Measured on this repo: lint 2.9s, typecheck 5.9s, tests 6.9s, build 4.5s — a ~20s local gate. A pre-commit hook would save roughly the 2.9s it takes to run `pnpm lint` by hand, while the real wait is the CodeRabbit review at ~3 minutes, which no hook can pre-empt. The cost is a dependency, hook plumbing, and a new failure mode where broken tooling blocks all commits. Revisit if the repo grows past roughly 500 files or lint exceeds ~10s.
+- **No AI code reviewer gap remains** — CodeRabbit is installed and required. See `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
 
 ## Dependency Scanning
 
@@ -67,7 +70,19 @@ Per `job-application-tracker-project-architecture.md` §62 and §63, the accepte
 | React component | React Testing Library + jsdom | application form, filters, status display, loading/error states | ⚠️ installed, 10 tests covering the shell and dashboard placeholder only |
 | End-to-End | Playwright | app shell, landmarks, focus order, contrast in both themes, 360px layout, 44px targets | ✅ **24 passing** across desktop + 360px. MVP journeys (register, login, create application, move status, follow-up, search/filter, logout) not written — those features do not exist yet. |
 
-CI (GitHub Actions) runs install, Prisma generate, `migrate deploy`, lint, typecheck, test, and build. Playwright is intentionally excluded (architecture §63) but the specs exist and type-check.
+CI runs install, Prisma generate, `migrate deploy`, lint, dependency audit, typecheck, test, and build, plus a parallel `e2e` job that installs Chromium and runs the browser suite. All four are required by branch protection.
+
+The `e2e` job sets `PW_CHANNEL: ''`. This matters: `playwright.config.ts` defaults to the system-installed browser for local convenience, and `msedge` does not exist on the ubuntu runner. Without the override the job would fail on browser launch rather than on anything meaningful.
+
+## Two GitHub Actions pitfalls this repo has already hit
+
+Both were found by running the workflow, not by reading it. They are recorded because the failure messages point somewhere unhelpful.
+
+**A job-level `env:` block replaces the top-level one; it does not merge.** The `e2e` job needed one extra variable (`PW_CHANNEL`) alongside five inherited ones. Declaring a job-level `env` silently dropped the other five, and the job failed with `Environment variable not found: DATABASE_URL`. Repeating all the values literally in the job is the fix. Referencing them as `${DATABASE_URL}` does not work either — GitHub does not substitute inside an `env` block, so it resolves to a literal string.
+
+**A workflow-level `services:` block produced runs GitHub would not dispatch.** Moving Postgres to workflow level yielded runs with zero jobs, no log, and `cannot be retried`. Reverting to per-job `services:` blocks worked immediately. The tidier arrangement is the broken one here, so the duplication stays and the reasoning is commented in the workflow file.
+
+The general lesson: a pipeline that has never executed on the platform is not a verified pipeline. Both of these looked correct when written.
 
 ## Existing Regression Tests
 

@@ -4,7 +4,7 @@
 
 Validation status: WARN.
 
-Checked 72 Markdown file(s), with 0 error(s), 110 warning(s), and 101 suggestion(s).
+Checked 72 Markdown file(s), with 0 error(s), 110 warning(s), and 100 suggestion(s).
 
 ## Overall Status
 
@@ -233,9 +233,8 @@ Checked 72 Markdown file(s), with 0 error(s), 110 warning(s), and 101 suggestion
 - SUGGESTION markdown-todo-without-owner-or-reason (.wwg/governance/regression-guardrail-catalog.md:67): TODO/TBD appears without an owner, reason, or open-question context. Recommendation: Add the owner, reason, or decision needed before resolving the placeholder.
 - SUGGESTION markdown-todo-without-owner-or-reason (.wwg/governance/regression-guardrail-catalog.md:68): TODO/TBD appears without an owner, reason, or open-question context. Recommendation: Add the owner, reason, or decision needed before resolving the placeholder.
 - SUGGESTION markdown-todo-without-owner-or-reason (.wwg/governance/regression-guardrail-catalog.md:69): TODO/TBD appears without an owner, reason, or open-question context. Recommendation: Add the owner, reason, or decision needed before resolving the placeholder.
-- SUGGESTION markdown-repeated-heading (.wwg/governance/test-enforcement.md:128) [Related Truths]: Heading 'Related Truths' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
+- SUGGESTION markdown-repeated-heading (.wwg/governance/test-enforcement.md:143) [Related Truths]: Heading 'Related Truths' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
 - SUGGESTION markdown-possible-vague-pronouns (.wwg/governance/test-enforcement.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
-- SUGGESTION markdown-possible-stale-current-language (.wwg/governance/test-enforcement.md:25): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
 - SUGGESTION markdown-possible-vague-pronouns (.wwg/governance/tooling-known-issues.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
 - SUGGESTION markdown-repeated-heading (.wwg/reports/adoption-audit.md:77) [Inferred Truth]: Heading 'Inferred Truth' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
 - SUGGESTION markdown-repeated-heading (.wwg/reports/adoption-audit.md:86) [Open Questions]: Heading 'Open Questions' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
@@ -427,9 +426,8 @@ Checked 72 Markdown file(s), with 0 error(s), 110 warning(s), and 101 suggestion
 - WARNING governance-rules-missing-structure (.wwg/governance/security-review.md) [Must, Must Not, Prefer, Avoid]: Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid. Recommendation: Use Must / Must Not / Prefer / Avoid for enforceable governance rules.
 - WARNING governance-contract-missing-sections (.wwg/governance/test-enforcement.md) [Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References]: Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References. Recommendation: Add the missing governance section or mark it explicitly not applicable.
 - WARNING governance-rules-missing-structure (.wwg/governance/test-enforcement.md) [Must, Must Not, Prefer, Avoid]: Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid. Recommendation: Use Must / Must Not / Prefer / Avoid for enforceable governance rules.
-- SUGGESTION markdown-repeated-heading (.wwg/governance/test-enforcement.md:128) [Related Truths]: Heading 'Related Truths' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
+- SUGGESTION markdown-repeated-heading (.wwg/governance/test-enforcement.md:143) [Related Truths]: Heading 'Related Truths' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
 - SUGGESTION markdown-possible-vague-pronouns (.wwg/governance/test-enforcement.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
-- SUGGESTION markdown-possible-stale-current-language (.wwg/governance/test-enforcement.md:25): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
 - WARNING governance-contract-missing-sections (.wwg/governance/test-plan.md) [Applies To, Enforcement, Reports / Artifacts, References]: Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References. Recommendation: Add the missing governance section or mark it explicitly not applicable.
 - WARNING governance-rules-missing-structure (.wwg/governance/test-plan.md) [Must, Must Not, Prefer, Avoid]: Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid. Recommendation: Use Must / Must Not / Prefer / Avoid for enforceable governance rules.
 - WARNING governance-contract-missing-sections (.wwg/governance/tooling-known-issues.md) [Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References]: Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References. Recommendation: Add the missing governance section or mark it explicitly not applicable.
