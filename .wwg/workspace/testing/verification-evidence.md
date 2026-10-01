@@ -160,7 +160,7 @@ not among them.
 ### Supporting evidence
 
 ```bash
-gh api repos/ZenDevvv/tarn-app/branches/main/protection --jq '{contexts: .required_status_checks.contexts, strict: .required_status_checks.strict, conversations: .required_conversation_resolution.enabled}'
+gh api repos/ZenDevvv/tarn-app/branches/main/protection --jq '{contexts: .required_status_checks.contexts, strict: .required_status_checks.strict, conversations: .required_conversation_resolution.enabled, approvals: .required_pull_request_reviews.required_approving_review_count}'
 ```
 
 ```json
