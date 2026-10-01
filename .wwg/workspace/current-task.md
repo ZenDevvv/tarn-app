@@ -44,6 +44,7 @@ Escape hatch if CodeRabbit ever fails to report a status: an admin can edit or r
 
 - **No more direct pushes to `main`.** Every change needs a branch and a pull request.
 - **Expect to wait.** CodeRabbit took roughly three minutes per review, and strict mode means a new push to an open pull request invalidates the checks and requires a re-run.
+- **Squash merge leaves a gap.** The commit landing on `main` is newly generated and never had CI run against it. Strict mode guarantees the checks passed on the latest pull request commit. Use a merge commit, or add a post-merge re-run, if that guarantee matters. (Found by CodeRabbit, not by me.)
 - Squash merge is the path used so far, which keeps history readable.
 
 ## Truth Surfaces Updated
