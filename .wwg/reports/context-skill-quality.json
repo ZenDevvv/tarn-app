@@ -1,20 +1,59 @@
 {
   "checkedFiles": [
+    ".wwg/governance/README.md",
+    ".wwg/governance/audit-log.md",
+    ".wwg/governance/canonical-artifact-review.md",
+    ".wwg/governance/context-drift-detection.md",
+    ".wwg/governance/drift-detection.md",
     ".wwg/governance/drift-guard.md",
+    ".wwg/governance/enforcement-levels.md",
+    ".wwg/governance/evidence-standards.md",
+    ".wwg/governance/human-approval-matrix.md",
+    ".wwg/governance/maintenance-review-checklist.md",
+    ".wwg/governance/operational-readiness-review.md",
+    ".wwg/governance/project-readiness-checklist.md",
+    ".wwg/governance/public-discovery-review.md",
+    ".wwg/governance/public-surface-review.md",
+    ".wwg/governance/quality-gates.md",
+    ".wwg/governance/recommendation-policy.md",
+    ".wwg/governance/recommendation-registry.md",
     ".wwg/governance/regression-gaps.md",
+    ".wwg/governance/regression-guardrail-catalog.md",
     ".wwg/governance/regression-manifest.md",
+    ".wwg/governance/release-checklist.md",
     ".wwg/governance/rule-traceability.md",
+    ".wwg/governance/security-review.md",
+    ".wwg/governance/test-enforcement.md",
+    ".wwg/governance/test-plan.md",
+    ".wwg/governance/tooling-known-issues.md",
     ".wwg/governance/truth-capture.md",
+    ".wwg/governance/truth-conflict-resolution.md",
+    ".wwg/reports/README.md",
     ".wwg/reports/adoption-audit.md",
     ".wwg/reports/adoption-regression-report.md",
+    ".wwg/reports/generated-project-upgrade-review.md",
+    ".wwg/reports/readme-validation.md",
     ".wwg/reports/skill-cleanup-review.md",
     ".wwg/reports/wwg-adoption-plan.md",
     ".wwg/reports/wwg-adoption-report.md",
     ".wwg/reports/wwg-adoption-truth-handoff.md",
+    ".wwg/reports/wwg-agent-handoff.md",
+    ".wwg/reports/wwg-audit-report.md",
+    ".wwg/reports/wwg-doctor-report.md",
     ".wwg/reports/wwg-existing-audit-report.md",
+    ".wwg/reports/wwg-generate-governance-report.md",
+    ".wwg/reports/wwg-handoff-to-codex.md",
     ".wwg/reports/wwg-maintenance-review.md",
+    ".wwg/reports/wwg-migration-history.md",
+    ".wwg/reports/wwg-upgrade-history.md",
+    ".wwg/reports/wwg-upgrade-report.md",
     ".wwg/reports/wwg-validate-report.md",
     ".wwg/wiki/principles/README.md",
+    ".wwg/wiki/principles/accessibility-principles.md",
+    ".wwg/wiki/principles/architecture-restraint-principles.md",
+    ".wwg/wiki/principles/plan-vs-implementation-truth.md",
+    ".wwg/wiki/principles/product-principles.md",
+    ".wwg/wiki/principles/ui-ux-simplicity-principles.md",
     ".wwg/wiki/project-truth.md",
     ".wwg/wiki/terminology.md",
     ".wwg/workspace/current-task.md",
@@ -28,7 +67,87 @@
   ],
   "classifiedFiles": [
     {
+      "path": ".wwg/governance/README.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/audit-log.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/context-drift-detection.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/drift-detection.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
       "path": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/enforcement-levels.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/evidence-standards.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/human-approval-matrix.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/maintenance-review-checklist.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/operational-readiness-review.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/project-readiness-checklist.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/public-discovery-review.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/public-surface-review.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/quality-gates.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/recommendation-policy.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/recommendation-registry.md",
       "fileType": "governance",
       "reason": "Governance directory path."
     },
@@ -38,7 +157,17 @@
       "reason": "Governance directory path."
     },
     {
+      "path": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
       "path": ".wwg/governance/regression-manifest.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/release-checklist.md",
       "fileType": "governance",
       "reason": "Governance directory path."
     },
@@ -48,9 +177,39 @@
       "reason": "Governance directory path."
     },
     {
+      "path": ".wwg/governance/security-review.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/test-enforcement.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/test-plan.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
       "path": ".wwg/governance/truth-capture.md",
       "fileType": "governance",
       "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/governance/truth-conflict-resolution.md",
+      "fileType": "governance",
+      "reason": "Governance directory path."
+    },
+    {
+      "path": ".wwg/reports/README.md",
+      "fileType": "report",
+      "reason": "Report directory path."
     },
     {
       "path": ".wwg/reports/adoption-audit.md",
@@ -59,6 +218,16 @@
     },
     {
       "path": ".wwg/reports/adoption-regression-report.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/generated-project-upgrade-review.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/readme-validation.md",
       "fileType": "report",
       "reason": "Report directory path."
     },
@@ -83,12 +252,52 @@
       "reason": "Report directory path."
     },
     {
+      "path": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
       "path": ".wwg/reports/wwg-existing-audit-report.md",
       "fileType": "report",
       "reason": "Report directory path."
     },
     {
+      "path": ".wwg/reports/wwg-generate-governance-report.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
       "path": ".wwg/reports/wwg-maintenance-review.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-upgrade-report.md",
       "fileType": "report",
       "reason": "Report directory path."
     },
@@ -99,6 +308,31 @@
     },
     {
       "path": ".wwg/wiki/principles/README.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
+    },
+    {
+      "path": ".wwg/wiki/principles/accessibility-principles.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
+    },
+    {
+      "path": ".wwg/wiki/principles/architecture-restraint-principles.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
+    },
+    {
+      "path": ".wwg/wiki/principles/plan-vs-implementation-truth.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
+    },
+    {
+      "path": ".wwg/wiki/principles/product-principles.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
+    },
+    {
+      "path": ".wwg/wiki/principles/ui-ux-simplicity-principles.md",
       "fileType": "context",
       "reason": "Wiki truth file treated as context for contract review."
     },
@@ -164,6 +398,96 @@
     {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/README.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/README.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/audit-log.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/audit-log.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/context-drift-detection.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/context-drift-detection.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/drift-detection.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/drift-detection.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
       "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
       "affectedFile": ".wwg/governance/drift-guard.md",
       "fileType": "governance",
@@ -175,6 +499,204 @@
       "code": "governance-rules-missing-structure",
       "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
       "affectedFile": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/enforcement-levels.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/enforcement-levels.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/evidence-standards.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/evidence-standards.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/human-approval-matrix.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/human-approval-matrix.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/maintenance-review-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/maintenance-review-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/operational-readiness-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/operational-readiness-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/project-readiness-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/project-readiness-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/public-discovery-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/public-discovery-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/public-surface-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/public-surface-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/quality-gates.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/quality-gates.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/recommendation-policy.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/recommendation-policy.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/recommendation-registry.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/recommendation-registry.md",
       "fileType": "governance",
       "affectedSection": "Must, Must Not, Prefer, Avoid",
       "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
@@ -200,6 +722,24 @@
     {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
       "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
       "affectedFile": ".wwg/governance/regression-manifest.md",
       "fileType": "governance",
@@ -211,6 +751,24 @@
       "code": "governance-rules-missing-structure",
       "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
       "affectedFile": ".wwg/governance/regression-manifest.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/release-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/release-checklist.md",
       "fileType": "governance",
       "affectedSection": "Must, Must Not, Prefer, Avoid",
       "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
@@ -236,6 +794,78 @@
     {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/security-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/security-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/test-enforcement.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/test-enforcement.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/test-plan.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/test-plan.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
       "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
       "affectedFile": ".wwg/governance/truth-capture.md",
       "fileType": "governance",
@@ -250,6 +880,33 @@
       "fileType": "governance",
       "affectedSection": "Must, Must Not, Prefer, Avoid",
       "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/truth-conflict-resolution.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/truth-conflict-resolution.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/README.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
     },
     {
       "severity": "warning",
@@ -265,6 +922,24 @@
       "code": "report-contract-missing-sections",
       "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
       "affectedFile": ".wwg/reports/adoption-regression-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/generated-project-upgrade-review.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/readme-validation.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
       "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
@@ -309,7 +984,52 @@
       "severity": "warning",
       "code": "report-contract-missing-sections",
       "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
       "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-generate-governance-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
       "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
@@ -321,6 +1041,33 @@
       "affectedFile": ".wwg/reports/wwg-maintenance-review.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes",
       "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
     },
     {
@@ -345,7 +1092,7 @@
       "severity": "warning",
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
-      "affectedFile": ".wwg/wiki/project-truth.md",
+      "affectedFile": ".wwg/wiki/principles/accessibility-principles.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
       "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
@@ -354,9 +1101,54 @@
       "severity": "warning",
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
-      "affectedFile": ".wwg/wiki/terminology.md",
+      "affectedFile": ".wwg/wiki/principles/architecture-restraint-principles.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/principles/plan-vs-implementation-truth.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/principles/product-principles.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/principles/ui-ux-simplicity-principles.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Decisions, Constraints, References",
       "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
     },
     {
@@ -544,10 +1336,99 @@
       "severity": "suggestion",
       "code": "markdown-possible-stale-current-language",
       "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "line": 17,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "line": 46,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/drift-detection.md",
+      "fileType": "governance",
+      "line": 28,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/governance/drift-guard.md",
       "fileType": "governance",
       "line": 51,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/public-discovery-review.md",
+      "fileType": "governance",
+      "line": 15,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 60,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 66,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 67,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 68,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 69,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
     },
     {
       "severity": "suggestion",
@@ -579,12 +1460,173 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 199,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 200,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 201,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 212,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 216,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-empty-section",
+      "message": "Section 'WWG Audit Report' is empty.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "WWG Audit Report",
+      "line": 1,
+      "recommendedFix": "Fill the section or state 'Not applicable' with a short reason."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 292,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 293,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 294,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 295,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 296,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 275,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 276,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 277,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 278,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 279,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-repeated-heading",
       "message": "Heading 'Inferred Truth' repeats at the same level.",
       "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
       "fileType": "report",
       "affectedSection": "Inferred Truth",
-      "line": 81,
+      "line": 80,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -594,8 +1636,53 @@
       "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
       "fileType": "report",
       "affectedSection": "Open Questions",
-      "line": 90,
+      "line": 89,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 197,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 198,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 199,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 210,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 214,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
       "severity": "suggestion",
@@ -604,6 +1691,133 @@
       "affectedFile": ".wwg/reports/wwg-maintenance-review.md",
       "fileType": "report",
       "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 27,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 45,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 27,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 45,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/principles/architecture-restraint-principles.md",
+      "fileType": "context",
+      "line": 52,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/principles/plan-vs-implementation-truth.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/principles/ui-ux-simplicity-principles.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 93,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 111,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 112,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 113,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 255,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "line": 38,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
       "severity": "suggestion",
@@ -825,6 +2039,96 @@
     {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/README.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/README.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/audit-log.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/audit-log.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/context-drift-detection.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/context-drift-detection.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/drift-detection.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/drift-detection.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
       "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
       "affectedFile": ".wwg/governance/drift-guard.md",
       "fileType": "governance",
@@ -836,6 +2140,204 @@
       "code": "governance-rules-missing-structure",
       "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
       "affectedFile": ".wwg/governance/drift-guard.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/enforcement-levels.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/enforcement-levels.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/evidence-standards.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/evidence-standards.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/human-approval-matrix.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/human-approval-matrix.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/maintenance-review-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/maintenance-review-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/operational-readiness-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/operational-readiness-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/project-readiness-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/project-readiness-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/public-discovery-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/public-discovery-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/public-surface-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/public-surface-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/quality-gates.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/quality-gates.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/recommendation-policy.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/recommendation-policy.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/recommendation-registry.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/recommendation-registry.md",
       "fileType": "governance",
       "affectedSection": "Must, Must Not, Prefer, Avoid",
       "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
@@ -861,6 +2363,24 @@
     {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
       "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
       "affectedFile": ".wwg/governance/regression-manifest.md",
       "fileType": "governance",
@@ -872,6 +2392,24 @@
       "code": "governance-rules-missing-structure",
       "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
       "affectedFile": ".wwg/governance/regression-manifest.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/release-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/release-checklist.md",
       "fileType": "governance",
       "affectedSection": "Must, Must Not, Prefer, Avoid",
       "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
@@ -897,6 +2435,78 @@
     {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/security-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/security-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/test-enforcement.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/test-enforcement.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/test-plan.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/test-plan.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
       "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
       "affectedFile": ".wwg/governance/truth-capture.md",
       "fileType": "governance",
@@ -911,6 +2521,33 @@
       "fileType": "governance",
       "affectedSection": "Must, Must Not, Prefer, Avoid",
       "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/truth-conflict-resolution.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/truth-conflict-resolution.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/README.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
     },
     {
       "severity": "warning",
@@ -926,6 +2563,24 @@
       "code": "report-contract-missing-sections",
       "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
       "affectedFile": ".wwg/reports/adoption-regression-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/generated-project-upgrade-review.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/readme-validation.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
       "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
@@ -970,7 +2625,52 @@
       "severity": "warning",
       "code": "report-contract-missing-sections",
       "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
       "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-generate-governance-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
       "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
@@ -982,6 +2682,33 @@
       "affectedFile": ".wwg/reports/wwg-maintenance-review.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes",
       "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
     },
     {
@@ -1006,7 +2733,7 @@
       "severity": "warning",
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
-      "affectedFile": ".wwg/wiki/project-truth.md",
+      "affectedFile": ".wwg/wiki/principles/accessibility-principles.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
       "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
@@ -1015,9 +2742,54 @@
       "severity": "warning",
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
-      "affectedFile": ".wwg/wiki/terminology.md",
+      "affectedFile": ".wwg/wiki/principles/architecture-restraint-principles.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/principles/plan-vs-implementation-truth.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/principles/product-principles.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/principles/ui-ux-simplicity-principles.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Decisions, Constraints, References",
       "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
     },
     {
@@ -1045,7 +2817,7 @@
       "severity": "warning",
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
-      "affectedFile": ".wwg/wiki/project-truth.md",
+      "affectedFile": ".wwg/wiki/principles/accessibility-principles.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
       "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
@@ -1054,13 +2826,253 @@
       "severity": "warning",
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
-      "affectedFile": ".wwg/wiki/terminology.md",
+      "affectedFile": ".wwg/wiki/principles/architecture-restraint-principles.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/principles/architecture-restraint-principles.md",
+      "fileType": "context",
+      "line": 52,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/principles/plan-vs-implementation-truth.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/principles/plan-vs-implementation-truth.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/principles/product-principles.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/principles/ui-ux-simplicity-principles.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/principles/ui-ux-simplicity-principles.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 93,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 111,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 112,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 113,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 255,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Decisions, Constraints, References",
       "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
     }
   ],
   "governanceFindings": [
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/README.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/README.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/audit-log.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/audit-log.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "line": 17,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "line": 46,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/context-drift-detection.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/context-drift-detection.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/drift-detection.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/drift-detection.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/drift-detection.md",
+      "fileType": "governance",
+      "line": 28,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
     {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
@@ -1091,6 +3103,213 @@
     {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/enforcement-levels.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/enforcement-levels.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/evidence-standards.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/evidence-standards.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/human-approval-matrix.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/human-approval-matrix.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/maintenance-review-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/maintenance-review-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/operational-readiness-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/operational-readiness-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/project-readiness-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/project-readiness-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/public-discovery-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/public-discovery-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/public-discovery-review.md",
+      "fileType": "governance",
+      "line": 15,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/public-surface-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/public-surface-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/quality-gates.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/quality-gates.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/recommendation-policy.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/recommendation-policy.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/recommendation-registry.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/recommendation-registry.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
       "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
       "affectedFile": ".wwg/governance/regression-gaps.md",
       "fileType": "governance",
@@ -1109,6 +3328,69 @@
     {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 60,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 66,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 67,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 68,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 69,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
       "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
       "affectedFile": ".wwg/governance/regression-manifest.md",
       "fileType": "governance",
@@ -1120,6 +3402,24 @@
       "code": "governance-rules-missing-structure",
       "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
       "affectedFile": ".wwg/governance/regression-manifest.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/release-checklist.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/release-checklist.md",
       "fileType": "governance",
       "affectedSection": "Must, Must Not, Prefer, Avoid",
       "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
@@ -1145,6 +3445,86 @@
     {
       "severity": "warning",
       "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/security-review.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/security-review.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/test-enforcement.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/test-enforcement.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/test-plan.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/test-plan.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "affectedSection": "Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
       "message": "Governance is missing contract section(s): Purpose, Applies To, Rules, Enforcement, Reports / Artifacts, References.",
       "affectedFile": ".wwg/governance/truth-capture.md",
       "fileType": "governance",
@@ -1156,12 +3536,39 @@
       "code": "governance-rules-missing-structure",
       "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
       "affectedFile": ".wwg/governance/truth-capture.md",
+      "fileType": "governance",
+      "affectedSection": "Must, Must Not, Prefer, Avoid",
+      "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-contract-missing-sections",
+      "message": "Governance is missing contract section(s): Applies To, Rules, Enforcement, Reports / Artifacts, References.",
+      "affectedFile": ".wwg/governance/truth-conflict-resolution.md",
+      "fileType": "governance",
+      "affectedSection": "Applies To, Rules, Enforcement, Reports / Artifacts, References",
+      "recommendedFix": "Add the missing governance section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "governance-rules-missing-structure",
+      "message": "Governance file is missing rule structure section(s): Must, Must Not, Prefer, Avoid.",
+      "affectedFile": ".wwg/governance/truth-conflict-resolution.md",
       "fileType": "governance",
       "affectedSection": "Must, Must Not, Prefer, Avoid",
       "recommendedFix": "Use Must / Must Not / Prefer / Avoid for enforceable governance rules."
     }
   ],
   "reportFindings": [
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/README.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
     {
       "severity": "warning",
       "code": "report-contract-missing-sections",
@@ -1212,6 +3619,24 @@
       "severity": "warning",
       "code": "report-contract-missing-sections",
       "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/generated-project-upgrade-review.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/readme-validation.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
       "affectedFile": ".wwg/reports/skill-cleanup-review.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
@@ -1248,6 +3673,194 @@
       "severity": "warning",
       "code": "report-contract-missing-sections",
       "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 199,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 200,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 201,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 212,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 216,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-empty-section",
+      "message": "Section 'WWG Audit Report' is empty.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "WWG Audit Report",
+      "line": 1,
+      "recommendedFix": "Fill the section or state 'Not applicable' with a short reason."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 292,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 293,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 294,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 295,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 296,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 275,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 276,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 277,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 278,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 279,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
       "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
@@ -1260,7 +3873,7 @@
       "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
       "fileType": "report",
       "affectedSection": "Inferred Truth",
-      "line": 81,
+      "line": 80,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -1270,8 +3883,71 @@
       "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
       "fileType": "report",
       "affectedSection": "Open Questions",
-      "line": 90,
+      "line": 89,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-generate-governance-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 197,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 198,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 199,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 210,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 214,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
       "severity": "warning",
@@ -1289,6 +3965,73 @@
       "affectedFile": ".wwg/reports/wwg-maintenance-review.md",
       "fileType": "report",
       "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 27,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 45,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 27,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 45,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
     },
     {
       "severity": "warning",
@@ -1327,10 +4070,99 @@
       "severity": "suggestion",
       "code": "markdown-possible-stale-current-language",
       "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "line": 17,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/canonical-artifact-review.md",
+      "fileType": "governance",
+      "line": 46,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/drift-detection.md",
+      "fileType": "governance",
+      "line": 28,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/governance/drift-guard.md",
       "fileType": "governance",
       "line": 51,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/governance/public-discovery-review.md",
+      "fileType": "governance",
+      "line": 15,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 60,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 66,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 67,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 68,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/governance/regression-guardrail-catalog.md",
+      "fileType": "governance",
+      "line": 69,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/governance/tooling-known-issues.md",
+      "fileType": "governance",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
     },
     {
       "severity": "suggestion",
@@ -1362,12 +4194,173 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 199,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 200,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 201,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 212,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-agent-handoff.md",
+      "fileType": "report",
+      "line": 216,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-empty-section",
+      "message": "Section 'WWG Audit Report' is empty.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "WWG Audit Report",
+      "line": 1,
+      "recommendedFix": "Fill the section or state 'Not applicable' with a short reason."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 292,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 293,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 294,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 295,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "line": 296,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 275,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 276,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 277,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 278,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-doctor-report.md",
+      "fileType": "report",
+      "line": 279,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-repeated-heading",
       "message": "Heading 'Inferred Truth' repeats at the same level.",
       "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
       "fileType": "report",
       "affectedSection": "Inferred Truth",
-      "line": 81,
+      "line": 80,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -1377,8 +4370,53 @@
       "affectedFile": ".wwg/reports/wwg-existing-audit-report.md",
       "fileType": "report",
       "affectedSection": "Open Questions",
-      "line": 90,
+      "line": 89,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 197,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 198,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 199,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 210,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-todo-without-owner-or-reason",
+      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
+      "affectedFile": ".wwg/reports/wwg-handoff-to-codex.md",
+      "fileType": "report",
+      "line": 214,
+      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
     },
     {
       "severity": "suggestion",
@@ -1387,6 +4425,133 @@
       "affectedFile": ".wwg/reports/wwg-maintenance-review.md",
       "fileType": "report",
       "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 27,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-migration-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 45,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 27,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading '0.6.6 to 0.6.6' repeats at the same level.",
+      "affectedFile": ".wwg/reports/wwg-upgrade-history.md",
+      "fileType": "report",
+      "affectedSection": "0.6.6 to 0.6.6",
+      "line": 45,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/principles/architecture-restraint-principles.md",
+      "fileType": "context",
+      "line": 52,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/principles/plan-vs-implementation-truth.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/principles/ui-ux-simplicity-principles.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 93,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 111,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 112,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 113,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 255,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "line": 38,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
       "severity": "suggestion",
@@ -1857,16 +5022,16 @@
   ],
   "metadataPolicyApplied": "Option C: Skill Registry metadata is canonical; skill files may include lightweight metadata when beneficial, and package-side skills do not require frontmatter.",
   "summary": {
-    "checkedFileCount": 25,
+    "checkedFileCount": 64,
     "skippedFileCount": 1,
     "errorCount": 0,
-    "warningCount": 40,
-    "suggestionCount": 30,
+    "warningCount": 102,
+    "suggestionCount": 77,
     "classificationCounts": {
-      "context": 3,
+      "context": 8,
       "skill": 0,
-      "governance": 5,
-      "report": 9,
+      "governance": 28,
+      "report": 20,
       "public_doc": 0,
       "agent_instruction": 1,
       "changelog_governance": 0,

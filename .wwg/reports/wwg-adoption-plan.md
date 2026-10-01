@@ -6,25 +6,49 @@ Conservative adoption should register existing artifacts before creating new WWG
 
 ## Recommended Mode
 
-new
+conservative
 
 ## Existing Artifacts to Reuse
 
 | Existing artifact | Classification | Suggested WWG role | Confidence |
 |---|---|---|---|
+| .wwg/changelog/config.yml | public surface | public_surface_updates | medium |
+| .wwg/changelog/state.json | public surface | public_surface_updates | medium |
+| AGENTS.md | root agent policy | root_agents | high |
 | DESIGN.md | design source | design_context | high |
+| governance | governance root | quality_gates | medium |
+| governance/audit-log.md | governance artifact | audit_log | medium |
+| governance/context-drift-detection.md | canonical context | project_master_context | medium |
+| governance/quality-gates.md | governance artifact | quality_gates | medium |
+| governance/regression-gaps.json | governance artifact | regression_guardrails | medium |
+| governance/regression-gaps.md | governance artifact | regression_guardrails | medium |
+| governance/regression-guardrail-catalog.md | governance artifact | regression_guardrails | medium |
+| governance/regression-manifest.json | governance artifact | regression_guardrails | medium |
+| governance/regression-manifest.md | governance artifact | regression_guardrails | medium |
+| governance/release-checklist.md | governance artifact | release_checklist | medium |
+| governance/security-review.md | governance artifact | quality_gates | medium |
+| governance/test-plan.md | governance artifact | test_plan | medium |
+| reports | governance root | reference_history | medium |
+| reports/adoption-regression-report.json | governance artifact | regression_guardrails | medium |
+| reports/adoption-regression-report.md | governance artifact | regression_guardrails | medium |
+| reports/context-skill-quality.md | canonical context | project_master_context | medium |
+| wiki | context root | project_master_context | medium |
+| workspace/testing/manual-verification-checklist.md | governance artifact | test_plan | medium |
+| workspace/testing/manual-verification-evidence.json | governance artifact | test_plan | medium |
+| workspace/testing/non-technical-regression-checklist.md | governance artifact | regression_guardrails | medium |
+| workspace/testing/regression-candidate-review.json | governance artifact | regression_guardrails | medium |
+| workspace/testing/regression-candidate-review.md | governance artifact | regression_guardrails | medium |
 
 ## Artifacts to Register
 
+- root_agents: AGENTS.md
+- project_master_context: governance/context-drift-detection.md
 - design_context: DESIGN.md
 
 ## Recommended Artifacts for Later Phases
 
-- project_registry: wwg.project.yaml
 - changelog: CHANGELOG.md
-- project_master_context: docs/ai-context/project-context.md
 - maintenance_matrix: docs/ai-context/context-maintenance-matrix.md
-- evidence_standards: governance/evidence-standards.md
 - public_discovery_context: docs/ai-context/public-discovery-context.md
 
 ## Artifacts to Create Later
@@ -34,7 +58,32 @@ new
 
 ## Files Not to Duplicate
 
+- .wwg/changelog/config.yml
+- .wwg/changelog/state.json
+- AGENTS.md
 - DESIGN.md
+- governance
+- governance/audit-log.md
+- governance/context-drift-detection.md
+- governance/quality-gates.md
+- governance/regression-gaps.json
+- governance/regression-gaps.md
+- governance/regression-guardrail-catalog.md
+- governance/regression-manifest.json
+- governance/regression-manifest.md
+- governance/release-checklist.md
+- governance/security-review.md
+- governance/test-plan.md
+- reports
+- reports/adoption-regression-report.json
+- reports/adoption-regression-report.md
+- reports/context-skill-quality.md
+- wiki
+- workspace/testing/manual-verification-checklist.md
+- workspace/testing/manual-verification-evidence.json
+- workspace/testing/non-technical-regression-checklist.md
+- workspace/testing/regression-candidate-review.json
+- workspace/testing/regression-candidate-review.md
 
 ## Changelog
 
@@ -61,22 +110,21 @@ wwg:
   registry_update_policy: safe_merge
 layers:
   wiki:
-    root: .
+    root: wiki
     strategy: mapped-existing
   workspace:
     root: .
     strategy: mapped-existing
   governance:
-    root: reports
+    root: governance
     strategy: mapped-existing
 canonical_artifacts:
+  root_agents: AGENTS.md
+  project_master_context: governance/context-drift-detection.md
   design_context: DESIGN.md
 recommended_artifacts:
-  project_registry: wwg.project.yaml
   changelog: CHANGELOG.md
-  project_master_context: docs/ai-context/project-context.md
   maintenance_matrix: docs/ai-context/context-maintenance-matrix.md
-  evidence_standards: governance/evidence-standards.md
   public_discovery_context: docs/ai-context/public-discovery-context.md
 scoped_agents: []
 reports:
@@ -86,14 +134,6 @@ reports:
   adoption_plan_json: reports/wwg-adoption-plan.json
   adoption_report: reports/wwg-adoption-report.md
   adoption_report_json: reports/wwg-adoption-report.json
-  adoption_regression_baseline: .wwg/reports/adoption-regression-report.md
-  adoption_regression_baseline_json: .wwg/reports/adoption-regression-report.json
-  regression_manifest: .wwg/governance/regression-manifest.md
-  regression_manifest_json: .wwg/governance/regression-manifest.json
-  regression_gaps: .wwg/governance/regression-gaps.md
-  regression_gaps_json: .wwg/governance/regression-gaps.json
-  rule_traceability: .wwg/governance/rule-traceability.md
-  rule_traceability_json: .wwg/governance/rule-traceability.json
 ```
 
 ## Risk Classification
@@ -114,4 +154,4 @@ reports:
 
 ## Next Steps
 
-- wwg init
+- wwg adopt --mode conservative --dry-run

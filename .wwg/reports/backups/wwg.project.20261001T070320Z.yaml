@@ -18,11 +18,7 @@ layers:
     root: .wwg/governance
     strategy: wwg-native
 canonical_artifacts:
-  product_requirements: job-application-tracker-brd-prd.md
-  technical_architecture: job-application-tracker-project-architecture.md
   design_context: DESIGN.md
-  design_reference: design-system.html
-  design_tokens: index.css
   root_agents: AGENTS.md
   project_truth: .wwg/wiki/project-truth.md
   terminology: .wwg/wiki/terminology.md
@@ -52,18 +48,3 @@ reports:
   regression_gaps_json: .wwg/governance/regression-gaps.json
   rule_traceability: .wwg/governance/rule-traceability.md
   rule_traceability_json: .wwg/governance/rule-traceability.json
-  handoff: .wwg/reports/wwg-agent-handoff.md
-  handoff_compatibility: .wwg/reports/wwg-handoff-to-codex.md
-  generate_workspace: .wwg/reports/wwg-generate-workspace-report.md
-  generate_governance: .wwg/reports/wwg-generate-governance-report.md
-  refresh_context: .wwg/reports/wwg-refresh-context-report.md
-  refresh_skills: .wwg/reports/wwg-refresh-skills-report.md
-handoff:
-  agent_report: .wwg/reports/wwg-agent-handoff.md
-  codex_report: .wwg/reports/wwg-handoff-to-codex.md
-  last_handoff_at: 2026-10-01T07:11:54.716Z
-  recommended_prompt: Read AGENTS.md and .wwg/reports/wwg-agent-handoff.md. Follow the WWG operating
-    loop, then continue from the WWG plan and begin implementation with your chosen implementation
-    agent.
-last_generated:
-  governance: 2026-10-01T07:10:17.367Z

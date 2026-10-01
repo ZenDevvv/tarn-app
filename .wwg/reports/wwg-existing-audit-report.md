@@ -5,18 +5,18 @@
 - Target: C:\Users\Zen\Desktop\MY PROJECTS\applicant-tracking-system
 - Date: 2026-10-01
 - Recommended adoption mode: infer
-- Adoption readiness score: 23 / 100
+- Adoption readiness score: 29 / 100
 - Confidence: LOW
-- Command: `wwg adopt --mode infer --apply --target C:\Users\Zen\Desktop\MY PROJECTS\applicant-tracking-system`
+- Command: `wwg audit --existing`
 
 ## Evidence Reviewed
 
-- README/docs: DESIGN.md
+- README/docs: DESIGN.md, governance/README.md, reports/README.md, wiki/principles/README.md
 - Package/config files: None detected
 - Source folders: None detected
 - Tests: None detected
 - Deployment/config: None detected
-- Existing agent/context files: None detected
+- Existing agent/context files: .wwg/changelog/config.yml, .wwg/changelog/state.json, .wwg/readme/config.yml, .wwg/readme/state.json, AGENTS.md
 
 ## Observed Reality
 
@@ -28,7 +28,7 @@
 - Main implemented features: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no feature headings or routes detected)
 - User roles/surfaces: NEEDS_CONFIRMATION - NEEDS_CONFIRMATION Evidence: README/source (no clear user roles detected)
 - Data persistence: NEEDS_CONFIRMATION - No persistence layer detected Evidence: repository scan (no database/schema/migration indicators)
-- Auth/security: NEEDS_CONFIRMATION - No auth/security implementation detected Evidence: repository scan (no auth/security indicators)
+- Auth/security: CONFIRMED - governance/security-review.md Evidence: governance/security-review.md (auth/security indicator)
 - Payments/billing: NEEDS_CONFIRMATION - No payments/billing implementation detected Evidence: repository scan (no payment/billing indicators)
 - Deployment/runtime: NEEDS_CONFIRMATION - No deployment config detected Evidence: repository scan (no Docker/Vercel/Netlify/GitHub Actions config detected)
 
@@ -56,7 +56,6 @@
 - Confirm product category. Why: Category affects profile selection, architecture defaults, and governance gates. Evidence: NEEDS_CONFIRMATION: Software project
 - Confirm primary users and role names. Why: Roles affect permissions, UX, terminology, and task routing. Evidence: NEEDS_CONFIRMATION: NEEDS_CONFIRMATION
 - Confirm persistence boundary. Why: Data ownership and migration policy depend on this. Evidence: NEEDS_CONFIRMATION: No persistence layer detected
-- Confirm auth/security boundary. Why: Auth and permissions changes are approval-sensitive. Evidence: NEEDS_CONFIRMATION: No auth/security implementation detected
 - Confirm payments/billing boundary. Why: Payments and billing are approval-sensitive. Evidence: NEEDS_CONFIRMATION: No payments/billing implementation detected
 - Confirm deployment/runtime boundary. Why: Operational readiness depends on deployment truth. Evidence: NEEDS_CONFIRMATION: No deployment config detected
 - Confirm testing strategy. Why: WWG health depends on a known validation path. Evidence: No test files detected.
@@ -72,7 +71,7 @@ Labels used: CONFIRMED, INFERRED, NEEDS_CONFIRMATION, CONFLICTING, STALE.
 
 ## Legacy Registry Mapping Summary
 
-Detected 1 artifact(s). Registry-first mode: new.
+Detected 26 artifact(s). Registry-first mode: conservative.
 
 ## Observed Facts
 
@@ -92,7 +91,6 @@ Detected 1 artifact(s). Registry-first mode: new.
 - Confirm product category. Evidence: NEEDS_CONFIRMATION: Software project
 - Confirm primary users and role names. Evidence: NEEDS_CONFIRMATION: NEEDS_CONFIRMATION
 - Confirm persistence boundary. Evidence: NEEDS_CONFIRMATION: No persistence layer detected
-- Confirm auth/security boundary. Evidence: NEEDS_CONFIRMATION: No auth/security implementation detected
 - Confirm payments/billing boundary. Evidence: NEEDS_CONFIRMATION: No payments/billing implementation detected
 - Confirm deployment/runtime boundary. Evidence: NEEDS_CONFIRMATION: No deployment config detected
 - Confirm testing strategy. Evidence: No test files detected.
@@ -106,72 +104,97 @@ Reports are reference history. `.wwg/wiki/project-truth.md` is the canonical cur
 
 ## Adoption Readiness Score
 
-Score: 5 / 105
+Score: 40 / 105
 
 ### Strengths
 
+- Root AGENTS.md exists
 - Canonical context candidates detected
+- Governance or operations assets detected
 
 ### Gaps
 
-- No root AGENTS.md detected
 - No maintenance matrix detected
-- No explicit evidence standards or governance assets detected
-- No WWG registry file
 
 ### Scoring Categories
 
 | Category | Score | Reason |
 |---|---:|---|
-| agent instructions | 0 / 10 | Root agent policy not detected. |
-| canonical context | 5 / 10 | Context candidates detected. |
+| agent instructions | 10 / 10 | Root agent policy exists. |
+| canonical context | 10 / 10 | Context candidates detected. |
 | maintenance matrix | 0 / 10 | No maintenance matrix detected. |
-| governance assets | 0 / 10 | No governance assets detected. |
+| governance assets | 10 / 10 | Governance or operations assets detected. |
 | skills/prompts | 0 / 5 | No skills or prompts detected. |
-| public surface/discovery | 0 / 5 | No public surface assets detected. |
+| public surface/discovery | 5 / 5 | Public surface or discovery assets detected. |
 | project structure clarity | 0 / 10 | No major implementation boundary detected. |
 | readme/docs quality | 0 / 10 | README/docs not detected. |
 | tests/checks | 0 / 10 | No tests/specs detected. |
 | deployment config | 0 / 10 | Deployment config not detected. |
 | entry point clarity | 0 / 5 | No conventional entry points detected. |
 | mock vs production boundaries | 0 / 5 | No explicit mock/demo boundary signals detected. |
-| registry/readiness | 0 / 5 | No WWG registry file detected. |
+| registry/readiness | 5 / 5 | WWG registry exists. |
 
 ### Recommended Adoption Mode
 
-new
+conservative
 
 ## Command
 
-`wwg adopt --mode infer --apply --target C:\Users\Zen\Desktop\MY PROJECTS\applicant-tracking-system`
+`wwg audit --existing`
 
 ## Repository Type Detected
 
-existing-project
+wwg-native-project
 
 ## Existing Artifacts Detected
 
 | Existing artifact | Classification | Suggested WWG role | Confidence |
 |---|---|---|---|
+| .wwg/changelog/config.yml | public surface | public_surface_updates | medium |
+| .wwg/changelog/state.json | public surface | public_surface_updates | medium |
+| AGENTS.md | root agent policy | root_agents | high |
 | DESIGN.md | design source | design_context | high |
+| governance | governance root | quality_gates | medium |
+| governance/audit-log.md | governance artifact | audit_log | medium |
+| governance/context-drift-detection.md | canonical context | project_master_context | medium |
+| governance/quality-gates.md | governance artifact | quality_gates | medium |
+| governance/regression-gaps.json | governance artifact | regression_guardrails | medium |
+| governance/regression-gaps.md | governance artifact | regression_guardrails | medium |
+| governance/regression-guardrail-catalog.md | governance artifact | regression_guardrails | medium |
+| governance/regression-manifest.json | governance artifact | regression_guardrails | medium |
+| governance/regression-manifest.md | governance artifact | regression_guardrails | medium |
+| governance/release-checklist.md | governance artifact | release_checklist | medium |
+| governance/security-review.md | governance artifact | quality_gates | medium |
+| governance/test-plan.md | governance artifact | test_plan | medium |
+| reports | governance root | reference_history | medium |
+| reports/adoption-regression-report.json | governance artifact | regression_guardrails | medium |
+| reports/adoption-regression-report.md | governance artifact | regression_guardrails | medium |
+| reports/context-skill-quality.md | canonical context | project_master_context | medium |
+| wiki | context root | project_master_context | medium |
+| workspace/testing/manual-verification-checklist.md | governance artifact | test_plan | medium |
+| workspace/testing/manual-verification-evidence.json | governance artifact | test_plan | medium |
+| workspace/testing/non-technical-regression-checklist.md | governance artifact | regression_guardrails | medium |
+| workspace/testing/regression-candidate-review.json | governance artifact | regression_guardrails | medium |
+| workspace/testing/regression-candidate-review.md | governance artifact | regression_guardrails | medium |
 
 ## Findings by Evidence Level
 
 ### confirmed
 
-- MEDIUM governance-not-detected: evidence=confirmed risk=medium No governance, reports, operations, or checklist artifacts were detected. Recommendation: Recommend governance artifacts in a later explicit phase; conservative apply should create reports only.
-- MEDIUM root-agents-missing: evidence=confirmed risk=medium No root AGENTS.md file was detected. Recommendation: Consider a root agent policy after registry-first adoption.
-- LOW public-surface-not-detected: evidence=confirmed risk=low No public surface or public discovery artifacts were detected. Recommendation: No action required for conservative adoption.
+- INFO governance-detected: evidence=confirmed risk=low Detected 19 governance artifact(s). Recommendation: Reuse and register existing governance artifacts.
 - INFO mapping-design_context (DESIGN.md): evidence=confirmed risk=low Detected candidate for design_context. Recommendation: Register DESIGN.md as design_context; do not duplicate it.
+- INFO mapping-project_master_context (governance/context-drift-detection.md): evidence=confirmed risk=low Detected candidate for project_master_context. Recommendation: Register governance/context-drift-detection.md as project_master_context; do not duplicate it.
+- INFO mapping-root_agents (AGENTS.md): evidence=confirmed risk=low Detected candidate for root_agents. Recommendation: Register AGENTS.md as root_agents; do not duplicate it.
+- INFO public-surface-artifact (.wwg/changelog/config.yml): evidence=confirmed risk=low Public surface or discovery artifact detected. Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
+- INFO public-surface-artifact (.wwg/changelog/state.json): evidence=confirmed risk=low Public surface or discovery artifact detected. Recommendation: Treat public/trust messaging changes as approval-gated when content is customer-facing.
+- INFO public-surface-detected: evidence=confirmed risk=low Detected 2 public surface/public discovery artifact(s). Recommendation: Map existing public discovery sources before proposing new ones.
+- INFO root-agents-detected (AGENTS.md): evidence=confirmed risk=low Root agent instructions were detected. Recommendation: Map this file as canonical_artifacts.root_agents.
 
 ### likely
 
 - MEDIUM recommended-changelog (CHANGELOG.md): evidence=likely risk=medium Recommended artifact is not currently mapped or detected. Recommendation: Create only in a later explicit adoption/init phase.
-- MEDIUM recommended-evidence_standards (governance/evidence-standards.md): evidence=likely risk=medium Recommended artifact is not currently mapped or detected. Recommendation: Create only in a later explicit adoption/init phase.
 - MEDIUM recommended-maintenance_matrix (docs/ai-context/context-maintenance-matrix.md): evidence=likely risk=medium Recommended artifact is not currently mapped or detected. Recommendation: Create only in a later explicit adoption/init phase.
-- MEDIUM recommended-project_master_context (docs/ai-context/project-context.md): evidence=likely risk=medium Recommended artifact is not currently mapped or detected. Recommendation: Create only in a later explicit adoption/init phase.
 - MEDIUM recommended-public_discovery_context (docs/ai-context/public-discovery-context.md): evidence=likely risk=medium Recommended artifact is not currently mapped or detected. Recommendation: Create only in a later explicit adoption/init phase.
-- LOW recommended-project_registry (wwg.project.yaml): evidence=likely risk=low Recommended artifact is not currently mapped or detected. Recommendation: Create via conservative adopt apply.
 
 ### hypotheses
 
@@ -183,15 +206,14 @@ existing-project
 
 ## Suggested WWG Mappings
 
+- root_agents: AGENTS.md
+- project_master_context: governance/context-drift-detection.md
 - design_context: DESIGN.md
 
 ## Recommended Artifacts
 
-- project_registry: wwg.project.yaml
 - changelog: CHANGELOG.md
-- project_master_context: docs/ai-context/project-context.md
 - maintenance_matrix: docs/ai-context/context-maintenance-matrix.md
-- evidence_standards: governance/evidence-standards.md
 - public_discovery_context: docs/ai-context/public-discovery-context.md
 
 ## Changelog
@@ -222,20 +244,17 @@ existing-project
 
 ## Missing WWG Artifacts
 
-- project_registry
 - changelog
-- project_master_context
 - maintenance_matrix
-- evidence_standards
 - public_discovery_context
 
 ## Public Surface Findings
 
-- LOW public-surface-not-detected: evidence=confirmed risk=low No public surface or public discovery artifacts were detected. Recommendation: No action required for conservative adoption.
+- INFO public-surface-detected: evidence=confirmed risk=low Detected 2 public surface/public discovery artifact(s). Recommendation: Map existing public discovery sources before proposing new ones.
 
 ## Governance Findings
 
-- MEDIUM governance-not-detected: evidence=confirmed risk=medium No governance, reports, operations, or checklist artifacts were detected. Recommendation: Recommend governance artifacts in a later explicit phase; conservative apply should create reports only.
+- INFO governance-detected: evidence=confirmed risk=low Detected 19 governance artifact(s). Recommendation: Reuse and register existing governance artifacts.
 
 ## Adoption Risk Classification
 
@@ -249,8 +268,8 @@ existing-project
 
 ## Recommended Adoption Mode
 
-new
+conservative
 
 ## Recommended Next Command
 
-`wwg init`
+`wwg adopt --mode conservative --dry-run`
