@@ -2241,7 +2241,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Supporting evidence",
-      "line": 99,
+      "line": 119,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2251,7 +2251,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Missing evidence",
-      "line": 115,
+      "line": 135,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2261,7 +2261,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Recommendation",
-      "line": 121,
+      "line": 141,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2271,7 +2271,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Follow-up",
-      "line": 126,
+      "line": 146,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2281,7 +2281,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Supporting evidence",
-      "line": 140,
+      "line": 160,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2291,7 +2291,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Missing evidence",
-      "line": 159,
+      "line": 179,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2301,7 +2301,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Recommendation",
-      "line": 165,
+      "line": 185,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2311,7 +2311,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Follow-up",
-      "line": 170,
+      "line": 190,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5756,7 +5756,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Supporting evidence",
-      "line": 99,
+      "line": 119,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5766,7 +5766,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Missing evidence",
-      "line": 115,
+      "line": 135,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5776,7 +5776,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Recommendation",
-      "line": 121,
+      "line": 141,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5786,7 +5786,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Follow-up",
-      "line": 126,
+      "line": 146,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5796,7 +5796,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Supporting evidence",
-      "line": 140,
+      "line": 160,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5806,7 +5806,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Missing evidence",
-      "line": 159,
+      "line": 179,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5816,7 +5816,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Recommendation",
-      "line": 165,
+      "line": 185,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5826,7 +5826,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Follow-up",
-      "line": 170,
+      "line": 190,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {

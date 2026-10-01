@@ -15,9 +15,9 @@ level, supporting evidence, missing evidence, recommendation, follow-up.
 validation error on a CodeRabbit run, after deleting the rejected
 `prismaLint` key.
 
-**Evidence level.** Confirmed, **sampled**. This is a negative
-observation — the absence of a warning — which is weaker than a positive
-reproduction. See "Missing evidence".
+**Evidence level.** Confirmed, **sampled**. This rests on a negative
+observation — the absence of a warning — corroborated by a positive
+parse of the config file. See "Missing evidence".
 
 ### Supporting evidence
 
@@ -44,32 +44,52 @@ git log -S prismaLint -- .coderabbit.yaml
 # (only one commit: introduced, never removed, until 4a5ab4d deleted it)
 ```
 
-**After** — re-run at `2026-10-01T17:22:52Z` on pull request #34:
+**After** — re-run at `2026-10-01T17:22:52Z` on pull request #34,
+scanning **all three** comment surfaces rather than the PR summary alone
+(`gh pr view --comments` can omit inline review comments, which is a real
+limitation — flagged by CodeRabbit on this PR):
 
-```bash
-gh pr view 34 --comments | Select-String 'unrecognized|Unrecognized key'
-# (no matches - exit 0, empty result)
-
-gh pr view 34 --comments | Select-String 'has unrecognized properties'
-# (no matches)
+```powershell
+$all = @()
+foreach ($e in @('issues/34/comments','pulls/34/reviews','pulls/34/comments')) {
+  $all += (gh api "repos/ZenDevvv/tarn-app/$e" --paginate --jq '.[].body' | Out-String)
+}
+$joined = $all -join "`n"
+foreach ($pat in @('has unrecognized properties','Validation error: Unrecognized key','Unrecognized key:')) {
+  ([regex]::Matches($joined, [regex]::Escape($pat))).Count
+}
 ```
+
+Output:
+
+```
+'has unrecognized properties'    -> 0 occurrence(s)
+'Validation error: Unrecognized key' -> 0 occurrence(s)
+'Unrecognized key:'              -> 0 occurrence(s)
+bodies scanned: 3
+```
+
+A broader case-insensitive search for `unrecognized|prismaLint` across
+those surfaces returns matches, but every one is **narrative** — CodeRabbit
+and my own PR description *describing* the removal. None is the validation
+notice itself, confirmed by the zero counts above.
 
 Also confirmed by parsing the config directly, proving the key is gone
 from the file itself rather than merely unreported:
 
-```bash
+```powershell
 pnpm dlx js-yaml@4 .coderabbit.yaml
-# parsed as valid JSON; `prismaLint present: NO`
+# parsed as valid YAML/JSON; `prismaLint present: NO`
 ```
 
-The local parse is the **positive** evidence. The negative grep on the
-PR comment is corroborating.
+The local parse is the **positive** evidence. The comment-surface scan is
+corroborating.
 
 ### Missing evidence
 
-- The negative grep samples CodeRabbit's PR summary comment. It cannot
-  rule out the tool suppressing the notice for an unrelated reason, such
-  as a rendering or caching change on GitHub's side.
+- The comment scan is still a negative observation. It cannot rule out
+  CodeRabbit suppressing the notice for an unrelated reason, such as a
+  rendering or caching change on GitHub's side.
 - Not checked: whether the warning would reappear on a cold run or in a
   different repository.
 - Not checked: whether any *other* unrecognized key exists that
@@ -140,7 +160,7 @@ not among them.
 ### Supporting evidence
 
 ```bash
-gh api repos/ZenDevvv/tarn-app/branches/main/protection
+gh api repos/ZenDevvv/tarn-app/branches/main/protection --jq '{contexts: .required_status_checks.contexts, strict: .required_status_checks.strict, conversations: .required_conversation_resolution.enabled}'
 ```
 
 ```json
