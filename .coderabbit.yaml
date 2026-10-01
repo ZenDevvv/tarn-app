@@ -280,8 +280,3 @@ reviews:
         Reference scope and documents by name, not by bare section or decision
         number — for example "the MVP database tables section of the
         architecture document" rather than a section symbol.
-
-# Optional: Prisma schema linting. Requires a plan that includes SAST support;
-# harmless to leave off otherwise.
-prismaLint:
-  enabled: false
