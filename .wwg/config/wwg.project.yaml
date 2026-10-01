@@ -4,9 +4,15 @@ wwg:
   adoption_mode: infer
   created_by: wwg-cli
   created_at: 2026-10-01
-  last_updated_at: 2026-10-01
+  last_updated_at: 2026-10-02
   registry_owner: wwg
   registry_update_policy: safe_merge
+github:
+  repository: ZenDevvv/tarn-app
+  url: https://github.com/ZenDevvv/tarn-app
+  default_branch: main
+  visibility: public
+  licence: none (all rights reserved)
 layers:
   wiki:
     root: .wwg/wiki
@@ -22,7 +28,7 @@ canonical_artifacts:
   technical_architecture: job-application-tracker-project-architecture.md
   design_context: DESIGN.md
   design_reference: design-system.html
-  design_tokens: index.css
+  design_tokens: apps/web/src/index.css
   root_agents: AGENTS.md
   project_truth: .wwg/wiki/project-truth.md
   terminology: .wwg/wiki/terminology.md
@@ -38,9 +44,16 @@ product:
   category: personal job-search web application
   implementation_status: database-migrated-no-features
   implementation_verified: 2026-10-01
+  repository: ZenDevvv/tarn-app
+  repository_url: https://github.com/ZenDevvv/tarn-app
+  repository_visibility: public
+  repository_licence: none (all rights reserved)
+  auth_module_status: not-implemented (requireAuth returns 501 by design)
   package_manager: pnpm
   package_manager_version: 9.15.4
-  node_requirement: ">=20.11.0"
+  node_requirement: ">=22"
+  node_pinned: 22
+  node_pinned_source: .nvmrc
   verification_commands:
     - pnpm lint
     - pnpm typecheck
@@ -50,6 +63,15 @@ product:
   executable_tests: 90
   browser_tests: 24
   browser_engine: system-installed (msedge default; CI uses pinned chromium)
+  delivery_pipeline:
+    ci: verified on GitHub
+    required_checks:
+      - verify
+      - e2e
+      - dependency-review
+      - CodeRabbit
+    branch_protection: main, strict mode, enforce_admins true
+    ci_last_verified: 2026-10-01
   database:
     engine: postgresql
     version: 16
@@ -110,16 +132,18 @@ reports:
   rule_traceability_json: .wwg/governance/rule-traceability.json
   handoff: .wwg/reports/wwg-agent-handoff.md
   handoff_compatibility: .wwg/reports/wwg-handoff-to-codex.md
-  generate_workspace: .wwg/reports/wwg-generate-workspace-report.md
   generate_governance: .wwg/reports/wwg-generate-governance-report.md
-  refresh_context: .wwg/reports/wwg-refresh-context-report.md
-  refresh_skills: .wwg/reports/wwg-refresh-skills-report.md
+  maintenance_review: .wwg/reports/wwg-maintenance-review.md
+  validate_report: .wwg/reports/wwg-validate-report.md
+  reports_readme: .wwg/reports/README.md
+  report_classification_review: .wwg/reports/wwg-report-classification-review.md
 handoff:
   agent_report: .wwg/reports/wwg-agent-handoff.md
   codex_report: .wwg/reports/wwg-handoff-to-codex.md
-  last_handoff_at: 2026-10-01T10:53:21.968Z
+  last_handoff_at: 2026-10-01T16:31:30.754Z
   recommended_prompt: Read AGENTS.md and .wwg/reports/wwg-agent-handoff.md. Follow the WWG operating
     loop, then continue from the WWG plan and begin implementation with your chosen implementation
     agent.
 last_generated:
   governance: 2026-10-01T07:10:17.367Z
+  reports_refreshed: 2026-10-02

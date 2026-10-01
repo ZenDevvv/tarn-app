@@ -1,0 +1,93 @@
+# WWG Intake Answers
+#
+# Purpose: canonical machine-readable answers consumed by `wwg brief` when it
+# generates `.wwg/reports/wwg-agent-handoff.md` and `wwg-handoff-to-codex.md`.
+#
+# Why this file exists (2026-10-02):
+#   The handoff reports emitted "Project: TBD", "Users and Roles: TBD",
+#   "MVP Features: TBD", and "Not published." even though all of this is settled in
+#   `.wwg/wiki/project-truth.md`. Root cause: `wwg brief` does NOT read
+#   `product.*` from wwg.project.yaml. In WWG 0.6.6 it reads `project.name` /
+#   `project.description` / `project.status`, and falls back to this file, which
+#   did not exist. See `.wwg/governance/tooling-known-issues.md` (WKG-TOOL-005).
+#
+# RULE: every value below is a restatement of accepted Project Truth, with its
+# evidence cited. This file is NOT a place to decide anything. If a value here
+# disagrees with `.wwg/wiki/project-truth.md`, Project Truth wins and this file is
+# the stale one. Do not resolve a conflict by editing this file alone.
+
+answers:
+  # Project Truth — Product Identity, One-Line Description, Implementation Reality
+  app_name: Tarn
+  app_summary: >-
+    A personal web application that lets an individual job seeker organize, monitor, and
+    manage their entire job-search process — applications, job descriptions, companies,
+    recruiters, interviews, resumes, follow-ups, and offers — in one place instead of
+    scattered spreadsheets, bookmarks, notes, emails, and calendars.
+  status: >-
+    FOUNDATION SCAFFOLDED AND DATABASE MIGRATED. NO PRODUCT FEATURE IS IMPLEMENTED.
+    The auth module is not built; requireAuth returns 501 by design. Do not describe
+    any user-facing capability as working because the scaffold is healthy.
+
+  # Project Truth — Primary Users and Roles
+  users: >-
+    Active Job Seeker — the primary and sole MVP persona. Applies to multiple positions
+    per week, holds multiple resume versions, and needs to remember interview schedules
+    and follow up professionally. Recruiter / Hiring Contact is tracked as data, not as a
+    system user. Admin, moderator, employer, and analytics-operator roles are out of scope.
+    Authentication ships in the MVP (D-0002).
+  roles: >-
+    Single authenticated role. No role-based permission tiers are specified. Every user's
+    data is bound to the authenticated user and all server-side queries must enforce that
+    ownership boundary.
+
+  # Project Truth — Canonical Scope (Phase 1 MVP)
+  mvp_features:
+    - Authentication and account management
+    - Dashboard
+    - Applications (create, edit, manage)
+    - Application details view
+    - Status pipeline / Kanban
+    - Application timeline
+    - Job information and job-description storage
+    - Company information
+    - Platform / source tracking
+    - Salary information
+    - Application date, follow-up date, notes
+    - Search and filtering
+    - Basic analytics
+    - Saved jobs
+    - Offers
+    - Skills (capture only; AI extraction and matching stay Phase 3)
+  core_features: >-
+    The MVP database ships 10 tables: users, companies, jobs, skills, job_skills,
+    applications, saved_jobs, timeline_events, follow_ups, offers. Notifications,
+    interviews, contacts, resumes, and cover_letters are deferred and verified absent.
+
+  # Project Truth — Canonical Scope, UI surfaces implied by it
+  pages: >-
+    Dashboard, Applications list, Application detail (timeline + follow-ups), Kanban
+    pipeline, Companies, Saved jobs, Offers, and auth screens. None are implemented yet;
+    the web app currently renders a shell with a dashboard placeholder.
+
+  # Project Truth — Architecture Truth. Hosting is still UNDECIDED — see REC-0005.
+  hosting: >-
+    Modular monolith, single API runtime, single PostgreSQL 16 database, pnpm monorepo.
+    DEPLOYMENT VENDORS ARE UNDECIDED: architecture section 65 recommends Vercel (web),
+    Railway or Render (api), Neon or Supabase (Postgres), and Cloudflare R2 (storage), but
+    none has been chosen and no deployment configuration exists.
+
+  # DESIGN.md — design rules. Design system name is Marker, which is never the product name.
+  design_style: >-
+    Marker design system. Bricolage Grotesque and Instrument Sans variable fonts only.
+    lucide-react icons only, 16px in controls and nav, 20px in the mobile tab bar, stroke
+    1.5, currentColor. Plain, quiet, personal design — explicitly not enterprise chrome,
+    gradients, or confetti. Minimum 44px pointer targets. Tokens live in
+    apps/web/src/index.css; never hard-code a hex value in a component.
+
+  # Project Truth — Open Questions. Keep this list synchronized with current-task.md.
+  open_questions:
+    - Which deployment vendors are chosen?
+    - Should the local directory be renamed from applicant-tracking-system to tarn?
+    - Should Husky and lint-staged be wired up now, or after the first feature?
+    - When should the ownership boundary be reviewed by someone other than the implementing agent?
