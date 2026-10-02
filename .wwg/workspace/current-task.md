@@ -165,6 +165,32 @@ second discards uncommitted changes. A fresh clone needs neither.
 This is the strongest argument in the project for treating "green in CI" as one
 data point rather than as verification.
 
+## Remaining risk — local E2E is untrustworthy while port 5173 is occupied
+
+After both PRs merged, a local `pnpm exec playwright test` reported **17 of 24
+failing**. It looked like a regression; it was not.
+
+`playwright.config.ts` sets `reuseExistingServer: !process.env.CI` and hardcodes
+port 5173. **Another project** (`MY PROJECTS\test\test-project2`) owned that
+port, so Playwright adopted it and tested that app instead. Confirmed by process
+inspection and by `Invoke-WebRequest`, which returned a page titled "Personal
+Job Application Tracker".
+
+What made this dangerous is that the failures were **specific and plausible** —
+a contrast ratio, a landmark count, a focus timeout. The tell was a single
+detail: one failure quoted `"Demo user: mika@example.com / password12"`, and
+that string appears **nowhere in this repository**. Tarn's suite was then
+re-verified green (24 passed) on ports 5199/4099 with `reuseExistingServer:
+false`, using a throwaway config that was deleted afterwards.
+
+**No Tarn code changed and CI was never affected** — CI sets `CI=true`, so it
+always starts its own server.
+
+**Consequence for the auth work:** do not trust a *green* local E2E run either.
+A foreign server could satisfy the assertions by coincidence. REC-0019 is
+recorded for an owner decision on the fix. I did not stop the other project's
+dev server — it is not Tarn's, and that was not this task's call.
+
 ## Prior task record - directory rename (2026-10-02, merged as PR #35)
 
 **Everything below this line describes the previous task, not the current one.**

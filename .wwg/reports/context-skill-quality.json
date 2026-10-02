@@ -2276,7 +2276,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "What changed",
-      "line": 200,
+      "line": 226,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2286,7 +2286,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Verified by execution, not assumption",
-      "line": 223,
+      "line": 249,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2296,7 +2296,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Deliberately declined",
-      "line": 272,
+      "line": 298,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2306,7 +2306,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Next task — awaiting owner signal",
-      "line": 282,
+      "line": 308,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2323,7 +2323,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 387,
+      "line": 413,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2528,11 +2528,50 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 569,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Recommendation' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Recommendation",
+      "line": 577,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 589,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-possible-vague-pronouns",
       "message": "File has many pronouns that may be ambiguous for agents.",
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "line": 464,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
       "severity": "suggestion",
@@ -6025,7 +6064,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "What changed",
-      "line": 200,
+      "line": 226,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6035,7 +6074,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Verified by execution, not assumption",
-      "line": 223,
+      "line": 249,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6045,7 +6084,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Deliberately declined",
-      "line": 272,
+      "line": 298,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6055,7 +6094,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Next task — awaiting owner signal",
-      "line": 282,
+      "line": 308,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6072,7 +6111,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 387,
+      "line": 413,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -6277,11 +6316,50 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 569,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Recommendation' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Recommendation",
+      "line": 577,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 589,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-possible-vague-pronouns",
       "message": "File has many pronouns that may be ambiguous for agents.",
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "line": 464,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
       "severity": "suggestion",
@@ -6780,7 +6858,7 @@
     "skippedFileCount": 1,
     "errorCount": 0,
     "warningCount": 113,
-    "suggestionCount": 135,
+    "suggestionCount": 139,
     "classificationCounts": {
       "context": 16,
       "skill": 0,
