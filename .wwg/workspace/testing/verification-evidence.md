@@ -574,6 +574,28 @@ The temporary config was deleted afterwards; no Tarn file was changed.
   until port 5173 is free**. A green local run would be equally untrustworthy,
   since a foreign server could satisfy the assertions by coincidence.
 
+### Why CI is safe — and the precise reason
+
+CI sets `CI=true`, so `reuseExistingServer` evaluates to `false`. It is worth
+being exact about what that does, because the intuition is easy to get wrong:
+it does **not** mean "always start the configured command".
+
+Verified by experiment, with port 5173 occupied by the foreign app and
+`reuseExistingServer: false`:
+
+```text
+Error: http://localhost:5173 is already used, make sure that nothing is running
+on the port/url or set reuseExistingServer:true in config.webServer.
+```
+
+So Playwright **fails the run** when the port is occupied. That is exactly what
+makes CI trustworthy: it cannot silently adopt a foreign app, because a
+conflicting process stops the job outright. Every green run on `main` is
+therefore real evidence.
+
+The local default is the opposite behaviour — `reuseExistingServer: true` means
+adopt whatever answers, without checking *what* answered.
+
 ### Recommendation
 
 Local E2E needs a guard before it can be relied on for feature work. The cheapest

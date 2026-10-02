@@ -183,15 +183,19 @@ that string appears **nowhere in this repository**. Tarn's suite was then
 re-verified green (24 passed) on ports 5199/4099 with `reuseExistingServer:
 false`, using a throwaway config that was deleted afterwards.
 
-**No Tarn code changed and CI was never affected** — CI sets `CI=true`, so it
-always starts its own server.
+**No Tarn code changed and CI was never affected** — CI sets `CI=true`, so
+`reuseExistingServer` is `false`, and Playwright **fails the run** when the port
+is occupied rather than adopting it (verified: `Error: http://localhost:5173 is
+already used`). CI cannot silently test the wrong app.
 
 **Consequence for the auth work:** do not trust a *green* local E2E run either.
 A foreign server could satisfy the assertions by coincidence. REC-0019 is
 recorded for an owner decision on the fix. I did not stop the other project's
 dev server — it is not Tarn's, and that was not this task's call.
 
-## Prior task record - directory rename (2026-10-02, merged as PR #35)
+---
+
+# Prior task record - directory rename (2026-10-02, merged as PR #35)
 
 **Everything below this line describes the previous task, not the current one.**
 It is retained as history, not as instructions. The 83/90 test figures, the

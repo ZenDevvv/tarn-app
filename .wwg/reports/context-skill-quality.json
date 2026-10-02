@@ -2276,7 +2276,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "What changed",
-      "line": 226,
+      "line": 230,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2286,7 +2286,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Verified by execution, not assumption",
-      "line": 249,
+      "line": 253,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2296,7 +2296,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Deliberately declined",
-      "line": 298,
+      "line": 302,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2306,7 +2306,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Next task — awaiting owner signal",
-      "line": 308,
+      "line": 312,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2323,7 +2323,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 413,
+      "line": 417,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2543,7 +2543,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Recommendation",
-      "line": 577,
+      "line": 599,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2553,7 +2553,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Follow-up",
-      "line": 589,
+      "line": 611,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6064,7 +6064,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "What changed",
-      "line": 226,
+      "line": 230,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6074,7 +6074,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Verified by execution, not assumption",
-      "line": 249,
+      "line": 253,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6084,7 +6084,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Deliberately declined",
-      "line": 298,
+      "line": 302,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6094,7 +6094,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Next task — awaiting owner signal",
-      "line": 308,
+      "line": 312,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6111,7 +6111,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 413,
+      "line": 417,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -6331,7 +6331,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Recommendation",
-      "line": 577,
+      "line": 599,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6341,7 +6341,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Follow-up",
-      "line": 589,
+      "line": 611,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
