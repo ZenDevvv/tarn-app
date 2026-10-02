@@ -514,3 +514,100 @@ frames it, and that framing is now accurate at 97/90.
 ### Follow-up
 
 REC-0011 — Done. REC-0009 — audited, no further false claims found.
+
+---
+
+## VER-0007 — Local E2E failed against a foreign app; Tarn's suite is green
+
+**Claim.** A local `pnpm exec playwright test` run reported **17 failures**,
+which looked like a serious regression in the shell and accessibility work. It
+was not. Tarn's suite passes; the run had adopted another project's dev server.
+
+**Evidence level.** Confirmed by execution, and disproved by direct inspection.
+
+### What happened
+
+`playwright.config.ts` sets `baseURL: http://localhost:5173` and
+`reuseExistingServer: !process.env.CI`. On this machine **another project** was
+already listening on 5173:
+
+```text
+Get-CimInstance Win32_Process -Filter "ProcessId=34528"
+node "...\MY PROJECTS\test\test-project2\apps\web\node_modules\..\vite\bin\vite.js"
+
+Invoke-WebRequest http://localhost:5173
+<title>Tracker - Personal Job Application Tracker</title>
+```
+
+Playwright adopted it and ran the Tarn suite against `test-project2`.
+
+### Why it was almost certainly missed
+
+The failures were **specific and plausible**, not obviously nonsense:
+
+```text
+expect(locator('main')).toHaveCount(...) failed
+contrast below 4.5:1 in dark mode:
+  [{"text":"Demo user: mika@example.com / password12","ratio":3.496}]
+Test timeout of 30000ms exceeded.
+```
+
+`mika@example.com` appears **nowhere in this repository** — `grep` across the
+tree returned no matches. That single check is what distinguished "Tarn is
+broken" from "Tarn was never loaded".
+
+### Proof that Tarn is fine
+
+A throwaway config on ports 5199/4099 with `reuseExistingServer: false`:
+
+```text
+24 passed (29.2s)
+```
+
+The temporary config was deleted afterwards; no Tarn file was changed.
+
+### Missing evidence
+
+- The other project's dev server was **left running**. It is not Tarn's and
+  killing it was not this task's call.
+- Consequently `pnpm exec playwright test` **cannot be trusted on this machine
+  until port 5173 is free**. A green local run would be equally untrustworthy,
+  since a foreign server could satisfy the assertions by coincidence.
+
+### Why CI is safe — and the precise reason
+
+CI sets `CI=true`, so `reuseExistingServer` evaluates to `false`. It is worth
+being exact about what that does, because the intuition is easy to get wrong:
+it does **not** mean "always start the configured command".
+
+Verified by experiment, with port 5173 occupied by the foreign app and
+`reuseExistingServer: false`:
+
+```text
+Error: http://localhost:5173 is already used, make sure that nothing is running
+on the port/url or set reuseExistingServer:true in config.webServer.
+```
+
+So Playwright **fails the run** when the port is occupied. That is exactly what
+makes CI trustworthy: it cannot silently adopt a foreign app, because a
+conflicting process stops the job outright. Every green run on `main` is
+therefore real evidence.
+
+The local default is the opposite behaviour — `reuseExistingServer: true` means
+adopt whatever answers, without checking *what* answered.
+
+### Recommendation
+
+Local E2E needs a guard before it can be relied on for feature work. The cheapest
+correct fix is to assert the app on the port is Tarn — request the root and fail
+fast with an explicit message — rather than letting 17 confusing assertions fail.
+Recorded as **REC-0019** for an owner decision, because the alternatives
+(claiming the port, or moving to a dedicated E2E port) both change the local
+developer workflow.
+
+CI is unaffected: it sets `CI=true`, so `reuseExistingServer` is `false` and the
+job always starts its own server.
+
+### Follow-up
+
+REC-0019 — Proposed.
