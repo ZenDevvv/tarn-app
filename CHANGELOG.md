@@ -149,8 +149,6 @@ These are deliberate, accepted, or deferred — not oversights.
 - **An independent human security review is deferred**, by explicit decision. The
   residual risk is concentrated in one property: a single missing ownership filter on
   one endpoint would expose the whole database.
-- **Formatting is not enforced in CI** and the current tree does not pass the
-  formatting check. Recorded as a known gap.
 - **No deployment target is chosen**, so there is no deployment configuration and no
   production-readiness boundary.
 - **The project is unlicensed** — public, but not open source. The project grants **no

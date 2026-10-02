@@ -88,7 +88,7 @@ Accessibility verified in a real browser (Playwright, 24 assertions): landmarks 
 
 Two accessibility defects were found by these tests and fixed in `apps/web/src/layouts/app-layout.tsx`: the primary navigation link was 19px tall and the focused skip link was under 44px, both violating the 44px touch-target rule in `DESIGN.md` §11.
 
-Consequence that agents must respect: a green build and 114 passing assertions describe the **foundation**, not the product. No user-facing capability exists. Do not describe a feature as working because the scaffold is healthy.
+Consequence that agents must respect: a green build and 121 passing assertions describe the **foundation**, not the product. No user-facing capability exists. Do not describe a feature as working because the scaffold is healthy.
 
 Re-verified 2026-10-02 by execution, with the database now actually running:
 
@@ -515,7 +515,7 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
     2. The `e2e` suite grows beyond shell, dashboard-placeholder, and accessibility assertions.
     3. A browser regression reaches `main` that was not caught by reading the pull request.
   - Cost of reversing later is low: one API call adding the context to `required_status_checks`, then a pull request. There is no reason to pay it before the trigger fires.
-  - What the decision does **not** change: `verify` (lint, dependency audit, typecheck, 90 tests, build), `dependency-review`, and `CodeRabbit` all remain required, with strict mode and `enforce_admins: true`. Coverage is unchanged.
+  - What the decision does **not** change: `verify` (lint, dependency audit, typecheck, tests, build), `dependency-review`, and `CodeRabbit` all remain required, with strict mode and `enforce_admins: true`. Coverage is unchanged.
 - RESOLVED — Independent human security review. **Consciously deferred** by the owner, not overlooked. Recorded so it is not rediscovered as an oversight.
   - Status: RESOLVED_DEFERRED
   - Evidence: owner instruction "independent human reviewer, not for now", 2026-10-01; `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.
@@ -553,7 +553,7 @@ Still open:
   - Resolved 2026-10-01: repository is **public**, reviewer is **CodeRabbit** on the free tier, installed and verified working.
 - Question: When should the ownership boundary be reviewed by someone other than the implementing agent?
   - Why it matters: an independent human review of the authentication and data-access code was **consciously deferred** by the owner, not overlooked. The residual risk is concentrated in one property — a single missing `userId` filter on one endpoint would expose the whole database.
-  - Evidence / uncertainty: mitigated by required cross-user isolation tests, not eliminated. Deterministic mitigations are in place: dependency scanning, lint, typecheck, 90 unit/integration tests, 24 browser tests.
+  - Evidence / uncertainty: mitigated by required cross-user isolation tests, not eliminated. Deterministic mitigations are in place: dependency scanning, lint, typecheck, 97 unit/integration tests, 24 browser tests.
 
 Resolved on 2026-10-02:
 

@@ -130,10 +130,10 @@ A process note worth keeping: the first version of the touch-target test **logge
 
 ## Current WWG Regression Posture
 
-As of 2026-10-01:
+As of 2026-10-02:
 
 - Regression baseline: present
-- Executable tests: **90 unit/integration + 24 browser = 114 assertions**
+- Executable tests: **97 unit/integration + 24 browser = 121 assertions**
 - Database migration: committed and applied; verified table set matches the MVP scope exactly
 - Open gaps: no auth or CRUD route tests (those features do not exist yet); no Husky/lint-staged
 - The WWG-generated regression gap list predates all of this and does not reflect the current tests. Regenerate with `wwg adopt refresh-regression` or `wwg maintain`.

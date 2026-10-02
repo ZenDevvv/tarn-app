@@ -35,12 +35,17 @@ it was on 2026-10-01, before the monorepo scaffold and database migration landed
 
 | Suite | Count | Command |
 |---|---|---|
-| Unit + integration (types, auth, validation, database, API, React) | 90 passing | `pnpm test` |
+| Unit + integration (types, auth, validation, database, API, React) | 97 passing | `pnpm test` |
 | Browser E2E (desktop + 360px, real browser) | 24 passing | `npx playwright test` |
 
-Re-verified by execution on 2026-10-02: `pnpm test` → 90 passed, matching
-`.wwg/wiki/project-truth.md` exactly. Both suites are also enforced in CI
-(`.github/workflows/ci.yml`, jobs `verify` and `e2e`) and are required by branch protection.
+Re-verified by execution on 2026-10-02: `pnpm test` → **97 passed, 0 skipped**
+with a live database, and 90 passed / 7 skipped without one. Both suites run in CI
+(`.github/workflows/ci.yml`, jobs `verify` and `e2e`).
+
+**Only `verify` is required by branch protection.** The `e2e` job runs and reports
+on every pull request but is deliberately not required — see
+`.wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md`. The earlier
+version of this note said both were required, which was wrong.
 
 The gaps are therefore **not resolved** — they are **stale**. The distinction matters:
 nothing here claims coverage that does not exist, and nothing here should be read as
