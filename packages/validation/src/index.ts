@@ -37,11 +37,7 @@ const currency = z
  * actionable copy.
  */
 const cuidField = (message: string) =>
-  z
-    .string({ required_error: message, invalid_type_error: message })
-    .trim()
-    .min(1, message)
-    .cuid(message);
+  z.string({ required_error: message, invalid_type_error: message }).trim().min(1, message).cuid(message);
 
 export const applicationStatusSchema = z.enum(APPLICATION_STATUSES);
 export const applicationPrioritySchema = z.enum(APPLICATION_PRIORITIES);
@@ -55,10 +51,7 @@ export const jobPlatformSchema = z.enum(JOB_PLATFORMS);
 
 export const registerSchema = z.object({
   email: z.string().trim().toLowerCase().email('Enter an email address, like you@example.com.'),
-  password: z
-    .string()
-    .min(8, 'Use at least 8 characters.')
-    .max(200, 'Password is too long.'),
+  password: z.string().min(8, 'Use at least 8 characters.').max(200, 'Password is too long.'),
   name: z.string().trim().min(1, 'Enter your name.').max(120),
 });
 

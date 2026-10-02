@@ -11,9 +11,10 @@ This governance file is required by root `AGENTS.md` and the WWG readiness model
 **A full verification path exists and runs.** As of 2026-10-01:
 
 - Vitest 5.0 runs across all six workspace packages.
-- **90 tests pass**: 7 types, 13 auth/password, 23 validation, 24 database (17 schema scope + 7 integration), 13 API, 10 React.
+- **97 tests pass**: 7 types, 13 auth/password, 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 13 API, 10 React. **Requires Docker running** — without it the 7 database integration tests skip loudly and the count is 90, not 97.
 - **Playwright passes 24 assertions** across a desktop and a 360px project, in a real browser.
 - `pnpm lint` is clean and gated in CI (ESLint 9 flat config).
+- `pnpm format:check` is clean and gated in CI since 2026-10-02 (REC-0011).
 - `pnpm typecheck` is clean, including `tests/tsconfig.json` for the Playwright specs.
 - `pnpm build` succeeds for both apps.
 - `pnpm audit` reports **no known vulnerabilities**.
@@ -65,12 +66,15 @@ Per `job-application-tracker-project-architecture.md` §62 and §63, the accepte
 |---|---|---|---|
 | Unit | Vitest | utilities, status transitions, analytics calculations, validation schemas, business-rule helpers | ✅ installed, 20 tests (types 7, auth 13) |
 | Schema scope | Vitest | MVP table set, enums, ownership columns, required indexes | ✅ installed, 17 tests |
+| Repository scripts | Vitest | root `db:*` script wiring — guards the `pnpm --filter` built-in collision | ✅ installed, 7 tests (REC-0016) |
 | Database integration | Vitest + Postgres | cascades, cross-user isolation, unique constraints, hash verification | ✅ installed, 7 tests, skips loudly without a DB |
 | API | Vitest + Supertest | authentication, ownership validation, application CRUD, filters, status updates, timeline creation, follow-ups | ⚠️ 13 smoke/envelope/CORS/error tests. **No auth or CRUD route tests yet** — those arrive with the features. |
 | React component | React Testing Library + jsdom | application form, filters, status display, loading/error states | ⚠️ installed, 10 tests covering the shell and dashboard placeholder only |
 | End-to-End | Playwright | app shell, landmarks, focus order, contrast in both themes, 360px layout, 44px targets | ✅ **24 passing** across desktop + 360px. MVP journeys (register, login, create application, move status, follow-up, search/filter, logout) not written — those features do not exist yet. |
 
-CI runs install, Prisma generate, `migrate deploy`, lint, dependency audit, typecheck, test, and build, plus a parallel `e2e` job that installs Chromium and runs the browser suite. All four are required by branch protection.
+CI runs install, Prisma generate, `migrate deploy`, lint, format check, dependency audit, typecheck, test, and build, plus a parallel `e2e` job that installs Chromium and runs the browser suite. Three checks are required by branch protection: `verify`, `dependency-review`, and `CodeRabbit`. The `e2e` job runs and reports on every pull request but is deliberately **not** required — see `.wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md`.
+
+**A gate must exercise the documented entry point.** CI applies migrations with an inline `pnpm --filter @tarn/database exec prisma migrate deploy` rather than calling the root `pnpm db:deploy`. That is not a style choice: the root script was broken until 2026-10-02 and the inline form hid it (REC-0016). An unexplained workaround in CI is a defect waiting at the source.
 
 The `e2e` job sets `PW_CHANNEL: ''`. This matters: `playwright.config.ts` defaults to the system-installed browser for local convenience, and `msedge` does not exist on the ubuntu runner. Without the override the job would fail on browser launch rather than on anything meaningful.
 

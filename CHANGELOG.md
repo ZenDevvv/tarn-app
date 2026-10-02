@@ -84,15 +84,17 @@ Nothing here is a user-facing feature. This is the groundwork the features will 
 
 ### Added — verification
 
-- **90 unit, integration, and schema tests** across six packages. Of those, **83 run
-  without a database and 7 are database integration tests that require one** — those 7
+- **97 unit, integration, schema, and script tests** across six packages. Of those, **90
+  run without a database and 7 are database integration tests that require one** — those 7
   cover referential integrity, cascade behaviour, unique constraints, and cross-user
   isolation, and they *skip loudly* rather than passing silently when no database is
-  reachable. So a local run with Docker stopped reports 83 passing and 7 skipped. The
-  90 figure is the full inventory, and is what CI observes against a real database.
+  reachable. So a local run with Docker stopped reports 90 passing and 7 skipped. The
+  97 figure is the full inventory, and is what CI observes against a real database.
 - **24 browser and accessibility assertions** in a real browser, covering colour
   contrast in light and dark themes, focus order, 360px layout, and touch-target size.
   This suite found and fixed two genuine accessibility defects.
+- **A regression guard for root script wiring.** The database commands are now asserted
+  by test, after a documented command turned out to have been broken and never run.
 - Browser tests run against the system browser locally, because the bundled download
   is frequently blocked on Windows, while CI uses a pinned browser for reproducible
   results.
@@ -105,14 +107,26 @@ Nothing here is a user-facing feature. This is the groundwork the features will 
 - **Repository directory renamed** from `applicant-tracking-system` to `tarn-app`, so
   the checkout no longer carries a retired name. The container project name is now
   pinned in configuration so the local database volume survives future renames.
+- **Formatting is now a gate.** Source formatting was already declared and documented but
+  never checked, and the tree did not conform. It now conforms, and continuous
+  integration enforces it.
 - **Governance records corrected at the source.** Several internal reports and the
   project registry were found to state things that were untrue — including a claim
   that a configuration fix had been made and verified when it had not. The underlying
   causes were fixed rather than the reports being edited, so the errors do not return
   on the next regeneration.
+- **An agent-conduct principle now covers documented commands.** A command described in
+  the documentation is a claim requiring evidence, exactly like a claim of verification.
+  An unexplained workaround in continuous integration is treated as a defect waiting at
+  its source.
 
 ### Fixed
 
+- **The database migration command did not work.** `pnpm db:deploy` — the command the
+  documented volume-recovery procedure instructs a developer to run — failed every time,
+  because the workspace filter resolved the verb as a package-manager command of the
+  same name instead of running the script. It had never been executed by any check, so
+  nothing reported it. Fixed, guarded by a test, and the whole command family verified.
 - A configuration key rejected by the code review tool on every pull request, removed.
 - Two accessibility defects: a navigation link below the minimum touch-target size,
   and a focused skip link that was too small to use.

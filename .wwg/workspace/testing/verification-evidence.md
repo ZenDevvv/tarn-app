@@ -341,4 +341,176 @@ Both errors are loud but misleading.
 ### Follow-up
 
 REC-0006 (directory rename) — Done. REC-0011 (`format:check` not enforced in
-CI, fails on 50 files) — Proposed.
+CI, fails on 50 files) — **Done 2026-10-02**, see VER-0006.
+
+---
+
+## VER-0005 — `pnpm db:deploy` was broken; fixed and now regression-guarded
+
+**Claim.** The root `pnpm db:deploy` script is broken and was never exercised by
+any gate. Fixed on 2026-10-02, with a test that fails if it regresses.
+
+**Evidence level.** Confirmed by execution, including a deliberate
+reintroduction of the defect.
+
+### Supporting evidence
+
+The root script read:
+
+```json
+"db:deploy": "pnpm --filter @tarn/database deploy"
+```
+
+`deploy` is a **built-in pnpm command**. Without an explicit `run`, pnpm
+resolves its own `deploy` and never invokes the package script:
+
+```text
+$ pnpm db:deploy
+ERR_PNPM_INVALID_DEPLOY_TARGET  This command requires one parameter
+```
+
+**Why it survived two review rounds and an owner sign-off.** No gate ran it.
+Both CI jobs apply migrations with an inline
+`pnpm --filter @tarn/database exec prisma migrate deploy`, which works. The
+inline form silently routed around the defect, so the repository script was
+never executed by anything. The comment above the CI step already said "Use
+`db:deploy`", which made the divergence look like an oversight rather than the
+symptom it was.
+
+**Fix and proof.** Changed to `pnpm --filter @tarn/database run deploy`:
+
+```text
+$ pnpm db:deploy
+All migrations have been successfully applied.
+```
+
+**Scope check — the sibling scripts were each executed, not assumed:**
+
+| Script | Result |
+|---|---|
+| `db:generate` | pass |
+| `db:migrate` | pass |
+| `db:deploy` | failed before the fix, passes after |
+| `db:seed` | pass, and idempotent across three consecutive runs |
+| `db:studio` | launches (interactive; not script-verified) |
+
+`deploy` was the only collision. `generate`, `migrate`, `seed`, and `studio` are
+not pnpm built-ins.
+
+**Regression guard proven to fail on the defect.**
+`packages/database/prisma/scripts.test.ts` was added, then the broken form was
+reintroduced to confirm the test is not vacuous:
+
+```text
+AssertionError: expected [ 'deploy', 'install', 'add', …(5) ] to not include 'deploy'
+AssertionError: expected 'pnpm --filter @tarn/database deploy'
+                to be 'pnpm --filter @tarn/database run deploy'
+ Tests  2 failed | 5 passed (7)
+```
+
+The broken form was then reverted and the full suite re-run green.
+
+### Missing evidence
+
+- The test asserts the **script string**, not the command's behaviour. It
+  prevents this specific wiring defect; it does not prove migrations apply. CI
+  covers that.
+- `db:studio` is interactive and was not verified beyond launching.
+
+### Recommendation
+
+Treat any root script that delegates through `pnpm --filter` as suspect if the
+verb matches a pnpm built-in. The collision set is `deploy`, `install`, `add`,
+`remove`, `link`, `import`, `patch`, `why`.
+
+### Follow-up
+
+REC-0016 — Done. REC-0017 — Proposed (the unexplained inline CI workaround).
+
+---
+
+## VER-0006 — The formatting gate is clean and the database tests actually run
+
+**Claim.** `pnpm format:check` passes and is enforced in CI; the 7 database
+integration tests execute rather than skip.
+
+**Evidence level.** Confirmed by execution.
+
+### Supporting evidence
+
+**Database up, full suite:**
+
+```text
+$ docker compose up -d
+$ pnpm db:deploy     All migrations have been successfully applied.
+$ pnpm db:seed       Seed complete.
+$ pnpm test
+  types        7 passed
+  auth        13 passed
+  validation  23 passed
+  database    31 passed   (17 schema scope + 7 integration + 7 script wiring)
+  api         13 passed
+  web         10 passed
+                    97 passed, 0 skipped
+```
+
+The cross-user isolation test at
+`packages/database/tests/integration.test.ts:145` — `scopes queries by userId
+so one user cannot read another's rows` — is inside that 7. It was previously in
+the skipped set, which meant the ownership boundary the auth module depends on
+had **no local coverage at all**.
+
+**Formatting:** all 50 files were reformatted — pure line-width reflow, 169
+added / 139 removed, **zero deletions or renames**, confirmed by
+`git status --porcelain` showing no `D` or `R` entries. `pnpm format:check` now
+reports `All matched files use Prettier code style!`, and a `Check formatting`
+step was added to the `verify` job.
+
+**Every gate re-run after the reformat**, because a mass reformat is exactly the
+kind of change that breaks something quietly:
+
+| Gate | Result |
+|---|---|
+| `pnpm lint` | clean |
+| `pnpm typecheck` | clean, 6 workspaces |
+| `pnpm test` | 97 passed, 0 skipped |
+| `pnpm build` | both apps build |
+| `pnpm format:check` | clean |
+| `pnpm exec playwright test` | 24 passed |
+
+### Supporting evidence — REC-0009 re-audit
+
+The REC-0009 audit asked whether other "confirmed" claims from the 2026-10-01
+close-out batch were true. Each was re-checked by execution rather than by
+reading the file that made the claim:
+
+| Claim | Method | Result |
+|---|---|---|
+| `prismaLint` key removed | `Select-String .coderabbit.yaml` | gone; only the explanatory comment remains |
+| `e2e` not a required check | `gh api .../branches/main/protection` | `["verify","dependency-review","CodeRabbit"]` |
+| `enforce_admins` on | same call | `true` |
+| No known vulnerabilities | `pnpm audit --audit-level=high` | `No known vulnerabilities found` |
+| Node pinned in one place | `.nvmrc` + `engines` + CI | `.nvmrc` = `22`, `engines` = `>=22`, 2 CI steps use `node-version-file` |
+| Exactly the 10 MVP tables | `\dt` in Postgres | all 10 present; `notifications`, `interviews`, `contacts`, `resumes`, `cover_letters` absent |
+| Password is scrypt at rest | `SELECT left("passwordHash", 7) FROM users` | `scrypt$` |
+| Seed counts | row counts after three seed runs | 1 user, 2 companies, 2 jobs, 3 applications, 1 offer — unchanged |
+
+**No false claim was found in this batch.** That is a positive result, and it is
+recorded as one rather than left implied.
+
+### Missing evidence
+
+- The seed password is printed to stdout by design. Accepted for local
+  development; never run against a shared environment.
+- `format:check` enforces source formatting only. `.wwg/` and `*.md` are in
+  `.prettierignore`, so documentation formatting is not gated.
+
+### Recommendation
+
+`pnpm test` is only meaningful with Docker running. Treat the skipped count as a
+failure signal, not a pass — this is already how `README.md` § Troubleshooting
+frames it, and that framing is now accurate at 97/90.
+
+### Follow-up
+
+REC-0011 — Done. REC-0009 — audited, no further false claims found.

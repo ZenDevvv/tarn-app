@@ -69,12 +69,24 @@ jobs:
       - name: Generate Prisma client
         run: pnpm db:generate
 
-      # Use `db:deploy`, never `migrate dev` in CI (architecture §60).
+      # Use `migrate deploy`, never `migrate dev` in CI (architecture §60).
+      # This used to be the root `pnpm db:deploy` script, which was broken —
+      # `pnpm --filter <pkg> deploy` resolves to pnpm's own built-in `deploy`
+      # command, not the package script, so it failed with
+      # ERR_PNPM_INVALID_DEPLOY_TARGET. The inline form below worked around it
+      # and hid the defect. `pnpm db:deploy` is now fixed and asserted locally;
+      # if this line ever regresses to it, the script is broken again.
       - name: Apply migrations
         run: pnpm --filter @tarn/database exec prisma migrate deploy
 
       - name: Lint
         run: pnpm lint
+
+      # Formatting is a gate, not a suggestion. It failed on 50 pre-existing
+      # files until 2026-10-02 (REC-0011); the tree is now clean, so this can
+      # be enforced without a large cleanup commit on the first feature branch.
+      - name: Check formatting
+        run: pnpm format:check
 
       # Whole-tree dependency scan (the lockfile-diff review for PRs lives in
       # dependency-review.yml). Dependabot opens the update PRs.

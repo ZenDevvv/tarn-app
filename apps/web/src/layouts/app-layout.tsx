@@ -6,9 +6,7 @@
  */
 import { NavLink, Outlet } from 'react-router-dom';
 
-const navItems = [
-  { to: '/dashboard', label: 'Dashboard' },
-] as const;
+const navItems = [{ to: '/dashboard', label: 'Dashboard' }] as const;
 
 export function AppLayout() {
   return (

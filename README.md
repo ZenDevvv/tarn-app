@@ -77,14 +77,19 @@ Everything below runs in GitHub Actions on every push:
 | Gate | What it enforces |
 |---|---|
 | `pnpm lint` | ESLint 9, including no `any` and no unused values |
+| `pnpm format:check` | Prettier formatting |
 | `pnpm audit --audit-level=high` | no known high-severity dependency vulnerabilities |
 | dependency review | a PR cannot introduce a vulnerable dependency |
 | `pnpm typecheck` | types across all six packages |
-| `pnpm test` | 90 unit and integration tests (83 without a running database — see Troubleshooting) |
+| `pnpm test` | 97 unit and integration tests (90 without a running database — see Troubleshooting) |
 | `pnpm build` | both apps compile |
 | Playwright job | 24 browser and accessibility assertions in a real engine |
 
-All four of these must pass, along with the CodeRabbit review, before `main` accepts a merge.
+**Three of these are required to merge to `main`, not all of them.** The required
+checks are `verify`, `dependency-review`, and `CodeRabbit`. The Playwright job
+runs and reports on every pull request but is deliberately **not** required, so
+a red browser test does not block a merge. See
+[`.wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md`](.wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md).
 
 Dependabot opens weekly dependency pull requests, grouped so they stay readable. Major bumps are held back deliberately — upgrading across a major is manual work, not something that arrives unannounced on a Monday. Prisma majors specifically need a client-generation migration.
 
@@ -106,16 +111,24 @@ symlink, because pnpm stores absolute paths inside them. Reinstall to relink:
 pnpm install --frozen-lockfile
 ```
 
+**`pnpm db:deploy` fails with `ERR_PNPM_INVALID_DEPLOY_TARGET`.**
+A root script that delegates through a workspace filter must name the verb
+explicitly, as `pnpm --filter <pkg> run <script>`. Without `run`, pnpm resolves
+the verb as one of its own built-ins — `deploy`, `install`, `add`, `remove`,
+`link`, `import`, `patch`, and `why` all collide — and runs that instead of your
+script. This bit `db:deploy` specifically. `packages/database/prisma/scripts.test.ts`
+now asserts the shape of every `db:*` script so it cannot regress.
+
 **`pnpm typecheck` reports `has no exported member 'ApplicationStatus'`.**
 The generated Prisma Client is stale or was never generated. Fix with
 `pnpm db:generate`. This also needs re-running after any change to
 `packages/database/prisma/schema.prisma`.
 
-**`pnpm test` shows 83 passing instead of 90, with 7 skipped.**
+**`pnpm test` shows 90 passing instead of 97, with 7 skipped.**
 PostgreSQL is not reachable. The 7 skipped tests are the database integration
 tests in `packages/database/tests/integration.test.ts`, and they skip loudly
 rather than passing silently. Start it with `docker compose up -d` and re-run.
-Do not treat the 83-test result as equivalent to the 90-test result — the
+Do not treat the 90-test result as equivalent to the 97-test result — the
 skipped tests are the ones covering referential integrity, cascade deletes,
 and cross-user isolation.
 
@@ -230,5 +243,7 @@ Read `AGENTS.md` first, then `.wwg/wiki/project-truth.md`. Governed truth,
 decisions, and principles live under `.wwg/`.
 ## Branch protection
 
-\main\ is protected. Every change arrives through a pull request where CI, the dependency review, and CodeRabbit must all pass. Direct pushes and force pushes are rejected.
+`main` is protected. Every change arrives through a pull request, and the
+`verify`, `dependency-review`, and `CodeRabbit` checks must all pass. Direct
+pushes and force pushes are rejected.
 

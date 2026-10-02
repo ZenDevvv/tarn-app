@@ -3,7 +3,7 @@ type: principle-brief
 status: active
 mutability: high-friction
 scope: agent-conduct
-last_reviewed: 2026-10-01
+last_reviewed: 2026-10-02
 ---
 
 # Never Present Planned Work as Implemented
@@ -31,12 +31,40 @@ Three concrete risks:
 2. **Path hallucination.** The architecture document names `apps/web/src/index.css` and `DESIGN.md` §1 repeats it as a hard rule. That file does not exist; `index.css` is at the repository root. An agent reasoning from the doc alone will reference a nonexistent path and treat the conflict as a code bug. The path is now confirmed as correct by `.wwg/wiki/decisions/D-0005-token-file-location.md`, and the move is scheduled for the scaffold — so the mismatch is a *pending migration*, not an error to fix or a doc to distrust.
 3. **False readiness.** `wwg status` and readiness reports can show green checks that reflect WWG *structure*, not product *capability*. "WWG structure present" is not "MVP is working".
 
+## The verification gap: documentation is not evidence of execution
+
+A fourth risk emerged on 2026-10-02 and is now part of this principle.
+
+A root command, `pnpm db:deploy`, was documented in `README.md` § Troubleshooting
+as part of the volume-recovery procedure. It was **broken from the day it was
+written** — `pnpm --filter @tarn/database deploy` resolves to pnpm's own
+built-in `deploy` command, not the package script, so the command failed with
+`ERR_PNPM_INVALID_DEPLOY_TARGET`. It survived two AI review rounds and an owner
+sign-off because **no gate ever executed it**. Both CI jobs invoke the
+equivalent command inline, which works, and so routed around the defect
+permanently.
+
+The generalisable rules:
+
+1. **A documented command is a claim requiring evidence, exactly like a
+   "verified" claim.** If `README.md` says `pnpm X` works, run `pnpm X` before
+   trusting the sentence. Do not infer that a script works because its
+   surrounding prose is confident.
+2. **An unexplained workaround in CI is masking a defect at the source.** When
+   CI runs a command inline instead of calling the script that exists for the
+   purpose, ask why. If nobody can say, the script is suspect — do not "clean it
+   up" to match the inline form. Fix the script and make CI call it, so the next
+   real break is visible.
+3. **Prefer exercising the real entry point.** A gate that calls a different
+   path than the one documented gives green status for something nobody uses.
+
 ## Applies To
 
 - Project Truth and Terminology updates
 - Status, readiness, and handoff reporting
 - Code generation and file references
 - Any statement about what the product does, supports, or is ready for
+- Any command, script, or procedure this project documents as working
 
 ## Agent Guidance
 
@@ -57,6 +85,9 @@ Three concrete risks:
 
 - `.wwg/wiki/project-truth.md` — "Source-of-Truth Order", "Implementation Reality", "Safety and Production Boundaries", "Known Conflicts and Drift Risks"
 - `.wwg/wiki/decisions/D-0005-token-file-location.md` — the confirmed token-path migration
+- `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md` — a place where the owner settled a choice that agents should not have settled alone
+- `.wwg/wiki/project-truth.md` CORRECTION entry — the `prismaLint` claim that was recorded as verified and never verified
+- `.wwg/governance/recommendation-registry.md` REC-0009 — re-audit the unproven claims from the 2026-10-01 close-out batch
 - `job-application-tracker-brd-prd.md` §35 (MVP Definition of Done), §38 (Document Status and Decision Log)
 - `job-application-tracker-project-architecture.md` §90 (Suggested Build Order)
 - `.wwg/governance/evidence-standards.md`

@@ -74,9 +74,10 @@ Verified on 2026-10-01 by execution:
 
 - `pnpm lint` — clean (ESLint 9 flat config; gate proven to fail on a seeded violation, then reverted)
 - `pnpm typecheck` — clean, including `tests/tsconfig.json` for the Playwright specs
-- `pnpm test` — **90 tests passing**: 7 types, 13 auth/password, 23 validation, 24 database (17 schema scope + 7 integration), 13 API, 10 React
+- `pnpm test` — **97 tests passing**: 7 types, 13 auth/password, 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 13 API, 10 React
 - `npx playwright test` — **24 passing** across desktop and 360px projects, in a real browser
-- `pnpm build` — both apps build; web 251 kB (81 kB gzip)
+- `pnpm build` — both apps build; web 279 kB (90 kB gzip)
+- `pnpm format:check` — **clean**; enforced in CI since 2026-10-02
 - `pnpm audit` — **no known vulnerabilities**
 - `pnpm db:migrate` — migration created and applied; `migrate status` reports the schema is up to date
 - `pnpm db:seed` — idempotent, produces the documented counts
@@ -89,12 +90,13 @@ Two accessibility defects were found by these tests and fixed in `apps/web/src/l
 
 Consequence that agents must respect: a green build and 114 passing assertions describe the **foundation**, not the product. No user-facing capability exists. Do not describe a feature as working because the scaffold is healthy.
 
-Re-verified 2026-10-02 by execution, with two practical caveats:
+Re-verified 2026-10-02 by execution, with the database now actually running:
 
 - `pnpm lint`, `pnpm typecheck`, and `pnpm build` are clean.
-- `pnpm test` reports **83 passing and 7 skipped**, not 90. The 7 skips are the database integration tests, which skip loudly because Docker Desktop was not running. The 90 figure remains the correct count for a machine with a live database, and is what CI observes. **Do not treat 83 as equivalent to 90** — the skipped tests are the ones covering referential integrity, cascade deletes, and cross-user isolation.
+- `pnpm test` reports **97 passing and 0 skipped** with Docker Desktop running. The earlier **83 passing / 7 skipped** figure was the correct count for that machine state, where Docker was stopped; **83 was never equivalent to 90**, because the skipped tests are the ones covering referential integrity, cascade deletes, and cross-user isolation.
 - Two failure modes were hit and fixed on 2026-10-02, both consequences of the directory rename rather than code defects, and both now documented in `README.md` § Troubleshooting: a stale `node_modules` whose junctions pointed at the old directory (`MODULE_NOT_FOUND` for `vitest`, fixed with `pnpm install --frozen-lockfile`), and a stale generated Prisma Client (`no exported member 'ApplicationStatus'`, fixed with `pnpm db:generate`). An agent starting work in a renamed checkout should expect both.
-- `pnpm format:check` **fails on 50 pre-existing files** and is **not** enforced by CI. Treated as a known gap, not a regression; see REC-0011.
+- `pnpm format:check` **now passes** and is enforced in CI. It previously failed on 50 pre-existing files; see REC-0011.
+- **The cross-user isolation test actually executes now.** `packages/database/tests/integration.test.ts:145` (`scopes queries by userId so one user cannot read another's rows`) was previously in the skipped set. This is the single most relevant precondition for the auth module's ownership boundary, and it had no local coverage until 2026-10-02.
 
 ## Product Identity
 
@@ -434,6 +436,14 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
   - Status: RETIRED
   - Evidence: superseded by Tarn on 2026-10-01 (PRD §1.1, §38).
   - Note: the two canonical source files keep their historical `job-application-tracker-*` filenames. Do not treat those filenames as a naming rule, and do not propagate the retired name into new files or user-facing strings.
+- RESOLVED — The root `db:deploy` script was broken and CI hid it. **Fixed 2026-10-02.**
+  - Status: RESOLVED
+  - What was wrong: the root script read `pnpm --filter @tarn/database deploy`. `deploy` is a **built-in pnpm command**, so pnpm resolved its own `deploy` rather than the package script, and `pnpm db:deploy` failed with `ERR_PNPM_INVALID_DEPLOY_TARGET`. The documented volume-recovery procedure in `README.md` § Troubleshooting was therefore broken.
+  - Why it survived: **both CI jobs invoke the command inline** (`pnpm --filter @tarn/database exec prisma migrate deploy`), which works. The inline form silently routed around the defect, so the repository script was never exercised by any gate.
+  - Fix: `pnpm --filter @tarn/database run deploy`. The explicit `run` is required whenever the verb collides with a pnpm built-in — `deploy`, `install`, `add`, `remove`, `link`, `import`, `patch`, `why`.
+  - Regression guard: `packages/database/prisma/scripts.test.ts` asserts the shape of every root `db:*` script. Verified by **reintroducing the broken form and confirming 2 assertions fail**, then restoring.
+  - Scope check: `db:generate`, `db:migrate`, `db:seed`, and `db:studio` were each executed and all pass — `deploy` was the only collision. The guard covers the whole `db:*` family so a future rename cannot reintroduce it.
+  - Lesson, and it is the **REC-0009 failure mode again**: a command was documented, reviewed by two AI passes and an owner sign-off, and never once executed. The generalisable rule — *a workaround in CI that exists for no stated reason is masking a defect at the source* — is now recorded in `.wwg/wiki/principles/plan-vs-implementation-truth.md`.
 - RESOLVED — No ESLint config and no lint gate. `eslint.config.mjs` (ESLint 9 flat config) now enforces typescript-eslint recommended plus project rules including `no-explicit-any`; `pnpm lint` runs from the repo root and is a required CI step. The gate was proven to fail by seeding a deliberate `any` and an unused variable, then reverted.
   - Status: RESOLVED
   - Evidence: `eslint.config.mjs`; `.github/workflows/ci.yml` lint step.

@@ -73,7 +73,9 @@ export async function hashPassword(password: string): Promise<string> {
   const salt = randomBytes(SALT_LENGTH);
   const hash = await deriveKey(password, salt, PARAMS);
 
-  return [ALGORITHM, PARAMS.N, PARAMS.r, PARAMS.p, salt.toString('base64'), hash.toString('base64')].join('$');
+  return [ALGORITHM, PARAMS.N, PARAMS.r, PARAMS.p, salt.toString('base64'), hash.toString('base64')].join(
+    '$',
+  );
 }
 
 interface ParsedHash {
@@ -139,7 +141,5 @@ export async function verifyPassword(password: string, stored: string): Promise<
 export function needsRehash(stored: string): boolean {
   const parsed = parseHash(stored);
   if (!parsed) return true;
-  return (
-    parsed.params.N < PARAMS.N || parsed.params.r < PARAMS.r || parsed.params.p < PARAMS.p
-  );
+  return parsed.params.N < PARAMS.N || parsed.params.r < PARAMS.r || parsed.params.p < PARAMS.p;
 }

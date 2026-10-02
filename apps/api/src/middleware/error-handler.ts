@@ -75,7 +75,9 @@ export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
     }
     // Malformed JSON, unsupported content type, and similar.
     const status = error.status ?? error.statusCode ?? 400;
-    res.status(status).json(fail('bad_request', "Couldn't read that request. Check the format and try again."));
+    res
+      .status(status)
+      .json(fail('bad_request', "Couldn't read that request. Check the format and try again."));
     return;
   }
 

@@ -137,7 +137,12 @@ describe('status enums (architecture §43, PRD §12)', () => {
 
   it('defines the three canonical priorities (PRD §13)', () => {
     const block = schema.match(/enum\s+ApplicationPriority\s*\{([\s\S]*?)\}/)?.[1] ?? '';
-    expect(block.split('\n').map((l) => l.trim()).filter(Boolean)).toEqual(['LOW', 'MEDIUM', 'HIGH']);
+    expect(
+      block
+        .split('\n')
+        .map((l) => l.trim())
+        .filter(Boolean),
+    ).toEqual(['LOW', 'MEDIUM', 'HIGH']);
   });
 });
 

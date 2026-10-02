@@ -1640,7 +1640,7 @@
       "affectedFile": ".wwg/governance/test-enforcement.md",
       "fileType": "governance",
       "affectedSection": "Related Truths",
-      "line": 143,
+      "line": 147,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2195,7 +2195,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 179,
+      "line": 181,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2204,25 +2204,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 196,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/wiki/project-truth.md",
-      "fileType": "context",
-      "line": 200,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/wiki/project-truth.md",
-      "fileType": "context",
-      "line": 201,
+      "line": 198,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2232,6 +2214,24 @@
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
       "line": 202,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 203,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 204,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2271,6 +2271,46 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'What changed' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "affectedSection": "What changed",
+      "line": 167,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Verified by execution, not assumption' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "affectedSection": "Verified by execution, not assumption",
+      "line": 190,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Deliberately declined' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "affectedSection": "Deliberately declined",
+      "line": 239,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Next task — awaiting owner signal' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "affectedSection": "Next task — awaiting owner signal",
+      "line": 249,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-possible-vague-pronouns",
       "message": "File has many pronouns that may be ambiguous for agents.",
       "affectedFile": ".wwg/workspace/current-task.md",
@@ -2283,7 +2323,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 221,
+      "line": 354,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2404,6 +2444,86 @@
       "fileType": "unknown",
       "affectedSection": "Follow-up",
       "line": 341,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Supporting evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Supporting evidence",
+      "line": 356,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 413,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Recommendation' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Recommendation",
+      "line": 420,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 426,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Supporting evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Supporting evidence",
+      "line": 439,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 501,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Recommendation' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Recommendation",
+      "line": 508,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 514,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -3774,7 +3894,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 179,
+      "line": 181,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3783,25 +3903,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 196,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/wiki/project-truth.md",
-      "fileType": "context",
-      "line": 200,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/wiki/project-truth.md",
-      "fileType": "context",
-      "line": 201,
+      "line": 198,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3811,6 +3913,24 @@
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
       "line": 202,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 203,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 204,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -4404,7 +4524,7 @@
       "affectedFile": ".wwg/governance/test-enforcement.md",
       "fileType": "governance",
       "affectedSection": "Related Truths",
-      "line": 143,
+      "line": 147,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5269,7 +5389,7 @@
       "affectedFile": ".wwg/governance/test-enforcement.md",
       "fileType": "governance",
       "affectedSection": "Related Truths",
-      "line": 143,
+      "line": 147,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5824,7 +5944,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 179,
+      "line": 181,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5833,25 +5953,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 196,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/wiki/project-truth.md",
-      "fileType": "context",
-      "line": 200,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/wiki/project-truth.md",
-      "fileType": "context",
-      "line": 201,
+      "line": 198,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5861,6 +5963,24 @@
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
       "line": 202,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 203,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/project-truth.md",
+      "fileType": "context",
+      "line": 204,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5900,6 +6020,46 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'What changed' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "affectedSection": "What changed",
+      "line": 167,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Verified by execution, not assumption' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "affectedSection": "Verified by execution, not assumption",
+      "line": 190,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Deliberately declined' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "affectedSection": "Deliberately declined",
+      "line": 239,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Next task — awaiting owner signal' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "affectedSection": "Next task — awaiting owner signal",
+      "line": 249,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-possible-vague-pronouns",
       "message": "File has many pronouns that may be ambiguous for agents.",
       "affectedFile": ".wwg/workspace/current-task.md",
@@ -5912,7 +6072,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 221,
+      "line": 354,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -6033,6 +6193,86 @@
       "fileType": "unknown",
       "affectedSection": "Follow-up",
       "line": 341,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Supporting evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Supporting evidence",
+      "line": 356,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 413,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Recommendation' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Recommendation",
+      "line": 420,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 426,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Supporting evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Supporting evidence",
+      "line": 439,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 501,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Recommendation' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Recommendation",
+      "line": 508,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 514,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6540,7 +6780,7 @@
     "skippedFileCount": 1,
     "errorCount": 0,
     "warningCount": 113,
-    "suggestionCount": 123,
+    "suggestionCount": 135,
     "classificationCounts": {
       "context": 16,
       "skill": 0,

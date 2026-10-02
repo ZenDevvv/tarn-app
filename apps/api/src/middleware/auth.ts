@@ -16,11 +16,5 @@ import type { RequestHandler } from 'express';
 import { AppError } from './error-handler.js';
 
 export const requireAuth: RequestHandler = (_req, _res, next) => {
-  next(
-    new AppError(
-      501,
-      'auth_not_implemented',
-      'Sign-in is not available yet. This is a scaffolded API.',
-    ),
-  );
+  next(new AppError(501, 'auth_not_implemented', 'Sign-in is not available yet. This is a scaffolded API.'));
 };

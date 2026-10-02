@@ -1,7 +1,7 @@
 # Current Task
 
-Status: DONE — the directory rename is merged and canonical truth now matches the working tree.
-Task mode: Existing Project Adoption (continued) → governance/report refresh + truth synchronization. Mixed: adoption-governance work with a small config fix. No product feature was started.
+Status: DONE — pre-auth cleanup complete. The database runs, every gate is green, and the documented commands have been executed for the first time.
+Task mode: Existing Project Adoption (continued) → bug fix + tooling cleanup + truth synchronization. Mixed. No product feature was started.
 Instance type: existing-project (adopted)
 Adoption status: ADOPTED_FROM_EXISTING_PROJECT
 Last updated: 2026-10-02
@@ -9,7 +9,136 @@ Last updated: 2026-10-02
 ## Task Summary
 
 - Status: DONE
-- User request: "tell me the current project state and what to do next", then "proceed to next to do. i want the project state clean before touching features"
+- User request: "docker desktop is open. finish everything that needs to be done so that we can proceed to the auth feature"
+
+## What this task found
+
+The stated goal was to clear the pre-auth gates. Doing that surfaced **a broken
+documented command that had never been executed**, which is the more important
+outcome.
+
+`pnpm db:deploy` — the command the `README.md` volume-recovery procedure tells a
+developer to run — was broken from the day it was written:
+
+```text
+$ pnpm db:deploy
+ERR_PNPM_INVALID_DEPLOY_TARGET  This command requires one parameter
+```
+
+The root script read `pnpm --filter @tarn/database deploy`. `deploy` is a
+**built-in pnpm command**, so pnpm ran its own `deploy` and never invoked the
+package script.
+
+**Why it survived two AI review rounds and an owner sign-off.** No gate ran it.
+Both CI jobs apply migrations inline
+(`pnpm --filter @tarn/database exec prisma migrate deploy`), which works — so the
+inline form silently routed around the defect permanently. The comment above the
+CI step already said "Use `db:deploy`", which made the divergence look like an
+oversight rather than the symptom it was.
+
+This is the **REC-0009 failure mode recurring**, and the third instance of the
+same shape: a claim of verification where no verification ran.
+
+## What changed
+
+| File | Change |
+|---|---|
+| `package.json` | `db:deploy` → `pnpm --filter @tarn/database run deploy` |
+| `packages/database/prisma/scripts.test.ts` | **New.** 7 tests asserting the shape of every root `db:*` script |
+| `.github/workflows/ci.yml` | Added a `Check formatting` step; documented the inline-workaround trap above the migration step |
+| 50 source files | Prettier reformatted (REC-0011) |
+| `README.md` | Corrected the gate count ("all four" → three named checks), corrected test counts 83/90 → 90/97, added a troubleshooting entry for the `pnpm --filter` collision, fixed a mangled `\main\` line |
+| `.wwg/wiki/project-truth.md` | Test counts, the re-verification block, and a new RESOLVED entry for the `db:deploy` defect |
+| `.wwg/wiki/principles/plan-vs-implementation-truth.md` | New section: the verification gap, and why a documented command is itself a claim requiring evidence |
+| `.wwg/governance/recommendation-registry.md` | REC-0009 → Done (audited), REC-0011 → Done, REC-0016 → Done (new), REC-0017 → Proposed (new) |
+| `.wwg/governance/test-enforcement.md` | Counts, the new test layer, and the "gate must exercise the documented entry point" rule |
+| `.wwg/workspace/testing/verification-evidence.md` | VER-0005, VER-0006 |
+
+## Verified by execution, not assumption
+
+Every gate was re-run **after** the 50-file reformat, because a mass reformat is
+exactly the change that breaks something quietly:
+
+| Gate | Result |
+|---|---|
+| `docker compose up -d` | healthy |
+| `pnpm db:deploy` | migrations applied — **failed before the fix** |
+| `pnpm db:seed` ×3 | idempotent, counts unchanged |
+| `pnpm lint` | clean |
+| `pnpm format:check` | **clean** (was failing on 50 files) |
+| `pnpm typecheck` | clean, 6 workspaces |
+| `pnpm test` | **97 passed, 0 skipped** (was 83 passed, 7 skipped) |
+| `pnpm build` | both apps build |
+| `pnpm exec playwright test` | 24 passed |
+| `pnpm audit --audit-level=high` | no known vulnerabilities |
+
+The regression test was **proven non-vacuous**: the broken form was reintroduced,
+2 assertions failed, then it was reverted and the suite re-run green.
+
+## The precondition that is now actually met
+
+VER-0004 recorded this as missing evidence:
+
+> The 7 database integration tests **skipped** rather than passed, so the
+> cross-user isolation coverage that the auth module depends on is currently
+> unverified on this machine.
+
+**That gap is closed.** `packages/database/tests/integration.test.ts:145` —
+`scopes queries by userId so one user cannot read another's rows` — now
+executes. Until today the ownership boundary the auth module must implement had
+**no local coverage at all**.
+
+## REC-0009 audit — no further false claims
+
+Each "confirmed" claim from the 2026-10-01 close-out was re-checked **by
+execution, not by re-reading the file that made the claim**:
+
+| Claim | Method | Result |
+|---|---|---|
+| `prismaLint` removed | `Select-String .coderabbit.yaml` | gone; only the explanatory comment remains |
+| `e2e` not required | `gh api .../branches/main/protection` | `["verify","dependency-review","CodeRabbit"]` |
+| `enforce_admins` on | same call | `true` |
+| No known vulnerabilities | `pnpm audit --audit-level=high` | none found |
+| Node pinned in one place | `.nvmrc` + `engines` + CI | `22`, `>=22`, 2 steps use `node-version-file` |
+| Exactly 10 MVP tables | `\dt` in Postgres | all 10 present, all 5 deferred absent |
+| Password scrypt at rest | `SELECT left("passwordHash", 7) FROM users` | `scrypt$` |
+| Seed counts | row counts after 3 runs | 1 user, 2 companies, 2 jobs, 3 applications, 1 offer |
+
+**No false claim found in that batch.** Recorded as a positive result rather than
+left implied.
+
+## Deliberately declined
+
+- **Changing CI to call `pnpm db:deploy` now that it works.** The inline form is
+  correct and currently green. Switching would put an unverified change in the
+  same commit as the fix, for no benefit yet. Logged as **REC-0017** with the
+  reasoning, so the next agent does not "simplify" CI into the broken shape.
+- **Reformatting `.wwg/` and `*.md`.** Both are in `.prettierignore`.
+  Reformatting governed documentation would produce an enormous diff against
+  files whose line breaks carry meaning, for no functional gain.
+
+## Next task — awaiting owner signal
+
+**The authentication module.** Nothing has changed here; it remains the next
+step, and architecture §90 places it directly after the database.
+
+Requires: real session/JWT issue and verify, httpOnly cookie handling,
+`POST /register` / `login` / `logout`, and replacing the 501 guard at
+`apps/api/src/middleware/auth.ts:18` with real verification plus the `userId`
+ownership filter. D-0002 confirms auth is MVP scope, not a deferral.
+
+**Both preconditions are now met.** The database runs, the ownership-boundary
+test executes, and every documented command has been run at least once.
+
+---
+
+# Prior task record — directory rename (2026-10-02, merged as PR #35)
+
+**Everything below this line describes the previous task, not the current one.**
+It is retained as history, not as instructions. The 83/90 test figures, the
+"not executing" precondition, and the REC-0011/REC-0015 statuses in it are all
+superseded by the sections above. Do not act on it without reading the current
+task first.
 
 ## Why this ran
 
@@ -76,6 +205,10 @@ updated.
 
 ## The 83-vs-90 caveat, stated plainly
 
+> **Superseded 2026-10-02.** The figures are now 97 passing / 90 without a
+> database. The reasoning below still holds and is why `README.md` §
+> Troubleshooting frames a skip count as a failure signal.
+
 Docker Desktop was not running, so the 7 database integration tests **skipped loudly**
 rather than passing. 90 is the correct count with a live database and is what CI
 observes. **Do not treat 83 as equivalent to 90.** The skipped tests are the ones
@@ -127,6 +260,9 @@ filter. D-0002 confirms auth is MVP scope, not a deferral.
 **Before starting:** start Docker Desktop and confirm the 7 database integration tests
 actually run. They are the main deterministic mitigation for the ownership boundary,
 and right now they are not executing.
+
+> **Superseded 2026-10-02.** Docker is now running and all 7 tests execute. See
+> "The precondition that is now actually met" above.
 
 ## Incident — CodeRabbit rate limit blocked the merge
 

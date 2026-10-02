@@ -31,9 +31,10 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
     ...init,
   });
 
-  const payload = (await response.json().catch(() => null)) as
-    | { data?: T; error?: { code: string; message: string; fields?: Record<string, string> } }
-    | null;
+  const payload = (await response.json().catch(() => null)) as {
+    data?: T;
+    error?: { code: string; message: string; fields?: Record<string, string> };
+  } | null;
 
   if (!response.ok) {
     throw new ApiRequestError(
