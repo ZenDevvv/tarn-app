@@ -71,8 +71,7 @@ export default defineConfig({
       env: {
         NODE_ENV: 'development',
         PORT: '4000',
-        DATABASE_URL:
-          process.env.DATABASE_URL ?? 'postgresql://tarn:tarn@localhost:5432/tarn?schema=public',
+        DATABASE_URL: process.env.DATABASE_URL ?? 'postgresql://tarn:tarn@localhost:5432/tarn?schema=public',
         JWT_SECRET: 'e2e-only-jwt-secret',
         COOKIE_SECRET: 'e2e-only-cookie-secret',
         WEB_ORIGIN: 'http://localhost:5173',

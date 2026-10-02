@@ -62,7 +62,13 @@ describe('verifyPassword', () => {
   });
 
   it('denies access for a malformed stored hash instead of throwing', async () => {
-    for (const bad of ['', 'not-a-hash', 'scrypt$1$2$3', 'md5$32768$8$1$c2FsdA==$aGFzaA==', 'scrypt$x$8$1$c2FsdA==$aGFzaA==']) {
+    for (const bad of [
+      '',
+      'not-a-hash',
+      'scrypt$1$2$3',
+      'md5$32768$8$1$c2FsdA==$aGFzaA==',
+      'scrypt$x$8$1$c2FsdA==$aGFzaA==',
+    ]) {
       await expect(verifyPassword('anything', bad)).resolves.toBe(false);
     }
   });

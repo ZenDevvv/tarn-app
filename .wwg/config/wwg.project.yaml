@@ -74,16 +74,15 @@ product:
     - pnpm test
     - pnpm build
     - npx playwright test
-  # 90 requires a reachable database. Without one, 7 database integration
-  # tests skip loudly and the run reports 83. Re-verified 2026-10-02.
-  executable_tests: 90
-  executable_tests_without_database: 83
+  # 97 requires a reachable database. Without one, 7 database integration
+  # tests skip loudly and the run reports 90. Re-verified 2026-10-02.
+  executable_tests: 97
+  executable_tests_without_database: 90
   executable_tests_skipped_without_database: 7
   database_tests_require_docker: true
   browser_tests: 24
   browser_engine: system-installed (msedge default; CI uses pinned chromium)
-  format_gate: not enforced in CI; `pnpm format:check` currently fails on 50
-    pre-existing files. See REC-0011.
+  format_gate: enforced in CI since 2026-10-02; `pnpm format:check` passes. See REC-0011.
   delivery_pipeline:
     ci: verified on GitHub
     # Verified against the GitHub API on 2026-10-02. `e2e` is intentionally

@@ -30,7 +30,11 @@ export const APPLICATION_STATUSES = [
 export type ApplicationStatus = (typeof APPLICATION_STATUSES)[number];
 
 /** Terminal states — no further pipeline movement. */
-export const TERMINAL_STATUSES = ['ACCEPTED', 'REJECTED', 'WITHDRAWN'] as const satisfies readonly ApplicationStatus[];
+export const TERMINAL_STATUSES = [
+  'ACCEPTED',
+  'REJECTED',
+  'WITHDRAWN',
+] as const satisfies readonly ApplicationStatus[];
 
 /** Statuses that represent an application still in play. */
 export const ACTIVE_STATUSES = [

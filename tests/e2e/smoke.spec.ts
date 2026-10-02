@@ -75,10 +75,7 @@ test.describe('accessibility (DESIGN.md §11)', () => {
       );
       return controls.filter((el) => {
         const name =
-          el.getAttribute('aria-label') ??
-          el.getAttribute('title') ??
-          el.textContent?.trim() ??
-          '';
+          el.getAttribute('aria-label') ?? el.getAttribute('title') ?? el.textContent?.trim() ?? '';
         return name.length === 0;
       }).length;
     });
@@ -134,10 +131,7 @@ test.describe('accessibility (DESIGN.md §11)', () => {
       });
 
       const below = failing.filter((r) => r.ratio < 4.5);
-      expect(
-        below,
-        `contrast below 4.5:1 in ${scheme} mode: ${JSON.stringify(below)}`,
-      ).toEqual([]);
+      expect(below, `contrast below 4.5:1 in ${scheme} mode: ${JSON.stringify(below)}`).toEqual([]);
     }
   });
 });

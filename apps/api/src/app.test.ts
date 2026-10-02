@@ -53,20 +53,18 @@ describe('GET /api/v1/health', () => {
 
 describe('routing is not swallowed by the health route', () => {
   // Regression guard for the app.use vs app.get bug.
-  it.each([
-    '/api/v1/nope',
-    '/api/v1/nope/deep',
-    '/api/v1/applications',
-    '/api/v1/companies/abc',
-  ])('returns 404 for unknown route %s', async (route) => {
-    const response = await request(createApp()).get(route);
+  it.each(['/api/v1/nope', '/api/v1/nope/deep', '/api/v1/applications', '/api/v1/companies/abc'])(
+    'returns 404 for unknown route %s',
+    async (route) => {
+      const response = await request(createApp()).get(route);
 
-    expect(response.status).toBe(404);
-    // Must be the error envelope, not a leaked health payload.
-    expect(response.body).toEqual({
-      error: { code: 'not_found', message: 'Could not find that route.' },
-    });
-  });
+      expect(response.status).toBe(404);
+      // Must be the error envelope, not a leaked health payload.
+      expect(response.body).toEqual({
+        error: { code: 'not_found', message: 'Could not find that route.' },
+      });
+    },
+  );
 
   it('does not answer health for a sub-path of health', async () => {
     const response = await request(createApp()).get(`${API_PREFIX}/health/extra`);

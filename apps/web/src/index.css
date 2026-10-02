@@ -10,10 +10,10 @@
    into tailwind.config.ts (theme.extend.colors / borderRadius / fontFamily).
    ========================================================================== */
 
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "@fontsource-variable/bricolage-grotesque";
-@import "@fontsource-variable/instrument-sans";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource-variable/instrument-sans';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -23,14 +23,14 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Surfaces: separate by tone + hairline, not by shadow */
-  --background: #f4f5f2;            /* paper   */
-  --card: #ffffff;                  /* raised  */
+  --background: #f4f5f2; /* paper   */
+  --card: #ffffff; /* raised  */
   --popover: #ffffff;
-  --secondary: #e9ece6;             /* sunken  */
+  --secondary: #e9ece6; /* sunken  */
   --muted: #e9ece6;
-  --accent: #dde3d6;                /* hover fill for rows / menu items */
-  --border: #dadfd6;                /* hairline */
-  --input: #7c867f;                 /* control edge, 3:1 vs paper (WCAG 1.4.11) */
+  --accent: #dde3d6; /* hover fill for rows / menu items */
+  --border: #dadfd6; /* hairline */
+  --input: #7c867f; /* control edge, 3:1 vs paper (WCAG 1.4.11) */
 
   /* Ink */
   --foreground: #16251f;
@@ -38,7 +38,7 @@
   --popover-foreground: #16251f;
   --secondary-foreground: #16251f;
   --accent-foreground: #16251f;
-  --muted-foreground: #5a665f;      /* 5.5:1 on paper */
+  --muted-foreground: #5a665f; /* 5.5:1 on paper */
 
   /* Brand: pine */
   --primary: #1f4a3b;
@@ -58,12 +58,12 @@
   --warning-tint: #f3e4c4;
   --info: #33608f;
   --info-tint: #dce6f1;
-  --success: #1f4a3b;               /* success == brand on purpose */
+  --success: #1f4a3b; /* success == brand on purpose */
   --success-tint: #dce8e1;
 
   /* Stage ring colours */
   --stage-active: var(--primary);
-  --stage-closed: #7c867f;          /* withdrawn / no response */
+  --stage-closed: #7c867f; /* withdrawn / no response */
   --stage-rejected: var(--destructive);
 
   /* Charts (Recharts): one hue for magnitude, others for categories */
@@ -183,18 +183,30 @@
 
   --shadow-float: var(--elevation-float);
 
-  --font-sans: "Instrument Sans Variable", "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    'Instrument Sans Variable', 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    sans-serif;
+  --font-display:
+    'Bricolage Grotesque Variable', 'Bricolage Grotesque', 'Instrument Sans Variable', ui-sans-serif,
+    system-ui, sans-serif;
 
   /* Type scale: [size, line-height]. Use text-body, text-title, etc. */
-  --text-caption: 0.75rem;    --text-caption--line-height: 1rem;
-  --text-small: 0.8125rem;    --text-small--line-height: 1.125rem;
-  --text-body: 0.875rem;      --text-body--line-height: 1.375rem;
-  --text-reading: 0.9375rem;  --text-reading--line-height: 1.625rem;
-  --text-subheading: 1rem;    --text-subheading--line-height: 1.375rem;
-  --text-heading: 1.25rem;    --text-heading--line-height: 1.625rem;
-  --text-title: 1.75rem;      --text-title--line-height: 2.125rem;
-  --text-display: 2.5rem;     --text-display--line-height: 2.75rem;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1rem;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.125rem;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.375rem;
+  --text-reading: 0.9375rem;
+  --text-reading--line-height: 1.625rem;
+  --text-subheading: 1rem;
+  --text-subheading--line-height: 1.375rem;
+  --text-heading: 1.25rem;
+  --text-heading--line-height: 1.625rem;
+  --text-title: 1.75rem;
+  --text-title--line-height: 2.125rem;
+  --text-display: 2.5rem;
+  --text-display--line-height: 2.75rem;
 
   --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
@@ -211,9 +223,12 @@
   }
   body {
     @apply bg-background text-foreground font-sans text-body antialiased;
-    font-variant-numeric: tabular-nums;   /* salaries, dates, counts line up */
+    font-variant-numeric: tabular-nums; /* salaries, dates, counts line up */
   }
-  h1, h2, h3, .font-display {
+  h1,
+  h2,
+  h3,
+  .font-display {
     font-family: var(--font-display);
     font-optical-sizing: auto;
     letter-spacing: -0.015em;
@@ -245,8 +260,12 @@
 }
 
 @keyframes marker-sweep {
-  from { background-size: 0% 100%; }
-  to   { background-size: 100% 100%; }
+  from {
+    background-size: 0% 100%;
+  }
+  to {
+    background-size: 100% 100%;
+  }
 }
 @utility marker-sweep {
   animation: marker-sweep 500ms var(--ease-out-soft) both;
@@ -256,7 +275,9 @@
    6. Motion: answers a person's action; never decorates
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

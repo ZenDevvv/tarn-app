@@ -19,7 +19,11 @@ import {
 
 describe('registerSchema', () => {
   it('accepts a valid payload', () => {
-    const result = registerSchema.safeParse({ email: 'A@Example.com ', password: 'hunter2hunter2', name: ' Sam ' });
+    const result = registerSchema.safeParse({
+      email: 'A@Example.com ',
+      password: 'hunter2hunter2',
+      name: ' Sam ',
+    });
     expect(result.success).toBe(true);
     // Normalised for consistent storage and lookup.
     expect(result.success && result.data.email).toBe('a@example.com');
@@ -32,7 +36,9 @@ describe('registerSchema', () => {
   });
 
   it('rejects a malformed email', () => {
-    expect(registerSchema.safeParse({ email: 'nope', password: 'hunter2hunter2', name: 'Sam' }).success).toBe(false);
+    expect(registerSchema.safeParse({ email: 'nope', password: 'hunter2hunter2', name: 'Sam' }).success).toBe(
+      false,
+    );
   });
 });
 
@@ -54,7 +60,9 @@ describe('createApplicationSchema', () => {
   });
 
   it('rejects an unknown status', () => {
-    expect(createApplicationSchema.safeParse({ jobId: 'clx1234567890abcdefghijk', status: 'NOPE' }).success).toBe(false);
+    expect(
+      createApplicationSchema.safeParse({ jobId: 'clx1234567890abcdefghijk', status: 'NOPE' }).success,
+    ).toBe(false);
   });
 
   it('rejects a missing jobId', () => {
@@ -77,7 +85,9 @@ describe('updateApplicationSchema', () => {
 
 describe('createJobSchema', () => {
   it('accepts a minimal job', () => {
-    expect(createJobSchema.safeParse({ title: 'Frontend Engineer', platform: 'LINKEDIN' }).success).toBe(true);
+    expect(createJobSchema.safeParse({ title: 'Frontend Engineer', platform: 'LINKEDIN' }).success).toBe(
+      true,
+    );
   });
 
   it('rejects an inverted salary range with a specific message', () => {
@@ -93,7 +103,8 @@ describe('createJobSchema', () => {
 
   it('accepts an equal min and max', () => {
     expect(
-      createJobSchema.safeParse({ title: 'X', platform: 'OTHER', salaryMin: 50000, salaryMax: 50000 }).success,
+      createJobSchema.safeParse({ title: 'X', platform: 'OTHER', salaryMin: 50000, salaryMax: 50000 })
+        .success,
     ).toBe(true);
   });
 
@@ -130,11 +141,15 @@ describe('applicationFiltersSchema', () => {
 
 describe('MVP entities (D-0004)', () => {
   it('validates a saved job', () => {
-    expect(createSavedJobSchema.safeParse({ title: 'Staff Engineer', platform: 'REFERRAL' }).success).toBe(true);
+    expect(createSavedJobSchema.safeParse({ title: 'Staff Engineer', platform: 'REFERRAL' }).success).toBe(
+      true,
+    );
   });
 
   it('rejects a saved job with a malformed url', () => {
-    expect(createSavedJobSchema.safeParse({ title: 'X', platform: 'OTHER', url: 'not-a-url' }).success).toBe(false);
+    expect(createSavedJobSchema.safeParse({ title: 'X', platform: 'OTHER', url: 'not-a-url' }).success).toBe(
+      false,
+    );
   });
 
   it('validates an offer and normalises currency to upper case', () => {
