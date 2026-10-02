@@ -12,7 +12,7 @@ This governance file is required by root `AGENTS.md` and the WWG readiness model
 
 - Vitest 5.0 runs across all six workspace packages.
 - **97 tests pass**: 7 types, 13 auth/password, 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 13 API, 10 React. **Requires Docker running** — without it the 7 database integration tests skip loudly and the count is 90, not 97.
-- **Playwright passes 24 assertions** across a desktop and a 360px project, in a real browser.
+- **Playwright passes 24 test instances** across a desktop and a 360px project (12 test cases × 2 projects), in a real browser.
 - `pnpm lint` is clean and gated in CI (ESLint 9 flat config).
 - `pnpm format:check` is clean and gated in CI since 2026-10-02 (REC-0011).
 - `pnpm typecheck` is clean, including `tests/tsconfig.json` for the Playwright specs.
@@ -20,7 +20,7 @@ This governance file is required by root `AGENTS.md` and the WWG readiness model
 - `pnpm audit` reports **no known vulnerabilities**.
 - GitHub Actions runs install, `db:generate`, `migrate deploy`, lint, dependency audit, typecheck, test, and build against a Postgres service. A parallel `e2e` job installs Chromium and runs the browser suite. Dependabot opens weekly dependency PRs, and a lockfile-diff dependency review runs on every pull request.
 - All four checks are required by branch protection on `main`, along with the CodeRabbit review, and admin enforcement is on.
-- **The `e2e` job has a proven green run on GitHub** — 2m47s, running the 24 browser and accessibility assertions in a real browser engine against a real Postgres. `verify` runs in 52s.
+- **The `e2e` job has a proven green run on GitHub** — 2m47s, running the 24 browser and accessibility test instances in a real browser engine against a real Postgres. `verify` runs in 52s.
 
 Still absent:
 
@@ -133,7 +133,8 @@ A process note worth keeping: the first version of the touch-target test **logge
 As of 2026-10-02:
 
 - Regression baseline: present
-- Executable tests: **97 unit/integration + 24 browser = 121 assertions**
+- Executable tests: **97 unit/integration test instances** (`pnpm test`), plus **24 Playwright test instances** (`npx playwright test` = 12 cases × 2 projects). These are not summed into one figure — see the counting note below.
+- Counting rule: **report test instances per suite, never a combined "assertion" total.** The two runners measure different things, and Playwright's 24 are instances of 12 cases, not 24 assertions. Several tests each assert multiple conditions internally, so any single combined number is misleading.
 - Database migration: committed and applied; verified table set matches the MVP scope exactly
 - Open gaps: no auth or CRUD route tests (those features do not exist yet); no Husky/lint-staged
 - The WWG-generated regression gap list predates all of this and does not reflect the current tests. Regenerate with `wwg adopt refresh-regression` or `wwg maintain`.

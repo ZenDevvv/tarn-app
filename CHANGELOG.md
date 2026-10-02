@@ -90,7 +90,8 @@ Nothing here is a user-facing feature. This is the groundwork the features will 
   isolation, and they *skip loudly* rather than passing silently when no database is
   reachable. So a local run with Docker stopped reports 90 passing and 7 skipped. The
   97 figure is the full inventory, and is what CI observes against a real database.
-- **24 browser and accessibility assertions** in a real browser, covering colour
+- **24 browser and accessibility test instances** in a real browser — 12 test cases run
+  across a desktop and a 360px project — covering colour
   contrast in light and dark themes, focus order, 360px layout, and touch-target size.
   This suite found and fixed two genuine accessibility defects.
 - **A regression guard for root script wiring.** The database commands are now asserted

@@ -75,7 +75,7 @@ Verified on 2026-10-01 by execution:
 - `pnpm lint` — clean (ESLint 9 flat config; gate proven to fail on a seeded violation, then reverted)
 - `pnpm typecheck` — clean, including `tests/tsconfig.json` for the Playwright specs
 - `pnpm test` — **97 tests passing**: 7 types, 13 auth/password, 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 13 API, 10 React
-- `npx playwright test` — **24 passing** across desktop and 360px projects, in a real browser
+- `npx playwright test` — **24 passing test instances** (12 cases × 2 projects) across desktop and 360px, in a real browser
 - `pnpm build` — both apps build; web 279 kB (90 kB gzip)
 - `pnpm format:check` — **clean**; enforced in CI since 2026-10-02
 - `pnpm audit` — **no known vulnerabilities**
@@ -84,11 +84,13 @@ Verified on 2026-10-01 by execution:
 - Prisma client generation, `migrate status`, and `db:seed` all still work with the `deepmerge-ts` override in place
 - API boots only when env is valid, and fails closed naming each missing variable
 
-Accessibility verified in a real browser (Playwright, 24 assertions): landmarks present and unique, skip link focusable and ≥44px once revealed, every interactive control has an accessible name, text contrast ≥4.5:1 in **both** light and dark themes, no horizontal page scroll at 360px, and every pointer target ≥44px.
+Accessibility verified in a real browser (Playwright, 24 test instances = 12 cases × 2 projects): landmarks present and unique, skip link focusable and ≥44px once revealed, every interactive control has an accessible name, text contrast ≥4.5:1 in **both** light and dark themes, no horizontal page scroll at 360px, and every pointer target ≥44px.
 
 Two accessibility defects were found by these tests and fixed in `apps/web/src/layouts/app-layout.tsx`: the primary navigation link was 19px tall and the focused skip link was under 44px, both violating the 44px touch-target rule in `DESIGN.md` §11.
 
-Consequence that agents must respect: a green build and 121 passing assertions describe the **foundation**, not the product. No user-facing capability exists. Do not describe a feature as working because the scaffold is healthy.
+Consequence that agents must respect: a green build and 97 passing unit/integration tests (plus 24 Playwright test instances) describe the **foundation**, not the product. No user-facing capability exists. Do not describe a feature as working because the scaffold is healthy.
+
+A note on counting: **24 is Playwright test *instances*, not assertions.** The browser suite has 12 `test()` cases run across 2 projects (desktop and 360px). Do not add the two suites into a single "assertion" total — they measure different things, and several tests each assert several conditions internally.
 
 Re-verified 2026-10-02 by execution, with the database now actually running:
 
@@ -453,7 +455,7 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 - RESOLVED — No database-backed tests. `packages/database/tests/integration.test.ts` runs against real Postgres and covers cascades, cross-user isolation, unique constraints, and hash verification. It skips loudly, never silently, when no database is reachable. CI runs it against a Postgres service.
   - Status: RESOLVED
   - Evidence: `packages/database/tests/integration.test.ts`; `.github/workflows/ci.yml`.
-- RESOLVED — Playwright could not run because the bundled Chromium download is blocked. The suite now drives the **system-installed Microsoft Edge** (and Chrome on request) via Playwright's `channel`, which needs no download. 24 assertions pass across desktop and 360px. CI keeps using the pinned bundled browser for reproducibility.
+- RESOLVED — Playwright could not run because the bundled Chromium download is blocked. The suite now drives the **system-installed Microsoft Edge** (and Chrome on request) via Playwright's `channel`, which needs no download. 24 test instances pass across desktop and 360px. CI keeps using the pinned bundled browser for reproducibility.
   - Status: RESOLVED
   - Evidence: `playwright.config.ts` (`PW_CHANNEL`); `tests/e2e/smoke.spec.ts`.
   - Two real accessibility defects were found this way and fixed: a 19px-tall nav link and an undersized focused skip link, both against the 44px rule in `DESIGN.md` §11.

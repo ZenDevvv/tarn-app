@@ -83,7 +83,7 @@ Everything below runs in GitHub Actions on every push:
 | `pnpm typecheck` | types across all six packages |
 | `pnpm test` | 97 unit and integration tests (90 without a running database — see Troubleshooting) |
 | `pnpm build` | both apps compile |
-| Playwright job | 24 browser and accessibility assertions in a real engine |
+| Playwright job | 24 browser and accessibility test instances in a real engine |
 
 **Three of these are required to merge to `main`, not all of them.** The required
 checks are `verify`, `dependency-review`, and `CodeRabbit`. The Playwright job
