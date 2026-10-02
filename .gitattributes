@@ -1,0 +1,22 @@
+# Normalize line endings to LF in the working tree.
+#
+# Why this file exists. `.prettierrc.json` sets `endOfLine: "lf"`, and
+# `pnpm format:check` is a required CI gate added on 2026-10-02 (REC-0011).
+# Without an explicit rule here, Git's `core.autocrlf=true` — the default on
+# Windows — rewrites LF to CRLF on checkout. The result is a commit that is
+# green in CI and fails `pnpm format:check` locally on every fresh clone or
+# branch switch, with the CI log claiming everything is fine.
+#
+# This was reproduced on 2026-10-03: a fresh clone of an all-green `main`
+# contained CRLF line endings and Prettier rejected the files it had just
+# written. It is a trap for exactly the contributors least able to diagnose it.
+#
+# Pinning the working-tree form makes local and CI agree.
+#
+# `text=auto` still lets Git detect genuinely binary content, but this
+# repository tracks no binary files today, so the single rule below is safe. If
+# a binary asset is added later, give it an explicit `binary` entry.
+* text=auto eol=lf
+
+# Lockfiles are generated; never line-ending normalize them.
+pnpm-lock.yaml -text
