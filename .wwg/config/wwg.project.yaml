@@ -74,22 +74,19 @@ product:
     pre-existing files. See REC-0011.
   delivery_pipeline:
     ci: verified on GitHub
-    # Observed value, not intent. The GitHub API reports these three contexts;
-    # `e2e` is NOT among them, so a red browser-test job does not block a
-    # merge. Project Truth records the discrepancy as CONFLICTING under
-    # REC-0010, pending an owner decision. Do not "fix" this to match
-    # Project Truth without that decision.
-    required_checks_observed:
+    # Verified against the GitHub API on 2026-10-02. `e2e` is intentionally
+    # NOT required: the owner decided on 2026-10-02 that browser tests stay
+    # advisory for this personal MVP project. The job still runs and reports
+    # on every pull request; only its power to block a merge was declined.
+    # See D-0008. Do not "fix" this by adding e2e without reopening that
+    # decision — the revisit triggers are listed in D-0008.
+    required_checks:
       - verify
       - dependency-review
       - CodeRabbit
-    required_checks_intended_per_project_truth:
-      - verify
-      - e2e
-      - dependency-review
-      - CodeRabbit
-    required_checks_conflict: true
-    e2e_runs_but_is_not_required: true
+    e2e_job_runs_and_reports: true
+    e2e_required: false
+    e2e_non_requiring_rationale: owner accepts browser regressions merging unnoticed, for merge speed on a personal MVP (D-0008)
     branch_protection: main, strict mode, enforce_admins true
     ci_last_verified: 2026-10-02
   database:

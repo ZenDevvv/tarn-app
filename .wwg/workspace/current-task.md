@@ -171,25 +171,51 @@ decision. Recorded as REC-0015.
 
 ## Remaining Open Questions
 
-1. **Should `e2e` be a required status check?** (REC-0010) Re-verified live on
-   2026-10-02: still `["verify", "dependency-review", "CodeRabbit"]`. A red browser test
-   does not block a merge. Owner decision — REC-0013 now records the registry's
-   divergent claim.
-2. Which deployment vendors? (REC-0005)
+1. ~~Should `e2e` be a required status check?~~ **DECIDED 2026-10-02 — no.**
+   Recommendation **REC-0010** ("Decide whether the `e2e` browser-test job should be a
+   required status check") is closed as **Deferred**. Owner judgement: personal MVP
+   project, merge speed is worth more than gate strictness. Recorded in
+   `.wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md`, which also lists
+   the three conditions that should reopen it (first real product UI, `e2e` suite growing
+   past scaffolding, or a browser regression reaching `main` unnoticed). The related
+   registry-drift item **REC-0013** ("`wwg.project.yaml` `required_checks` still listed
+   `e2e`") is closed as **Done**.
+2. Which deployment vendors? **REC-0005** — "Decide the deployment vendors" (architecture
+   §65 recommends Vercel / Railway-or-Render / Neon-or-Supabase / Cloudflare R2; none
+   chosen, no deploy config exists).
 3. Husky and lint-staged, now that merges are gated? Lower value now that CI blocks.
 4. When to get an external security review — still deferred, not forgotten.
-5. `CHANGELOG.md` — none exists. (REC-0007)
-6. CodeRabbit's free tier allows 10 included reviews per hour. PR #35 consumed **five
-   automatic rounds** (05:04–05:51 UTC) plus one manual `@coderabbitai review`
-   re-review, because each round surfaced a real defect that had to be fixed and
-   re-reviewed. A review-heavy pull request can exhaust the allowance. See REC-0015.
+5. `CHANGELOG.md` — none exists. **REC-0007** — "Add a CHANGELOG.md".
+6. **CodeRabbit review throughput, and what is actually known about it.** PR #35 consumed
+   **five automatic review rounds** (05:04–05:51 UTC) plus one manual
+   `@coderabbitai review` re-review, because each round surfaced a real defect that had
+   to be fixed and re-reviewed. On the sixth push the required `CodeRabbit` status sat
+   `pending` for over 25 minutes and the merge was blocked.
+   **What is observed, not assumed:** CodeRabbit's own review body on PR #35
+   (submitted 2026-10-02T05:04:23Z) stated verbatim:
+
+   > **Plan**: Advanced
+   > **Included review availability:** This review used your included allowance. Your
+   > plan provides up to 10 included reviews per hour; 9 remain after this review.
+
+   Two caveats, so this is not over-read. The counter is **not** a reliable predictor:
+   it reported 9 remaining after the first review, four more reviews then succeeded, and
+   the sixth still paused — so the pause happened with allowance apparently unspent. And
+   the applicable entitlement is genuinely ambiguous, because that same review labelled
+   the plan `Advanced`, which is a *paid* tier name in CodeRabbit's public pricing. The
+   public free tier is expected to apply (D-0007), but the repository does not document
+   the entitlement, so **treat 10/hour as a figure the tool printed, not a verified
+   allowance**. The owner should confirm on CodeRabbit's billing page that nothing is
+   being invoiced — the same cost watch item D-0007 already raises.
+   **REC-0015** — "A required CodeRabbit review can sit pending indefinitely, and the
+   obvious diagnostic endpoint does not show it".
 
 ## Close-Out Notes
 
 - Truth Alignment Status: YELLOW — Project Truth was **changed** to match the working
   tree, and the change is deliberate and evidence-backed, not a silent overwrite.
-  Project Truth itself records the `CONFLICTING` entry on `e2e` and two `STALE` items
-  that remain genuinely unresolved.
+  The `e2e` entry that was previously `CONFLICTING` has since been decided and
+  corrected — see D-0008. Two `STALE` items remain genuinely unresolved.
 - Execution Gate: pass for this task, **but do not rely on the maintenance report's own
   `Stop` gate** — see REC-0004 and REC-0014. `wwg validate` is the trustworthy signal
   and it is clean.
@@ -197,6 +223,16 @@ decision. Recorded as REC-0015.
 - Implementation confidence: HIGH for foundation, data layer, and delivery pipeline;
   **ZERO for product features** — unchanged by this task, which touched no application
   source.
-- New recommendations: **four added** (REC-0011 … REC-0014). REC-0006 closed as Done.
+- New recommendations: **five added** (REC-0011 … REC-0015). REC-0006 closed as Done.
   None are promoted into active work.
+- **Later the same day — one more recommendation closed, not added.** The owner decided
+  that the `e2e` browser-test job stays advisory rather than becoming a required status
+  check, for a personal MVP where merge speed outweighs gate strictness. That closes
+  **REC-0010** ("Decide whether the `e2e` browser-test job should be a required status
+  check") as **Deferred** rather than leaving it `Proposed`, and closes **REC-0013**
+  ("`wwg.project.yaml` `required_checks` still listed `e2e`") as **Done**. The decision
+  and its three revisit triggers are recorded in a new decision record,
+  `.wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md`. The `CONFLICTING`
+  entry in Project Truth and the stale four-check list in the branch-protection entry are
+  both corrected. No CI or branch-protection configuration was changed.
 - Files changed: 15, all modifications. No application source file was modified.

@@ -4,7 +4,7 @@ Adoption status: ADOPTED_FROM_EXISTING_PROJECT
 Status: Accepted truth, ingested from existing project documentation, amended by owner decision, and synchronized against the scaffolded foundation.
 Truth confidence: MEDIUM
 Last truth ingestion: 2026-10-01
-Last owner decision batch: 2026-10-01 (product name, MVP auth, package manager, MVP schema scope, token path); 2026-10-02 (repository directory rename executed)
+Last owner decision batch: 2026-10-01 (product name, MVP auth, package manager, MVP schema scope, token path); 2026-10-02 (repository directory rename executed; `e2e` browser tests stay advisory rather than merge-blocking)
 Last implementation sync: 2026-10-02 (scaffold, data layer, and delivery pipeline unchanged; directory rename and Compose project-name pin executed)
 Last adoption audit: 2026-10-01
 
@@ -469,7 +469,7 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 - RESOLVED — Nothing enforced CI. `main` now has branch protection with **admin enforcement on**.
   - Status: RESOLVED
   - Evidence: applied and verified 2026-10-01 via the GitHub API.
-  - Settings: required status checks `verify`, `e2e`, `dependency-review`, `CodeRabbit`; **strict mode** (the pull request branch must be up to date with the base branch before merging, and checks must pass on the latest commit SHA); pull request required with zero required approvals; `enforce_admins: true`; force pushes disabled; branch deletion disabled; conversation resolution required.
+  - Settings: required status checks are `verify`, `dependency-review`, `CodeRabbit` — **three, not four**; the `e2e` browser job is deliberately **not** required (owner decision 2026-10-02, see D-0008). **Strict mode** (the pull request branch must be up to date with the base branch before merging, and checks must pass on the latest commit SHA); pull request required with zero required approvals; `enforce_admins: true`; force pushes disabled; branch deletion disabled; conversation resolution required.
   - **Known limit, flagged by CodeRabbit:** with squash merge, the commit that lands on `main` is newly generated and CI never runs against it. Strict mode guarantees checks passed on the latest *pull request* commit, not on the squash result. If a guarantee on the merged SHA is wanted, use a merge commit or a post-merge re-run check instead of squash.
   - **Verified by testing, not assumption.** A direct push to `main` was rejected with `GH006: Protected branch update failed`. A real pull request went `BLOCKED` while CodeRabbit was still running, flipped to `CLEAN` once all three passed, and merged. That is the complete workflow proven end to end.
   - Owner chose admin enforcement knowingly. The first configuration deliberately set `enforce_admins: false` as a lockout safeguard; that made the gates advisory because the owner is the only admin, so it was changed to `true` on request.
@@ -491,12 +491,18 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
   - What was true: the key was still in `.coderabbit.yaml`, and the warning was live on every review. `git log -S` proved it had never been removed since the file's first commit.
   - Why it matters: this is a `CONFIRMED` claim in canonical truth that the working tree and the live platform both contradicted. It means at least one close-out asserted verification without running it. Any other "verified" or "confirmed gone" claim from that batch should be treated as unverified until re-checked by execution.
   - Rule reinforced: a claim of verification is itself a claim requiring evidence. Record the command and its output, not the conclusion. See REC-0009.
-- CONFLICTING — the `e2e` browser-test job is recorded as a required status check but is not one.
-  - Status: CONFLICTING — needs an owner decision, not an agent fix.
-  - What Project Truth claims: required status checks are `verify`, `e2e`, `dependency-review`, `CodeRabbit` (see the branch-protection entry below).
-  - What the platform reports: `required_status_checks.contexts` is `["verify", "dependency-review", "CodeRabbit"]` — **`e2e` is absent**, queried via the GitHub API on 2026-10-02. Full command and output in `.wwg/workspace/testing/verification-evidence.md` (VER-0003).
-  - Consequence: the `e2e` job runs in CI on every pull request and its result is visible, but a **red `e2e` does not block a merge**. A browser regression can merge green. This is a real gap in the delivery gate, not a documentation nit.
-  - Why it was not fixed automatically: adding a required check to branch protection changes what the gate enforces on every future merge. That is an owner decision, and the correct fix may be to add `e2e` or to correct this record. Logged as REC-0010.
+- RESOLVED — The `e2e` browser-test job was recorded as a required status check while the platform reported it absent. **Now decided: `e2e` stays advisory and non-required, by owner decision.**
+  - Status: RESOLVED_DECIDED (2026-10-02)
+  - What the platform reports: `required_status_checks.contexts` is `["verify", "dependency-review", "CodeRabbit"]` — `e2e` is absent. Re-verified live on 2026-10-02 and again on 2026-10-02 after PR #35 merged. Command and output in `.wwg/workspace/testing/verification-evidence.md` (VER-0003).
+  - Decision: **leave it that way.** Owner judgement is that this is a personal MVP project where merge speed is worth more than gate strictness. Recorded in `.wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md`. Recommendation **REC-0010** ("Decide whether the `e2e` browser-test job should be a required status check") is closed as **Deferred**, not dropped.
+  - **The honest framing, so this is not misremembered later:** the `e2e` job **does run and report on every pull request**. The owner sees the browser and accessibility result each time. What was declined is only the ability to *refuse* a merge when it is red. This is "browser tests are advisory", not "browser tests are absent from CI".
+  - Accepted trade-off: a browser regression can merge green if the owner does not notice the red result.
+  - **Revisit trigger** — any one of these, and the decision should be reopened:
+    1. The first real product UI ships (auth screens, applications list, Kanban board).
+    2. The `e2e` suite grows beyond shell, dashboard-placeholder, and accessibility assertions.
+    3. A browser regression reaches `main` that was not caught by reading the pull request.
+  - Cost of reversing later is low: one API call adding the context to `required_status_checks`, then a pull request. There is no reason to pay it before the trigger fires.
+  - What the decision does **not** change: `verify` (lint, dependency audit, typecheck, 90 tests, build), `dependency-review`, and `CodeRabbit` all remain required, with strict mode and `enforce_admins: true`. Coverage is unchanged.
 - RESOLVED — Independent human security review. **Consciously deferred** by the owner, not overlooked. Recorded so it is not rediscovered as an oversight.
   - Status: RESOLVED_DEFERRED
   - Evidence: owner instruction "independent human reviewer, not for now", 2026-10-01; `.wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md`.

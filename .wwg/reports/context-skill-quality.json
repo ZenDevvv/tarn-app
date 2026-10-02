@@ -56,6 +56,7 @@
     ".wwg/wiki/decisions/D-0005-token-file-location.md",
     ".wwg/wiki/decisions/D-0006-password-hashing-scrypt.md",
     ".wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md",
+    ".wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md",
     ".wwg/wiki/principles/README.md",
     ".wwg/wiki/principles/accessibility-principles.md",
     ".wwg/wiki/principles/architecture-restraint-principles.md",
@@ -353,6 +354,11 @@
     },
     {
       "path": ".wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
+    },
+    {
+      "path": ".wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md",
       "fileType": "context",
       "reason": "Wiki truth file treated as context for contract review."
     },
@@ -1207,6 +1213,15 @@
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
       "affectedFile": ".wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
       "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
@@ -2096,6 +2111,14 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-possible-stale-current-language",
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/principles/architecture-restraint-principles.md",
@@ -2221,7 +2244,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 189,
+      "line": 215,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2271,7 +2294,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Supporting evidence",
-      "line": 160,
+      "line": 170,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2281,7 +2304,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Missing evidence",
-      "line": 179,
+      "line": 197,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2291,7 +2314,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Recommendation",
-      "line": 185,
+      "line": 206,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2301,7 +2324,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Follow-up",
-      "line": 190,
+      "line": 215,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2311,7 +2334,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Supporting evidence",
-      "line": 207,
+      "line": 234,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2321,7 +2344,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Missing evidence",
-      "line": 295,
+      "line": 322,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2331,7 +2354,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Recommendation",
-      "line": 308,
+      "line": 335,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2341,7 +2364,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Follow-up",
-      "line": 314,
+      "line": 341,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -3345,6 +3368,15 @@
       "severity": "warning",
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
       "affectedFile": ".wwg/wiki/principles/README.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
@@ -3566,6 +3598,23 @@
       "fileType": "context",
       "line": 66,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
     },
     {
       "severity": "warning",
@@ -5665,6 +5714,14 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-possible-stale-current-language",
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/principles/architecture-restraint-principles.md",
@@ -5790,7 +5847,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 189,
+      "line": 215,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5840,7 +5897,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Supporting evidence",
-      "line": 160,
+      "line": 170,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5850,7 +5907,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Missing evidence",
-      "line": 179,
+      "line": 197,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5860,7 +5917,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Recommendation",
-      "line": 185,
+      "line": 206,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5870,7 +5927,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Follow-up",
-      "line": 190,
+      "line": 215,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5880,7 +5937,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Supporting evidence",
-      "line": 207,
+      "line": 234,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5890,7 +5947,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Missing evidence",
-      "line": 295,
+      "line": 322,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5900,7 +5957,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Recommendation",
-      "line": 308,
+      "line": 335,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -5910,7 +5967,7 @@
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
       "fileType": "unknown",
       "affectedSection": "Follow-up",
-      "line": 314,
+      "line": 341,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6406,13 +6463,13 @@
   ],
   "metadataPolicyApplied": "Option C: Skill Registry metadata is canonical; skill files may include lightweight metadata when beneficial, and package-side skills do not require frontmatter.",
   "summary": {
-    "checkedFileCount": 74,
+    "checkedFileCount": 75,
     "skippedFileCount": 1,
     "errorCount": 0,
-    "warningCount": 111,
-    "suggestionCount": 121,
+    "warningCount": 112,
+    "suggestionCount": 122,
     "classificationCounts": {
-      "context": 15,
+      "context": 16,
       "skill": 0,
       "governance": 28,
       "report": 21,
