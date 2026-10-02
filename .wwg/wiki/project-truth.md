@@ -4,8 +4,8 @@ Adoption status: ADOPTED_FROM_EXISTING_PROJECT
 Status: Accepted truth, ingested from existing project documentation, amended by owner decision, and synchronized against the scaffolded foundation.
 Truth confidence: MEDIUM
 Last truth ingestion: 2026-10-01
-Last owner decision batch: 2026-10-01 (product name, MVP auth, package manager, MVP schema scope, token path)
-Last implementation sync: 2026-10-01 (monorepo scaffold complete; verified by typecheck, 60 passing tests, and build)
+Last owner decision batch: 2026-10-01 (product name, MVP auth, package manager, MVP schema scope, token path); 2026-10-02 (repository directory rename executed)
+Last implementation sync: 2026-10-02 (scaffold, data layer, and delivery pipeline unchanged; directory rename and Compose project-name pin executed)
 Last adoption audit: 2026-10-01
 
 This file was populated by ingesting the existing project documents into governed truth, then amended by explicit owner decisions recorded in PRD §38 and `.wwg/wiki/decisions/`.
@@ -89,6 +89,13 @@ Two accessibility defects were found by these tests and fixed in `apps/web/src/l
 
 Consequence that agents must respect: a green build and 114 passing assertions describe the **foundation**, not the product. No user-facing capability exists. Do not describe a feature as working because the scaffold is healthy.
 
+Re-verified 2026-10-02 by execution, with two practical caveats:
+
+- `pnpm lint`, `pnpm typecheck`, and `pnpm build` are clean.
+- `pnpm test` reports **83 passing and 7 skipped**, not 90. The 7 skips are the database integration tests, which skip loudly because Docker Desktop was not running. The 90 figure remains the correct count for a machine with a live database, and is what CI observes. **Do not treat 83 as equivalent to 90** — the skipped tests are the ones covering referential integrity, cascade deletes, and cross-user isolation.
+- Two failure modes were hit and fixed on 2026-10-02, both consequences of the directory rename rather than code defects, and both now documented in `README.md` § Troubleshooting: a stale `node_modules` whose junctions pointed at the old directory (`MODULE_NOT_FOUND` for `vitest`, fixed with `pnpm install --frozen-lockfile`), and a stale generated Prisma Client (`no exported member 'ApplicationStatus'`, fixed with `pnpm db:generate`). An agent starting work in a renamed checkout should expect both.
+- `pnpm format:check` **fails on 50 pre-existing files** and is **not** enforced by CI. Treated as a known gap, not a regression; see REC-0011.
+
 ## Product Identity
 
 - Product name: Tarn
@@ -103,18 +110,30 @@ Consequence that agents must respect: a green build and 114 passing assertions d
   - Status: CONFIRMED
   - Evidence: `DESIGN.md` line 3 — "Design rules for **Tarn** (design system name: **Marker**)"; 46 references in `design-system.html`, 18 in `index.css`.
   - Rule: **Marker is never the product name. Tarn is never a design-system name.** These are distinct namespaces.
-- Repository identity: the **GitHub repository is `ZenDevvv/tarn-app`**; the local folder is still `applicant-tracking-system`.
-  - Status: CONFIRMED_STALE
-  - Evidence: `git remote -v` → `https://github.com/ZenDevvv/tarn-app.git`, confirmed via the GitHub API on 2026-10-01.
-  - **Three different names now coexist.** Only the first is the product name:
+- Repository identity: the **GitHub repository is `ZenDevvv/tarn-app`**; the local folder is `tarn-app`.
+  - Status: CONFIRMED
+  - Evidence: `git remote -v` → `https://github.com/ZenDevvv/tarn-app.git`, confirmed via the GitHub API on 2026-10-01. Directory renamed from `applicant-tracking-system` to `tarn-app` on 2026-10-02; verified against the working tree and recorded in `.wwg/workspace/testing/verification-evidence.md` (VER-0004).
+  - **The three-way name split is now RESOLVED.** The product name is `Tarn`; the repository and the local directory are both `tarn-app`. The retired third name is gone:
 
     | Name | Where | Is it the product name? |
     |---|---|---|
     | `Tarn` | Product name, used in code and UI | Yes |
-    | `tarn-app` | GitHub repository | No |
-    | `applicant-tracking-system` | Local folder path | No — and it contains a **retired** name |
+    | `tarn-app` | GitHub repository **and** local directory | No |
 
+  - The retired name `applicant-tracking-system` no longer names anything active. It survives only in four intentional places, and each is a deliberate reference to a **past** Compose project or volume rather than a live identifier:
+    1. `docker-compose.yml` — in the comment explaining which pre-rename volume is not reused, and why it is not pinned.
+    2. `README.md` § Troubleshooting — in the recovery procedure, which must name the legacy project (`docker compose -p applicant-tracking-system down`) and the legacy volume in order to migrate off them.
+    3. Generated WWG reports — absolute paths recorded at generation time.
+    4. This file, `terminology.md`, `D-0001`, and `AGENTS.md` — as the RETIRED record and the rule against reintroducing it.
+  - It must not be used for anything new: not as a directory name, package name, service name, environment variable, or Compose project name.
   - Consequence: never infer the product name from the repository or folder name. Do not propagate `applicant-tracking-system` into new files, CI configuration, or documentation.
+- **Compose project name is pinned to `tarn-app`** in `docker-compose.yml`.
+  - Status: CONFIRMED
+  - Evidence: `docker-compose.yml` line `name: tarn-app`; `docker compose config` validates (exit 0), 2026-10-02.
+  - Rationale: Compose derives the project name from the containing directory, and the Postgres volume name derives from the project name, so a rename silently changes the volume and presents as "the database is gone". Pinning decouples both from the directory path.
+  - **Known one-time consequence:** the pin does *not* preserve the volume across the 2026-10-02 rename itself. A volume created beforehand is named `applicant-tracking-system_tarn-postgres-data` and is not reused; the first `docker compose up` after the change starts from an empty volume. Accepted deliberately, because the local database holds only seeded development data that `pnpm db:deploy && pnpm db:seed` reproduces exactly. The alternative — pinning the volume name to the retired product name — would embed `applicant-tracking-system` in the repository permanently, which is the opposite of the rename's purpose. Declined; rationale recorded on pull request #35 and in `docker-compose.yml`.
+  - Migration procedure for hand-created local records is documented in `README.md` § Troubleshooting, and is explicitly labelled **not executed** — Docker Desktop was not running when it was written.
+
 - Repository visibility: **public**
   - Status: CONFIRMED
   - Evidence: GitHub API reports `visibility: PUBLIC`, `isPrivate: false`, 2026-10-01.
@@ -508,9 +527,6 @@ Still open:
 - Question: Which deployment vendors are actually chosen?
   - Why it matters: infrastructure cost and hosting boundaries depend on this; also relevant to file storage and secrets handling.
   - Evidence / uncertainty: architecture §65 lists recommendations only; no `vercel.json`, `railway.json`, or equivalent exists.
-- Question: Should the repository directory be renamed from `applicant-tracking-system` to `tarn`?
-  - Why it matters: the directory name no longer matches the product name, which is a recurring source of confusion and a risk of the retired name being resurrected by tooling. The scaffold has now made this more visible: the root `package.json` is named `tarn` while the directory is not.
-  - Evidence / uncertainty: directory is `applicant-tracking-system`; no remote or CI target exists yet, so renaming is still cheap. The cost grows once a git remote or branch protection is configured.
 - Question: Should Husky and lint-staged be wired up now, or after the first feature?
   - Why it matters: pre-commit hooks stop broken work reaching main. CI already gates lint, typecheck, tests, and build, so hooks are a convenience rather than a safety net.
   - Evidence / uncertainty: architecture §2.4 lists both as recommended tooling.
@@ -519,6 +535,12 @@ Still open:
 - Question: When should the ownership boundary be reviewed by someone other than the implementing agent?
   - Why it matters: an independent human review of the authentication and data-access code was **consciously deferred** by the owner, not overlooked. The residual risk is concentrated in one property — a single missing `userId` filter on one endpoint would expose the whole database.
   - Evidence / uncertainty: mitigated by required cross-user isolation tests, not eliminated. Deterministic mitigations are in place: dependency scanning, lint, typecheck, 90 unit/integration tests, 24 browser tests.
+
+Resolved on 2026-10-02:
+
+6. Repository directory rename → **yes, done.** The directory is now `tarn-app`, matching the GitHub repository and the root `package.json`. It landed on pull request #35 together with the Compose project-name pin that protects the Postgres volume across the rename. See `VER-0004` and the Product Identity entry above.
+   - The previous entry's cost estimate — "no remote or CI target exists yet, so renaming is still cheap" — was already false when written. The repository was published and branch protection applied on 2026-10-01, the day before.
+   - Side effect accepted with it: the local Postgres volume is not carried across, and must be rebuilt with `pnpm db:deploy && pnpm db:seed`. See Product Identity and `README.md` § Troubleshooting.
 
 ## Update Rules
 

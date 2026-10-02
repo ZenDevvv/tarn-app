@@ -2133,7 +2133,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 160,
+      "line": 179,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2142,7 +2142,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 177,
+      "line": 196,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2151,7 +2151,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 181,
+      "line": 200,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2160,7 +2160,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 182,
+      "line": 201,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2169,7 +2169,24 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 183,
+      "line": 202,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "line": 54,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2178,7 +2195,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/terminology.md",
       "fileType": "context",
-      "line": 52,
+      "line": 134,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2187,16 +2204,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/terminology.md",
       "fileType": "context",
-      "line": 132,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/wiki/terminology.md",
-      "fileType": "context",
-      "line": 133,
+      "line": 135,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2209,29 +2217,11 @@
     },
     {
       "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/workspace/current-task.md",
-      "fileType": "unknown",
-      "line": 20,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/workspace/current-task.md",
-      "fileType": "unknown",
-      "line": 43,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
       "code": "markdown-possible-stale-current-language",
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 109,
+      "line": 189,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2316,6 +2306,46 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Supporting evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Supporting evidence",
+      "line": 207,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 295,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Recommendation' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Recommendation",
+      "line": 308,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 314,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-possible-vague-pronouns",
       "message": "File has many pronouns that may be ambiguous for agents.",
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
@@ -2337,6 +2367,14 @@
       "message": "File has many pronouns that may be ambiguous for agents.",
       "affectedFile": "DESIGN.md",
       "fileType": "unknown",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": "README.md",
+      "fileType": "public_doc",
       "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
     },
     {
@@ -3631,7 +3669,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 160,
+      "line": 179,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3640,7 +3678,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 177,
+      "line": 196,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3649,7 +3687,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 181,
+      "line": 200,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3658,7 +3696,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 182,
+      "line": 201,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3667,7 +3705,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 183,
+      "line": 202,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3681,11 +3719,19 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-possible-stale-current-language",
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/terminology.md",
       "fileType": "context",
-      "line": 52,
+      "line": 54,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3694,7 +3740,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/terminology.md",
       "fileType": "context",
-      "line": 132,
+      "line": 134,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3703,7 +3749,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/terminology.md",
       "fileType": "context",
-      "line": 133,
+      "line": 135,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     }
   ],
@@ -4964,6 +5010,14 @@
       "fileType": "public_doc",
       "affectedSection": "Purpose, Audience, Summary, How It Works, Examples, Related Commands or Files, References",
       "recommendedFix": "Add the missing public documentation section when the file is a stable public guide."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": "README.md",
+      "fileType": "public_doc",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
     }
   ],
   "agentInstructionFindings": [
@@ -5648,7 +5702,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 160,
+      "line": 179,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5657,7 +5711,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 177,
+      "line": 196,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5666,7 +5720,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 181,
+      "line": 200,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5675,7 +5729,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 182,
+      "line": 201,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5684,7 +5738,24 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 183,
+      "line": 202,
+      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-stale-current-language",
+      "message": "Stable or active file contains phase/pass/temporary language.",
+      "affectedFile": ".wwg/wiki/terminology.md",
+      "fileType": "context",
+      "line": 54,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5693,7 +5764,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/terminology.md",
       "fileType": "context",
-      "line": 52,
+      "line": 134,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5702,16 +5773,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/terminology.md",
       "fileType": "context",
-      "line": 132,
-      "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-possible-stale-current-language",
-      "message": "Stable or active file contains phase/pass/temporary language.",
-      "affectedFile": ".wwg/wiki/terminology.md",
-      "fileType": "context",
-      "line": 133,
+      "line": 135,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5724,29 +5786,11 @@
     },
     {
       "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/workspace/current-task.md",
-      "fileType": "unknown",
-      "line": 20,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
-      "code": "markdown-todo-without-owner-or-reason",
-      "message": "TODO/TBD appears without an owner, reason, or open-question context.",
-      "affectedFile": ".wwg/workspace/current-task.md",
-      "fileType": "unknown",
-      "line": 43,
-      "recommendedFix": "Add the owner, reason, or decision needed before resolving the placeholder."
-    },
-    {
-      "severity": "suggestion",
       "code": "markdown-possible-stale-current-language",
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 109,
+      "line": 189,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5831,6 +5875,46 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Supporting evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Supporting evidence",
+      "line": 207,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 295,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Recommendation' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Recommendation",
+      "line": 308,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 314,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-possible-vague-pronouns",
       "message": "File has many pronouns that may be ambiguous for agents.",
       "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
@@ -5852,6 +5936,14 @@
       "message": "File has many pronouns that may be ambiguous for agents.",
       "affectedFile": "DESIGN.md",
       "fileType": "unknown",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": "README.md",
+      "fileType": "public_doc",
       "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
     },
     {
@@ -6318,7 +6410,7 @@
     "skippedFileCount": 1,
     "errorCount": 0,
     "warningCount": 111,
-    "suggestionCount": 117,
+    "suggestionCount": 121,
     "classificationCounts": {
       "context": 15,
       "skill": 0,

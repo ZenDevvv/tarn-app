@@ -1,116 +1,202 @@
 # Current Task
 
-Status: DONE — stale WWG reports refreshed and the registry corrected at the source.
-Task mode: Existing Project Adoption (continued) → governance/report refresh. No application source was touched.
+Status: DONE — the directory rename is merged and canonical truth now matches the working tree.
+Task mode: Existing Project Adoption (continued) → governance/report refresh + truth synchronization. Mixed: adoption-governance work with a small config fix. No product feature was started.
 Instance type: existing-project (adopted)
+Adoption status: ADOPTED_FROM_EXISTING_PROJECT
 Last updated: 2026-10-02
 
 ## Task Summary
 
 - Status: DONE
-- User request: "clean up the stale wwg reports first. dont do the auth after, let me give a signal when to execute"
+- User request: "tell me the current project state and what to do next", then "proceed to next to do. i want the project state clean before touching features"
 
 ## Why this ran
 
-A progress scan found the delivered pipeline finished and the product features entirely
-unbuilt, but also found WWG governance artifacts lagging reality in ways that would
-mislead the next agent:
+A progress scan found the delivered pipeline healthy and the product features entirely
+unbuilt, and it also found that the repository directory had been renamed on disk
+without any of the compensating work landing:
 
-- `.wwg/reports/wwg-agent-handoff.md` and `wwg-handoff-to-codex.md` claimed
-  **"GitHub Repository: Not published"** and **"Project: TBD"** — false since 2026-10-01.
-- `.wwg/reports/wwg-maintenance-review.md` asserted **README.md is missing** when it exists,
-  and that the repository **has no git remote** and **CI has never run** — all untrue.
-- `.wwg/governance/regression-gaps.md` claimed **"No existing tests"** against a repository
-  with 114 automated assertions.
-- `.wwg/config/wwg.project.yaml` had drifted from reality in four places.
+- The rename commit sat on a branch with **no open pull request** — one commit ahead
+  of `origin/main`, never reviewed, never merged.
+- Canonical truth still described the old directory name in five places, including an
+  `AGENTS.md` header and a `CONFIRMED_STALE` entry in Project Truth.
+- The rename had silently broken the local toolchain in two ways, and **Project Truth
+  did not record either**.
 
 ## Root cause, not symptom
 
-The handoff reports were not hand-edited. They were generated before the project registry
-knew the product name, so every regeneration reproduced the false values.
+The rename was performed as a filesystem operation. A rename is not self-contained: the
+Compose project name derives from the directory, the Postgres volume name derives from
+the Compose project name, and pnpm writes absolute paths into every `node_modules`
+junction. The directory changed; none of its dependents were updated.
 
-`.wwg/config/wwg.project.yaml` was corrected at the source, which fixes every future
-regeneration. Editing the report prose would have hidden the defect and returned on the
-next run.
+This is the same shape of defect the previous task fixed in the registry: the visible
+symptom (stale reports, a dangling branch) was downstream of a source that was never
+updated.
 
-Registry fields corrected:
+## What changed
 
-| Field | Was | Now | Why it mattered |
-|---|---|---|---|
-| `canonical_artifacts.design_tokens` | `index.css` | `apps/web/src/index.css` | Token file moved at scaffold time (D-0005) |
-| `product.node_requirement` | `>=20.11.0` | `>=22` + `.nvmrc` pointer | `engines` was tightened; registry kept the untested floor |
-| `reports.generate_workspace` / `refresh_context` / `refresh_skills` | registered | removed | Pointed at three artifacts that were never written |
-| `product.*` | absent | repository, visibility, licence, auth status, delivery pipeline | Source of the "Not published" and "TBD" output |
+**Merged — PR #35** (`chore/rename-folder-to-tarn-app` → `main`, squash):
 
-## What was regenerated vs hand-authored
+- `docker-compose.yml` — pinned `name: tarn-app` so the Compose project and the
+  Postgres volume no longer follow the directory path.
+- `README.md` — corrected two stale claims (Playwright described as "planned" in two
+  places; `packages/auth` missing from the layout), the `pnpm test` count, and added a
+  Troubleshooting section covering the two failures a moved checkout actually causes.
 
-Regenerated through the responsible WWG command, not by hand:
+**Truth synchronized in the same change**, as `AGENTS.md` requires:
 
-- `wwg maintain --target .` → `wwg-maintenance-review.md`
-- `wwg reports --target .` → `wwg-report-classification-review.md` (new)
-- The `## WWG Truth Synchronization` section was then re-applied by hand, because
-  `wwg maintain` does not emit it but `wwg validate` requires it (WKG-TOOL-001)
-
-Hand-authored, because no command can produce them correctly:
-
-- `regression-gaps.md` human note, added **outside** the generated block per that file's
-  own header. Its stale content is permanent until tooling changes (REC-0002).
-- `.wwg/reports/README.md` — the index listed six artifact groups that do not exist.
-- `.wwg/governance/recommendation-registry.md` — placeholder row removed, eight real
-  entries added.
-- `.gitignore` — narrow `.wwg/reports/backups/` rule; the 13 tracked backups were
-  untracked with `git rm --cached` and remain on disk.
+| File | Change |
+|---|---|
+| `.wwg/wiki/project-truth.md` | Repository identity → `CONFIRMED`; added the Compose pin and its one-time volume consequence; moved the directory question out of "Still open" into a resolved block; recorded the 83-vs-90 test distinction and both rename failure modes |
+| `.wwg/wiki/terminology.md` | `applicant-tracking-system` → RETIRED directory name; added a rule against reintroducing it; conflict row RESOLVED |
+| `.wwg/wiki/decisions/D-0001-product-name-tarn.md` | Superseded the stale directory claim; added a naming rule for the retired directory name |
+| `AGENTS.md` | Header now reads `Tarn (repository and directory: tarn-app)` |
+| `.wwg/config/wwg.project.yaml` | Recorded the directory, the observed required checks, the 83/90 split, the unenforced format gate; removed four registry pointers to files that do not exist |
+| `.wwg/governance/recommendation-registry.md` | REC-0006 → Done; added REC-0011 … REC-0014 |
+| `.wwg/workspace/testing/verification-evidence.md` | Added VER-0004 |
+| `.wwg/reports/*` | Regenerated via `wwg validate` and `wwg maintain` |
 
 ## Verified by execution, not assumption
 
-- `pnpm test` → **90 passing**, matching Project Truth exactly.
-- `wwg validate --target .` → re-run live after the edits; result recorded below.
-- Two maintenance findings were **genuinely fixed**, confirmed by their disappearance from
-  the regenerated report: `gitignore-policy-drift` cleared, and the false "README front
-  door is missing" finding corrected to "needs governance review".
+- `pnpm lint` — clean.
+- `pnpm typecheck` — clean, all 6 workspaces.
+- `pnpm build` — web built.
+- `pnpm test` — **83 passing, 7 skipped** (see the caveat below).
+- `docker compose config --quiet` — exit 0.
+- `wwg validate --target .` — **0 critical, 0 high, 0 medium, 0 low, 11 info**.
+- `wwg maintain --target .` — Critical 0, High 0, Warnings 1, Advisory 16.
+- `wwg.project.yaml` — parses; `handoff` restored after I removed it by mistake, and
+  the four absent-artifact pointers confirmed gone.
+- `git status --porcelain` — **no `D` or `R` entries.** Nothing was deleted or renamed;
+  all 15 changed files are modifications. This refutes the maintenance report's
+  "evidence appears to be removed" claim (REC-0014).
+- PR #35: `verify`, `e2e`, `dependency-review`, and `CodeRabbit` all green; merged.
+
+## The 83-vs-90 caveat, stated plainly
+
+Docker Desktop was not running, so the 7 database integration tests **skipped loudly**
+rather than passing. 90 is the correct count with a live database and is what CI
+observes. **Do not treat 83 as equivalent to 90.** The skipped tests are the ones
+covering referential integrity, cascade deletes, and cross-user isolation — the exact
+property the next task depends on.
 
 ## New findings
 
-- **`wwg maintain` reports `RED / Critical Alignment Break` / `EXECUTION GATE: Stop` while
-  simultaneously reporting Critical 0, High 0, Warnings 1.** The drift score comes from
-  report-bookkeeping heuristics ("Documentation Lag", "Regression / Quality Drift"), not
-  from any real truth conflict. Logged as REC-0004. **An agent obeying that gate literally
-  would halt all implementation over report bookkeeping.**
-- `wwg reports` classified the adoption regression **baseline** as "ambiguous", despite
-  `AGENTS.md` and `regression-gaps.md` both citing it as the source baseline. Now classified
-  as promoted in the registry.
-- `.gitignore` mojibake suspected in an earlier scan was a **PowerShell console encoding
-  artifact, not a file defect**. `§55` is intact. No change made — a false finding avoided.
+- **CodeRabbit found four real defects in the recovery procedure I wrote in response to
+  its first finding**, across rounds 2 to 5 of its review: a default `pg_dump` carries schema
+  and would replay on top of a migrated database and partially fail; plain
+  `docker compose down` would use the new project name and leave port 5432 bound; and
+  the `psql` target had to match the `DATABASE_URL` that `pnpm db:deploy` reads. All
+  four are fixed. The assertive review profile is doing real work.
+- **The commit message and file comment claimed the pin preserves the volume "when the
+  repository directory is renamed". That was false for this rename** — it protects
+  future renames only. CodeRabbit caught the same thing independently as a Major
+  data-integrity finding. Corrected in the file, the commit, and Project Truth. This is
+  the REC-0009 failure mode again: a claim of verification that was never verified.
+- **`wwg maintain` still reports `RED / Critical Alignment Break` / `EXECUTION GATE: Stop`
+  on a tree with 0 critical, 0 high, and no deletions**, and now names two specific
+  false positives (REC-0014): the word *admin* in `enforce_admins`, which means a
+  **GitHub repository admin** and not a product persona; and "evidence removed", fired
+  by deleting YAML pointer keys that named files which never existed.
+- `pnpm format:check` **fails on 50 pre-existing files and is not enforced by CI**
+  (REC-0011). Not fixed here — reformatting 50 files does not belong in this change.
+
+## Deliberately declined
+
+- **CodeRabbit's suggested fix** for the volume: pin the volume name to
+  `applicant-tracking-system_tarn-postgres-data`. It would preserve the old volume, but
+  it permanently embeds the retired product name in the repository, which is the
+  opposite of what the rename was for. The local database holds only seeded data that
+  `pnpm db:deploy && pnpm db:seed` reproduces exactly. Declined, with the trade-off
+  recorded in `docker-compose.yml` and Project Truth so the next agent sees the
+  reasoning rather than re-litigating it.
 
 ## Next task — awaiting owner signal
 
-**The authentication module.** Not started, by explicit instruction. It is the only thing
-between the scaffold and any reachable protected route, and architecture §90 places it
-directly after the database.
+**The authentication module.** Not started, by explicit instruction. It is the only
+thing between the scaffold and any reachable protected route, and architecture §90
+places it directly after the database.
 
 Requires: real session/JWT issue and verify, httpOnly cookie handling,
 `POST /register` / `login` / `logout`, and replacing the 501 guard at
 `apps/api/src/middleware/auth.ts:18` with real verification plus the `userId` ownership
 filter. D-0002 confirms auth is MVP scope, not a deferral.
 
+**Before starting:** start Docker Desktop and confirm the 7 database integration tests
+actually run. They are the main deterministic mitigation for the ownership boundary,
+and right now they are not executing.
+
+## Incident — CodeRabbit rate limit blocked the merge
+
+While landing this change, the merge became unmergeable for a reason unrelated to its
+content. Worth recording, because the failure is silent and looks like a policy problem.
+
+Sequence, on pull request #35:
+
+1. CodeRabbit's free tier allows 10 included reviews per hour. **Five automatic review
+   rounds** were used between 05:04 and 05:51 UTC, because each round surfaced real
+   defects that had to be fixed and re-reviewed.
+2. On the final force-push, CodeRabbit reported **"Review paused"**, and the required
+   `CodeRabbit` context then sat at `pending` ("Review in progress") for over 25 minutes.
+3. `gh pr checks` still displayed `CodeRabbit pass` from the *previous* commit, which is
+   misleading. Two separate traps, both hit here:
+   - `gh pr checks` reports the newest known result for a context, not the result for
+     the head SHA, so the pull request looks green while the gate is unsatisfied.
+   - **CodeRabbit publishes a commit _status_, not a check run.** So
+     `gh api .../commits/<sha>/check-runs` does not list it *at all*, and the correct
+     conclusion is not "the check is missing" but "you are querying the wrong endpoint".
+     My first reading of that empty list was wrong, and had to be corrected.
+4. The authoritative signal is the combined status:
+
+   ```bash
+   gh api repos/ZenDevvv/tarn-app/commits/<sha>/status --jq '.state, (.statuses[] | .context)'
+   # pending
+   # CodeRabbit
+   ```
+
+5. Because `CodeRabbit` is a **required** status check, `mergeStateStatus` reported
+   `BLOCKED` and the merge was refused.
+
+The trap: `gh pr checks` shows a stale `pass` from an earlier commit, so the PR looks
+green while the gate is unsatisfied. Trust the check runs on the head SHA, not the
+summary table.
+
+Resolution taken: **waited for the hourly allowance to reset rather than bypassing the
+gate.** Project Truth records an administrator escape hatch for exactly the case where
+CodeRabbit fails to report, but `--admin` would land a change with no AI review after
+`enforce_admins: true` was deliberately chosen. Not used without an explicit owner
+decision. Recorded as REC-0015.
+
 ## Remaining Open Questions
 
-1. Which deployment vendors? (REC-0005)
-2. Rename the local folder `applicant-tracking-system` to `tarn`? The folder still carries
-   the **retired** product name. (REC-0006)
+1. **Should `e2e` be a required status check?** (REC-0010) Re-verified live on
+   2026-10-02: still `["verify", "dependency-review", "CodeRabbit"]`. A red browser test
+   does not block a merge. Owner decision — REC-0013 now records the registry's
+   divergent claim.
+2. Which deployment vendors? (REC-0005)
 3. Husky and lint-staged, now that merges are gated? Lower value now that CI blocks.
 4. When to get an external security review — still deferred, not forgotten.
 5. `CHANGELOG.md` — none exists. (REC-0007)
+6. CodeRabbit's free tier allows 10 included reviews per hour. PR #35 consumed **five
+   automatic rounds** (05:04–05:51 UTC) plus one manual `@coderabbitai review`
+   re-review, because each round surfaced a real defect that had to be fixed and
+   re-reviewed. A review-heavy pull request can exhaust the allowance. See REC-0015.
 
 ## Close-Out Notes
 
-- Truth Alignment Status: GREEN — Project Truth was verified accurate and required no change.
-  The drift was in generated reports and the registry, which is now fixed at the source.
-- Execution Gate: pass for this task. Note REC-0004: the maintenance report's own `Stop`
-  gate is unreliable in WWG 0.6.6.
+- Truth Alignment Status: YELLOW — Project Truth was **changed** to match the working
+  tree, and the change is deliberate and evidence-backed, not a silent overwrite.
+  Project Truth itself records the `CONFLICTING` entry on `e2e` and two `STALE` items
+  that remain genuinely unresolved.
+- Execution Gate: pass for this task, **but do not rely on the maintenance report's own
+  `Stop` gate** — see REC-0004 and REC-0014. `wwg validate` is the trustworthy signal
+  and it is clean.
 - Drift status: LOW
 - Implementation confidence: HIGH for foundation, data layer, and delivery pipeline;
-  **ZERO for product features**
-- New recommendations: **eight added** to the registry (REC-0002 … REC-0008, plus REC-0001
-  closed as the placeholder removal). None are promoted into active work.
-- No application source file was modified. No product truth was changed.
+  **ZERO for product features** — unchanged by this task, which touched no application
+  source.
+- New recommendations: **four added** (REC-0011 … REC-0014). REC-0006 closed as Done.
+  None are promoted into active work.
+- Files changed: 15, all modifications. No application source file was modified.

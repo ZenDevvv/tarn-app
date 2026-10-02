@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "wwg.workspace.manualVerificationEvidence",
-  "generatedAt": "2026-10-01T16:25:13.331Z",
+  "generatedAt": "2026-10-02T05:41:29.087Z",
   "sourceGovernance": {
     "manifestPath": ".wwg/governance/regression-manifest.json",
     "gapsPath": ".wwg/governance/regression-gaps.json",

@@ -1,7 +1,7 @@
 {
   "targetDisplay": ".",
-  "generatedAt": "2026-10-01T16:25:13.285Z",
-  "command": "wwg maintain --target C:\\Users\\Zen\\Desktop\\MY PROJECTS\\applicant-tracking-system",
+  "generatedAt": "2026-10-02T05:41:29.049Z",
+  "command": "wwg maintain --target C:\\Users\\Zen\\Desktop\\MY PROJECTS\\tarn-app",
   "markdownReportPath": ".wwg/reports/skill-cleanup-review.md",
   "jsonReportPath": ".wwg/reports/skill-cleanup-review.json",
   "manifestPath": ".wwg/config/skill-manifest.yaml",

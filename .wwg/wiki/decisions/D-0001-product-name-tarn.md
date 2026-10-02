@@ -32,7 +32,7 @@ Owner decision. No further rationale was recorded.
 - `job-application-tracker-project-architecture.md` title and overview updated.
 - `DESIGN.md` header, `index.css` header comment, and `design-system.html` title and lede updated.
 - "Job Application Tracker" now survives in exactly three places, all intentional retirement notices: PRD §1.1, PRD §38 Decision Log, and the `DESIGN.md` Naming note.
-- The repository directory is still `applicant-tracking-system`. This mismatch is now a recorded open question, not an unnoticed inconsistency.
+- The repository directory was still `applicant-tracking-system` when this decision was recorded. That mismatch was a recorded open question, not an unnoticed inconsistency. **Superseded 2026-10-02:** the directory is now `tarn-app`, matching the GitHub repository, and the Compose project name is pinned to `tarn-app` so the database volume no longer follows the directory path. See `.wwg/workspace/testing/verification-evidence.md` (VER-0004) and `.wwg/wiki/project-truth.md` § Product Identity.
 
 ## Naming Rules
 
@@ -43,6 +43,7 @@ Owner decision. No further rationale was recorded.
 | Design system name | `Marker` — never a product name |
 | Never | Use `Tarn` as a design-system or component-library name |
 | Historical filenames | `job-application-tracker-brd-prd.md` and `job-application-tracker-project-architecture.md` keep their names. These are historical and are **not** a naming rule. Do not propagate the prefix into new files. |
+| Retired directory name | `applicant-tracking-system` — retired 2026-10-02, superseded by `tarn-app`. Never reintroduce it in new files, configuration, or CI. |
 
 ## Ambiguity Note
 
