@@ -32,11 +32,28 @@ owner question. Read it before assuming any capability exists.
 The design system is **Marker** (see `DESIGN.md` and `design-system.html`).
 The product is **Tarn**. They are not the same thing.
 
-## Requirements
-
 - Node.js 22 (see `.nvmrc` — CI uses the same pinned version)
 - pnpm 9.15.4 (`npm i -g pnpm@9.15.4`)
 - Docker, for local PostgreSQL
+
+`.gitattributes` pins line endings to LF so `pnpm format:check` behaves the same
+on Windows as it does on the Linux CI runner. If you are seeing formatting
+failures on files you have not touched, check that this file exists.
+
+Git applies these rules when it copies files out of the index, so **an existing
+checkout is not fixed by pulling this file.** After pulling it, re-check the tree
+out once:
+
+```bash
+git add --renormalize .   # re-normalize the index (implies -u: stages changes)
+git checkout -- .         # restore the working tree from that updated index
+```
+
+The first command stages your current changes to tracked files, so they survive
+as staged. The second then restores the working tree **from the index**, so
+unstaged changes to tracked files that the first command did not stage are lost.
+Untracked files are not touched. Commit or stash first if you are unsure. A
+fresh clone needs neither step.
 
 ## Getting started
 

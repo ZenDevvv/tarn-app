@@ -3,7 +3,7 @@ type: principle-brief
 status: active
 mutability: high-friction
 scope: agent-conduct
-last_reviewed: 2026-10-02
+last_reviewed: 2026-10-03
 ---
 
 # Never Present Planned Work as Implemented
@@ -80,6 +80,28 @@ The generalisable rules:
 - This does not mean being pessimistic or refusing to plan. Planning is exactly what this project is doing now.
 - It does not mean treating documentation as low-value. Here, the documents *are* the product artifact; they are simply not running software.
 - It does not mean distrusting the docs. They are authoritative for intent; they are not evidence of runtime state.
+
+## A gate that disagrees across platforms is a repository defect
+
+On 2026-10-02 a `pnpm format:check` gate was added to CI and confirmed green.
+On 2026-10-03 it was discovered to **fail on every fresh clone on Windows**
+while passing on the Linux runner, because `core.autocrlf` rewrites line endings
+on checkout and the repository had no `.gitattributes`.
+
+The commit was correct in both places. The *checkout* was not reproducible, so
+the gate measured the contributor's platform rather than the code.
+
+Rules that follow:
+
+1. **A gate must be proven to agree across platforms before it is trusted.**
+   "Green in CI" is one data point, not a verification. Clone fresh, on the
+   platform you claim to support, and run the gate there.
+2. **When a documented gate fails for someone but passes for you, suspect the
+   repository configuration before the contributor's environment.** The
+   contributor is not wrong, and "works on my machine" is not a defence.
+3. **Prefer gates that measure content, not checkout state**, where the tooling
+   allows. A formatting gate is only meaningful if the formatter's expectations
+   and the checkout's output are pinned to the same thing.
 
 ## Related Truths
 

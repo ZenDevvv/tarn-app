@@ -1,10 +1,10 @@
 # Current Task
 
-Status: DONE — pre-auth cleanup complete. The database runs, every gate is green, and the documented commands have been executed for the first time.
+Status: DONE — pre-auth cleanup complete. PR #38 merged (the `db:deploy` fix, the format gate, and the count corrections). A follow-up branch fixes the platform-dependent format gate (REC-0018).
 Task mode: Existing Project Adoption (continued) → bug fix + tooling cleanup + truth synchronization. Mixed. No product feature was started.
 Instance type: existing-project (adopted)
 Adoption status: ADOPTED_FROM_EXISTING_PROJECT
-Last updated: 2026-10-02
+Last updated: 2026-10-03
 
 ## Task Summary
 
@@ -132,7 +132,40 @@ test executes, and every documented command has been run at least once.
 
 ---
 
-# Prior task record — directory rename (2026-10-02, merged as PR #35)
+### A third defect, found while verifying the PR — REC-0018
+
+After PR #38 merged, `pnpm format:check` **failed locally on 51 files** despite
+being green in CI. Not a regression from the merge — the merge merely exposed
+it, because a checkout re-materialises files.
+
+The cause: `.prettierrc.json` sets `endOfLine: "lf"` and the new CI gate
+enforces it, but the repository had **no `.gitattributes`**, so `core.autocrlf`
+rewrote LF to CRLF on every Windows checkout. Reproduced against an all-green
+`main` in a scratch clone: 145 CRLF line endings in a single file, and
+`prettier --check` rejecting it.
+
+**No tracked blob was ever wrong.** That is exactly why CI was green and only
+fresh Windows clones failed — the gate was measuring the contributor's platform
+rather than the code. Fixed by adding `.gitattributes` with `* text=auto eol=lf`,
+which is a checkout-time fix, so the commit diff is one file.
+
+Verified by **cloning fresh and re-testing**: 0 CRLF pairs, `prettier --check`
+passes. The lesson — a gate that disagrees across platforms is a repository
+defect, not a broken environment — is now in
+`.wwg/wiki/principles/plan-vs-implementation-truth.md`.
+
+**Operational gap caught in review.** CodeRabbit correctly pointed out that
+Git applies `eol` rules only when copying files out of the index, so an
+**existing** checkout is not fixed by pulling `.gitattributes`. I hit this
+first-hand — my own working tree needed a forced re-checkout before
+`format:check` passed. The README now documents the two-command recovery
+(`git add --renormalize .` then `git checkout -- .`) with a warning that the
+second discards uncommitted changes. A fresh clone needs neither.
+
+This is the strongest argument in the project for treating "green in CI" as one
+data point rather than as verification.
+
+## Prior task record - directory rename (2026-10-02, merged as PR #35)
 
 **Everything below this line describes the previous task, not the current one.**
 It is retained as history, not as instructions. The 83/90 test figures, the
