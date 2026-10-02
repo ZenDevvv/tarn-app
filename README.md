@@ -45,12 +45,14 @@ checkout is not fixed by pulling this file.** After pulling it, re-check the tre
 out once:
 
 ```bash
-git add --renormalize .   # re-normalize the index
-git checkout -- .         # rewrite the working tree with the new rule
+git add --renormalize .   # re-normalize the index (implies -u: stages changes)
+git checkout -- .         # restore the working tree from that updated index
 ```
 
-Commit or stash anything you care about first — `git checkout -- .` discards
-uncommitted changes to tracked files. A fresh clone needs neither step.
+The first command stages your current changes to tracked files, so they survive
+as staged. The second then restores the working tree **from the index**, which
+means anything the first command did not stage is lost. Commit or stash first if
+you are unsure. A fresh clone needs neither step.
 
 ## Getting started
 
