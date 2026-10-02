@@ -32,11 +32,13 @@ owner question. Read it before assuming any capability exists.
 The design system is **Marker** (see `DESIGN.md` and `design-system.html`).
 The product is **Tarn**. They are not the same thing.
 
-## Requirements
-
 - Node.js 22 (see `.nvmrc` — CI uses the same pinned version)
 - pnpm 9.15.4 (`npm i -g pnpm@9.15.4`)
 - Docker, for local PostgreSQL
+
+`.gitattributes` pins line endings to LF so `pnpm format:check` behaves the same
+on Windows as it does on the Linux CI runner. If you are seeing formatting
+failures on files you have not touched, check that this file exists.
 
 ## Getting started
 
