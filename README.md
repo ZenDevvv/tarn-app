@@ -50,9 +50,10 @@ git checkout -- .         # restore the working tree from that updated index
 ```
 
 The first command stages your current changes to tracked files, so they survive
-as staged. The second then restores the working tree **from the index**, which
-means anything the first command did not stage is lost. Commit or stash first if
-you are unsure. A fresh clone needs neither step.
+as staged. The second then restores the working tree **from the index**, so
+unstaged changes to tracked files that the first command did not stage are lost.
+Untracked files are not touched. Commit or stash first if you are unsure. A
+fresh clone needs neither step.
 
 ## Getting started
 
