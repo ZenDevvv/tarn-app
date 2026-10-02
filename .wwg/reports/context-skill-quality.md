@@ -4,7 +4,7 @@
 
 Validation status: WARN.
 
-Checked 75 Markdown file(s), with 0 error(s), 112 warning(s), and 122 suggestion(s).
+Checked 80 Markdown file(s), with 0 error(s), 113 warning(s), and 123 suggestion(s).
 
 ## Overall Status
 
@@ -46,6 +46,9 @@ Checked 75 Markdown file(s), with 0 error(s), 112 warning(s), and 122 suggestion
 - .wwg/reports/README.md
 - .wwg/reports/adoption-audit.md
 - .wwg/reports/adoption-regression-report.md
+- .wwg/reports/changelog-bump-recommendation.md
+- .wwg/reports/changelog-preview.md
+- .wwg/reports/changelog-validation.md
 - .wwg/reports/generated-project-upgrade-review.md
 - .wwg/reports/readme-validation.md
 - .wwg/reports/skill-cleanup-review.md
@@ -54,6 +57,7 @@ Checked 75 Markdown file(s), with 0 error(s), 112 warning(s), and 122 suggestion
 - .wwg/reports/wwg-adoption-truth-handoff.md
 - .wwg/reports/wwg-agent-handoff.md
 - .wwg/reports/wwg-audit-report.md
+- .wwg/reports/wwg-changelog-handoff.md
 - .wwg/reports/wwg-doctor-report.md
 - .wwg/reports/wwg-existing-audit-report.md
 - .wwg/reports/wwg-generate-governance-report.md
@@ -86,6 +90,7 @@ Checked 75 Markdown file(s), with 0 error(s), 112 warning(s), and 122 suggestion
 - .wwg/workspace/testing/regression-candidate-review.md
 - .wwg/workspace/testing/verification-evidence.md
 - AGENTS.md
+- CHANGELOG.md
 - DESIGN.md
 - README.md
 - job-application-tracker-brd-prd.md
@@ -98,11 +103,11 @@ Checked 75 Markdown file(s), with 0 error(s), 112 warning(s), and 122 suggestion
 | context | 16 |
 | skill | 0 |
 | governance | 28 |
-| report | 21 |
+| report | 22 |
 | public_doc | 1 |
 | agent_instruction | 1 |
 | changelog_governance | 0 |
-| changelog_or_release_note | 0 |
+| changelog_or_release_note | 4 |
 | design_contract | 0 |
 | template | 0 |
 | unknown | 8 |
@@ -180,6 +185,7 @@ Checked 75 Markdown file(s), with 0 error(s), 112 warning(s), and 122 suggestion
 - WARNING report-contract-missing-sections (.wwg/reports/wwg-adoption-truth-handoff.md) [Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed]: Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed. Recommendation: Add missing report sections in future reports or mark sections explicitly not applicable.
 - WARNING report-contract-missing-sections (.wwg/reports/wwg-agent-handoff.md) [Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed]: Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed. Recommendation: Add missing report sections in future reports or mark sections explicitly not applicable.
 - WARNING report-contract-missing-sections (.wwg/reports/wwg-audit-report.md) [Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed]: Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed. Recommendation: Add missing report sections in future reports or mark sections explicitly not applicable.
+- WARNING report-contract-missing-sections (.wwg/reports/wwg-changelog-handoff.md) [Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed]: Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed. Recommendation: Add missing report sections in future reports or mark sections explicitly not applicable.
 - WARNING report-contract-missing-sections (.wwg/reports/wwg-doctor-report.md) [Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed]: Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed. Recommendation: Add missing report sections in future reports or mark sections explicitly not applicable.
 - WARNING report-contract-missing-sections (.wwg/reports/wwg-existing-audit-report.md) [Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed]: Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed. Recommendation: Add missing report sections in future reports or mark sections explicitly not applicable.
 - WARNING report-contract-missing-sections (.wwg/reports/wwg-generate-governance-report.md) [Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed]: Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed. Recommendation: Add missing report sections in future reports or mark sections explicitly not applicable.
@@ -311,7 +317,7 @@ Checked 75 Markdown file(s), with 0 error(s), 112 warning(s), and 122 suggestion
 - SUGGESTION markdown-possible-stale-current-language (.wwg/wiki/terminology.md:134): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
 - SUGGESTION markdown-possible-stale-current-language (.wwg/wiki/terminology.md:135): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
 - SUGGESTION markdown-possible-vague-pronouns (.wwg/workspace/current-task.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
-- SUGGESTION markdown-possible-stale-current-language (.wwg/workspace/current-task.md:215): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
+- SUGGESTION markdown-possible-stale-current-language (.wwg/workspace/current-task.md:221): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
 - SUGGESTION markdown-repeated-heading (.wwg/workspace/testing/verification-evidence.md:119) [Supporting evidence]: Heading 'Supporting evidence' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
 - SUGGESTION markdown-repeated-heading (.wwg/workspace/testing/verification-evidence.md:135) [Missing evidence]: Heading 'Missing evidence' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
 - SUGGESTION markdown-repeated-heading (.wwg/workspace/testing/verification-evidence.md:141) [Recommendation]: Heading 'Recommendation' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
@@ -326,6 +332,7 @@ Checked 75 Markdown file(s), with 0 error(s), 112 warning(s), and 122 suggestion
 - SUGGESTION markdown-repeated-heading (.wwg/workspace/testing/verification-evidence.md:341) [Follow-up]: Heading 'Follow-up' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
 - SUGGESTION markdown-possible-vague-pronouns (.wwg/workspace/testing/verification-evidence.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
 - SUGGESTION markdown-possible-stale-current-language (AGENTS.md:60): Stable or active file contains phase/pass/temporary language. Recommendation: Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical.
+- SUGGESTION markdown-possible-vague-pronouns (CHANGELOG.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
 - SUGGESTION markdown-possible-vague-pronouns (DESIGN.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
 - SUGGESTION markdown-possible-vague-pronouns (README.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
 - SUGGESTION markdown-repeated-heading (job-application-tracker-brd-prd.md:1792) [Mitigation]: Heading 'Mitigation' repeats at the same level. Recommendation: Rename repeated headings or add a qualifier when repeated sections could confuse agents.
@@ -502,6 +509,7 @@ Checked 75 Markdown file(s), with 0 error(s), 112 warning(s), and 122 suggestion
 - SUGGESTION markdown-todo-without-owner-or-reason (.wwg/reports/wwg-audit-report.md:292): TODO/TBD appears without an owner, reason, or open-question context. Recommendation: Add the owner, reason, or decision needed before resolving the placeholder.
 - SUGGESTION markdown-todo-without-owner-or-reason (.wwg/reports/wwg-audit-report.md:293): TODO/TBD appears without an owner, reason, or open-question context. Recommendation: Add the owner, reason, or decision needed before resolving the placeholder.
 - SUGGESTION markdown-todo-without-owner-or-reason (.wwg/reports/wwg-audit-report.md:294): TODO/TBD appears without an owner, reason, or open-question context. Recommendation: Add the owner, reason, or decision needed before resolving the placeholder.
+- WARNING report-contract-missing-sections (.wwg/reports/wwg-changelog-handoff.md) [Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed]: Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed. Recommendation: Add missing report sections in future reports or mark sections explicitly not applicable.
 - WARNING report-contract-missing-sections (.wwg/reports/wwg-doctor-report.md) [Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed]: Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed. Recommendation: Add missing report sections in future reports or mark sections explicitly not applicable.
 - SUGGESTION markdown-possible-vague-pronouns (.wwg/reports/wwg-doctor-report.md): File has many pronouns that may be ambiguous for agents. Recommendation: Replace ambiguous pronouns with explicit nouns where references may be unclear.
 - SUGGESTION markdown-todo-without-owner-or-reason (.wwg/reports/wwg-doctor-report.md:276): TODO/TBD appears without an owner, reason, or open-question context. Recommendation: Add the owner, reason, or decision needed before resolving the placeholder.

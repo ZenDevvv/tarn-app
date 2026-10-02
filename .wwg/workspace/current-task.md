@@ -185,7 +185,13 @@ decision. Recorded as REC-0015.
    chosen, no deploy config exists).
 3. Husky and lint-staged, now that merges are gated? Lower value now that CI blocks.
 4. When to get an external security review — still deferred, not forgotten.
-5. `CHANGELOG.md` — none exists. **REC-0007** — "Add a CHANGELOG.md".
+5. ~~`CHANGELOG.md` — none exists.~~ **DONE 2026-10-02.** `CHANGELOG.md` created at the
+   repository root, hand-authored from the real git history, with **no version number**
+   because nothing has been released, tagged, or deployed. `wwg changelog validate`
+   confirms "CHANGELOG.md found: true" and "Unreleased section present". **REC-0007**
+   ("Add a CHANGELOG.md") → *Done*. **REC-0012** (registry paths pointing at files that
+   never existed) → *Done* for the resolvable part; the three `docs/ai-context/`
+   recommendations stay unregistered because that directory has never existed.
 6. **CodeRabbit review throughput, and what is actually known about it.** PR #35 consumed
    **five automatic review rounds** (05:04–05:51 UTC) plus one manual
    `@coderabbitai review` re-review, because each round surfaced a real defect that had
@@ -235,4 +241,24 @@ decision. Recorded as REC-0015.
   `.wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md`. The `CONFLICTING`
   entry in Project Truth and the stale four-check list in the branch-protection entry are
   both corrected. No CI or branch-protection configuration was changed.
+
+- **Then, at the owner's request: `CHANGELOG.md` added before any feature work.** The
+  owner asked for release memory to exist before the auth module starts, which is the
+  right order — it means the first real feature lands in a file that already says
+  plainly that no feature has shipped yet.
+  The file is **hand-authored, not generated.** `wwg changelog generate --from-git
+  --weekly --dry-run` was run first and its output was rejected on quality grounds: it
+  filed the real commits as generic "Improved governance guidance" boilerplate, and
+  classified both the design-system commit and the CodeRabbit configuration commit as
+  "No meaningful user, owner, governance, or agent-facing change detected". Generating
+  from that would have produced a changelog describing nothing that happened.
+  One format detail worth keeping: `wwg` matches the unreleased heading with
+  `/^##\s+Unreleased(?:\s+-\s+YYYY-MM-DD)?$/`, so the conventional Keep-a-Changelog
+  `## [Unreleased]` is **not recognised**. The heading must be unbracketed.
+  The `major` version bump the tooling recommends is **declined**, with the reasoning
+  recorded in `CHANGELOG.md` and in the project registry. The tool triggers on a
+  "folder-contract signal" from the directory rename, but there are zero released
+  versions, so there is no compatibility contract to break, and `1.0.0` would falsely
+  imply a finished product. **The tool will keep recommending `major` on keyword
+  matches — that is expected and must not be "fixed".**
 - Files changed: 15, all modifications. No application source file was modified.

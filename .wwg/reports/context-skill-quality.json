@@ -31,6 +31,9 @@
     ".wwg/reports/README.md",
     ".wwg/reports/adoption-audit.md",
     ".wwg/reports/adoption-regression-report.md",
+    ".wwg/reports/changelog-bump-recommendation.md",
+    ".wwg/reports/changelog-preview.md",
+    ".wwg/reports/changelog-validation.md",
     ".wwg/reports/generated-project-upgrade-review.md",
     ".wwg/reports/readme-validation.md",
     ".wwg/reports/skill-cleanup-review.md",
@@ -39,6 +42,7 @@
     ".wwg/reports/wwg-adoption-truth-handoff.md",
     ".wwg/reports/wwg-agent-handoff.md",
     ".wwg/reports/wwg-audit-report.md",
+    ".wwg/reports/wwg-changelog-handoff.md",
     ".wwg/reports/wwg-doctor-report.md",
     ".wwg/reports/wwg-existing-audit-report.md",
     ".wwg/reports/wwg-generate-governance-report.md",
@@ -71,6 +75,7 @@
     ".wwg/workspace/testing/regression-candidate-review.md",
     ".wwg/workspace/testing/verification-evidence.md",
     "AGENTS.md",
+    "CHANGELOG.md",
     "DESIGN.md",
     "README.md",
     "job-application-tracker-brd-prd.md",
@@ -233,6 +238,21 @@
       "reason": "Report directory path."
     },
     {
+      "path": ".wwg/reports/changelog-bump-recommendation.md",
+      "fileType": "changelog_or_release_note",
+      "reason": "Changelog and release-note filenames are release memory."
+    },
+    {
+      "path": ".wwg/reports/changelog-preview.md",
+      "fileType": "changelog_or_release_note",
+      "reason": "Changelog and release-note filenames are release memory."
+    },
+    {
+      "path": ".wwg/reports/changelog-validation.md",
+      "fileType": "changelog_or_release_note",
+      "reason": "Changelog and release-note filenames are release memory."
+    },
+    {
       "path": ".wwg/reports/generated-project-upgrade-review.md",
       "fileType": "report",
       "reason": "Report directory path."
@@ -269,6 +289,11 @@
     },
     {
       "path": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "reason": "Report directory path."
+    },
+    {
+      "path": ".wwg/reports/wwg-changelog-handoff.md",
       "fileType": "report",
       "reason": "Report directory path."
     },
@@ -431,6 +456,11 @@
       "path": "AGENTS.md",
       "fileType": "agent_instruction",
       "reason": "AGENTS.md files are active agent instructions."
+    },
+    {
+      "path": "CHANGELOG.md",
+      "fileType": "changelog_or_release_note",
+      "reason": "Changelog and release-note filenames are release memory."
     },
     {
       "path": "DESIGN.md",
@@ -1060,6 +1090,15 @@
       "code": "report-contract-missing-sections",
       "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
       "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-changelog-handoff.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
       "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
@@ -2244,7 +2283,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 215,
+      "line": 221,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2383,6 +2422,14 @@
       "fileType": "agent_instruction",
       "line": 60,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": "CHANGELOG.md",
+      "fileType": "changelog_or_release_note",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
     },
     {
       "severity": "suggestion",
@@ -3207,6 +3254,15 @@
       "code": "report-contract-missing-sections",
       "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
       "affectedFile": ".wwg/reports/wwg-audit-report.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-changelog-handoff.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
       "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
@@ -4715,6 +4771,15 @@
       "severity": "warning",
       "code": "report-contract-missing-sections",
       "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
+      "affectedFile": ".wwg/reports/wwg-changelog-handoff.md",
+      "fileType": "report",
+      "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
+      "recommendedFix": "Add missing report sections in future reports or mark sections explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "report-contract-missing-sections",
+      "message": "Report is missing contract section(s): Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed.",
       "affectedFile": ".wwg/reports/wwg-doctor-report.md",
       "fileType": "report",
       "affectedSection": "Outcome, Evidence, Validation, Risks, Next Action, Detailed Notes, Files Changed or Files Reviewed",
@@ -5847,7 +5912,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 215,
+      "line": 221,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5986,6 +6051,14 @@
       "fileType": "agent_instruction",
       "line": 60,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": "CHANGELOG.md",
+      "fileType": "changelog_or_release_note",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
     },
     {
       "severity": "suggestion",
@@ -6463,20 +6536,20 @@
   ],
   "metadataPolicyApplied": "Option C: Skill Registry metadata is canonical; skill files may include lightweight metadata when beneficial, and package-side skills do not require frontmatter.",
   "summary": {
-    "checkedFileCount": 75,
+    "checkedFileCount": 80,
     "skippedFileCount": 1,
     "errorCount": 0,
-    "warningCount": 112,
-    "suggestionCount": 122,
+    "warningCount": 113,
+    "suggestionCount": 123,
     "classificationCounts": {
       "context": 16,
       "skill": 0,
       "governance": 28,
-      "report": 21,
+      "report": 22,
       "public_doc": 1,
       "agent_instruction": 1,
       "changelog_governance": 0,
-      "changelog_or_release_note": 0,
+      "changelog_or_release_note": 4,
       "design_contract": 0,
       "template": 0,
       "unknown": 8
