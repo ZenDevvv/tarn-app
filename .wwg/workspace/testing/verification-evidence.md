@@ -151,11 +151,21 @@ REC-0009, to audit the rest of that batch.
 
 ## VER-0003 — `e2e` is not a required status check on `main`
 
-**Claim.** `.wwg/wiki/project-truth.md` records the required status
-checks as `verify`, `e2e`, `dependency-review`, `CodeRabbit`. `e2e` is
-not among them.
+**Historical claim (as first recorded).** `.wwg/wiki/project-truth.md` recorded
+the required status checks as `verify`, `e2e`, `dependency-review`, `CodeRabbit`.
+`e2e` was not among them. That was a documentation error, not a policy.
 
-**Evidence level.** Confirmed.
+**Current policy, after the owner decided it.** `verify`, `dependency-review`,
+and `CodeRabbit` are required. The `e2e` browser-test job **runs and reports on
+every pull request** but is **not** required for merge. That is now intentional
+policy, recorded in `.wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md`.
+
+The distinction is load-bearing: the first version of this record could be read as
+"the required check is missing", which is true. It must not be read as "browser
+tests are absent from CI", which is false.
+
+**Evidence level.** Confirmed for the platform state. The *policy* is an owner
+decision, not an execution finding.
 
 ### Supporting evidence
 
@@ -173,23 +183,40 @@ gh api repos/ZenDevvv/tarn-app/branches/main/protection --jq '{contexts: .requir
 ```
 
 The `e2e` job does run on every pull request and reports a result — it
-was observed `pass` on pull requests #33 and #34. It is simply not in
-`contexts`, so a red `e2e` would not block a merge.
+was observed `pass` on pull requests #33, #34, #35, and #36. It is simply
+not in `contexts`, so a red `e2e` does not block a merge.
+
+Re-queried after pull request #35 merged, confirming the state was unchanged
+and not a transient:
+
+```bash
+gh api repos/ZenDevvv/tarn-app/branches/main/protection --jq '.required_status_checks.contexts'
+# ["verify","dependency-review","CodeRabbit"]
+```
 
 ### Missing evidence
 
-None for the claim. The *intent* is unknown: whether `e2e` was meant to
-be required and the configuration was missed, or whether the exclusion
-was deliberate. That is an owner decision.
+None for the platform state.
+
+The *intent* was unknown when this record was first written. It has since been
+resolved: the owner decided the exclusion is deliberate, for a personal MVP
+project where merge speed outweighs gate strictness. See D-0008, which also
+records the three conditions that should reopen the question.
 
 ### Recommendation
 
-Do not assume the delivery gate covers browser tests. Record as
-`CONFLICTING` in Project Truth and decide explicitly. See REC-0010.
+Resolved. Do not assume the delivery gate covers browser tests — that remains
+true — but the reason is now a recorded decision rather than a documentation
+error. **REC-0010** ("Decide whether the `e2e` browser-test job should be a
+required status check") is closed as **Deferred**, with revisit triggers, not
+dropped. The related registry-drift item **REC-0013** ("`wwg.project.yaml`
+`required_checks` still listed `e2e`") is closed as **Done**.
 
 ### Follow-up
 
-REC-0010, before the auth module lands.
+None. Reopen only on a D-0008 revisit trigger: the first real product UI
+shipping, the `e2e` suite growing past scaffolding, or a browser regression
+reaching `main` unnoticed.
 
 ---
 
