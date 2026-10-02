@@ -369,7 +369,7 @@ Known scaffold-level risks:
 - **Password hashing is scrypt — owner-confirmed.** Node's built-in `crypto.scrypt` at `N=32768, r=8, p=1`, 16-byte salt, 64-byte key, self-describing storage format. This replaced a `sha256:` placeholder that was never acceptable. Parameters are tunable in `packages/auth/src/password.ts`, and the format means they can change without invalidating existing hashes. See `.wwg/wiki/decisions/D-0006-password-hashing-scrypt.md`. An external security review before launch is still recommended — the owner's confirmation settles the algorithm choice, not the launch gate.
 - The seed prints the test password to stdout. Acceptable for local development only; never run the seed against a shared environment.
 - `apps/api` sets `trust proxy` to 1. That is correct behind a single known proxy and wrong behind multiple; revisit per environment (architecture §55).
-- Playwright runs locally against the **system-installed** Microsoft Edge because the bundled Chromium download is blocked in this environment. CI uses the pinned bundled browser for reproducibility. A local `PW_CHANNEL=chrome` run is also supported. Browser tests are **not yet wired into CI**, because CI has never actually run.
+- Playwright runs locally against the **system-installed** Microsoft Edge because the bundled Chromium download is blocked in this environment. CI uses the pinned bundled browser for reproducibility. A local `PW_CHANNEL=chrome` run is also supported. **Superseded 2026-10-02:** the earlier claim here that browser tests were "not yet wired into CI, because CI has never actually run" was false on both counts. A dedicated `e2e` job runs them in CI, and CI has run successfully on `main` repeatedly — most recently on the merges of pull requests #35 and #36. What remains true is narrower and is recorded in D-0008: the `e2e` job **runs and reports on every pull request but is not a required status check**, so a red browser test does not block a merge. See the branch-protection entries and `.wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md`.
 - `package.json#prisma` is deprecated in Prisma 6 and warns on every database command. It still works; migrate to `prisma.config.ts` before upgrading to Prisma 7.
 - **A `pnpm.overrides` entry pins `deepmerge-ts` to `^8.0.2`** to clear a high-severity advisory in Prisma's dependency tree. Prisma client generation, `migrate status`, and `db:seed` were all re-verified to still work afterwards. Remove the override only once a Prisma upgrade resolves the advisory upstream. Dependabot is configured to ignore Prisma major bumps for the same reason.
 
@@ -420,9 +420,12 @@ Named product risks and mitigations (CONFIRMED, PRD §34): too much manual entry
 - RESOLVED — Root `README.md` did not exist. A factual README now exists, documenting stack, commands, MVP scope, and the fact that no feature is implemented.
   - Status: RESOLVED
   - Evidence: `README.md` at repository root.
-- STALE — No `CHANGELOG.md`; no release memory exists yet. Acceptable pre-release, since nothing has been versioned or deployed.
-  - Status: STALE
-  - Evidence: working-tree scan.
+- RESOLVED — No `CHANGELOG.md`; no release memory existed. **`CHANGELOG.md` now exists at the repository root.**
+  - Status: RESOLVED (executed 2026-10-02)
+  - Evidence: `CHANGELOG.md`; `wwg changelog validate --target .` reports "CHANGELOG.md found: true" and "✓ Unreleased section present".
+  - It records the foundation, design, delivery pipeline, verification, and the accepted limitations — with **no version number**, because nothing has ever been released, tagged, or deployed. The first release is planned as `0.1.0` and is gated on the first real user-facing feature.
+  - **The `major` bump that `wwg changelog recommend-bump` keeps recommending is declined**, and the reasoning is written into `CHANGELOG.md` itself: the tool triggers on a "folder-contract signal" from the directory rename, but with zero released versions there is no compatibility contract to break, and a `1.0.0` would falsely imply maturity. The tool will keep flagging it on keyword matches. That is expected, not a regression.
+  - Note on the tool's own output: its auto-generated "meaningful change groups" are generic WWG boilerplate that described none of this project's real commits, and it classified the design-system and CodeRabbit commits as "no meaningful change". The changelog was therefore **hand-authored from the actual git history**, not generated.
 - RESOLVED — Design-system name `Marker` (DESIGN.md) vs product name `Tarn` (PRD §1.1). Previously three names coexisted; the product name is now Tarn and `Marker` is scoped to the design system only.
   - Status: RESOLVED
   - Evidence: `DESIGN.md` line 3 and the new Naming note; PRD §1.1.

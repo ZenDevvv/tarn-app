@@ -34,9 +34,21 @@ canonical_artifacts:
   terminology: .wwg/wiki/terminology.md
   decisions: .wwg/wiki/decisions
   principles: .wwg/wiki/principles
+  changelog: CHANGELOG.md
   readme: README.md
 product:
   name: Tarn
+  # Nothing has been released, tagged, or deployed. CHANGELOG.md carries a
+  # single Unreleased section and no version, deliberately.
+  released_version: none
+  first_release_planned: 0.1.0
+  first_release_condition: first real user-facing feature
+  version_bump_tooling_recommendation: major -- DECLINED, see CHANGELOG.md.
+    `wwg changelog recommend-bump` flags a "folder-contract signal" from the
+    directory rename. With zero released versions there is no compatibility
+    contract to break, and 1.0.0 would falsely imply maturity. The tool will
+    keep recommending major on keyword matches; that is expected, not a
+    regression to fix.
   previous_name: Job Application Tracker
   name_status: confirmed
   design_system_name: Marker
@@ -126,11 +138,11 @@ workspace_layout:
   - packages/types
 recommended_artifacts:
   project_registry: wwg.project.yaml
-  changelog: CHANGELOG.md
-  project_master_context: docs/ai-context/project-context.md
-  maintenance_matrix: docs/ai-context/context-maintenance-matrix.md
+  # changelog now exists and is also registered as canonical above.
   evidence_standards: governance/evidence-standards.md
-  public_discovery_context: docs/ai-context/public-discovery-context.md
+  # project_master_context, maintenance_matrix, and public_discovery_context
+  # remain unregistered recommendations: docs/ai-context/ has never been
+  # created. See REC-0012.
 scoped_agents: []
 reports:
   adoption_audit: .wwg/reports/adoption-audit.md
