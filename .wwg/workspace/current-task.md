@@ -154,6 +154,14 @@ passes. The lesson — a gate that disagrees across platforms is a repository
 defect, not a broken environment — is now in
 `.wwg/wiki/principles/plan-vs-implementation-truth.md`.
 
+**Operational gap caught in review.** CodeRabbit correctly pointed out that
+Git applies `eol` rules only when copying files out of the index, so an
+**existing** checkout is not fixed by pulling `.gitattributes`. I hit this
+first-hand — my own working tree needed a forced re-checkout before
+`format:check` passed. The README now documents the two-command recovery
+(`git add --renormalize .` then `git checkout -- .`) with a warning that the
+second discards uncommitted changes. A fresh clone needs neither.
+
 This is the strongest argument in the project for treating "green in CI" as one
 data point rather than as verification.
 

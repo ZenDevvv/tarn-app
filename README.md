@@ -40,6 +40,18 @@ The product is **Tarn**. They are not the same thing.
 on Windows as it does on the Linux CI runner. If you are seeing formatting
 failures on files you have not touched, check that this file exists.
 
+Git applies these rules when it copies files out of the index, so **an existing
+checkout is not fixed by pulling this file.** After pulling it, re-check the tree
+out once:
+
+```bash
+git add --renormalize .   # re-normalize the index
+git checkout -- .         # rewrite the working tree with the new rule
+```
+
+Commit or stash anything you care about first — `git checkout -- .` discards
+uncommitted changes to tracked files. A fresh clone needs neither step.
+
 ## Getting started
 
 ```bash

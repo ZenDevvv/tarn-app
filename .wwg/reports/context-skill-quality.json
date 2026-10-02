@@ -2276,7 +2276,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "What changed",
-      "line": 192,
+      "line": 200,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2286,7 +2286,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Verified by execution, not assumption",
-      "line": 215,
+      "line": 223,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2296,7 +2296,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Deliberately declined",
-      "line": 264,
+      "line": 272,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2306,7 +2306,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Next task — awaiting owner signal",
-      "line": 274,
+      "line": 282,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2323,7 +2323,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 379,
+      "line": 387,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -6025,7 +6025,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "What changed",
-      "line": 192,
+      "line": 200,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6035,7 +6035,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Verified by execution, not assumption",
-      "line": 215,
+      "line": 223,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6045,7 +6045,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Deliberately declined",
-      "line": 264,
+      "line": 272,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6055,7 +6055,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Next task — awaiting owner signal",
-      "line": 274,
+      "line": 282,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6072,7 +6072,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 379,
+      "line": 387,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
