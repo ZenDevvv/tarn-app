@@ -51,7 +51,10 @@ where anything may still change, which honestly signals "early, incomplete."
   out, refresh the session, and read the current user. Sign-up and sign-in are
   rate limited per IP.
 - **Sessions use `httpOnly` cookies**, never browser storage, so a script injected into
-  the page cannot read the session token.
+  the page cannot read the session token. Access tokens are short-lived (15 minutes)
+  and refreshed transparently, and every session has a hard 30-day ceiling that
+  cannot be extended by renewing, so a stolen session token cannot be kept alive
+  indefinitely.
 - **The dashboard is now behind sign-in.** A signed-out visitor is redirected to the
   sign-in page, and the API refuses unauthenticated requests rather than passing them
   through.
@@ -98,12 +101,12 @@ Nothing here is a user-facing feature. This is the groundwork the features will 
 
 ### Added — verification
 
-- **181 unit, integration, schema, and script tests** across six packages. Of those, **145
-  run without a database and 36 require one** — 7 database integration tests covering
+- **188 unit, integration, schema, and script tests** across six packages. Of those, **150
+  run without a database and 38 require one** — 7 database integration tests covering
   referential integrity, cascade behaviour, unique constraints, and cross-user
   isolation, plus 29 auth route tests. They *skip loudly* rather than passing silently
-  when no database is reachable, so a local run with Docker stopped reports 145 passing
-  and 36 skipped. The 181 figure is the full inventory, and is what CI observes against
+  when no database is reachable, so a local run with Docker stopped reports 150 passing
+  and 38 skipped. The 188 figure is the full inventory, and is what CI observes against
   a real database.
 - **36 browser and accessibility test instances** in a real browser - 18 test cases run
   across a desktop and a 360px project - covering a full sign-up and sign-in journey plus colour
@@ -165,9 +168,10 @@ These are deliberate, accepted, or deferred — not oversights.
 - **Authentication is the only feature implemented.** Applications, pipeline, timeline,
   follow-ups, offers, search, and analytics are all still to be built.
 - **Sessions cannot be revoked server-side.** Signing out clears the cookies, but a
-  token that was already issued stays valid until it expires - so a stolen refresh
-  token works for up to 7 days. This is a deliberate trade-off: adding a session
-  store would mean widening the agreed MVP database scope. See
+  token that was already issued stays valid until it expires. A stolen refresh token
+  is therefore usable for the remainder of its session, which is capped at 30 days
+  and cannot be extended by renewing. This is a deliberate trade-off: adding a
+  session store would mean widening the agreed MVP database scope. See
   `.wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md`.
 - **There is no password recovery.** No email delivery exists yet, so a forgotten
   password has no self-service path back. Fine while this is a development-phase

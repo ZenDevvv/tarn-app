@@ -77,7 +77,11 @@ What does **not** exist yet:
 
 **Session model — owner decision, 2026-10-03.** Two stateless JWTs in httpOnly cookies: a **15-minute access token** and a **7-day refresh token**, each carrying a `kind` claim so neither can be used as the other, and a random `jti` so rotation produces a genuinely different token.
 
-**The accepted trade-off, stated plainly:** sessions are **not server-side revocable**. `sessions` is not in the MVP schema, and `packages/database/prisma/schema.test.ts` asserts the exact model set to enforce D-0004. Logout clears the cookies, but a token already issued stays valid until it expires. A stolen refresh token therefore remains usable for up to 7 days. Adding a `sessions` table would fix this and requires a new owner decision amending D-0004.
+**The accepted trade-off, stated plainly:** sessions are **not server-side revocable**. `sessions` is not in the MVP schema, and `packages/database/prisma/schema.test.ts` asserts the exact model set to enforce D-0004. Logout clears the cookies, but a token already issued stays valid until it expires.
+
+**Correction made in review, and it matters.** An earlier version of this entry claimed a stolen refresh token was "usable for up to 7 days". That was **wrong in the direction that matters**: refresh issued a fresh full 7-day token every time, so a holder could renew indefinitely and the real exposure was *unbounded*, not 7 days.
+
+Refresh tokens now carry an **absolute session deadline** (`abs`), minted at sign-in and **carried forward unchanged** through every renewal, so no amount of renewing extends it. A token past its deadline is refused and the cookies are cleared. The ceiling is **30 days**, chosen to never interrupt a real user of a personal job-search tracker while still bounding a stolen credential. A refresh token with **no** `abs` claim is rejected rather than trusted.
 
 **Deferred by owner decision, 2026-10-03 — not oversights:**
 
@@ -89,7 +93,7 @@ Verified on 2026-10-01 by execution:
 
 - `pnpm lint` — clean (ESLint 9 flat config; gate proven to fail on a seeded violation, then reverted)
 - `pnpm typecheck` — clean, including `tests/tsconfig.json` for the Playwright specs
-- `pnpm test` — **181 tests passing**: 7 types, 30 auth (13 password + 14 token + 3 dummy-hash), 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 54 API (16 smoke/envelope/CORS/error/async + 32 auth route + 6 rate limiter), 36 React
+- `pnpm test` — **188 tests passing**: 7 types, 35 auth (13 password + 19 token + 3 dummy-hash), 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 56 API (20 smoke/envelope/CORS/error/async/env + 31 auth route + 5 rate limiter), 36 React
 - `npx playwright test` — **36 passing test instances** (18 cases × 2 projects) across desktop and 360px, in a real browser, covering a real auth journey
 - `pnpm build` — both apps build; web 279 kB (90 kB gzip)
 - `pnpm format:check` — **clean**; enforced in CI since 2026-10-02
@@ -110,7 +114,7 @@ A note on counting: **24 is Playwright test *instances*, not assertions.** The b
 Re-verified 2026-10-02 by execution, with the database now actually running:
 
 - `pnpm lint`, `pnpm typecheck`, and `pnpm build` are clean.
-- `pnpm test` reports **181 passing and 0 skipped** with Docker Desktop running. Without a database it reports **145 passing and 36 skipped** — measured, not assumed, by running against an unreachable `DATABASE_URL`. The skipped set is **two** suites, not one: the 7 database integration tests *and* the 29 auth route tests, because both need a live database. **145 is not equivalent to 181**; the skipped tests are the ones covering the ownership boundary.
+- `pnpm test` reports **188 passing and 0 skipped** with Docker Desktop running. Without a database it reports **150 passing and 38 skipped** — measured, not assumed, by running against an unreachable `DATABASE_URL`. The skipped set is **two** suites, not one: the 7 database integration tests *and* the 31 auth route tests, because both need a live database. **150 is not equivalent to 188**; the skipped tests are the ones covering the ownership boundary.
 - Two failure modes were hit and fixed on 2026-10-02, both consequences of the directory rename rather than code defects, and both now documented in `README.md` § Troubleshooting: a stale `node_modules` whose junctions pointed at the old directory (`MODULE_NOT_FOUND` for `vitest`, fixed with `pnpm install --frozen-lockfile`), and a stale generated Prisma Client (`no exported member 'ApplicationStatus'`, fixed with `pnpm db:generate`). An agent starting work in a renamed checkout should expect both.
 - `pnpm format:check` **now passes** and is enforced in CI. It previously failed on 50 pre-existing files; see REC-0011.
 - **The cross-user isolation test actually executes now.** `packages/database/tests/integration.test.ts:145` (`scopes queries by userId so one user cannot read another's rows`) was previously in the skipped set. This is the single most relevant precondition for the auth module's ownership boundary, and it had no local coverage until 2026-10-02.

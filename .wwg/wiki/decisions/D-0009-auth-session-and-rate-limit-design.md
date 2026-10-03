@@ -28,7 +28,8 @@ than decided by the agent.
 ### 1. Sessions are stateless JWTs — no `sessions` table
 
 Two httpOnly cookies: a **15-minute access token** and a **7-day refresh token**, both
-HS256, both carrying a `kind` claim and a random `jti`.
+HS256, both carrying a `kind` claim and a random `jti`. Refresh tokens additionally
+carry an **absolute session deadline** (`abs`), described below.
 
 **Why this was a question at all.** The natural implementation of revocable sessions
 is a `sessions` table. `packages/database/prisma/schema.test.ts` asserts the **exact**
@@ -40,17 +41,31 @@ needed an owner decision rather than an agent's convenience.
 **The accepted cost, stated plainly and not softened anywhere:**
 
 > **Sessions are not server-side revocable.** Logout clears the cookies. A token that
-> has already been issued remains valid until it expires, and a stolen **refresh**
-> token is usable for up to **7 days**. Rotating the refresh token does not help — the
-> copy an attacker holds is still valid.
+> has already been issued remains valid until it expires. There is no server-side
+> kill switch for an individual session.
 
 The short access-token life bounds the exposure for the token that is sent on every
 request. The refresh token is the long-lived exposure.
 
+**The absolute session deadline — added after review caught a real understatement.**
+The original version of this record claimed a stolen refresh token was "usable for up
+to 7 days". **That was wrong in the direction that matters.** Refresh issued a fresh
+full 7-day token on every call, so a holder could renew indefinitely: the true
+exposure was *unbounded*, not 7 days.
+
+Refresh tokens now carry `abs`, minted once at sign-in and **carried forward
+unchanged** through every renewal. A token past its deadline is refused and the
+cookies cleared; a token with **no** `abs` claim is rejected rather than trusted, so
+a token cannot sidestep the cap by omitting it. The ceiling is **30 days** — long
+enough never to interrupt a real user of a personal job-search tracker, while still
+bounding a stolen credential. Raising it needs no change to the signing code.
+
 **Why it is not worse than it sounds:** the 15-minute access window means the common
-case — a token observed in a log or proxy — expires quickly. **Why it is still a real
-risk:** a stolen refresh token is a 7-day credential with no off switch except rotating
-`JWT_SECRET`, which signs out every user.
+case — a token observed in a log or proxy — expires quickly, and the 30-day ceiling
+means even a stolen refresh token eventually dies.
+
+**Why it is still a real risk:** within that window there is no way to terminate one
+session without rotating `JWT_SECRET`, which signs out every user.
 
 **The mitigation is already in place for the future.** Every token carries a unique
 `jti`, so adding a `sessions` table later needs no change to the signing or

@@ -50,6 +50,8 @@ export type TokenKind = 'access' | 'refresh';
 export interface TokenPayload extends JWTPayload {
   sub: string;
   kind: TokenKind;
+  /** Absolute session deadline in epoch seconds. Refresh tokens only. */
+  abs?: number;
 }
 
 /**
@@ -61,8 +63,36 @@ export interface TokenPayload extends JWTPayload {
 export const ACCESS_TOKEN_TTL_SECONDS = 15 * 60;
 export const REFRESH_TOKEN_TTL_SECONDS = 7 * 24 * 60 * 60;
 
+/**
+ * Hard ceiling on how long a session can be renewed, regardless of activity.
+ *
+ * Without this, a stolen refresh token does not expire after 7 days — the holder
+ * simply calls `/auth/refresh` before it lapses and receives a fresh 7-day token,
+ * so the session lives forever while the account and signing key remain valid.
+ * The documented exposure was therefore wrong, and it was wrong in the direction
+ * that matters.
+ *
+ * The absolute deadline is minted once at sign-in and **carried through every
+ * refresh unchanged**, so no amount of renewing extends it. It is a ceiling on the
+ * session, not on any single token.
+ *
+ * 30 days is chosen to be long enough to never interrupt a real user of a personal
+ * job-search tracker, while still bounding a stolen credential to a fixed window.
+ * Raising it does not change the signing code.
+ */
+export const ABSOLUTE_SESSION_TTL_SECONDS = 30 * 24 * 60 * 60;
+
 /** Claim name carrying the token kind. `typ` is reserved by RFC 7519. */
 const KIND_CLAIM = 'kind';
+
+/**
+ * Claim carrying the absolute session deadline, in epoch seconds.
+ *
+ * Only refresh tokens carry it. It is not optional in the refresh path — a token
+ * without it is treated as expired, so a pre-existing token cannot be used to
+ * sidestep the cap.
+ */
+const ABSOLUTE_CLAIM = 'abs';
 
 function secretKey(secret: string): Uint8Array {
   // HS256 requires >= 256 bits. Fail loudly rather than sign with a weak key.
@@ -92,22 +122,42 @@ async function signToken(
   kind: TokenKind,
   secret: string,
   ttlSeconds: number,
+  absoluteExpiry?: number,
 ): Promise<string> {
-  return new SignJWT({ [KIND_CLAIM]: kind })
-    .setProtectedHeader({ alg: ALGORITHM, typ: 'JWT' })
-    .setSubject(userId)
-    .setJti(tokenId())
-    .setIssuedAt()
-    .setExpirationTime(`${ttlSeconds}s`)
-    .sign(secretKey(secret));
+  const claims: Record<string, unknown> = { [KIND_CLAIM]: kind };
+  if (absoluteExpiry !== undefined) claims[ABSOLUTE_CLAIM] = absoluteExpiry;
+
+  return (
+    new SignJWT(claims)
+      .setProtectedHeader({ alg: ALGORITHM, typ: 'JWT' })
+      .setSubject(userId)
+      .setJti(tokenId())
+      .setIssuedAt()
+      // Never issue a token that outlives its own absolute session deadline, even
+      // if the two lifetimes are misconfigured relative to each other.
+      .setExpirationTime(
+        Math.min(Math.floor(Date.now() / 1000) + ttlSeconds, absoluteExpiry ?? Number.POSITIVE_INFINITY),
+      )
+      .sign(secretKey(secret))
+  );
 }
 
 export function signAccessToken(userId: string, secret: string): Promise<string> {
   return signToken(userId, 'access', secret, ACCESS_TOKEN_TTL_SECONDS);
 }
 
-export function signRefreshToken(userId: string, secret: string): Promise<string> {
-  return signToken(userId, 'refresh', secret, REFRESH_TOKEN_TTL_SECONDS);
+/**
+ * Mint a refresh token.
+ *
+ * `absoluteExpiry` must be the deadline carried by the session being renewed, not
+ * a fresh `now + ABSOLUTE_SESSION_TTL_SECONDS` — that is what stops renewal from
+ * extending the session indefinitely. Omit it only at sign-in, where the session
+ * genuinely begins.
+ */
+export function signRefreshToken(userId: string, secret: string, absoluteExpiry?: number): Promise<string> {
+  const absolute = absoluteExpiry ?? Math.floor(Date.now() / 1000) + ABSOLUTE_SESSION_TTL_SECONDS;
+
+  return signToken(userId, 'refresh', secret, REFRESH_TOKEN_TTL_SECONDS, absolute);
 }
 
 /**

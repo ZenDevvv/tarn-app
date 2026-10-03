@@ -62,10 +62,25 @@ export async function refresh(req: Request, res: Response): Promise<void> {
   const claims = await verifyRefresh(token);
   if (!claims) throw unauthorized();
 
+  /**
+   * Absolute session deadline.
+   *
+   * A refresh token with no `abs` claim is rejected rather than trusted. Without
+   * this, a stolen refresh token could simply be renewed forever: every call
+   * returned a fresh 7-day token, so the documented "7 day exposure" was really
+   * "unbounded exposure" for anyone who kept renewing.
+   *
+   * The deadline is *carried forward* unchanged, so renewing can never extend it.
+   */
+  if (typeof claims.abs !== 'number' || claims.abs <= Math.floor(Date.now() / 1000)) {
+    clearAuthCookies(res);
+    throw unauthorized('Your session has expired. Sign in again.');
+  }
+
   // A token for a user who no longer exists must not mint new sessions.
   const user = await service.resolveUser(claims.sub);
 
-  await issueTokens(res, user.id);
+  await issueTokens(res, user.id, claims.abs);
 
   res.json(ok({ user: toPublicUser(user) }));
 }
@@ -90,11 +105,13 @@ export async function me(req: Request, res: Response): Promise<void> {
 // Helpers
 // ---------------------------------------------------------------------------
 
-async function issueTokens(res: Response, userId: string): Promise<void> {
+async function issueTokens(res: Response, userId: string, absoluteExpiry?: number): Promise<void> {
   const { JWT_SECRET } = getEnv();
   const [accessToken, refreshToken] = await Promise.all([
     signAccessToken(userId, JWT_SECRET),
-    signRefreshToken(userId, JWT_SECRET),
+    // `absoluteExpiry` is passed through on refresh so the session ceiling is
+    // preserved. Omitted at sign-in, where the session starts.
+    signRefreshToken(userId, JWT_SECRET, absoluteExpiry),
   ]);
   setAuthCookies(res, accessToken, refreshToken);
 }

@@ -97,7 +97,7 @@ Everything below runs in GitHub Actions on every push:
 | `pnpm audit --audit-level=high` | no known high-severity dependency vulnerabilities |
 | dependency review | a PR cannot introduce a vulnerable dependency |
 | `pnpm typecheck` | types across all six packages |
-| `pnpm test` | 181 unit and integration tests (145 without a running database — see Troubleshooting) |
+| `pnpm test` | 188 unit and integration tests (150 without a running database — see Troubleshooting) |
 | `pnpm build` | both apps compile |
 | Playwright job | 36 browser and accessibility test instances in a real engine |
 
@@ -152,7 +152,7 @@ The generated Prisma Client is stale or was never generated. Fix with
 `pnpm db:generate`. This also needs re-running after any change to
 `packages/database/prisma/schema.prisma`.
 
-**`pnpm test` shows 145 passing instead of 181, with 36 skipped.**
+**`pnpm test` shows 150 passing instead of 188, with 38 skipped.**
 PostgreSQL is not reachable, and **two** suites skip — loudly, never silently:
 
 | Suite | Skipped | Covers |
@@ -162,7 +162,7 @@ PostgreSQL is not reachable, and **two** suites skip — loudly, never silently:
 
 Start it with `docker compose up -d`, then `pnpm db:deploy && pnpm db:seed`, and re-run.
 
-Do not treat 145 as equivalent to 181. Between them the skipped suites carry the
+Do not treat 150 as equivalent to 188. Between them the skipped suites carry the
 ownership-boundary and session-handling coverage — the properties that matter
 most — though they also cover registration, cookies, and rate limiting, so they
 are not *only* about ownership.
@@ -249,12 +249,18 @@ frontend.
 ## Authentication
 
 Sessions are stateless JWTs in `httpOnly` cookies: a 15-minute access token and a
-7-day refresh token. They are never put in `localStorage` or `sessionStorage`.
+7-day refresh token. They are never put in `localStorage` or `sessionStorage`. An
+expired access token is refreshed transparently, so an open tab is not signed out
+mid-session.
+
+Every session also has a **hard 30-day ceiling**. It is set when you sign in and
+carried through every refresh unchanged, so renewing cannot extend it. A stolen
+refresh token is therefore usable for the rest of that window and no longer.
 
 **Sessions are not server-side revocable.** Signing out clears the cookies, but a
-token that was already issued stays valid until it expires, so a stolen refresh
-token is usable for up to 7 days. This is a deliberate trade-off: the MVP schema has
-no `sessions` table, and the schema-scope test guards that. The rationale is in
+token that was already issued stays valid until it expires. This is a deliberate
+trade-off: the MVP schema has no `sessions` table, and the schema-scope test guards
+that. The rationale is in
 [`.wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md`](.wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md).
 
 Register and sign-in are rate limited per IP — 5 sign-ups and 10 sign-in attempts

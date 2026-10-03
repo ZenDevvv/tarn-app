@@ -8,6 +8,7 @@
 import { describe, expect, it } from 'vitest';
 import { SignJWT } from 'jose';
 import {
+  ABSOLUTE_SESSION_TTL_SECONDS,
   ACCESS_TOKEN_TTL_SECONDS,
   REFRESH_TOKEN_TTL_SECONDS,
   signAccessToken,
@@ -132,5 +133,54 @@ describe('lifetimes', () => {
 
     expect(lifetime(access)).toBe(ACCESS_TOKEN_TTL_SECONDS);
     expect(lifetime(refresh)).toBe(REFRESH_TOKEN_TTL_SECONDS);
+  });
+});
+
+describe('absolute session deadline', () => {
+  /**
+   * Without this, a stolen refresh token never expires: the holder calls
+   * `/auth/refresh` before it lapses and gets a fresh 7-day token, so the real
+   * exposure is unbounded rather than 7 days. Raised in review.
+   */
+  it('stamps a new absolute deadline when a session starts', async () => {
+    const claims = await verifyToken(await signRefreshToken(USER_ID, SECRET), SECRET, 'refresh');
+    const now = Math.floor(Date.now() / 1000);
+
+    expect(claims?.abs).toBeGreaterThan(now);
+    expect((claims?.abs ?? 0) - now).toBeGreaterThanOrEqual(ABSOLUTE_SESSION_TTL_SECONDS - 5);
+  });
+
+  it('carries an existing deadline through unchanged instead of resetting it', async () => {
+    const first = await verifyToken(await signRefreshToken(USER_ID, SECRET), SECRET, 'refresh');
+    const original = first!.abs!;
+
+    // Simulate a renewal 6 days later with the same absolute deadline.
+    const renewed = await verifyToken(await signRefreshToken(USER_ID, SECRET, original), SECRET, 'refresh');
+
+    // Preserved, not pushed out by another full 30 days.
+    expect(renewed?.abs).toBe(original);
+  });
+
+  it('never issues a refresh token that outlives the absolute deadline', async () => {
+    const nowish = Math.floor(Date.now() / 1000);
+    const nearlyOver = nowish + 5;
+
+    const claims = await verifyToken(await signRefreshToken(USER_ID, SECRET, nearlyOver), SECRET, 'refresh');
+
+    // The 7-day token must be clamped to the session deadline, not exceed it.
+    expect(claims?.exp).toBeLessThanOrEqual(nearlyOver);
+    expect(claims?.abs).toBe(nearlyOver);
+  });
+
+  it('never lets the absolute deadline exceed the session lifetime by default', async () => {
+    const claims = await verifyToken(await signRefreshToken(USER_ID, SECRET), SECRET, 'refresh');
+
+    // The absolute ceiling is longer than one token, so the 7-day exp governs.
+    expect(claims!.abs! - claims!.iat!).toBeGreaterThan(claims!.exp! - claims!.iat!);
+  });
+
+  it('access tokens carry no absolute deadline', async () => {
+    const claims = await verifyToken(await signAccessToken(USER_ID, SECRET), SECRET, 'access');
+    expect(claims?.abs).toBeUndefined();
   });
 });

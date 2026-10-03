@@ -11,7 +11,7 @@ This governance file is required by root `AGENTS.md` and the WWG readiness model
 **A full verification path exists and runs.** As of 2026-10-03:
 
 - Vitest 5.0 runs across all six workspace packages.
-- **181 tests pass**: 7 types, 30 auth (13 password + 14 token + 3 dummy-hash), 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 54 API (16 smoke/envelope/CORS/error/async + 32 auth route + 6 rate limiter), 36 React. **Requires Docker running** — without it the 7 database integration tests **and the 29 auth route tests** skip loudly and the count is 145, not 181.
+- **188 tests pass**: 7 types, 35 auth (13 password + 19 token + 3 dummy-hash), 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 56 API (20 smoke/envelope/CORS/error/async/env + 31 auth route + 5 rate limiter), 36 React. **Requires Docker running** — without it the 7 database integration tests **and the 31 auth route tests** skip loudly and the count is 150, not 188.
 - **Playwright passes 36 test instances** across a desktop and a 360px project (18 cases × 2 projects), in a real browser, covering a real auth journey.
 - `pnpm lint` is clean and gated in CI (ESLint 9 flat config).
 - `pnpm format:check` is clean and gated in CI since 2026-10-02 (REC-0011).
@@ -133,7 +133,7 @@ A process note worth keeping: the first version of the touch-target test **logge
 As of 2026-10-03:
 
 - Regression baseline: present
-- Executable tests: **181 unit/integration test instances** (`pnpm test`), plus **36 Playwright test instances** (`npx playwright test` = 18 cases × 2 projects). These are not summed into one figure — see the counting note below.
+- Executable tests: **188 unit/integration test instances** (`pnpm test`), plus **36 Playwright test instances** (`npx playwright test` = 18 cases × 2 projects). These are not summed into one figure — see the counting note below.
 - Counting rule: **report test instances per suite, never a combined "assertion" total.** The two runners measure different things, and Playwright's 24 are instances of 12 cases, not 24 assertions. Several tests each assert multiple conditions internally, so any single combined number is misleading.
 - Database migration: committed and applied; verified table set matches the MVP scope exactly
 - Open gaps: no CRUD route tests for applications (that feature does not exist yet); no Husky/lint-staged

@@ -10,7 +10,7 @@
  * `.wwg/governance/test-enforcement.md` rule 4.
  */
 import { randomBytes } from 'node:crypto';
-import { verifyPassword } from '@tarn/auth';
+import { signRefreshToken, verifyPassword, verifyToken } from '@tarn/auth';
 import { prisma } from '@tarn/database';
 import request from 'supertest';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
@@ -391,6 +391,62 @@ describeDb('auth routes', () => {
         .set('cookie', cookieHeader(registerResponse, 'tarn_access'));
 
       expect(response.status).toBe(401);
+    });
+
+    /**
+     * The absolute session deadline (raised in review).
+     *
+     * A stolen refresh token must not be renewable forever. These tests mint a
+     * token whose session deadline has already passed and require the server to
+     * refuse it, rather than issuing another week.
+     */
+    it('refuses to renew a session past its absolute deadline', async () => {
+      const { response: registerResponse } = await registerUser();
+      const { JWT_SECRET } = testEnv;
+
+      const expiredSession = await signRefreshToken(
+        registerResponse.body.data.user.id,
+        JWT_SECRET,
+        Math.floor(Date.now() / 1000) - 60,
+      );
+
+      const response = await request(createApp())
+        .post(`${API_PREFIX}/auth/refresh`)
+        .set('cookie', `tarn_refresh=${expiredSession}`);
+
+      expect(response.status).toBe(401);
+      expect(response.body.error.code).toBe('unauthorized');
+    });
+
+    it('carries the absolute deadline forward instead of resetting it', async () => {
+      const { response: registerResponse } = await registerUser();
+
+      const app = createApp();
+
+      const first = await request(app)
+        .post(`${API_PREFIX}/auth/refresh`)
+        .set('cookie', cookieHeader(registerResponse, 'tarn_refresh'));
+      expect(first.status).toBe(200);
+
+      const second = await request(app)
+        .post(`${API_PREFIX}/auth/refresh`)
+        .set('cookie', cookieHeader(first, 'tarn_refresh'));
+      expect(second.status).toBe(200);
+
+      const deadlineOf = async (response: request.Response) => {
+        const token = cookieOf(response, 'tarn_refresh');
+        expect(token).toBeDefined();
+        const claims = await verifyToken(token!, testEnv.JWT_SECRET, 'refresh');
+        return claims!.abs;
+      };
+
+      const original = await deadlineOf(registerResponse);
+      const afterFirst = await deadlineOf(first);
+      const afterSecond = await deadlineOf(second);
+
+      // Two renewals must not push the ceiling out by another 30 days each.
+      expect(afterFirst).toBe(original);
+      expect(afterSecond).toBe(original);
     });
   });
 
