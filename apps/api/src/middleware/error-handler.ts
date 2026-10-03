@@ -58,7 +58,31 @@ function isBodyParserError(error: unknown): error is BodyParserError {
   return typeof error === 'object' && error !== null && typeof (error as BodyParserError).type === 'string';
 }
 
+/**
+ * Errors raised by the rate limiter.
+ *
+ * The limiter rejects with a plain `Error` carrying `status`/`code`, so that it
+ * stays independent of `AppError`. Without this branch it would fall through to
+ * the catch-all and the client would get a 500 for what is a 429, hiding both
+ * the reason and the `Retry-After` signal.
+ */
+interface StatusError extends Error {
+  status: number;
+  code: string;
+}
+
+function isStatusError(error: unknown): error is StatusError {
+  if (typeof error !== 'object' || error === null) return false;
+  const candidate = error as StatusError;
+  return typeof candidate.status === 'number' && typeof candidate.code === 'string';
+}
+
 export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
+  if (isStatusError(error) && !(error instanceof AppError)) {
+    res.status(error.status).json(fail(error.code, error.message));
+    return;
+  }
+
   if (error instanceof ZodError) {
     const fields: Record<string, string> = {};
     for (const issue of error.issues) {

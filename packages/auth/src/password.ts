@@ -143,3 +143,21 @@ export function needsRehash(stored: string): boolean {
   if (!parsed) return true;
   return parsed.params.N < PARAMS.N || parsed.params.r < PARAMS.r || parsed.params.p < PARAMS.p;
 }
+
+/**
+ * A real hash of an unguessable value, used to equalise timing on the
+ * sign-in path where the account does not exist.
+ *
+ * **Generated, not hard-coded.** An earlier version embedded a literal digest.
+ * That silently rots: `deriveKey` always produces `KEY_LENGTH` bytes regardless
+ * of what the stored field says, so the literal's encoded length controlled
+ * nothing, and if `PARAMS` were ever raised the literal would no longer match the
+ * cost parameters of hashes created for real accounts. Calling `hashPassword`
+ * means this always reflects the *current* policy. Raised in review.
+ *
+ * It can never be matched, because the plaintext is 32 random bytes that are
+ * discarded.
+ */
+export async function createDummyHash(): Promise<string> {
+  return hashPassword(randomBytes(32).toString('hex'));
+}

@@ -62,14 +62,43 @@ Closing it later is cheap and reversible: one API call to add the context to
 `required_status_checks`, then a pull request. There is no reason to pay that cost
 before the trigger fires.
 
+## TRIGGER FIRED — 2026-10-03. The decision still stands; owner review pending.
+
+**Triggers 1 and 2 both fired** when the authentication module shipped:
+
+1. **Auth screens are real product UI** — sign-in, registration, the dashboard guard,
+   and the sign-out control.
+2. **The suite grew past scaffolding.** It went from 12 shell/accessibility cases to
+   **18 cases (36 instances)** that now cover a genuine journey: register, land on the
+   dashboard, sign out, sign back in, reject a wrong password, and prove the dashboard
+   is protected again.
+
+**The decision has not been changed.** Branch protection is untouched, and `e2e`
+remains advisory. Recording the trigger is not the same as acting on it — the owner
+has not been asked yet, and this record must not be read as consent.
+
+Why the change of stage is worth weighing rather than assuming:
+
+- A browser regression can now be **silent and invisible on review**. A failed sign-in
+  looks like a diff of form markup; nobody reads a CSS class change and notices the
+  submit handler broke.
+- The suite is slower now (it registers, signs in, and signs out), so the marginal wait
+  before a merge is slightly higher.
+- Against that: the owner is still the only reviewer, and the suite still *reports* on
+  every pull request.
+
+**The owner should confirm whether D-0008 still holds.** Tracked as **REC-0023**. If it
+is reopened, the change is one API call plus a pull request — there is no technical
+obstacle either way.
+
 ## What this decision does *not* mean
 
 - It does **not** weaken the other gates. `verify` (lint, dependency audit, typecheck,
   tests, build), `dependency-review`, and `CodeRabbit` all remain required, with strict
   mode and admin enforcement on.
 - It does **not** remove browser tests from CI. They still run and still report.
-- It does **not** reduce test coverage. The 24 browser assertions still execute on
-  every pull request.
+- It does **not** reduce test coverage. The browser suite — 36 instances as of
+  2026-10-03 — still executes on every pull request.
 - It is **not** a deferral of a known defect. Nothing is currently red.
 
 ## Provenance note

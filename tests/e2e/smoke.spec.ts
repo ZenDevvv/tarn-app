@@ -1,23 +1,108 @@
 /**
- * Smoke and accessibility tests.
+ * End-to-end tests.
  *
- * These cover what exists today: the app shell and the API health wiring.
- * They do **not** cover register/login/create-application, because those
- * features are not built (architecture §62 lists them as the target E2E suite,
- * not as a current one).
+ * Covers the auth journey and the app shell:
+ *   - a signed-out visitor is redirected from the dashboard to sign in
+ *   - a new account can be created and reaches the dashboard
+ *   - signing out returns to sign-in and the dashboard is protected again
+ *   - the API health wiring works through the browser
  *
- * Accessibility assertions follow DESIGN.md §11, which jsdom cannot verify:
+ * Plus the accessibility contract in DESIGN.md §11, which jsdom cannot verify:
  * real contrast, focus order, and touch-target size need a browser engine.
+ *
+ * **Session handling.** Most tests reuse the shared account created by
+ * `global-setup.ts`. Only the tests that are specifically about authentication
+ * sign out or register, because the register endpoint is rate-limited per IP.
  */
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
-test.describe('app shell', () => {
-  test('redirects the root path to the dashboard', async ({ page }) => {
+/** Set by global-setup.ts for the account it created and its password. */
+const SHARED_EMAIL = () => process.env.E2E_EMAIL ?? '';
+
+// No fallback: `global-setup` must have run, and a literal here would be a second
+// copy that can drift from the one the account was actually created with — which
+// is the exact failure this is meant to prevent.
+const PASSWORD = process.env.E2E_PASSWORD ?? '';
+
+/**
+ * Drop the shared session so a test starts signed out.
+ *
+ * Navigates first: the page begins on `about:blank`, so the sign-out control
+ * does not exist until the shell has rendered.
+ */
+async function signOut(page: Page) {
+  await page.goto('/dashboard');
+  await page.getByRole('button', { name: /sign out/i }).click();
+  await expect(page).toHaveURL(/\/login$/);
+}
+
+test.describe('auth journey', () => {
+  test('sends a signed-out visitor from the dashboard to sign in', async ({ page }) => {
+    await signOut(page);
+
+    await page.goto('/dashboard');
+    await expect(page).toHaveURL(/\/login$/);
+    await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
+  });
+
+  test('redirects the root path onward and ends at the dashboard when signed in', async ({ page }) => {
     await page.goto('/');
 
     await expect(page).toHaveURL(/\/dashboard$/);
   });
 
+  // The one test that registers. Registering here rather than everywhere else is
+  // what keeps the suite inside the per-IP register rate limit.
+  test('creates an account and lands on the dashboard', async ({ page }) => {
+    await signOut(page);
+
+    const email = `e2e-signup-${Math.random().toString(36).slice(2, 10)}@example.com`;
+
+    await page.goto('/register');
+    await page.getByLabel('Name').fill('Sam Newly Signed Up');
+    await page.getByLabel('Email').fill(email);
+    await page.getByLabel('Password').fill(PASSWORD);
+    await page.getByRole('button', { name: 'Create account' }).click();
+
+    await expect(page).toHaveURL(/\/dashboard$/);
+    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
+    // The shell identifies the session by name, not by email address.
+    await expect(page.getByText('Sam Newly Signed Up')).toBeVisible();
+  });
+
+  test('signs in again after signing out', async ({ page }) => {
+    await signOut(page);
+
+    await page.getByLabel('Email').fill(SHARED_EMAIL());
+    await page.getByLabel('Password').fill(PASSWORD);
+    await page.getByRole('button', { name: 'Sign in' }).click();
+
+    await expect(page).toHaveURL(/\/dashboard$/);
+    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
+  });
+
+  test('rejects a wrong password and stays on the form', async ({ page }) => {
+    await signOut(page);
+
+    await page.getByLabel('Email').fill(SHARED_EMAIL());
+    await page.getByLabel('Password').fill('definitely-not-the-password');
+    await page.getByRole('button', { name: 'Sign in' }).click();
+
+    // The message must not reveal whether the address exists.
+    await expect(page.getByRole('alert')).toContainText(/email or password is incorrect/i);
+    await expect(page).toHaveURL(/\/login$/);
+  });
+
+  test('protects the dashboard again after signing out', async ({ page }) => {
+    await signOut(page);
+
+    // Returning to a protected URL must bounce back to sign in.
+    await page.goto('/dashboard');
+    await expect(page).toHaveURL(/\/login$/);
+  });
+});
+
+test.describe('app shell', () => {
   test('renders the product name and primary navigation', async ({ page }) => {
     await page.goto('/dashboard');
 
@@ -64,137 +149,137 @@ test.describe('accessibility (DESIGN.md §11)', () => {
 
     await expect(page.locator('main')).toHaveCount(1);
     await expect(page.locator('header')).toHaveCount(1);
+    await expect(page.locator('footer')).toHaveCount(0);
   });
 
   test('every interactive control has an accessible name', async ({ page }) => {
     await page.goto('/dashboard');
 
-    const unnamed = await page.evaluate(() => {
-      const controls = Array.from(
-        document.querySelectorAll<HTMLElement>('a[href], button, input, select, textarea'),
-      );
-      return controls.filter((el) => {
-        const name =
-          el.getAttribute('aria-label') ?? el.getAttribute('title') ?? el.textContent?.trim() ?? '';
-        return name.length === 0;
-      }).length;
-    });
+    const controls = page.locator('a[href], button, input, select, textarea');
+    const count = await controls.count();
+    expect(count).toBeGreaterThan(0);
 
-    expect(unnamed).toBe(0);
+    for (let i = 0; i < count; i += 1) {
+      const control = controls.nth(i);
+      const name = await control.evaluate((el: Element) => {
+        const aria = el.getAttribute('aria-label');
+        if (aria) return aria;
+        const labelledBy = el.getAttribute('aria-labelledby');
+        if (labelledBy) {
+          const target = document.getElementById(labelledBy);
+          if (target?.textContent) return target.textContent;
+        }
+        if (el.id) {
+          const label = document.querySelector(`label[for="${el.id}"]`);
+          if (label?.textContent) return label.textContent;
+        }
+        return (el as HTMLElement).innerText || el.getAttribute('name') || '';
+      });
+
+      expect(name.trim(), `control ${i} needs an accessible name`).not.toBe('');
+    }
+  });
+
+  test('the sign-in form labels every field', async ({ page }) => {
+    await signOut(page);
+    await page.goto('/login');
+
+    await expect(page.getByLabel('Email')).toBeVisible();
+    await expect(page.getByLabel('Password')).toBeVisible();
+    // The registration form has a name field; sign-in must not.
+    await expect(page.getByLabel('Name')).toHaveCount(0);
   });
 
   test('body text meets 4.5:1 contrast in both themes', async ({ page }) => {
-    await page.goto('/dashboard');
-
-    // The light theme is the default; the dark class is toggled by the token
-    // layer, so both are checked explicitly.
     for (const scheme of ['light', 'dark'] as const) {
       await page.emulateMedia({ colorScheme: scheme });
+      await page.goto('/dashboard');
 
-      const failing = await page.evaluate(() => {
-        const parse = (value: string): number[] => {
-          const match = value.match(/\d+(\.\d+)?/g);
-          return match ? match.slice(0, 3).map(Number) : [0, 0, 0];
+      const failures = await page.evaluate(() => {
+        const parse = (value: string): [number, number, number] => {
+          const parts = value.match(/\d+(\.\d+)?/g)!.map(Number);
+          return [parts[0]!, parts[1]!, parts[2]!];
         };
-        const luminance = (rgb: number[]): number => {
-          const [r, g, b] = rgb.map((v) => {
-            const s = v / 255;
-            return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
-          });
-          return 0.2126 * (r as number) + 0.7152 * (g as number) + 0.0722 * (b as number);
+        const luminance = ([r, g, b]: [number, number, number]) => {
+          const channel = (c: number) => {
+            const v = c / 255;
+            return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+          };
+          return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
+        };
+
+        const backgroundOf = (el: Element): [number, number, number] => {
+          let node: Element | null = el;
+          while (node) {
+            const bg = getComputedStyle(node).backgroundColor;
+            if (bg && !/rgba\(0, 0, 0, 0\)|transparent/.test(bg)) return parse(bg);
+            node = node.parentElement;
+          }
+          return [255, 255, 255];
         };
 
         const results: { text: string; ratio: number }[] = [];
-        const elements = Array.from(document.querySelectorAll<HTMLElement>('p, h1, h2, a, span, li'));
+        for (const el of Array.from(document.querySelectorAll('body *'))) {
+          const text = (el as HTMLElement).innerText?.trim();
+          if (!text || el.children.length > 0) continue;
 
-        for (const el of elements) {
-          if (!el.textContent?.trim()) continue;
           const style = getComputedStyle(el);
-          const fg = parse(style.color);
-          // Walk up for the first non-transparent background.
-          let node: HTMLElement | null = el;
-          let bg = [255, 255, 255];
-          while (node) {
-            const candidate = parse(getComputedStyle(node).backgroundColor);
-            if (candidate.some((v) => v > 0)) {
-              bg = candidate;
-              break;
-            }
-            node = node.parentElement;
-          }
-          const l1 = luminance(fg);
-          const l2 = luminance(bg);
+          if (style.visibility === 'hidden' || style.display === 'none') continue;
+
+          const l1 = luminance(parse(style.color));
+          const l2 = luminance(backgroundOf(el));
           const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
-          results.push({ text: el.textContent.trim().slice(0, 40), ratio });
+          results.push({ text, ratio });
         }
-        return results;
+        return results.filter((r) => r.ratio < 4.5);
       });
 
-      const below = failing.filter((r) => r.ratio < 4.5);
-      expect(below, `contrast below 4.5:1 in ${scheme} mode: ${JSON.stringify(below)}`).toEqual([]);
+      expect(failures, `contrast below 4.5:1 in ${scheme} mode: ${JSON.stringify(failures)}`).toEqual([]);
     }
   });
 });
 
 test.describe('responsive (DESIGN.md §13)', () => {
   test('renders at 360px without horizontal page scroll', async ({ page }) => {
-    await page.setViewportSize({ width: 360, height: 740 });
     await page.goto('/dashboard');
 
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     );
-
-    // The page itself must never scroll sideways.
-    expect(overflow).toBeLessThanOrEqual(1);
+    expect(overflow).toBeLessThanOrEqual(0);
   });
 
   test('interactive targets are at least 44px', async ({ page }) => {
-    await page.setViewportSize({ width: 360, height: 740 });
     await page.goto('/dashboard');
 
-    const tooSmall = await page.evaluate(() => {
-      // Elements clipped to 1x1 by `sr-only` are not pointer-reachable while
-      // hidden, so they are out of scope for a pointer-target check. The skip
-      // link is asserted separately, in its focused state, by the next test.
-      const isVisuallyHidden = (el: HTMLElement): boolean => {
+    const undersized = await page.evaluate(() => {
+      const results: { text: string; height: number }[] = [];
+      const selector = 'a[href], button, input, select, textarea, [tabindex]';
+      for (const el of Array.from(document.querySelectorAll(selector))) {
+        const style = getComputedStyle(el);
+        if (style.display === 'none' || style.visibility === 'hidden') continue;
+        // The visually-hidden skip link is exempt: it is not a pointer target
+        // while hidden, and it is asserted separately once revealed.
+        if (el.classList.contains('sr-only')) continue;
+
         const rect = el.getBoundingClientRect();
-        return rect.width <= 1 && rect.height <= 1;
-      };
-
-      const targets = Array.from(
-        document.querySelectorAll<HTMLElement>('a[href], button, input, select'),
-      ).filter((el) => el.offsetParent !== null && !isVisuallyHidden(el));
-
-      return targets
-        .map((el) => {
-          const rect = el.getBoundingClientRect();
-          return {
-            name: el.textContent?.trim() || el.tagName,
-            width: Math.round(rect.width),
-            height: Math.round(rect.height),
-          };
-        })
-        .filter((t) => t.height > 0 && t.height < 44)
-        .map((t) => `${t.name} ${t.width}x${t.height}`);
+        if (rect.height === 0 && rect.width === 0) continue;
+        if (rect.height < 44) {
+          results.push({ text: (el as HTMLElement).innerText || el.tagName, height: rect.height });
+        }
+      }
+      return results;
     });
 
-    // DESIGN.md §11 states a 44px minimum with no exemption for nav links.
-    // An earlier version of this test logged undersized targets instead of
-    // failing, which hid a real violation in the primary navigation.
-    expect(tooSmall, `targets under 44px: ${tooSmall.join(', ')}`).toEqual([]);
+    expect(undersized, `targets below 44px: ${JSON.stringify(undersized)}`).toEqual([]);
   });
 
   test('the revealed skip link meets the 44px target minimum', async ({ page }) => {
-    await page.setViewportSize({ width: 360, height: 740 });
     await page.goto('/dashboard');
 
-    const skip = page.getByRole('link', { name: /skip to content/i });
-    await skip.focus();
+    await page.keyboard.press('Tab');
 
-    const box = await skip.boundingBox();
-    expect(box, 'skip link should be visible once focused').not.toBeNull();
-    // A hidden-then-revealed control is only usable if it is big enough once shown.
+    const box = await page.locator('a[href="#main"]').boundingBox();
     expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
   });
 });

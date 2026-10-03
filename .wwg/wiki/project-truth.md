@@ -5,7 +5,7 @@ Status: Accepted truth, ingested from existing project documentation, amended by
 Truth confidence: MEDIUM
 Last truth ingestion: 2026-10-01
 Last owner decision batch: 2026-10-01 (product name, MVP auth, package manager, MVP schema scope, token path); 2026-10-02 (repository directory rename executed; `e2e` browser tests stay advisory rather than merge-blocking)
-Last implementation sync: 2026-10-02 (scaffold, data layer, and delivery pipeline unchanged; directory rename and Compose project-name pin executed)
+Last implementation sync: 2026-10-03 (authentication module implemented; scaffold, data layer, and delivery pipeline unchanged)
 Last adoption audit: 2026-10-01
 
 This file was populated by ingesting the existing project documents into governed truth, then amended by explicit owner decisions recorded in PRD §38 and `.wwg/wiki/decisions/`.
@@ -38,17 +38,17 @@ This ordering is itself accepted truth and governs every conflict below.
 
 ## Implementation Reality
 
-- Implementation status: **FOUNDATION SCAFFOLDED AND DATABASE MIGRATED. NO PRODUCT FEATURE IS IMPLEMENTED.**
+- Implementation status: **AUTHENTICATION IMPLEMENTED. NO OTHER PRODUCT FEATURE IS BUILT.**
 - Status: CONFIRMED
-- Evidence: working-tree scan plus executed verification on 2026-10-01.
-- Last verified: 2026-10-01
+- Evidence: working-tree scan plus executed verification on 2026-10-03.
+- Last verified: 2026-10-03
 
 What exists now:
 
 - Monorepo root: `pnpm-workspace.yaml`, `package.json` (pnpm 9.15.4), `tsconfig.base.json`, `docker-compose.yml`, `.env.example`, `.gitignore`, `README.md`, `.github/workflows/ci.yml`, `eslint.config.mjs`, `.prettierrc.json`, `.editorconfig`, `playwright.config.ts`
-- `apps/web` — React + Vite + Tailwind v4 app; renders a shell with a dashboard placeholder that calls the API health endpoint
-- `apps/api` — Express app; exposes `GET /api/v1/health` only
-- `packages/auth` — password hashing (scrypt). **Deviation from architecture §6**, recorded below
+- `apps/web` — React + Vite + Tailwind v4 app; sign-in and registration pages, a route-guarded dashboard, a sign-out control, and transparent session refresh
+- `apps/api` — Express app; `GET /api/v1/health` plus the auth module (`register`, `login`, `logout`, `refresh`, `me`) behind `requireAuth`
+- `packages/auth` — password hashing (scrypt) **and JWT signing/verification**. **Deviation from architecture §6**, recorded below
 - `packages/database` — Prisma schema, centralized client, **committed migration**, idempotent seed, schema-scope tests, database integration tests
 - `packages/validation` — shared Zod schemas
 - `packages/types` — shared domain types and the API response envelope
@@ -64,18 +64,37 @@ Database state **[OBSERVED]**:
 
 What does **not** exist yet:
 
-- **No auth module.** No register, login, or logout routes. `requireAuth` still returns 501, so no protected route is reachable.
-- No applications, pipeline/Kanban, timeline, follow-ups, dashboard metrics, analytics, search, saved jobs, skills UI, or offers UI.
-- No React component tests beyond the shell and dashboard placeholder; no API tests against a real database beyond persistence-layer integration tests.
-- Playwright E2E now runs and passes — see "Verified on 2026-10-01 by execution".
+- No applications, pipeline/Kanban, timeline, follow-ups, dashboard metrics, analytics, search, saved jobs, skills UI, or offers UI. The dashboard is a placeholder behind the auth guard.
+- **No account settings and no password recovery.** FR-AUTH-005 (recovery) and FR-AUTH-006 (account settings) are not implemented; both are deliberate deferrals — see "Deferred by owner decision" below.
 - No deployment configuration (architecture §65 vendors remain undecided).
+
+## Authentication — IMPLEMENTED 2026-10-03
+
+- Status: CONFIRMED by execution. PRD §35 DoD items **1** ("a user can securely create and access an account") is now **met**. Item **12** ("data is isolated between users") is **partially** met: the ownership boundary is enforced for `users` and covered by tests, but no user-owned feature tables exist yet to demonstrate it.
+- Routes live (architecture §38): `POST /auth/register`, `/auth/login`, `/auth/logout`, `/auth/refresh`, and `GET /auth/me`.
+- `requireAuth` at `apps/api/src/middleware/auth.ts` **no longer returns 501**. It verifies an HS256 access token and attaches `userId`. The 501 stub is gone.
+- Web: sign-in and registration pages, a route guard on `/dashboard`, a sign-out control, and the session in TanStack Query.
+
+**Session model — owner decision, 2026-10-03.** Two stateless JWTs in httpOnly cookies: a **15-minute access token** and a **7-day refresh token**, each carrying a `kind` claim so neither can be used as the other, and a random `jti` so rotation produces a genuinely different token.
+
+**The accepted trade-off, stated plainly:** sessions are **not server-side revocable**. `sessions` is not in the MVP schema, and `packages/database/prisma/schema.test.ts` asserts the exact model set to enforce D-0004. Logout clears the cookies, but a token already issued stays valid until it expires.
+
+**Correction made in review, and it matters.** An earlier version of this entry claimed a stolen refresh token was "usable for up to 7 days". That was **wrong in the direction that matters**: refresh issued a fresh full 7-day token every time, so a holder could renew indefinitely and the real exposure was *unbounded*, not 7 days.
+
+Refresh tokens now carry an **absolute session deadline** (`abs`), minted at sign-in and **carried forward unchanged** through every renewal, so no amount of renewing extends it. A token past its deadline is refused and the cookies are cleared. The ceiling is **30 days**, chosen to never interrupt a real user of a personal job-search tracker while still bounding a stolen credential. A refresh token with **no** `abs` claim is rejected rather than trusted.
+
+**Deferred by owner decision, 2026-10-03 — not oversights:**
+
+- **Password recovery (FR-AUTH-005).** Requires email delivery, and REC-0005 (deployment vendors) is undecided. Tracked as REC-0021.
+- **Account settings (FR-AUTH-006).** Not started.
+- **Rate limiting** ships for `/register` and `/login` only, in-memory and per-process. Counters reset on restart and are not shared across instances, so the effective limit multiplies if the API is scaled horizontally. Tracked as REC-0020.
 
 Verified on 2026-10-01 by execution:
 
 - `pnpm lint` — clean (ESLint 9 flat config; gate proven to fail on a seeded violation, then reverted)
 - `pnpm typecheck` — clean, including `tests/tsconfig.json` for the Playwright specs
-- `pnpm test` — **97 tests passing**: 7 types, 13 auth/password, 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 13 API, 10 React
-- `npx playwright test` — **24 passing test instances** (12 cases × 2 projects) across desktop and 360px, in a real browser
+- `pnpm test` — **190 tests passing**: 7 types, 35 auth (13 password + 19 token + 3 dummy-hash), 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 58 API (20 smoke/envelope/CORS/error/async/env + 33 auth route + 5 rate limiter), 36 React
+- `npx playwright test` — **36 passing test instances** (18 cases × 2 projects) across desktop and 360px, in a real browser, covering a real auth journey
 - `pnpm build` — both apps build; web 279 kB (90 kB gzip)
 - `pnpm format:check` — **clean**; enforced in CI since 2026-10-02
 - `pnpm audit` — **no known vulnerabilities**
@@ -95,7 +114,7 @@ A note on counting: **24 is Playwright test *instances*, not assertions.** The b
 Re-verified 2026-10-02 by execution, with the database now actually running:
 
 - `pnpm lint`, `pnpm typecheck`, and `pnpm build` are clean.
-- `pnpm test` reports **97 passing and 0 skipped** with Docker Desktop running. The earlier **83 passing / 7 skipped** figure was the correct count for that machine state, where Docker was stopped; **83 was never equivalent to 90**, because the skipped tests are the ones covering referential integrity, cascade deletes, and cross-user isolation.
+- `pnpm test` reports **190 passing and 0 skipped** with Docker Desktop running. Without a database it reports **150 passing and 40 skipped** — measured, not assumed, by running against an unreachable `DATABASE_URL`. The skipped set is **two** suites, not one: the 7 database integration tests *and* the 33 auth route tests, because both need a live database. **150 is not equivalent to 190**; the skipped tests are the ones covering the ownership boundary.
 - Two failure modes were hit and fixed on 2026-10-02, both consequences of the directory rename rather than code defects, and both now documented in `README.md` § Troubleshooting: a stale `node_modules` whose junctions pointed at the old directory (`MODULE_NOT_FOUND` for `vitest`, fixed with `pnpm install --frozen-lockfile`), and a stale generated Prisma Client (`no exported member 'ApplicationStatus'`, fixed with `pnpm db:generate`). An agent starting work in a renamed checkout should expect both.
 - `pnpm format:check` **now passes** and is enforced in CI. It previously failed on 50 pre-existing files; see REC-0011.
 - **The cross-user isolation test actually executes now.** `packages/database/tests/integration.test.ts:145` (`scopes queries by userId so one user cannot read another's rows`) was previously in the skipped set. This is the single most relevant precondition for the auth module's ownership boundary, and it had no local coverage until 2026-10-02.
@@ -351,13 +370,17 @@ Frontend file-placement rules (CONFIRMED, DESIGN.md §1):
 
 ## Safety and Production Boundaries
 
-This project is a **scaffolded foundation with no product feature implemented**. Nothing here is production-ready, and the build passing is not a readiness signal.
+This project is **a working authentication flow on a foundation, with no other product feature built**. Nothing here is production-ready, and the build passing is not a readiness signal.
 
 Do not claim production readiness for:
 
-- Any user-facing feature. The MVP Definition of Done (PRD §35) lists 14 criteria; none are met.
-- Authentication, authorization, or data isolation. `requireAuth` currently returns 501 by design, so no protected route is reachable at all.
-- Any performance, reliability, or accessibility conformance claim. The accessibility checks in `.wwg/wiki/principles/accessibility-principles.md` have not been run against a real screen.
+- **The product as a whole.** The MVP Definition of Done (PRD §35) lists 14 criteria. **One** is met (item 1, account creation and access); item 12 (data isolation) is partially met.
+- **Session revocation.** Stateless tokens cannot be revoked server-side; a leaked refresh token stays valid until it expires. See the owner decision above.
+- **Rate limiting as a security control.** It is per-process and in-memory, so it resets on restart and does not survive horizontal scaling.
+- **Password recovery.** Not implemented, deliberately.
+- Any performance, reliability, or accessibility conformance claim beyond what the browser suite asserts.
+
+Authentication **is** implemented and tested. That is a different statement from "ready for production", and both are recorded here so neither is overstated later.
 
 Security posture observed in the scaffold:
 
@@ -376,6 +399,9 @@ Known scaffold-level risks:
 - Playwright runs locally against the **system-installed** Microsoft Edge because the bundled Chromium download is blocked in this environment. CI uses the pinned bundled browser for reproducibility. A local `PW_CHANNEL=chrome` run is also supported. **Superseded 2026-10-02:** the earlier claim here that browser tests were "not yet wired into CI, because CI has never actually run" was false on both counts. A dedicated `e2e` job runs them in CI, and CI has run successfully on `main` repeatedly — most recently on the merges of pull requests #35 and #36. What remains true is narrower and is recorded in D-0008: the `e2e` job **runs and reports on every pull request but is not a required status check**, so a red browser test does not block a merge. See the branch-protection entries and `.wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md`.
 - `package.json#prisma` is deprecated in Prisma 6 and warns on every database command. It still works; migrate to `prisma.config.ts` before upgrading to Prisma 7.
 - **A `pnpm.overrides` entry pins `deepmerge-ts` to `^8.0.2`** to clear a high-severity advisory in Prisma's dependency tree. Prisma client generation, `migrate status`, and `db:seed` were all re-verified to still work afterwards. Remove the override only once a Prisma upgrade resolves the advisory upstream. Dependabot is configured to ignore Prisma major bumps for the same reason.
+- **Express 4 does not catch rejected promises from async handlers.** Every route handler must be wrapped in `asyncHandler` (`apps/api/src/middleware/async-handler.ts`) or its rejection becomes an unhandled promise rejection and the request hangs. This is not hypothetical — the auth route tests caught it immediately, with every 422 and 401 escaping instead of returning. Regression-tested in `app.test.ts`. Express 5 fixes this natively.
+- **`jose` 6.2.12 was added** to `packages/auth` for JWT signing and verification. `pnpm audit` still reports no known vulnerabilities. Hand-rolling HMAC signing was rejected: JWT construction is security-critical and a library with test vectors is safer.
+- **Local E2E is only trustworthy when port 5173 is free.** `playwright.config.ts` sets `reuseExistingServer: !CI`, so a local run adopts whatever app answers on that port. See REC-0019 — a different project on this machine caused 17 false failures.
 
 Security requirements that are accepted truth and will govern implementation (CONFIRMED, PRD §10.2/§32/§33; architecture §55):
 

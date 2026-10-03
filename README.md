@@ -8,11 +8,10 @@ Tarn is a full-stack TypeScript modular monolith.
 
 ## Status
 
-**Scaffolded. No feature is implemented yet.**
+**Authentication works. No other feature is implemented yet.**
 
-The repository foundation exists: monorepo, apps, shared packages, database
-schema, validation, and CI. There is no working application — authentication,
-applications, pipeline, dashboard, and the rest are still to be built.
+You can create an account, sign in, and reach the dashboard. Everything past that
+is still to be built — applications, pipeline, timeline, follow-ups, offers.
 
 Canonical truth lives in [`.wwg/wiki/project-truth.md`](.wwg/wiki/project-truth.md),
 which records what is confirmed, what is only a plan, and what is still an open
@@ -98,9 +97,9 @@ Everything below runs in GitHub Actions on every push:
 | `pnpm audit --audit-level=high` | no known high-severity dependency vulnerabilities |
 | dependency review | a PR cannot introduce a vulnerable dependency |
 | `pnpm typecheck` | types across all six packages |
-| `pnpm test` | 97 unit and integration tests (90 without a running database — see Troubleshooting) |
+| `pnpm test` | 190 unit and integration tests (150 without a running database — see Troubleshooting) |
 | `pnpm build` | both apps compile |
-| Playwright job | 24 browser and accessibility test instances in a real engine |
+| Playwright job | 36 browser and accessibility test instances in a real engine |
 
 **Three of these are required to merge to `main`, not all of them.** The required
 checks are `verify`, `dependency-review`, and `CodeRabbit`. The Playwright job
@@ -136,18 +135,37 @@ the verb as one of its own built-ins — `deploy`, `install`, `add`, `remove`,
 script. This bit `db:deploy` specifically. `packages/database/prisma/scripts.test.ts`
 now asserts the shape of every `db:*` script so it cannot regress.
 
+**A request hangs and never returns.**
+Express 4 does not catch rejected promises from `async` route handlers, so an
+unhandled rejection leaves the request open until it times out. Every route
+handler must be wrapped:
+
+```ts
+router.post('/thing', asyncHandler(controller.thing));
+```
+
+This is easy to miss because it produces no error message — just a request that
+never comes back. Express 5 fixes it natively.
+
 **`pnpm typecheck` reports `has no exported member 'ApplicationStatus'`.**
 The generated Prisma Client is stale or was never generated. Fix with
 `pnpm db:generate`. This also needs re-running after any change to
 `packages/database/prisma/schema.prisma`.
 
-**`pnpm test` shows 90 passing instead of 97, with 7 skipped.**
-PostgreSQL is not reachable. The 7 skipped tests are the database integration
-tests in `packages/database/tests/integration.test.ts`, and they skip loudly
-rather than passing silently. Start it with `docker compose up -d` and re-run.
-Do not treat the 90-test result as equivalent to the 97-test result — the
-skipped tests are the ones covering referential integrity, cascade deletes,
-and cross-user isolation.
+**`pnpm test` shows 150 passing instead of 190, with 40 skipped.**
+PostgreSQL is not reachable, and **two** suites skip — loudly, never silently:
+
+| Suite | Skipped | Covers |
+|---|---|---|
+| `packages/database/tests/integration.test.ts` | 7 | referential integrity, cascade deletes, cross-user isolation at the persistence layer |
+| `apps/api/src/modules/auth/auth.test.ts` | 29 | the whole auth surface: registration, sign-in, cookies, enumeration defence, token kinds, rate limiting, cross-user isolation |
+
+Start it with `docker compose up -d`, then `pnpm db:deploy && pnpm db:seed`, and re-run.
+
+Do not treat 150 as equivalent to 190. Between them the skipped suites carry the
+ownership-boundary and session-handling coverage — the properties that matter
+most — though they also cover registration, cookies, and rate limiting, so they
+are not *only* about ownership.
 
 **The database looks empty after renaming or moving the repository.**
 The Compose project name is now pinned to `tarn-app` in `docker-compose.yml`,
@@ -227,6 +245,30 @@ tests/e2e/        Playwright browser and accessibility specs
 Backend layering is fixed: Route → Middleware → Controller → Service → Repository.
 Business logic does not live in route files, and Prisma is never called from the
 frontend.
+
+## Authentication
+
+Sessions are stateless JWTs in `httpOnly` cookies: a 15-minute access token and a
+7-day refresh token. They are never put in `localStorage` or `sessionStorage`. An
+expired access token is refreshed transparently, so an open tab is not signed out
+mid-session.
+
+Every session also has a **hard 30-day ceiling**. It is set when you sign in and
+carried through every refresh unchanged, so renewing cannot extend it. A stolen
+refresh token is therefore usable for the rest of that window and no longer.
+
+**Sessions are not server-side revocable.** Signing out clears the cookies, but a
+token that was already issued stays valid until it expires. This is a deliberate
+trade-off: the MVP schema has no `sessions` table, and the schema-scope test guards
+that. The rationale is in
+[`.wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md`](.wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md).
+
+Register and sign-in are rate limited per IP — 5 sign-ups and 10 sign-in attempts
+per 15 minutes. That limit is per-process, so it does not survive horizontal
+scaling.
+
+Password recovery is **not implemented**. There is no email delivery yet, so a
+forgotten password currently has no self-service path back.
 
 ## MVP scope
 

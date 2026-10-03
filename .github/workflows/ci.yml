@@ -41,8 +41,8 @@ jobs:
     # here would resolve to a literal string rather than the job's value.
     env:
       DATABASE_URL: postgresql://tarn:tarn@localhost:5432/tarn?schema=public
-      JWT_SECRET: ci-only-jwt-secret
-      COOKIE_SECRET: ci-only-cookie-secret
+      JWT_SECRET: ci-only-jwt-secret-at-least-32-characters-long
+      COOKIE_SECRET: ci-only-cookie-secret-at-least-32-chars
       WEB_ORIGIN: http://localhost:5173
       NODE_ENV: test
 
@@ -133,8 +133,8 @@ jobs:
       NODE_ENV: test
       PORT: 4000
       DATABASE_URL: postgresql://tarn:tarn@localhost:5432/tarn?schema=public
-      JWT_SECRET: ci-only-jwt-secret
-      COOKIE_SECRET: ci-only-cookie-secret
+      JWT_SECRET: ci-only-jwt-secret-at-least-32-characters-long
+      COOKIE_SECRET: ci-only-cookie-secret-at-least-32-chars
       WEB_ORIGIN: http://localhost:5173
       SEED_USER_EMAIL: ci-seed@example.com
       SEED_USER_PASSWORD: ci-seed-password

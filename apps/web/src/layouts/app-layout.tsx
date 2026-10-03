@@ -4,11 +4,16 @@
  * Nav is semantic and labelled. Design rules come from DESIGN.md — tokens
  * only, no hard-coded hex values, plain second-person copy.
  */
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useLogout, useSession } from '../lib/use-session';
 
 const navItems = [{ to: '/dashboard', label: 'Dashboard' }] as const;
 
 export function AppLayout() {
+  const session = useSession();
+  const logout = useLogout();
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-dvh bg-background text-foreground">
       <a
@@ -41,6 +46,26 @@ export function AppLayout() {
               </li>
             ))}
           </ul>
+
+          {/* Only rendered when signed in, and it would otherwise be a dead
+              control on the sign-in page. */}
+          {session.data?.user && (
+            <div className="ml-auto flex items-center gap-4">
+              <span className="text-sm text-muted-foreground">{session.data.user.name}</span>
+              <button
+                type="button"
+                // min-h-11 for the 44px touch target (DESIGN.md §11).
+                className="inline-flex min-h-11 items-center underline underline-offset-4"
+                onClick={() => {
+                  logout.mutate(undefined, {
+                    onSuccess: () => navigate('/login', { replace: true }),
+                  });
+                }}
+              >
+                {logout.isPending ? 'Signing out…' : 'Sign out'}
+              </button>
+            </div>
+          )}
         </nav>
       </header>
 

@@ -1,10 +1,114 @@
 # Current Task
 
-Status: DONE — pre-auth cleanup complete. PR #38 merged (the `db:deploy` fix, the format gate, and the count corrections). A follow-up branch fixes the platform-dependent format gate (REC-0018).
-Task mode: Existing Project Adoption (continued) → bug fix + tooling cleanup + truth synchronization. Mixed. No product feature was started.
+Status: IN PROGRESS — authentication module.
+Task mode: **Meaningful feature, high-risk**, under Existing Project Adoption (continued). Auth touches authentication, authorization, and user data, which `AGENTS.md` lists as high-risk and approval-gated. Planning was paused for owner decisions before any code was written. Delivery is AI-agent.
 Instance type: existing-project (adopted)
 Adoption status: ADOPTED_FROM_EXISTING_PROJECT
 Last updated: 2026-10-03
+
+## Owner decisions taken before implementation
+
+Three questions were put to the owner rather than decided by the agent, because each
+changes accepted scope or the security posture.
+
+| Question | Decision | Consequence |
+|---|---|---|
+| Session storage | **Stateless JWT, short-lived access + refresh rotation** | No `sessions` table, so D-0004 and the schema-scope test are untouched. Logout clears the cookie; a leaked token stays valid until expiry. Accepted trade-off. |
+| Password recovery (FR-AUTH-005) | **Deferred explicitly** | Needs email delivery, and REC-0005 (deployment vendors) is undecided. Deferred with rationale, not left as an oversight. |
+| Rate limiting (PRD §32, §55) | **Hand-rolled in-memory limiter** | No new dependency. Must be revisited before horizontal scaling, since in-memory state is per-process. |
+
+**Why the schema guard forced the first question.**
+`packages/database/prisma/schema.test.ts` asserts the *exact* model set (10 models)
+and exact table list. Adding `sessions` would have failed it. That guard exists to
+enforce D-0004 MVP scope, so changing it required an owner decision rather than an
+agent convenience.
+
+Full rationale, accepted costs, and consequences are recorded in
+`.wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md`.
+
+## What shipped
+
+| Area | Detail |
+|---|---|
+| Routes | `POST /auth/register`, `/login`, `/logout`, `/refresh`; `GET /auth/me` |
+| Guard | `apps/api/src/middleware/auth.ts` verifies HS256 access tokens and attaches `userId`. **The 501 stub is gone.** |
+| Tokens | `packages/auth/src/token.ts` — 15-min access, 7-day refresh, `kind` claim so neither substitutes for the other, random `jti` |
+| Cookies | `httpOnly`, `SameSite=Lax`, `Secure` in production only; refresh scoped to `/api/v1/auth` |
+| Rate limiting | `/register` 5/15min, `/login` 10/15min keyed by IP **and** email |
+| Enumeration defence | Unknown email and wrong password return an identical status, code, and message, and both spend equal time via a dummy scrypt verify |
+| Web | Sign-in and registration pages, `/dashboard` guard, sign-out control, session in TanStack Query |
+| E2E | Rewritten: register → dashboard → sign out → sign in → protected-route checks, plus the existing accessibility suite |
+
+## Two real bugs the tests caught
+
+**1. Express 4 does not catch rejected promises from async handlers.**
+Every auth controller is `async` (it hashes a password). Without a bridge, each
+rejection became an *unhandled promise rejection* and the request hung — so every 422
+and 401 vanished instead of being returned. The route tests failed with
+`Serialized Error: { status: 401 }` and no HTTP response, which is what exposed it.
+
+Fixed with `asyncHandler` (`apps/api/src/middleware/async-handler.ts`), applied to
+every route, and regression-tested. **Express 5 fixes this natively.** This will bite
+the next module too if it is not remembered, so it is recorded in Project Truth's
+known-risks list and in D-0009's "Do Not".
+
+**2. "Refresh token rotation" was theatre.**
+JWT claims are deterministic, so two tokens minted for the same user in the same
+second had **identical signatures**. The rotation test asserted the new token
+differed from the old one and correctly failed — the first version of this code would
+have reissued the exact same string. Fixed by adding a random `jti` to every token,
+which also gives a future `sessions` table a natural key.
+
+## Verification
+
+| Gate | Result |
+|---|---|
+| `pnpm lint` | clean |
+| `pnpm typecheck` | clean, 6 workspaces |
+| `pnpm format:check` | clean |
+| `pnpm test` | **160 passing, 0 skipped** (was 97) |
+| `pnpm build` | both apps build |
+| `pnpm audit --audit-level=high` | no known vulnerabilities |
+| Playwright | **36 passing** across desktop and 360px (was 24) |
+| `wwg validate` | pass — 0 critical, 0 high |
+
+Test breakdown: 7 types, 29 auth (13 password + 14 token + 2 dummy-hash), 23
+validation, 31 database, 43 API (13 smoke + 30 auth route), 27 React.
+
+The E2E suite runs on **clean ports** (5199/4099) because port 5173 is held by another
+project on this machine and `reuseExistingServer` would adopt it — see REC-0019.
+
+## A third thing worth knowing
+
+The E2E suite initially registered a fresh account **per test** and failed partway
+through with `Too many accounts created from here`. That is not a flake: the register
+limiter is 5 per 15 minutes per IP, and every Playwright request arrives from
+`127.0.0.1`. The fix is the idiomatic Playwright pattern — `tests/e2e/global-setup.ts`
+creates one account and the suite reuses it via `storageState`. Registration itself
+remains covered end to end by one dedicated test.
+
+Worth noting because it is a real constraint on this project, not just a test problem:
+**any local or CI activity that registers more than 5 accounts per 15 minutes from one
+IP will be throttled.** That is correct behaviour, but it will surprise someone.
+
+## Remaining risks
+
+- **Sessions are not revocable** (D-0009, REC-0022). A stolen refresh token is valid
+  for up to 7 days with no off switch.
+- **Rate limiting is per-process** (REC-0020). Tied to REC-0005.
+- **Password recovery is deferred** (REC-0021). Not acceptable at a public release.
+- **D-0008's revisit triggers fired** (REC-0023). The auth UI is the first real
+  product UI and the suite now covers a real journey, but the decision was **not**
+  changed and branch protection is untouched. The owner should reconfirm.
+
+## Next task — awaiting owner signal
+
+**The applications module** — create, edit, and manage (PRD §7.3, DoD item 2). This is
+the first feature where the ownership boundary must be applied to real user data, so it
+is the true test of REC-0022's severity and of whether `requireAuth` plus a `userId`
+filter is enough in practice.
+
+Not started.
 
 ## Task Summary
 
@@ -197,11 +301,13 @@ dev server — it is not Tarn's, and that was not this task's call.
 
 # Prior task record - directory rename (2026-10-02, merged as PR #35)
 
-**Everything below this line describes the previous task, not the current one.**
-It is retained as history, not as instructions. The 83/90 test figures, the
-"not executing" precondition, and the REC-0011/REC-0015 statuses in it are all
-superseded by the sections above. Do not act on it without reading the current
-task first.
+**Everything below this line describes previous tasks, not the current one.**
+It is retained as history, not as instructions. Do not act on it without reading
+the current task first.
+
+---
+
+# Prior task record - pre-auth cleanup (2026-10-02/03, PRs #38, #39, #40)
 
 ## Why this ran
 
