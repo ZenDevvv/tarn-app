@@ -1,6 +1,6 @@
 # Current Task
 
-Status: IN PROGRESS — authentication module.
+Status: DONE — authentication module merged as PR #41. The database runs, every gate is green, and every documented command has been executed at least once.
 Task mode: **Meaningful feature, high-risk**, under Existing Project Adoption (continued). Auth touches authentication, authorization, and user data, which `AGENTS.md` lists as high-risk and approval-gated. Planning was paused for owner decisions before any code was written. Delivery is AI-agent.
 Instance type: existing-project (adopted)
 Adoption status: ADOPTED_FROM_EXISTING_PROJECT
@@ -100,6 +100,48 @@ IP will be throttled.** That is correct behaviour, but it will surprise someone.
 - **D-0008's revisit triggers fired** (REC-0023). The auth UI is the first real
   product UI and the suite now covers a real journey, but the decision was **not**
   changed and branch protection is untouched. The owner should reconfirm.
+
+## Merge outcome
+
+**Merged — PR #41** (`feat/auth-module` → `main`, squash, commit `910aa40`), after
+seven review rounds. CI green on `main`.
+
+**The last hour was blocked by something no checks view shows.**
+`required_conversation_resolution` is enabled on `main`, so unresolved review
+threads block the merge even when every required check is `SUCCESS` and
+`mergeable` is `MERGEABLE`. `mergeStateStatus` said only `BLOCKED`, and the REST
+merge endpoint returned `Not Found`. The signal that mattered was the thread list.
+
+Each of the 10 open threads was resolved with a note recording **what was fixed or
+why a finding was declined** — including one declined finding, the loud-skip
+behaviour of the database suites, with its cost stated rather than waved away.
+`--admin` was never used: it would have bypassed every check that was passing.
+Recorded as REC-0024.
+
+## Defects found in review
+
+Worth recording plainly, because the pattern is consistent: **the automated gates
+passed on nearly every one of these.** They were found by review, by a test failing
+for an unexpected reason, or by re-measuring a number I had asserted.
+
+| Defect | Class | Found by |
+|---|---|---|
+| `db:deploy` never worked | correctness | executing the command |
+| CI secrets too short, surfacing as a 500 rather than a startup failure | security | the first CI run failing |
+| Password spraying unthrottled (CWE-307) | security | review |
+| Unbounded limiter memory (CWE-770) | security | review |
+| O(n) eviction, created by the fix above | security | review |
+| Signed-in users logged out after 15 min | correctness | review |
+| `/auth/me` could not refresh, bouncing live sessions | correctness | review |
+| Cached *rejected* dummy-hash promise | correctness | review |
+| Documented session exposure was 7 days; it was unbounded | security | review |
+| "Rotation" returned a byte-identical token | correctness | a test failing |
+| Test totals did not reconcile | accuracy | review |
+
+The one worth dwelling on: **the security exposure I documented was wrong in the
+pessimistic-looking direction.** Refresh issued a fresh 7-day token each time, so
+the real exposure was unbounded. Every doc repeated the wrong number, and no gate
+could detect it — it was a claim about behaviour that was simply never tested.
 
 ## Next task — awaiting owner signal
 
