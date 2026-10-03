@@ -1,10 +1,10 @@
 # Current Task
 
-Status: DONE — authentication module merged as PR #41. The database runs, every gate is green, and every documented command has been executed at least once.
-Task mode: **Meaningful feature, high-risk**, under Existing Project Adoption (continued). Auth touches authentication, authorization, and user data, which `AGENTS.md` lists as high-risk and approval-gated. Planning was paused for owner decisions before any code was written. Delivery is AI-agent.
+Status: IN PROGRESS — applications module (API). Not yet merged.
+Task mode: **Meaningful feature, high-risk**, under Existing Project Adoption (continued). Both auth and applications touch the ownership boundary and user data, which `AGENTS.md` lists as high-risk and approval-gated. Planning was paused for owner decisions before any code was written. Delivery is AI-agent.
 Instance type: existing-project (adopted)
 Adoption status: ADOPTED_FROM_EXISTING_PROJECT
-Last updated: 2026-10-03
+Last updated: 2026-10-04
 
 ## Owner decisions taken before implementation
 
@@ -163,12 +163,10 @@ could detect it — it was a claim about behaviour that was simply never tested.
 
 ## Next task — awaiting owner signal
 
-**The applications module** — create, edit, and manage (PRD §7.3, DoD item 2). This is
-the first feature where the ownership boundary must be applied to real user data, so it
-is the true test of REC-0022's severity and of whether `requireAuth` plus a `userId`
-filter is enough in practice.
-
-Not started.
+**The applications web UI.** The module is API-only so far. The dashboard is still
+the auth-guarded placeholder, so PRD §35 items 3 (pipeline) and 4 (detail view) remain
+unreachable however complete the API is. It should also close REC-0026, since a list
+view needs the filtering the endpoint does not yet do.
 
 ## Task Summary
 
@@ -280,6 +278,56 @@ left implied.
 - **Reformatting `.wwg/` and `*.md`.** Both are in `.prettierignore`.
   Reformatting governed documentation would produce an enormous diff against
   files whose line breaks carry meaning, for no functional gain.
+
+## Applications module (API) — 2026-10-04
+
+Two owner decisions before any code, recorded in D-0010:
+
+1. **Company and job are supplied inline**, not as an existing `jobId`. The
+   scaffold's schema contradicted architecture §23, which describes one
+   `POST /applications` creating Company + Job + Application + TimelineEvent, and
+   PRD §7.3, which lists company and position as required application
+   information. Everything is created in one `prisma.$transaction`.
+2. **The `APP-2026-0001` reference is deferred.** It needs a column on a governed
+   MVP table and an amendment to the schema-scope test. REC-0025.
+
+**Ownership boundary — the point of this module.** Every repository function
+takes `userId` and filters on it; there is deliberately no helper that takes a
+bare application id. "Not yours" and "does not exist" return a byte-identical
+404, and a test asserts that byte-identity rather than just the status code.
+
+The isolation tests were **proven non-vacuous**: with the `userId` filter removed
+from `findApplicationById`, **4 tests fail**. Restored and re-verified green.
+
+Also proven: the create path rejects a client-supplied `userId`, and two users
+applying to the same employer get **separate company rows** — sharing one would
+expose one user's applications to the other through the relation.
+
+### Bugs and dead ends hit
+
+- **A silent 404 on an empty update.** `updateApplicationSchema` stripped unknown
+  keys, so a payload containing only `job` validated to `{}` and Prisma reported
+  no matching rows — a 404 for an application that exists. Fixed by making the
+  schema `.strict()`: such a payload now returns 422. Silently ignoring an edit
+  would leave a caller believing a job had been renamed.
+- **My own test bugs, three of them**, each caught by a failure that said nothing
+  about the route: `cleanup()` ran *after* `signIn` and deleted the account the
+  test was about to use (a foreign-key error, not a route bug); company-count
+  assertions were unscoped and counted the seeded row; and supertest's "agent"
+  does not persist cookies, so every request came back 401. Each is now a
+  deliberate pattern with a comment explaining why.
+- **PowerShell bulk-edits corrupted the test file twice** — `§` became `?`, and a
+  repair pass then turned `??` into an em dash inside real expressions. Switched
+  to the edit tool and a checked Node script. Worth remembering: this shell is
+  lossy on non-ASCII, and both times it was only caught because a test failed
+  loudly.
+- **A stale test caught a real change**: `/api/v1/applications` was asserted to
+  404 as an unknown route. It is a real route now and correctly answers 401.
+
+### Counts
+
+217 tests (was 190): 7 types, 35 auth, 28 validation, 31 database, 80 API, 36
+React. 155 pass and 62 skip without a database.
 
 ## Next task — awaiting owner signal
 

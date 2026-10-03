@@ -11,7 +11,7 @@ This governance file is required by root `AGENTS.md` and the WWG readiness model
 **A full verification path exists and runs.** As of 2026-10-03:
 
 - Vitest 5.0 runs across all six workspace packages.
-- **190 tests pass**: 7 types, 35 auth (13 password + 19 token + 3 dummy-hash), 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 58 API (20 smoke/envelope/CORS/error/async/env + 33 auth route + 5 rate limiter), 36 React. **Requires Docker running** — without it the 7 database integration tests **and the 33 auth route tests** skip loudly and the count is 150, not 190.
+- **217 tests pass**: 7 types, 35 auth (13 password + 19 token + 3 dummy-hash), 28 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 80 API (21 smoke/envelope/CORS/error/async/env + 33 auth route + 5 rate limiter + 22 application route), 36 React. **Requires Docker running** — without it the 7 database integration tests **and the 55 auth + application route tests** skip loudly and the count is 155, not 217.
 - **Playwright passes 36 test instances** across a desktop and a 360px project (18 cases × 2 projects), in a real browser, covering a real auth journey.
 - `pnpm lint` is clean and gated in CI (ESLint 9 flat config).
 - `pnpm format:check` is clean and gated in CI since 2026-10-02 (REC-0011).
@@ -130,13 +130,14 @@ A process note worth keeping: the first version of the touch-target test **logge
 
 ## Current WWG Regression Posture
 
-As of 2026-10-03:
+As of 2026-10-04:
 
 - Regression baseline: present
-- Executable tests: **190 unit/integration test instances** (`pnpm test`), plus **36 Playwright test instances** (`npx playwright test` = 18 cases × 2 projects). These are not summed into one figure — see the counting note below.
+- Executable tests: **217 unit/integration test instances** (`pnpm test`), plus **36 Playwright test instances** (`npx playwright test` = 18 cases × 2 projects). These are not summed into one figure — see the counting note below.
 - Counting rule: **report test instances per suite, never a combined "assertion" total.** The two runners measure different things, and Playwright's 24 are instances of 12 cases, not 24 assertions. Several tests each assert multiple conditions internally, so any single combined number is misleading.
 - Database migration: committed and applied; verified table set matches the MVP scope exactly
-- Open gaps: no CRUD route tests for applications (that feature does not exist yet); no Husky/lint-staged
+- **Applications CRUD route tests: 21, covering cross-user isolation.** This is the first module where the ownership boundary is exercised against real user-owned data, so `.wwg/governance/test-enforcement.md` rule 4 applies and the isolation cases are the reason the module's suite exists.
+- Open gaps: **no browser coverage for applications**, because there is no applications web UI to drive — the Playwright count is unchanged and deliberately so. Also open: no Husky/lint-staged, and no search/filter coverage because the list endpoint does not accept filters yet (REC-0026).
 - The WWG-generated regression gap list predates all of this and does not reflect the current tests. Regenerate with `wwg adopt refresh-regression` or `wwg maintain`.
 
 ## Related Truths

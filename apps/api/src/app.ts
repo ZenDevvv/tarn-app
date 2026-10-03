@@ -13,6 +13,7 @@ import { errorHandler, notFoundHandler } from './middleware/error-handler.js';
 import { requestId } from './middleware/request-id.js';
 import { health } from './routes/health.js';
 import { router as authRouter } from './modules/auth/auth.routes.js';
+import { router as applicationsRouter } from './modules/applications/application.routes.js';
 
 export const API_PREFIX = '/api/v1';
 
@@ -47,8 +48,9 @@ export function createApp(): Express {
   // are the public entry points that establish a session).
   app.use(`${API_PREFIX}/auth`, authRouter);
 
-  // Every other domain router must sit behind `requireAuth` (architecture §36):
-  //   app.use(`${API_PREFIX}/applications`, requireAuth, applicationsRouter);
+  // Every domain router sits behind `requireAuth`, applied inside the router so a
+  // route added later cannot accidentally land unprotected (architecture §36).
+  app.use(`${API_PREFIX}/applications`, applicationsRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);

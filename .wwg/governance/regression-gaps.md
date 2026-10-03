@@ -38,8 +38,8 @@ it was on 2026-10-01, before the monorepo scaffold and database migration landed
 | Unit + integration (types, auth, validation, database, API, React) | 188 passing | `pnpm test` |
 | Browser E2E (desktop + 360px, real browser) | 36 passing | `npx playwright test` |
 
-Re-verified by execution on 2026-10-03: `pnpm test` → **190 passed, 0 skipped**
-with a live database, and 150 passed / 40 skipped without one. Both suites run in CI
+Re-verified by execution on 2026-10-03: `pnpm test` → **217 passed, 0 skipped**
+with a live database, and 155 passed / 62 skipped without one. Both suites run in CI
 (`.github/workflows/ci.yml`, jobs `verify` and `e2e`).
 
 **Only `verify` is required by branch protection.** The `e2e` job runs and reports

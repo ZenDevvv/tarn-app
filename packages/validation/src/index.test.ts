@@ -52,23 +52,71 @@ describe('loginSchema', () => {
   });
 });
 
+const VALID_APPLICATION = {
+  company: { name: 'Acme Corp' },
+  job: { title: 'Frontend Engineer', platform: 'LINKEDIN' },
+};
+
 describe('createApplicationSchema', () => {
   it('defaults status to APPLIED (PRD §5)', () => {
-    const result = createApplicationSchema.safeParse({ jobId: 'clx1234567890abcdefghijk' });
+    const result = createApplicationSchema.safeParse(VALID_APPLICATION);
     expect(result.success).toBe(true);
     expect(result.success && result.data.status).toBe('APPLIED');
   });
 
-  it('rejects an unknown status', () => {
-    expect(
-      createApplicationSchema.safeParse({ jobId: 'clx1234567890abcdefghijk', status: 'NOPE' }).success,
-    ).toBe(false);
+  it('accepts inline company and job details (architecture §23)', () => {
+    const result = createApplicationSchema.safeParse({
+      company: { name: '  Acme Corp  ', website: 'https://acme.test' },
+      job: {
+        title: 'Frontend Engineer',
+        platform: 'OTHER',
+        location: 'Remote',
+        salaryMin: 50000,
+        salaryMax: 90000,
+        salaryCurrency: 'usd',
+      },
+    });
+
+    expect(result.success).toBe(true);
+    // Trimmed and normalised, not stored raw.
+    expect(result.success && result.data.company.name).toBe('Acme Corp');
+    expect(result.success && result.data.job.salaryCurrency).toBe('USD');
   });
 
-  it('rejects a missing jobId', () => {
-    const result = createApplicationSchema.safeParse({});
+  it('rejects an unknown status', () => {
+    expect(createApplicationSchema.safeParse({ ...VALID_APPLICATION, status: 'NOPE' }).success).toBe(false);
+  });
+
+  it('rejects a missing company name', () => {
+    const result = createApplicationSchema.safeParse({
+      company: {},
+      job: { title: 'X', platform: 'OTHER' },
+    });
     expect(result.success).toBe(false);
-    expect(result.error?.issues[0]?.message).toBe('Choose a job.');
+  });
+
+  it('rejects a missing job title', () => {
+    const result = createApplicationSchema.safeParse({
+      company: { name: 'Acme' },
+      job: { platform: 'OTHER' },
+    });
+    expect(result.success).toBe(false);
+  });
+
+  it('rejects an inverted salary range', () => {
+    const result = createApplicationSchema.safeParse({
+      company: { name: 'Acme' },
+      job: { title: 'X', platform: 'OTHER', salaryMin: 90000, salaryMax: 50000 },
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.error?.issues.some((i) => i.message.includes('Minimum salary'))).toBe(true);
+  });
+
+  it('requires company and job — there is no jobId shortcut', () => {
+    // The jobId form was replaced by inline details (owner decision 2026-10-03).
+    // A payload carrying only jobId must not silently validate.
+    expect(createApplicationSchema.safeParse({ jobId: 'clx1234567890abcdefghijk' }).success).toBe(false);
   });
 });
 
@@ -171,14 +219,27 @@ describe('MVP entities (D-0004)', () => {
 });
 
 describe('ownership-relevant rejection', () => {
-  it('rejects a cross-tenant identifier that is not a cuid', () => {
-    // The API must never accept an owner id from the client. Schemas here
-    // simply have no field for it, so there is nothing to validate.
+  it('drops a client-supplied userId rather than carrying it', () => {
+    // The API must never accept an owner id from the client. Schemas here have
+    // no field for it, so there is nothing to validate and nothing to persist.
     const result = createApplicationSchema.safeParse({
-      jobId: 'clx1234567890abcdefghijk',
+      ...VALID_APPLICATION,
       userId: 'attacker-controlled',
     });
     expect(result.success).toBe(true);
     expect(result.success && 'userId' in result.data).toBe(false);
+  });
+
+  it('drops a client-supplied companyId so a job cannot be attached elsewhere', () => {
+    // `job.companyId` is not part of the inline shape. A client-supplied one is
+    // stripped rather than trusted, which is what stops an application being
+    // filed against another user's company by id.
+    const result = createApplicationSchema.safeParse({
+      ...VALID_APPLICATION,
+      job: { ...VALID_APPLICATION.job, companyId: 'clxsomeothercompany0000000' },
+    });
+
+    expect(result.success).toBe(true);
+    expect(result.success && 'companyId' in result.data.job).toBe(false);
   });
 });

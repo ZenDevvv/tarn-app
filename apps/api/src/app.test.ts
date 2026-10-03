@@ -56,7 +56,10 @@ describe('GET /api/v1/health', () => {
 
 describe('routing is not swallowed by the health route', () => {
   // Regression guard for the app.use vs app.get bug.
-  it.each(['/api/v1/nope', '/api/v1/nope/deep', '/api/v1/applications', '/api/v1/companies/abc'])(
+  // `/api/v1/applications` was in this list while the route did not exist. It
+  // does now, and correctly answers 401 without a session, so it is no longer a
+  // valid "unknown route" probe — see the dedicated test below.
+  it.each(['/api/v1/nope', '/api/v1/nope/deep', '/api/v1/companies/abc'])(
     'returns 404 for unknown route %s',
     async (route) => {
       const response = await request(createApp()).get(route);
@@ -76,6 +79,16 @@ describe('routing is not swallowed by the health route', () => {
 
   it('returns 404 for an unknown root path', async () => {
     expect((await request(createApp()).get('/')).status).toBe(404);
+  });
+
+  // The route exists now, so it must answer 401 rather than falling through to
+  // the 404 handler. This also guards the ordering: a router mounted before
+  // notFoundHandler must actually reach its own middleware.
+  it('does not treat a protected route as unknown', async () => {
+    const response = await request(createApp()).get('/api/v1/applications');
+
+    expect(response.status).toBe(401);
+    expect(response.body.error.code).toBe('unauthorized');
   });
 });
 

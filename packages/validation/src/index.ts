@@ -90,6 +90,7 @@ const jobBaseSchema = z.object({
   location: z.string().trim().max(200).nullish(),
   salaryMin: salary.nullish(),
   salaryMax: salary.nullish(),
+  salaryCurrency: currency.nullish(),
   description: z.string().trim().max(100_000).nullish(),
 });
 
@@ -117,8 +118,56 @@ export const updateJobSchema = jobBaseSchema.partial().superRefine(enforceSalary
 // Application (PRD §7.3)
 // ---------------------------------------------------------------------------
 
+/**
+ * Company details supplied inline with a new application.
+ *
+ * No identifier is accepted. Architecture §23 has the server find-or-create the
+ * company by name, so the client has nothing to reference and — importantly —
+ * nothing to reference *someone else's* company with. See the note on
+ * `createApplicationSchema` about the rejected "reuse an existing id" shape.
+ */
+const applicationCompanySchema = z.object({
+  name: z.string().trim().min(1, 'Enter a company name.').max(200),
+  website: z.string().trim().url('Enter a full URL, like https://example.com.').max(2000).nullish(),
+  notes: z.string().trim().max(10_000).nullish(),
+});
+
+/**
+ * Job details supplied inline with a new application.
+ *
+ * `companyId` is omitted deliberately: the company comes from the sibling
+ * `company` object, and two sources for the same relation is how ownership bugs
+ * get in.
+ */
+const applicationJobSchema = z
+  .object({
+    title: z.string().trim().min(1, 'Enter a job title.').max(200),
+    platform: jobPlatformSchema,
+    location: z.string().trim().max(200).nullish(),
+    salaryMin: salary.nullish(),
+    salaryMax: salary.nullish(),
+    salaryCurrency: currency.nullish(),
+    description: z.string().trim().max(100_000).nullish(),
+  })
+  .superRefine(enforceSalaryRange);
+
+/**
+ * Create an application.
+ *
+ * **Why company and job are inline rather than a `jobId`.** Architecture §23
+ * describes one `POST /api/v1/applications` creating Company, Job, Application
+ * and TimelineEvent, and §24 requires them to succeed or fail together. The
+ * earlier version of this schema took an existing `jobId` instead, which forced
+ * the user to create a job first — three requests to log one application, and a
+ * contract that contradicted the architecture. Owner decision, 2026-10-03.
+ *
+ * There is deliberately **no** `userId` field, and no way to point at an existing
+ * company or job. The owner always comes from the verified session, and the
+ * company is matched by name within that owner only.
+ */
 export const createApplicationSchema = z.object({
-  jobId: cuidField('Choose a job.'),
+  company: applicationCompanySchema,
+  job: applicationJobSchema,
   status: applicationStatusSchema.default('APPLIED'),
   priority: applicationPrioritySchema.nullish(),
   appliedAt: z.coerce.date().nullish(),
@@ -127,13 +176,45 @@ export const createApplicationSchema = z.object({
   notes: z.string().trim().max(50_000).nullish(),
 });
 
-export const updateApplicationSchema = z.object({
-  status: applicationStatusSchema.optional(),
-  priority: applicationPrioritySchema.nullish(),
-  appliedAt: z.coerce.date().nullish(),
-  nextAction: z.string().trim().max(500).nullish(),
-  nextActionDueAt: z.coerce.date().nullish(),
-  notes: z.string().trim().max(50_000).nullish(),
+/**
+ * Edit an application.
+ *
+ * **`status` is deliberately absent.** It is changeable only through
+ * `PATCH /applications/:id/status`, which records a timeline entry in the same
+ * transaction as the change. Accepting it here too would give a client a second
+ * route to a status change that skips history entirely — a `PATCH /:id` carrying
+ * `{ status: 'OFFER' }` would move the application and record nothing, which
+ * breaks the "every status change is recorded" guarantee PRD §4.3 rests on.
+ * One way to change status, and it always records. See D-0010.
+ *
+ * Company and job are **not** editable here either. They are separate entities
+ * (terminology: "Job and Application are distinct entities and must never be
+ * conflated", PRD §11), and editing a job would silently rewrite the record for
+ * every other application pointing at it. That needs its own endpoints.
+ *
+ * `.strict()` is deliberate. Without it an unknown key is silently dropped, so a
+ * client sending `{ job: { title: 'New title' } }` would get a success response
+ * and reasonably believe the job had been renamed. Rejecting with 422 says "that
+ * is not editable here" instead of accepting a lie. It also stops a typo'd field
+ * name from being quietly ignored, and it is what turns a stray `status` into a
+ * visible 422 rather than an unrecorded status change.
+ */
+export const updateApplicationSchema = z
+  .object({
+    priority: applicationPrioritySchema.nullish(),
+    appliedAt: z.coerce.date().nullish(),
+    nextAction: z.string().trim().max(500).nullish(),
+    nextActionDueAt: z.coerce.date().nullish(),
+    notes: z.string().trim().max(50_000).nullish(),
+  })
+  .strict();
+
+/** Route parameter for every `/applications/:id` route. */
+export const applicationIdSchema = cuidField('Could not find that application.');
+
+/** Architecture §38 `PATCH /applications/:id/status`. */
+export const updateApplicationStatusSchema = z.object({
+  status: applicationStatusSchema,
 });
 
 /** Architecture §29: filtering is a query concern, validated centrally. */
