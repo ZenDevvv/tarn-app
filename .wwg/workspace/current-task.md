@@ -112,9 +112,19 @@ threads block the merge even when every required check is `SUCCESS` and
 `mergeable` is `MERGEABLE`. `mergeStateStatus` said only `BLOCKED`, and the REST
 merge endpoint returned `Not Found`. The signal that mattered was the thread list.
 
-Each of the 10 open threads was resolved with a note recording **what was fixed or
-why a finding was declined** — including one declined finding, the loud-skip
-behaviour of the database suites, with its cost stated rather than waved away.
+Each of the 10 open threads was resolved, and **a note explaining what was fixed
+or why a finding was declined** was posted on each — including one declined
+finding, the database suites' loud-skip behaviour, with its cost stated rather
+than waved away. Verified after the fact: 33 threads on PR #41, all resolved, 10
+carrying a reply.
+
+**A correction, because the first version of this line was false.** It originally
+said the threads were resolved "with a note". At that moment they were resolved
+but **no notes existed** — I had called `resolveReviewThread` and nothing else.
+The notes were written and posted afterwards. Review caught the gap, which is the
+same failure this project has now caught repeatedly: asserting something was done
+that had not been done.
+
 Recorded as REC-0024.
 
 **`--admin` was not used, and its effect was not assumed.** An earlier version of
