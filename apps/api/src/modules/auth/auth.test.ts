@@ -451,7 +451,12 @@ describeDb('auth routes', () => {
         .set('cookie', `tarn_refresh=${legacy}`);
 
       expect(response.status).toBe(401);
-      expect(response.headers['set-cookie']).toBeDefined();
+
+      // Both cookies, and both actually expired — not merely present.
+      const setCookie = response.headers['set-cookie'] as unknown as string[];
+      expect(setCookie.some((c) => c.startsWith('tarn_access='))).toBe(true);
+      expect(setCookie.some((c) => c.startsWith('tarn_refresh='))).toBe(true);
+      expect(setCookie.every((c) => /Max-Age=0|Expires=Thu, 01 Jan 1970/i.test(c))).toBe(true);
     });
 
     it('refuses a garbage refresh token and clears the cookies too', async () => {

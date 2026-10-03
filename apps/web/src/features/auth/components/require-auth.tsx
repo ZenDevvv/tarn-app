@@ -10,12 +10,11 @@
  * every refresh.
  */
 import type { ReactNode } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useSession } from '../../../lib/use-session';
 
 export function RequireAuth({ children }: { children: ReactNode }) {
   const session = useSession();
-  const location = useLocation();
 
   if (session.isPending) {
     return (
@@ -26,8 +25,12 @@ export function RequireAuth({ children }: { children: ReactNode }) {
   }
 
   if (session.isError || !session.data?.user) {
-    // Remember where they were headed so sign-in can return them there.
-    return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+    // No `state.from` is passed. It was previously set here and never read by the
+    // login page, so it was dead code implying a redirect-back that did not
+    // exist. `/dashboard` is currently the only protected route, so returning
+    // there after sign-in is the same destination anyway. If deep-linking to
+    // specific pages lands later, this is where the return path should be wired.
+    return <Navigate to="/login" replace />;
   }
 
   return <>{children}</>;

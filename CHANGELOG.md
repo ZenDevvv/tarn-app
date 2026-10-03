@@ -104,7 +104,7 @@ Nothing here is a user-facing feature. This is the groundwork the features will 
 - **190 unit, integration, schema, and script tests** across six packages. Of those, **150
   run without a database and 40 require one** — 7 database integration tests covering
   referential integrity, cascade behaviour, unique constraints, and cross-user
-  isolation, plus 29 auth route tests. They *skip loudly* rather than passing silently
+  isolation, plus 33 auth route tests. They *skip loudly* rather than passing silently
   when no database is reachable, so a local run with Docker stopped reports 150 passing
   and 40 skipped. The 190 figure is the full inventory, and is what CI observes against
   a real database.
