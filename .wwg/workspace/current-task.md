@@ -115,8 +115,16 @@ merge endpoint returned `Not Found`. The signal that mattered was the thread lis
 Each of the 10 open threads was resolved with a note recording **what was fixed or
 why a finding was declined** — including one declined finding, the loud-skip
 behaviour of the database suites, with its cost stated rather than waved away.
-`--admin` was never used: it would have bypassed every check that was passing.
 Recorded as REC-0024.
+
+**`--admin` was not used, and its effect was not assumed.** An earlier version of
+this record claimed `--admin` "would have bypassed every check that was passing".
+That was never tested. What is true is narrower: `--admin` *requests* an
+administrative override of unmet requirements, and whether it also overrides a
+conversation-resolution rule enforced on admins is not documented and was not
+verified here. The decision not to use it stands on its own — an unresolved thread
+means an unaddressed finding, and merging over one would defeat the gate regardless
+of which flag permitted it.
 
 ## Defects found in review
 
