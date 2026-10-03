@@ -97,7 +97,7 @@ Everything below runs in GitHub Actions on every push:
 | `pnpm audit --audit-level=high` | no known high-severity dependency vulnerabilities |
 | dependency review | a PR cannot introduce a vulnerable dependency |
 | `pnpm typecheck` | types across all six packages |
-| `pnpm test` | 188 unit and integration tests (150 without a running database — see Troubleshooting) |
+| `pnpm test` | 190 unit and integration tests (150 without a running database — see Troubleshooting) |
 | `pnpm build` | both apps compile |
 | Playwright job | 36 browser and accessibility test instances in a real engine |
 
@@ -152,7 +152,7 @@ The generated Prisma Client is stale or was never generated. Fix with
 `pnpm db:generate`. This also needs re-running after any change to
 `packages/database/prisma/schema.prisma`.
 
-**`pnpm test` shows 150 passing instead of 188, with 38 skipped.**
+**`pnpm test` shows 150 passing instead of 190, with 40 skipped.**
 PostgreSQL is not reachable, and **two** suites skip — loudly, never silently:
 
 | Suite | Skipped | Covers |
@@ -162,7 +162,7 @@ PostgreSQL is not reachable, and **two** suites skip — loudly, never silently:
 
 Start it with `docker compose up -d`, then `pnpm db:deploy && pnpm db:seed`, and re-run.
 
-Do not treat 150 as equivalent to 188. Between them the skipped suites carry the
+Do not treat 150 as equivalent to 190. Between them the skipped suites carry the
 ownership-boundary and session-handling coverage — the properties that matter
 most — though they also cover registration, cookies, and rate limiting, so they
 are not *only* about ownership.

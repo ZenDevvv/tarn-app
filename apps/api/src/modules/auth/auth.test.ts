@@ -11,6 +11,11 @@
  */
 import { randomBytes } from 'node:crypto';
 import { signRefreshToken, verifyPassword, verifyToken } from '@tarn/auth';
+// Test-only, and a devDependency of this package for exactly this: signing a
+// token by hand is the only way to build a fixture in the *legacy* shape — one
+// with no `abs` claim. `signRefreshToken` always stamps the claim, so it cannot
+// produce this, and the claim's absence is the whole point of the test.
+import { SignJWT } from 'jose';
 import { prisma } from '@tarn/database';
 import request from 'supertest';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
@@ -396,26 +401,67 @@ describeDb('auth routes', () => {
     /**
      * The absolute session deadline (raised in review).
      *
-     * A stolen refresh token must not be renewable forever. These tests mint a
-     * token whose session deadline has already passed and require the server to
-     * refuse it, rather than issuing another week.
+     * Two distinct ways a session can be over, both of which must refuse to
+     * issue another week:
+     *
+     *  1. A token whose own expiry is in the past — which is what `signRefreshToken`
+     *     produces for a spent session, because it clamps `exp` to the deadline.
+     *  2. A cryptographically valid token that predates the `abs` claim, so it
+     *     cannot prove it falls inside the session.
      */
-    it('refuses to renew a session past its absolute deadline', async () => {
+    it('refuses to renew a session past its absolute deadline and clears the cookies', async () => {
       const { response: registerResponse } = await registerUser();
-      const { JWT_SECRET } = testEnv;
 
-      const expiredSession = await signRefreshToken(
+      const spent = await signRefreshToken(
         registerResponse.body.data.user.id,
-        JWT_SECRET,
+        testEnv.JWT_SECRET,
         Math.floor(Date.now() / 1000) - 60,
       );
 
       const response = await request(createApp())
         .post(`${API_PREFIX}/auth/refresh`)
-        .set('cookie', `tarn_refresh=${expiredSession}`);
+        .set('cookie', `tarn_refresh=${spent}`);
 
       expect(response.status).toBe(401);
       expect(response.body.error.code).toBe('unauthorized');
+
+      // Both cookies must be cleared, not just the refresh token. Leaving a live
+      // access cookie behind means the browser keeps presenting a token the
+      // server has already declared dead, until it expires on its own.
+      const setCookie = response.headers['set-cookie'] as unknown as string[];
+      expect(setCookie.some((c) => c.startsWith('tarn_access='))).toBe(true);
+      expect(setCookie.some((c) => c.startsWith('tarn_refresh='))).toBe(true);
+      expect(setCookie.every((c) => /Max-Age=0|Expires=Thu, 01 Jan 1970/i.test(c))).toBe(true);
+    });
+
+    it('refuses a valid token that predates the absolute-deadline claim', async () => {
+      const { response: registerResponse } = await registerUser();
+
+      // Shaped like a token issued before the `abs` claim existed: still
+      // cryptographically valid, but unable to prove it is inside the session.
+      const legacy = await new SignJWT({ kind: 'refresh' })
+        .setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+        .setSubject(registerResponse.body.data.user.id)
+        .setIssuedAt()
+        .setExpirationTime('1h')
+        .sign(new TextEncoder().encode(testEnv.JWT_SECRET));
+
+      const response = await request(createApp())
+        .post(`${API_PREFIX}/auth/refresh`)
+        .set('cookie', `tarn_refresh=${legacy}`);
+
+      expect(response.status).toBe(401);
+      expect(response.headers['set-cookie']).toBeDefined();
+    });
+
+    it('refuses a garbage refresh token and clears the cookies too', async () => {
+      const response = await request(createApp())
+        .post(`${API_PREFIX}/auth/refresh`)
+        .set('cookie', 'tarn_refresh=not.a.real.token');
+
+      expect(response.status).toBe(401);
+      const setCookie = response.headers['set-cookie'] as unknown as string[];
+      expect(setCookie.some((c) => c.startsWith('tarn_access='))).toBe(true);
     });
 
     it('carries the absolute deadline forward instead of resetting it', async () => {

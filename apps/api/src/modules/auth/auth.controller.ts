@@ -60,17 +60,29 @@ export async function refresh(req: Request, res: Response): Promise<void> {
   if (!token) throw unauthorized();
 
   const claims = await verifyRefresh(token);
-  if (!claims) throw unauthorized();
+
+  /**
+   * Any unusable refresh token clears both cookies.
+   *
+   * Not only the "no token" case. Leaving a live access cookie behind after the
+   * session is declared dead means the browser keeps presenting a token the
+   * server has already rejected, until it expires on its own.
+   */
+  if (!claims) {
+    clearAuthCookies(res);
+    throw unauthorized('Your session has expired. Sign in again.');
+  }
 
   /**
    * Absolute session deadline.
    *
-   * A refresh token with no `abs` claim is rejected rather than trusted. Without
-   * this, a stolen refresh token could simply be renewed forever: every call
-   * returned a fresh 7-day token, so the documented "7 day exposure" was really
-   * "unbounded exposure" for anyone who kept renewing.
-   *
-   * The deadline is *carried forward* unchanged, so renewing can never extend it.
+   * `signRefreshToken` already clamps each token's own `exp` to this deadline, so
+   * for a token minted by the current code the expiry check above usually fires
+   * first and this branch is not reached. It exists for tokens that predate the
+   * claim — a session issued before this shipped has no `abs` and a full 7-day
+   * expiry, so without this check such a token could still be renewed. Rather
+   * than trust a token that cannot prove it falls inside the session, the claim
+   * is required.
    */
   if (typeof claims.abs !== 'number' || claims.abs <= Math.floor(Date.now() / 1000)) {
     clearAuthCookies(res);
