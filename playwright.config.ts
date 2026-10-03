@@ -25,8 +25,11 @@ const channel = process.env.PW_CHANNEL ?? 'msedge';
  * The API base URL, published so `globalSetup` can create the shared account
  * before any browser test runs. Kept next to the webServer block below so the two
  * cannot drift apart.
+ *
+ * `??=` rather than `=`: a verification run that moves the API to another port
+ * sets this itself, and an unconditional assignment here would silently undo it.
  */
-process.env.E2E_API_URL = 'http://localhost:4000/api/v1';
+process.env.E2E_API_URL ??= 'http://localhost:4000/api/v1';
 
 const browser = channel ? { channel } : {};
 

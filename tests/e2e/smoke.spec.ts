@@ -16,9 +16,9 @@
  */
 import { expect, test, type Page } from '@playwright/test';
 
-const PASSWORD = 'correct-horse-battery';
 /** Set by global-setup.ts for the account it created. */
 const SHARED_EMAIL = () => process.env.E2E_EMAIL ?? '';
+const PASSWORD = process.env.E2E_PASSWORD ?? 'correct-horse-battery';
 
 /**
  * Drop the shared session so a test starts signed out.

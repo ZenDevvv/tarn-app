@@ -20,16 +20,69 @@ export class ApiRequestError extends Error {
   }
 }
 
+/**
+ * Single in-flight refresh, shared by every concurrent 401.
+ *
+ * Without this, a page that fires five requests when its access token expires
+ * would send five refresh calls. The API would honour all five, and four would be
+ * wasted round trips that also burn the login rate limiter's budget.
+ */
+let refreshInFlight: Promise<boolean> | null = null;
+
+async function refreshSession(): Promise<boolean> {
+  refreshInFlight ??= (async () => {
+    try {
+      const response = await fetch(`${baseUrl}/auth/refresh`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+      });
+      return response.ok;
+    } catch {
+      return false;
+    } finally {
+      // Cleared so a later expiry can try again.
+      refreshInFlight = null;
+    }
+  })();
+
+  return refreshInFlight;
+}
+
 export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const response = await fetch(`${baseUrl}${path}`, {
-    // Send the httpOnly session cookie (architecture §2.2, §55).
-    credentials: 'include',
-    headers: {
-      'content-type': 'application/json',
-      ...init.headers,
-    },
-    ...init,
-  });
+  const send = () =>
+    fetch(`${baseUrl}${path}`, {
+      // Send the httpOnly session cookie (architecture §2.2, §55).
+      credentials: 'include',
+      headers: {
+        'content-type': 'application/json',
+        ...init.headers,
+      },
+      ...init,
+    });
+
+  let response = await send();
+
+  /**
+   * Transparent session refresh (architecture §38).
+   *
+   * The access token is deliberately short-lived, so an open tab will hit a 401
+   * every 15 minutes. Without this, the user is silently signed out of a session
+   * they never asked to end — caught in review.
+   *
+   * `/auth/refresh` and `/auth/logout` are excluded: retrying either would loop,
+   * and a 401 from `me` genuinely means "signed out".
+   */
+  const isAuthEndpoint = path.startsWith('/auth/refresh') || path.startsWith('/auth/logout');
+  const isSessionProbe = path === '/auth/me';
+
+  if (response.status === 401 && !isAuthEndpoint && !isSessionProbe) {
+    const refreshed = await refreshSession();
+
+    if (refreshed) {
+      response = await send();
+    }
+  }
 
   const payload = (await response.json().catch(() => null)) as {
     data?: T;

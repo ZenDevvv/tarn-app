@@ -21,6 +21,11 @@ import type { FullConfig } from '@playwright/test';
 
 export const E2E_PASSWORD = 'correct-horse-battery';
 
+// Published so the specs sign in as the same account this file created, instead of
+// re-declaring the password. A test that hard-codes it drifts silently the moment
+// one of the two is edited.
+process.env.E2E_PASSWORD = E2E_PASSWORD;
+
 export default async function globalSetup(config: FullConfig): Promise<void> {
   const baseURL = config.projects[0]?.use?.baseURL as string | undefined;
   if (!baseURL) throw new Error('globalSetup needs a baseURL.');

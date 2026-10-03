@@ -1,4 +1,4 @@
-export { hashPassword, needsRehash, verifyPassword } from './password.js';
+export { createDummyHash, hashPassword, needsRehash, verifyPassword } from './password.js';
 export {
   ACCESS_TOKEN_TTL_SECONDS,
   REFRESH_TOKEN_TTL_SECONDS,

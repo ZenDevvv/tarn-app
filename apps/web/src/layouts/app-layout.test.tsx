@@ -93,12 +93,13 @@ describe('AppLayout', () => {
     expect(screen.getByRole('button', { name: /sign out/i })).toBeInTheDocument();
   });
 
-  it('gives the sign-out control a 44px target (DESIGN.md §11)', async () => {
-    renderShell();
-
-    const button = await screen.findByRole('button', { name: /sign out/i });
-    expect(button.className).toContain('min-h-11');
-  });
+  // NOTE ON TOUCH TARGETS: there is deliberately no jsdom test asserting a 44px
+  // target for the sign-out control. jsdom performs no layout, so the only way to
+  // assert it here is to match the Tailwind class name — which tests the styling
+  // system's spelling, not the rendered size, and breaks on any refactor. The
+  // real check is `tests/e2e/smoke.spec.ts` ("interactive targets are at least
+  // 44px"), which measures `getBoundingClientRect()` in a real engine and covers
+  // this control among others.
 
   // A dead "Sign out" button on the sign-in page is a small thing that reads as a
   // bug, so the control is asserted to be absent when there is no session.

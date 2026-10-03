@@ -35,7 +35,29 @@ interface Bucket {
   count: number;
   /** Epoch ms at which this bucket's window ends. */
   resetAt: number;
+  /** Monotonic counter used to pick an eviction victim. */
+  seq: number;
 }
+
+/**
+ * Hard ceiling on tracked keys per limiter.
+ *
+ * Without this, memory is bounded by *requests per window* rather than by
+ * anything fixed: an attacker who varies IP or email can mint unbounded live
+ * buckets, and the sweep cannot help while they are all still inside their
+ * window. That is CWE-770 and it was raised in review.
+ *
+ * 2,048 is generous for a single-user product — far more distinct clients than
+ * this app will ever see in a 15-minute window — while keeping the worst-case
+ * footprint small and the bound cheap to test.
+ *
+ * When the ceiling is reached the oldest live bucket is evicted to make room.
+ * The trade-off is deliberate and stated: an attacker who floods the map can
+ * evict a legitimate user's bucket, which weakens that user's limit for one
+ * window. The alternative — failing closed for unseen keys — lets an attacker
+ * lock out real users at will, which is worse. Bounded memory is the priority.
+ */
+const MAX_BUCKETS = 2_048;
 
 export interface RateLimitOptions {
   /** Maximum requests allowed per window. */
@@ -45,9 +67,8 @@ export interface RateLimitOptions {
   /**
    * Derive the bucket key. Default: client IP.
    *
-   * Login also folds in the submitted email so one attacker cannot lock a victim
-   * out by hammering their address, and so credential stuffing against many
-   * accounts from one IP is still throttled.
+   * Login uses **two** limiters: one keyed by IP+email, and one keyed by IP
+   * alone. The pair is deliberate — see auth.routes.ts.
    */
   keyGenerator?: (req: import('express').Request) => string;
   /** Message returned when the limit trips. DESIGN.md §12: state what to do. */
@@ -65,6 +86,14 @@ export interface RateLimiter {
    * file's requests throttle the next test file's.
    */
   reset(): void;
+  /**
+   * Number of tracked keys.
+   *
+   * Exists so the memory bound can be asserted directly. Driving 10k+ requests
+   * through HTTP to observe an internal map is slow and indirect; asserting the
+   * bound needs the bound itself to be observable.
+   */
+  readonly size: () => number;
 }
 
 export function createRateLimiter(options: RateLimitOptions): RateLimiter {
@@ -73,16 +102,32 @@ export function createRateLimiter(options: RateLimitOptions): RateLimiter {
 
   // Per-limiter state, shared across every request the limiter sees.
   const buckets = new Map<string, Bucket>();
+  let sequence = 0;
 
-  /**
-   * Evict expired buckets. Without this the map grows without bound, which is a
-   * memory leak reachable by anyone who can vary their IP or email.
-   */
+  /** Drop expired buckets. Bounded work: only runs once the map is large. */
   function sweep(now: number): void {
     if (buckets.size < 1000) return;
     for (const [key, bucket] of buckets) {
       if (bucket.resetAt <= now) buckets.delete(key);
     }
+  }
+
+  /**
+   * Make room for one more key, evicting the oldest live bucket if needed.
+   * Runs only at the ceiling, so the common path costs nothing.
+   */
+  function makeRoom(): void {
+    if (buckets.size < MAX_BUCKETS) return;
+
+    let oldestKey: string | undefined;
+    let oldestSeq = Number.POSITIVE_INFINITY;
+    for (const [key, bucket] of buckets) {
+      if (bucket.seq < oldestSeq) {
+        oldestSeq = bucket.seq;
+        oldestKey = key;
+      }
+    }
+    if (oldestKey !== undefined) buckets.delete(oldestKey);
   }
 
   const middleware: RequestHandler = (req, res, next) => {
@@ -92,19 +137,26 @@ export function createRateLimiter(options: RateLimitOptions): RateLimiter {
     const key = keyGenerator(req);
     const existing = buckets.get(key);
 
-    const bucket =
-      existing && existing.resetAt > now ? existing : { count: 0, resetAt: now + windowSeconds * 1000 };
+    if (!existing || existing.resetAt <= now) {
+      // A new window for this key. makeRoom runs first so the map stays bounded
+      // even when an attacker keeps minting fresh keys.
+      makeRoom();
+      sequence += 1;
+      buckets.set(key, { count: 1, resetAt: now + windowSeconds * 1000, seq: sequence });
+    } else {
+      existing.count += 1;
+    }
 
-    bucket.count += 1;
-    buckets.set(key, bucket);
+    const bucket = buckets.get(key)!;
+    const count = bucket.count;
 
-    const remaining = Math.max(0, limit - bucket.count);
+    const remaining = Math.max(0, limit - count);
 
     res.setHeader('RateLimit-Limit', String(limit));
     res.setHeader('RateLimit-Remaining', String(remaining));
     res.setHeader('RateLimit-Reset', String(Math.ceil(bucket.resetAt / 1000)));
 
-    if (bucket.count > limit) {
+    if (count > limit) {
       const retryAfter = Math.max(1, Math.ceil((bucket.resetAt - now) / 1000));
       res.setHeader('Retry-After', String(retryAfter));
       next(
@@ -119,5 +171,5 @@ export function createRateLimiter(options: RateLimitOptions): RateLimiter {
     next();
   };
 
-  return { middleware, reset: () => buckets.clear() };
+  return { middleware, reset: () => buckets.clear(), size: () => buckets.size };
 }

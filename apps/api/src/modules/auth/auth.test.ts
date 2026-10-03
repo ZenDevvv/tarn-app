@@ -415,6 +415,57 @@ describeDb('auth routes', () => {
   });
 
   // -------------------------------------------------------------------------
+  // Rate limiting — PRD §32, architecture §55
+  // -------------------------------------------------------------------------
+
+  describe('rate limiting', () => {
+    /**
+     * Regression guard for CWE-307 (improper restriction of excessive
+     * authentication attempts).
+     *
+     * The first implementation keyed only on IP + email. An attacker spraying
+     * one password across many accounts produced a distinct key per account, so
+     * every attempt landed under the limit and none were throttled. An IP-only
+     * limiter now runs alongside the per-account one.
+     */
+    it('throttles spraying one password across many different accounts', async () => {
+      const app = createApp();
+
+      const responses = [];
+      for (let n = 0; n < 60; n += 1) {
+        responses.push(
+          await request(app)
+            .post(`${API_PREFIX}/auth/login`)
+            .send({ email: `victim-${n}-${uniq()}@example.com`, password: 'sprayed-password' }),
+        );
+      }
+
+      const limited = responses.filter((r) => r.status === 429);
+      // Every (IP, email) pair here is unique, so the per-account limiter cannot
+      // be what stopped it. The IP limiter must be.
+      expect(limited.length).toBeGreaterThan(0);
+      expect(limited[0]?.body.error.code).toBe('login_rate_limited');
+    });
+
+    it('still allows a normal user several wrong attempts before blocking them', async () => {
+      const { email } = await registerUser();
+      const app = createApp();
+
+      const responses = [];
+      for (let n = 0; n < 6; n += 1) {
+        responses.push(
+          await request(app)
+            .post(`${API_PREFIX}/auth/login`)
+            .send({ email, password: `wrong-${n}` }),
+        );
+      }
+
+      // Mistyping is not abuse, and the per-account ceiling is 10.
+      expect(responses.every((r) => r.status === 401)).toBe(true);
+    });
+  });
+
+  // -------------------------------------------------------------------------
   // Cross-user isolation — PRD §35 item 12
   // -------------------------------------------------------------------------
 

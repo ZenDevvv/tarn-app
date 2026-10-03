@@ -9,7 +9,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LoginPage } from '../../../routes/login-page';
 import { RegisterPage } from '../../../routes/register-page';
@@ -18,13 +18,16 @@ import * as apiClient from '../../../lib/api-client';
 
 const USER = { id: 'u1', email: 'sam@example.com', name: 'Sam', createdAt: '2026-01-01' };
 
-/** Renders the guards with a probe so the resulting path can be asserted. */
+/**
+ * Renders the guards.
+ *
+ * There is no `data-testid` path probe. Asserting on one couples the test to a
+ * test-only element in the tree and lets it pass even if the router never moved —
+ * the probe renders at the original path too. Instead each test waits for the
+ * *destination content*, which only exists if navigation actually happened.
+ */
 function renderAt(initialPath: string) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-
-  function PathProbe() {
-    return <span data-testid="path">{useLocation().pathname}</span>;
-  }
 
   function Protected() {
     return (
@@ -37,7 +40,6 @@ function renderAt(initialPath: string) {
   return render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter initialEntries={[initialPath]}>
-        <PathProbe />
         <Routes>
           <Route path="/dashboard" element={<Protected />} />
           <Route
@@ -86,11 +88,10 @@ describe('RequireAuth', () => {
     signedOut();
     renderAt('/dashboard');
 
-    // Wait for the destination to render, not just for the probe: the probe is
-    // always present, so asserting on it immediately would race the redirect.
+    // The sign-in form only renders at /login, so its presence is the proof of
+    // navigation — no test-only probe needed.
     await screen.findByRole('heading', { name: 'Sign in' });
 
-    expect(screen.getByTestId('path')).toHaveTextContent('/login');
     expect(screen.queryByText('Secret dashboard')).not.toBeInTheDocument();
   });
 
@@ -119,7 +120,6 @@ describe('RedirectIfAuthed', () => {
     // The protected page appearing *is* the signal that the redirect happened.
     await screen.findByText('Secret dashboard');
 
-    expect(screen.getByTestId('path')).toHaveTextContent('/dashboard');
     expect(screen.queryByRole('heading', { name: 'Sign in' })).not.toBeInTheDocument();
   });
 
@@ -155,7 +155,10 @@ describe('LoginPage', () => {
       email: 'sam@example.com',
       password: 'correct-horse-battery',
     });
-    expect(await screen.findByTestId('path')).toHaveTextContent('/dashboard');
+
+    // The protected page only renders at /dashboard, so its presence is the proof
+    // the navigation happened.
+    expect(await screen.findByText('Secret dashboard')).toBeInTheDocument();
   });
 
   it('announces a failure and keeps the user on the form', async () => {

@@ -98,8 +98,8 @@ Nothing here is a user-facing feature. This is the groundwork the features will 
 
 ### Added — verification
 
-- **164 unit, integration, schema, and script tests** across six packages. Of those, **153
-  run without a database and 7 are database integration tests that require one** — those 7
+- **171 unit, integration, schema, and script tests** across six packages. Of those, **153
+  run without a database and 36 are database-backed tests that require one** — those 7
   cover referential integrity, cascade behaviour, unique constraints, and cross-user
   isolation, and they *skip loudly* rather than passing silently when no database is
   reachable. So a local run with Docker stopped reports 153 passing and 7 skipped. The

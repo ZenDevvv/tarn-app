@@ -3,7 +3,7 @@
  *
  * Business logic lives here, never in route files (architecture §92 rule 2).
  */
-import { hashPassword, needsRehash, verifyPassword } from '@tarn/auth';
+import { createDummyHash, hashPassword, needsRehash, verifyPassword } from '@tarn/auth';
 import { AppError } from '../../middleware/error-handler.js';
 import * as repo from './auth.repository.js';
 import type { AuthUser } from './auth.repository.js';
@@ -46,14 +46,14 @@ export async function register(input: RegisterInput): Promise<AuthResult> {
  * **Enumeration defence.** A missing user and a wrong password must produce the
  * same error, so an attacker cannot use the login form to discover which email
  * addresses have accounts. When the user does not exist we still run a hash
- * verification against a dummy hash, which costs the same time as a real check
- * and removes the timing difference as well as the message difference.
+ * verification, which costs the same time as a real check and removes the timing
+ * difference as well as the message difference.
  */
 export async function login(input: { email: string; password: string }): Promise<AuthResult> {
   const record = await repo.findByEmail(input.email);
 
   if (!record) {
-    await verifyPassword(input.password, DUMMY_HASH);
+    await verifyPassword(input.password, await dummyHash());
     throw invalidCredentials();
   }
 
@@ -97,9 +97,16 @@ function invalidCredentials(): AppError {
 }
 
 /**
- * A real scrypt hash of an unguessable value, used only to equalise timing on the
- * unknown-email path. It can never be matched, because the input is random.
+ * Memoised dummy hash for the unknown-email path.
+ *
+ * Built once per process and cached. Generating it costs a full scrypt operation,
+ * and regenerating on every failed sign-in would double the work of the path it
+ * exists to make indistinguishable. Built via `createDummyHash`, so it always
+ * matches the current cost parameters rather than a literal that can drift.
  */
-const DUMMY_HASH =
-  'scrypt$32768$8$1$AAAAAAAAAAAAAAAAAAAAAA==$' +
-  'ZG8gbm90IG1hdGNoIGFueXRoaW5nLXBsYWNlaG9sZGVyLWJ5LWRlc2lnbi1wYWRkaW5nLTAwMDAwMDAwMDAwMDA=';
+let dummyHashPromise: Promise<string> | undefined;
+
+function dummyHash(): Promise<string> {
+  dummyHashPromise ??= createDummyHash();
+  return dummyHashPromise;
+}

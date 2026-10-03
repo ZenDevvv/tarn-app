@@ -11,7 +11,7 @@ This governance file is required by root `AGENTS.md` and the WWG readiness model
 **A full verification path exists and runs.** As of 2026-10-03:
 
 - Vitest 5.0 runs across all six workspace packages.
-- **164 tests pass**: 7 types, 29 auth (13 password + 14 token + 2 dummy-hash), 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 47 API (13 smoke + 30 auth route + 4 environment validation), 27 React. **Requires Docker running** — without it the 7 database integration tests skip loudly and the count is 153, not 160.
+- **171 tests pass**: 7 types, 30 auth (13 password + 14 token + 3 dummy-hash), 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 54 API (16 smoke/envelope/CORS/error/async + 32 auth route + 6 rate limiter), 26 React. **Requires Docker running** — without it the 7 database integration tests **and the 29 auth route tests** skip loudly and the count is 135, not 171.
 - **Playwright passes 36 test instances** across a desktop and a 360px project (18 cases × 2 projects), in a real browser, covering a real auth journey.
 - `pnpm lint` is clean and gated in CI (ESLint 9 flat config).
 - `pnpm format:check` is clean and gated in CI since 2026-10-02 (REC-0011).
@@ -64,12 +64,12 @@ Per `job-application-tracker-project-architecture.md` §62 and §63, the accepte
 
 | Layer | Tool | Scope | Status |
 |---|---|---|---|
-| Unit | Vitest | utilities, status transitions, analytics calculations, validation schemas, business-rule helpers | ✅ installed, 36 tests (types 7, auth 29) |
+| Unit | Vitest | utilities, status transitions, analytics calculations, validation schemas, business-rule helpers | ✅ installed, 37 tests (types 7, auth 30) |
 | Schema scope | Vitest | MVP table set, enums, ownership columns, required indexes | ✅ installed, 17 tests |
 | Repository scripts | Vitest | root `db:*` script wiring — guards the `pnpm --filter` built-in collision | ✅ installed, 7 tests (REC-0016) |
 | Database integration | Vitest + Postgres | cascades, cross-user isolation, unique constraints, hash verification | ✅ installed, 7 tests, skips loudly without a DB |
-| API | Vitest + Supertest | authentication, ownership validation, application CRUD, filters, status updates, timeline creation, follow-ups | ⚠️ 43 tests: 13 smoke/envelope/CORS/error + **30 auth route** (register, login, logout, refresh, me, cookie flags, enumeration defence, token-kind confusion, rate limiting, cross-user isolation). **No CRUD route tests** — those arrive with the features. |
-| React component | React Testing Library + jsdom | application form, filters, status display, loading/error states | ⚠️ 27 tests: the shell, the dashboard placeholder, the auth route guard, and the sign-in/registration pages. No feature-component tests, because no features exist. |
+| API | Vitest + Supertest | authentication, ownership validation, application CRUD, filters, status updates, timeline creation, follow-ups | ⚠️ 54 tests: 16 smoke/envelope/CORS/error/async-handler/env-validation + **32 auth route** (register, login, logout, refresh, me, cookie flags, enumeration defence, token-kind confusion, cross-user isolation) + 6 rate-limiter units. **No CRUD route tests** — those arrive with the features. |
+| React component | React Testing Library + jsdom | application form, filters, status display, loading/error states | ⚠️ 26 tests: the shell, the dashboard placeholder, the auth route guard, and the sign-in/registration pages. No feature-component tests, because no features exist. |
 | End-to-End | Playwright | app shell, landmarks, focus order, contrast in both themes, 360px layout, 44px targets | ✅ **36 passing** across desktop + 360px, including a real **register → dashboard → sign out → sign in → protected-route** journey. Application journeys not written — those features do not exist yet. |
 
 CI runs install, Prisma generate, `migrate deploy`, lint, format check, dependency audit, typecheck, test, and build, plus a parallel `e2e` job that installs Chromium and runs the browser suite. Three checks are required by branch protection: `verify`, `dependency-review`, and `CodeRabbit`. The `e2e` job runs and reports on every pull request but is deliberately **not** required — see `.wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md`.
@@ -133,7 +133,7 @@ A process note worth keeping: the first version of the touch-target test **logge
 As of 2026-10-03:
 
 - Regression baseline: present
-- Executable tests: **164 unit/integration test instances** (`pnpm test`), plus **36 Playwright test instances** (`npx playwright test` = 18 cases × 2 projects). These are not summed into one figure — see the counting note below.
+- Executable tests: **171 unit/integration test instances** (`pnpm test`), plus **36 Playwright test instances** (`npx playwright test` = 18 cases × 2 projects). These are not summed into one figure — see the counting note below.
 - Counting rule: **report test instances per suite, never a combined "assertion" total.** The two runners measure different things, and Playwright's 24 are instances of 12 cases, not 24 assertions. Several tests each assert multiple conditions internally, so any single combined number is misleading.
 - Database migration: committed and applied; verified table set matches the MVP scope exactly
 - Open gaps: no CRUD route tests for applications (that feature does not exist yet); no Husky/lint-staged

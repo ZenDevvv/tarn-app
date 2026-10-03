@@ -148,7 +148,8 @@ describe('asyncHandler bridges rejections to the error handler', () => {
       await Promise.reject(new Error('raw failure with no status'));
     }),
   );
-  app.use(requireAuth);
+  // No other middleware before the error handler — a stray guard here would
+  // reject first and mask the thing under test.
   app.use((error: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
     const status = error instanceof AppError ? error.status : 500;
     res.status(status).json({ code: error instanceof AppError ? error.code : 'internal_error' });

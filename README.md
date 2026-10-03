@@ -97,7 +97,7 @@ Everything below runs in GitHub Actions on every push:
 | `pnpm audit --audit-level=high` | no known high-severity dependency vulnerabilities |
 | dependency review | a PR cannot introduce a vulnerable dependency |
 | `pnpm typecheck` | types across all six packages |
-| `pnpm test` | 164 unit and integration tests (153 without a running database — see Troubleshooting) |
+| `pnpm test` | 171 unit and integration tests (135 without a running database — see Troubleshooting) |
 | `pnpm build` | both apps compile |
 | Playwright job | 36 browser and accessibility test instances in a real engine |
 
@@ -152,7 +152,7 @@ The generated Prisma Client is stale or was never generated. Fix with
 `pnpm db:generate`. This also needs re-running after any change to
 `packages/database/prisma/schema.prisma`.
 
-**`pnpm test` shows 153 passing instead of 164, with 7 skipped.**
+**`pnpm test` shows 135 passing instead of 171, with 36 skipped.**
 PostgreSQL is not reachable. The 7 skipped tests are the database integration
 tests in `packages/database/tests/integration.test.ts`, and they skip loudly
 rather than passing silently. Start it with `docker compose up -d` and re-run.

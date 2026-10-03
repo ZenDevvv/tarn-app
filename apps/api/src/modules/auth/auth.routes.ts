@@ -46,7 +46,24 @@ const registerLimiter = createRateLimiter({
   code: 'register_rate_limited',
 });
 
-const loginLimiter = createRateLimiter({
+/**
+ * Login uses **two** limiters, and the second exists because of review.
+ *
+ * The obvious limiter keys on IP + email, so a user who mistypes a password a
+ * few times is not blocked. But that key is also trivially defeated: an attacker
+ * spraying **one password across a thousand accounts** produces a thousand
+ * distinct (IP, email) keys, every one under the limit. That is CWE-307, raised
+ * in review of this module.
+ *
+ *   - `loginPerAccountLimiter` (10 / 15 min, IP + email) — stops hammering one account
+ *   - `loginPerIpLimiter` (50 / 15 min, IP) — stops spraying many accounts
+ *
+ * The generous IP ceiling is deliberate. Everyone behind one NAT or corporate
+ * proxy shares an IP, so a tight IP limit would lock out legitimate users. The
+ * per-account limiter still gives a real user a personal limit, and 50 sprayed
+ * attempts in a quarter hour is far above what a legitimate shared network does.
+ */
+const loginPerAccountLimiter = createRateLimiter({
   limit: 10,
   windowSeconds: 15 * 60,
   message: 'Too many sign-in attempts. Try again in a few minutes.',
@@ -57,11 +74,23 @@ const loginLimiter = createRateLimiter({
   },
 });
 
+const loginPerIpLimiter = createRateLimiter({
+  limit: 50,
+  windowSeconds: 15 * 60,
+  message: 'Too many sign-in attempts from this network. Try again in a few minutes.',
+  code: 'login_rate_limited',
+});
+
 // Every controller is async and every one can throw (validation, bad credentials,
 // a missing user). Each is wrapped so its rejection reaches the error handler
 // instead of becoming an unhandled promise rejection. See middleware/async-handler.ts.
 router.post('/register', registerLimiter.middleware, asyncHandler(controller.register));
-router.post('/login', loginLimiter.middleware, asyncHandler(controller.login));
+router.post(
+  '/login',
+  loginPerIpLimiter.middleware,
+  loginPerAccountLimiter.middleware,
+  asyncHandler(controller.login),
+);
 router.post('/logout', asyncHandler(controller.logout));
 router.post('/refresh', asyncHandler(controller.refresh));
 router.get('/me', requireAuth, asyncHandler(controller.me));
@@ -69,5 +98,6 @@ router.get('/me', requireAuth, asyncHandler(controller.me));
 /** Test seam — clears limiter counters so suites cannot throttle each other. */
 export const __resetLimiters = () => {
   registerLimiter.reset();
-  loginLimiter.reset();
+  loginPerAccountLimiter.reset();
+  loginPerIpLimiter.reset();
 };
