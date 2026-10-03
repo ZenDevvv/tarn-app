@@ -412,7 +412,7 @@ Do not claim production readiness for:
 
   **Not met:** 4 (detail view), 8 (follow-ups — no endpoints), 9 (dashboard metrics), 10 (search and filter — REC-0026), 11 (desktop and mobile interface — the dashboard is a placeholder).
 
-  **The remaining work is not only UI work.** Items 3, 4, 9 and 11 need a web interface. But items 8 and 10 also need endpoints that do not exist: there is no follow-up route at all, and the applications list does not accept the search or filter inputs its own schemas define. So the applications UI is the next module **alongside** those API gaps, not instead of them.
+  **The remaining work is not only UI work.** Items 3, 4, 9 and 11 need a web interface. But items 7, 8, 9 and 10 also need endpoints that do not exist: there is no route for adding a manual timeline event (PRD §7.6), no follow-up route at all, no `GET /api/v1/analytics/dashboard` (architecture §26), and the applications list does not accept the search or filter inputs its own schemas define. So the applications UI is the next module **alongside** those API gaps, not instead of them.
 - **Session revocation.** Stateless tokens cannot be revoked server-side. A session is capped at 30 days and cannot be extended by renewal, but there is no kill switch for an individual session.
 - **Rate limiting as a security control.** It is per-process and in-memory, so it resets on restart and does not survive horizontal scaling.
 - **Password recovery.** Not implemented, deliberately.
