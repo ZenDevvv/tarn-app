@@ -390,14 +390,42 @@ describeDb('applications', () => {
       expect(response.body.data.priority).toBeNull();
     });
 
-    it('ignores a client-supplied userId', async () => {
+    it('rejects a client-supplied userId', async () => {
       const api = await signIn('NoReassign');
       const { id } = await createApplication(api);
 
-      await api.patch(`${API_PREFIX}/applications/${id}`).send({ userId: 'clxsomeoneelse00000000' });
+      // The status and error code are asserted, not just the resulting ownership.
+      // Checking only `stored.userId` would pass whether the key was rejected or
+      // silently dropped, so the test could not tell the safe behaviour from the
+      // unsafe one it exists to catch.
+      const response = await api
+        .patch(`${API_PREFIX}/applications/${id}`)
+        .send({ userId: 'clxsomeoneelse00000000' });
+
+      expect(response.status).toBe(422);
+      expect(response.body.error.code).toBe('validation_failed');
 
       const stored = await prisma.application.findUniqueOrThrow({ where: { id } });
       expect(stored.userId).toBe(api.userId);
+    });
+
+    it('rejects status here so every status change goes through the route that records it', async () => {
+      const api = await signIn('NoSilentStatus');
+      const { id } = await createApplication(api);
+
+      // `PATCH /:id` must not be a second way to change status. If it were, a
+      // client could move an application and leave no history entry, breaking the
+      // guarantee PRD §4.3 rests on. See D-0010.
+      const response = await api.patch(`${API_PREFIX}/applications/${id}`).send({ status: 'OFFER' });
+
+      expect(response.status).toBe(422);
+      expect(response.body.error.code).toBe('validation_failed');
+
+      const stored = await prisma.application.findUniqueOrThrow({ where: { id } });
+      expect(stored.status).toBe('APPLIED');
+
+      const timeline = await api.get(`${API_PREFIX}/applications/${id}/timeline`);
+      expect(timeline.body.data).toHaveLength(1);
     });
 
     it('rejects edits to company or job details rather than ignoring them', async () => {

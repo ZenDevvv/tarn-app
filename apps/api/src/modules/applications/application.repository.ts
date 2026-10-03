@@ -12,6 +12,7 @@
  * Architecture §36, §39 and PRD §33 make this the project's primary guarantee.
  */
 import { prisma } from '@tarn/database';
+import type { ApplicationPriority, ApplicationStatus, JobPlatform, Prisma } from '@tarn/database';
 
 /** The application shape returned to clients, with its job and company resolved. */
 export interface ApplicationWithRelations {
@@ -53,8 +54,13 @@ const withRelations = {
   },
 } as const;
 
-/** Prisma transaction client type, for use inside `prisma.$transaction`. */
-type Tx = Parameters<Parameters<typeof prisma.$transaction>[0]>[0];
+/**
+ * Prisma transaction client, for use inside `prisma.$transaction`.
+ *
+ * Exported because a write that must be atomic with another has to accept the
+ * transaction client as an argument rather than reaching for the global one.
+ */
+export type Tx = Prisma.TransactionClient;
 
 export function listApplications(userId: string): Promise<ApplicationWithRelations[]> {
   return prisma.application.findMany({
@@ -117,7 +123,7 @@ export function createJob(
     userId: string;
     companyId: string;
     title: string;
-    platform: string;
+    platform: JobPlatform;
     location?: string | null;
     salaryMin?: number | null;
     salaryMax?: number | null;
@@ -130,7 +136,7 @@ export function createJob(
       userId: input.userId,
       companyId: input.companyId,
       title: input.title.trim(),
-      platform: input.platform as never,
+      platform: input.platform,
       location: input.location ?? null,
       salaryMin: input.salaryMin ?? null,
       salaryMax: input.salaryMax ?? null,
@@ -146,8 +152,8 @@ export function createApplication(
   input: {
     userId: string;
     jobId: string;
-    status: string;
-    priority?: string | null;
+    status: ApplicationStatus;
+    priority?: ApplicationPriority | null;
     appliedAt?: Date | null;
     nextAction?: string | null;
     nextActionDueAt?: Date | null;
@@ -158,8 +164,8 @@ export function createApplication(
     data: {
       userId: input.userId,
       jobId: input.jobId,
-      status: input.status as never,
-      priority: (input.priority ?? null) as never,
+      status: input.status,
+      priority: input.priority ?? null,
       appliedAt: input.appliedAt ?? null,
       nextAction: input.nextAction ?? null,
       nextActionDueAt: input.nextActionDueAt ?? null,
@@ -194,10 +200,26 @@ export function createTimelineEvent(
   });
 }
 
-export function updateApplication(userId: string, id: string, data: Record<string, unknown>) {
-  return prisma.application.updateMany({
-    // Scoped: an update that matched nothing is reported as "not found" by the
-    // service, which is the same response another user's id produces.
+/**
+ * Update an application, scoped to its owner.
+ *
+ * `client` defaults to the global Prisma client but **must be passed the
+ * transaction client** when the update has to be atomic with another write — as
+ * it is for a status change, which is recorded in the timeline in the same
+ * breath. Defaulting to the global client made the status update commit on its
+ * own, so a failing timeline insert could leave the status changed with no
+ * history entry, which is exactly what PRD §4.3 says must not happen.
+ *
+ * Scoped: an update that matched nothing is reported as "not found" by the
+ * service, which is the same response another user's id produces.
+ */
+export function updateApplication(
+  userId: string,
+  id: string,
+  data: Prisma.ApplicationUpdateManyMutationInput,
+  client: Tx | typeof prisma = prisma,
+) {
+  return client.application.updateMany({
     where: { id, userId },
     data,
   });

@@ -97,7 +97,7 @@ Everything below runs in GitHub Actions on every push:
 | `pnpm audit --audit-level=high` | no known high-severity dependency vulnerabilities |
 | dependency review | a PR cannot introduce a vulnerable dependency |
 | `pnpm typecheck` | types across all six packages |
-| `pnpm test` | 216 unit and integration tests (155 without a running database — see Troubleshooting) |
+| `pnpm test` | 217 unit and integration tests (155 without a running database — see Troubleshooting) |
 | `pnpm build` | both apps compile |
 | Playwright job | 36 browser and accessibility test instances in a real engine |
 
@@ -152,17 +152,18 @@ The generated Prisma Client is stale or was never generated. Fix with
 `pnpm db:generate`. This also needs re-running after any change to
 `packages/database/prisma/schema.prisma`.
 
-**`pnpm test` shows 155 passing instead of 216, with 61 skipped.**
-PostgreSQL is not reachable, and **two** suites skip — loudly, never silently:
+**`pnpm test` shows 155 passing instead of 217, with 62 skipped.**
+PostgreSQL is not reachable, and **three** suites skip — loudly, never silently:
 
 | Suite | Skipped | Covers |
 |---|---|---|
 | `packages/database/tests/integration.test.ts` | 7 | referential integrity, cascade deletes, cross-user isolation at the persistence layer |
-| `apps/api/src/modules/auth/auth.test.ts` | 29 | the whole auth surface: registration, sign-in, cookies, enumeration defence, token kinds, rate limiting, cross-user isolation |
+| `apps/api/src/modules/auth/auth.test.ts` | 33 | the whole auth surface: registration, sign-in, cookies, enumeration defence, token kinds, rate limiting, cross-user isolation |
+| `apps/api/src/modules/applications/application.test.ts` | 22 | application routes: create, read, edit, delete, status change, timeline, and **cross-user isolation against real user-owned data** |
 
 Start it with `docker compose up -d`, then `pnpm db:deploy && pnpm db:seed`, and re-run.
 
-Do not treat 155 as equivalent to 216. Between them the skipped suites carry the
+Do not treat 155 as equivalent to 217. Between them the skipped suites carry the
 ownership-boundary and session-handling coverage — the properties that matter
 most — though they also cover registration, cookies, and rate limiting, so they
 are not *only* about ownership.

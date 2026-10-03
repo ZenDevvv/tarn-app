@@ -7,6 +7,7 @@ import { forbiddenOrMissing, notFound } from '../../middleware/error-handler.js'
 import * as repo from './application.repository.js';
 import type { ApplicationWithRelations } from './application.repository.js';
 import type { CreateApplicationInput, UpdateApplicationInput } from '@tarn/validation';
+import type { ApplicationStatus, Prisma } from '@tarn/database';
 
 /**
  * Canonical timeline event types (PRD §7.6).
@@ -111,8 +112,9 @@ export async function update(
   // identical between "missing" and "someone else's".
   await findById(userId, id);
 
-  const data: Record<string, unknown> = {};
-  if (input.status !== undefined) data.status = input.status;
+  // No `status` here: `updateApplicationSchema` rejects it, and a status change
+  // must go through `changeStatus` so it is recorded in the timeline.
+  const data: Prisma.ApplicationUpdateManyMutationInput = {};
   if (input.priority !== undefined) data.priority = input.priority;
   if (input.appliedAt !== undefined) data.appliedAt = input.appliedAt;
   if (input.nextAction !== undefined) data.nextAction = input.nextAction;
@@ -135,7 +137,7 @@ export async function update(
 export async function changeStatus(
   userId: string,
   id: string,
-  status: string,
+  status: ApplicationStatus,
 ): Promise<ApplicationWithRelations> {
   const before = await findById(userId, id);
 
@@ -146,7 +148,10 @@ export async function changeStatus(
   }
 
   await repo.transaction(async (tx) => {
-    await repo.updateApplication(userId, id, { status });
+    // `tx` is passed so the status change and its history entry commit together.
+    // Without it the update runs on the global client, commits immediately, and a
+    // failing insert leaves the status changed with nothing recorded.
+    await repo.updateApplication(userId, id, { status }, tx);
     await repo.createTimelineEvent(tx, {
       userId,
       applicationId: id,

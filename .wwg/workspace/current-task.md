@@ -326,8 +326,8 @@ expose one user's applications to the other through the relation.
 
 ### Counts
 
-216 tests (was 190): 7 types, 35 auth, 28 validation, 31 database, 79 API, 36
-React. 155 pass and 61 skip without a database.
+217 tests (was 190): 7 types, 35 auth, 28 validation, 31 database, 80 API, 36
+React. 155 pass and 62 skip without a database.
 
 ## Next task — awaiting owner signal
 

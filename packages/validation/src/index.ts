@@ -179,7 +179,15 @@ export const createApplicationSchema = z.object({
 /**
  * Edit an application.
  *
- * Company and job are **not** editable here. They are separate entities
+ * **`status` is deliberately absent.** It is changeable only through
+ * `PATCH /applications/:id/status`, which records a timeline entry in the same
+ * transaction as the change. Accepting it here too would give a client a second
+ * route to a status change that skips history entirely — a `PATCH /:id` carrying
+ * `{ status: 'OFFER' }` would move the application and record nothing, which
+ * breaks the "every status change is recorded" guarantee PRD §4.3 rests on.
+ * One way to change status, and it always records. See D-0010.
+ *
+ * Company and job are **not** editable here either. They are separate entities
  * (terminology: "Job and Application are distinct entities and must never be
  * conflated", PRD §11), and editing a job would silently rewrite the record for
  * every other application pointing at it. That needs its own endpoints.
@@ -188,11 +196,11 @@ export const createApplicationSchema = z.object({
  * client sending `{ job: { title: 'New title' } }` would get a success response
  * and reasonably believe the job had been renamed. Rejecting with 422 says "that
  * is not editable here" instead of accepting a lie. It also stops a typo'd field
- * name from being quietly ignored.
+ * name from being quietly ignored, and it is what turns a stray `status` into a
+ * visible 422 rather than an unrecorded status change.
  */
 export const updateApplicationSchema = z
   .object({
-    status: applicationStatusSchema.optional(),
     priority: applicationPrioritySchema.nullish(),
     appliedAt: z.coerce.date().nullish(),
     nextAction: z.string().trim().max(500).nullish(),

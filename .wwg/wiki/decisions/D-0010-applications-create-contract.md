@@ -75,12 +75,70 @@ than quietly forgotten.
 - Search, filtering, sorting and pagination are **not** implemented even though
   `applicationFiltersSchema` exists (architecture §28-§31). Recorded as REC-0026.
 
+## Addendum — 2026-10-04, after CodeRabbit review on PR #43
+
+Two behaviours changed in review. Both were accepted as correct rather than
+defended.
+
+### `status` was removed from `updateApplicationSchema`
+
+The schema accepted `status` on the general `PATCH /applications/:id`, and the
+service wrote it **without** recording a timeline entry. So a client could send
+`{"status": "OFFER"}` to the general PATCH, move the application, and leave no
+history — bypassing the `/status` route that D-0010 and Project Truth describe as
+the path that records every status change. That is a direct contradiction of the
+"every status change is recorded" guarantee PRD §4.3 rests on.
+
+Two ways out were considered:
+
+- **Record a timeline event whenever `status` is set on the general PATCH.**
+  Keeps a single endpoint for clients doing a whole-form save. But it leaves two
+  routes doing the same thing, so the invariant now depends on both staying in
+  step — and the same bug can be reintroduced on either.
+- **Reject it.** One route changes status; it always records.
+
+Rejected the first. The second is in place, and `.strict()` turns a stray `status`
+into a visible 422 rather than an unrecorded change.
+
+### A status update was escaping its transaction
+
+`repo.updateApplication` used the global Prisma client even when called inside
+`prisma.$transaction`, so the status change committed on its own and a failing
+timeline insert could leave the status changed with no history — the same
+guarantee, broken one layer down. It now takes an optional client and the
+status-change path passes the transaction client.
+
+### Also tightened
+
+- `platform`, `status` and `priority` were widened to `string` and cast with
+  `as never`, which bypasses Prisma's enum checking. They are now typed
+  `JobPlatform`, `ApplicationStatus` and `ApplicationPriority`. `apps/api/src/**`
+  forbids type assertions used to silence the compiler, and these were exactly
+  that.
+- A test that only asserted resulting ownership could not tell a rejected payload
+  from a silently dropped one. It now asserts 422 and the error code, and a new
+  test covers the `status` rejection.
+
+### Accepted, not fixed — REC-0028
+
+Company find-or-create is not atomic. Concurrent creates can each insert a
+company row, because `Company` has no uniqueness constraint on
+`(userId, name)`. Both rows carry the same `userId`, so no ownership boundary is
+crossed — it is untidy data, not a leak. A unique index is a schema change to a
+governed MVP table and so needs a new owner decision; a retry loop would be worse,
+because with no constraint there is no conflict to detect.
+
 ## Do Not
 
 - Do not add a `userId`, `companyId` or `jobId` field to the create schema.
   Every one of them is a way for a client to aim a write at someone else's data.
 - Do not make `updateApplicationSchema` non-strict to "accept whatever the client
   sends". That reintroduces the silent-drop failure.
+- Do not add `status` back to `updateApplicationSchema`. One route changes status
+  and it always records history.
+- Do not pass the global Prisma client to a write that must be atomic with another.
+  `updateApplication` defaults to it for standalone edits; the status-change path
+  must pass `tx`.
 - Do not relax the schema-scope test to add the `APP-` reference without a new
   owner decision amending D-0004.
 - Do not describe sessions as revocable, or the applications module as having a UI.

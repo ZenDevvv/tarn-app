@@ -85,6 +85,7 @@ The company is **found-or-created by name, scoped to the owner**. There is no wa
 
 **Deliberately not implemented, and why:**
 
+- **`status` is not editable through `PATCH /applications/:id`.** It is changeable only through `PATCH /applications/:id/status`, which writes the status and its timeline entry in one transaction. Accepting it on both routes would give a client a second path that moves an application and records nothing, breaking the guarantee PRD §4.3 rests on. A `PATCH /:id` carrying `status` returns **422**. This was caught in review, not designed in.
 - **The `APP-2026-0001` human-readable reference (PRD §7.3).** Adding a column means changing a governed MVP table and its scope test — the same blocker that stopped the `sessions` table. Deferred by owner decision 2026-10-04; the cuid primary key is used instead. Recorded as REC-0025.
 - **Editing company or job details through an application.** `updateApplicationSchema` is `.strict()`, so such a payload is **rejected with 422** rather than silently ignored. Job and company are distinct entities (PRD §11) and need their own endpoints; silently dropping the edit would leave a caller believing a job was renamed.
 - **Search, filtering, sorting and pagination.** `applicationFiltersSchema` exists in the shared validation package but the list endpoint does not yet accept it. Architecture §28-§31 cover it; recorded as REC-0026.
@@ -115,7 +116,7 @@ Verified on 2026-10-01 by execution:
 
 - `pnpm lint` — clean (ESLint 9 flat config; gate proven to fail on a seeded violation, then reverted)
 - `pnpm typecheck` — clean, including `tests/tsconfig.json` for the Playwright specs
-- `pnpm test` — **216 tests passing**: 7 types, 35 auth (13 password + 19 token + 3 dummy-hash), 28 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 79 API (21 smoke/envelope/CORS/error/async/env + 33 auth route + 5 rate limiter + 21 application route), 36 React
+- `pnpm test` — **217 tests passing**: 7 types, 35 auth (13 password + 19 token + 3 dummy-hash), 28 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 80 API (21 smoke/envelope/CORS/error/async/env + 33 auth route + 5 rate limiter + 22 application route), 36 React
 - `npx playwright test` — **36 passing test instances** (18 cases × 2 projects) across desktop and 360px, in a real browser, covering a real auth journey
 - `pnpm build` — both apps build; web 279 kB (90 kB gzip)
 - `pnpm format:check` — **clean**; enforced in CI since 2026-10-02
@@ -136,7 +137,7 @@ A note on counting: **24 is Playwright test *instances*, not assertions.** The b
 Re-verified 2026-10-02 by execution, with the database now actually running:
 
 - `pnpm lint`, `pnpm typecheck`, and `pnpm build` are clean.
-- `pnpm test` reports **216 passing and 0 skipped** with Docker Desktop running. Without a database it reports **155 passing and 61 skipped** — measured, not assumed, by running against an unreachable `DATABASE_URL`. The skipped set is **two** suites, not one: the 7 database integration tests *and* the 54 auth + application route tests, because both need a live database. **155 is not equivalent to 216**; the skipped tests are the ones covering the ownership boundary.
+- `pnpm test` reports **217 passing and 0 skipped** with Docker Desktop running. Without a database it reports **155 passing and 62 skipped** — measured, not assumed, by running against an unreachable `DATABASE_URL`. The skipped set is **two** suites, not one: the 7 database integration tests *and* the 55 auth + application route tests, because both need a live database. **155 is not equivalent to 217**; the skipped tests are the ones covering the ownership boundary.
 - Two failure modes were hit and fixed on 2026-10-02, both consequences of the directory rename rather than code defects, and both now documented in `README.md` § Troubleshooting: a stale `node_modules` whose junctions pointed at the old directory (`MODULE_NOT_FOUND` for `vitest`, fixed with `pnpm install --frozen-lockfile`), and a stale generated Prisma Client (`no exported member 'ApplicationStatus'`, fixed with `pnpm db:generate`). An agent starting work in a renamed checkout should expect both.
 - `pnpm format:check` **now passes** and is enforced in CI. It previously failed on 50 pre-existing files; see REC-0011.
 - **The cross-user isolation test actually executes now.** `packages/database/tests/integration.test.ts:145` (`scopes queries by userId so one user cannot read another's rows`) was previously in the skipped set. This is the single most relevant precondition for the auth module's ownership boundary, and it had no local coverage until 2026-10-02.
@@ -401,6 +402,7 @@ Do not claim production readiness for:
 - **Rate limiting as a security control.** It is per-process and in-memory, so it resets on restart and does not survive horizontal scaling.
 - **Password recovery.** Not implemented, deliberately.
 - **Search, filtering, sorting, pagination.** The shared schemas exist; the applications list endpoint does not use them yet.
+- **Company de-duplication under concurrency.** Two simultaneous `POST /applications` for the same employer can each create a company row, because `Company` has no uniqueness constraint on `(userId, name)`. Both rows belong to the same user, so nothing crosses an ownership boundary — it is untidy data, not a leak. Fixing it needs a unique index, which is a schema change to a governed MVP table. Recorded as REC-0028.
 - Any performance, reliability, or accessibility conformance claim beyond what the browser suite asserts.
 
 Authentication and the applications API **are** implemented and tested. That is a different statement from "ready for production", and both are recorded here so neither is overstated later.
