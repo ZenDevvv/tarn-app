@@ -35,8 +35,6 @@ interface Bucket {
   count: number;
   /** Epoch ms at which this bucket's window ends. */
   resetAt: number;
-  /** Monotonic counter used to pick an eviction victim. */
-  seq: number;
 }
 
 /**
@@ -101,8 +99,13 @@ export function createRateLimiter(options: RateLimitOptions): RateLimiter {
   const keyGenerator = options.keyGenerator ?? ((req) => req.ip ?? 'unknown');
 
   // Per-limiter state, shared across every request the limiter sees.
+  //
+  // Map preserves insertion order, and re-setting an existing key does not move
+  // it, so the first entry is always the oldest live key. That makes eviction
+  // O(1) — an earlier version scanned the whole map to find the minimum sequence
+  // number, which meant an attacker at the ceiling could turn every request into
+  // an O(n) scan. That was itself a denial-of-service vector.
   const buckets = new Map<string, Bucket>();
-  let sequence = 0;
 
   /** Drop expired buckets. Bounded work: only runs once the map is large. */
   function sweep(now: number): void {
@@ -112,22 +115,11 @@ export function createRateLimiter(options: RateLimitOptions): RateLimiter {
     }
   }
 
-  /**
-   * Make room for one more key, evicting the oldest live bucket if needed.
-   * Runs only at the ceiling, so the common path costs nothing.
-   */
+  /** Evict the oldest live bucket once at the ceiling. O(1). */
   function makeRoom(): void {
     if (buckets.size < MAX_BUCKETS) return;
-
-    let oldestKey: string | undefined;
-    let oldestSeq = Number.POSITIVE_INFINITY;
-    for (const [key, bucket] of buckets) {
-      if (bucket.seq < oldestSeq) {
-        oldestSeq = bucket.seq;
-        oldestKey = key;
-      }
-    }
-    if (oldestKey !== undefined) buckets.delete(oldestKey);
+    const oldest = buckets.keys().next();
+    if (!oldest.done) buckets.delete(oldest.value);
   }
 
   const middleware: RequestHandler = (req, res, next) => {
@@ -138,11 +130,11 @@ export function createRateLimiter(options: RateLimitOptions): RateLimiter {
     const existing = buckets.get(key);
 
     if (!existing || existing.resetAt <= now) {
-      // A new window for this key. makeRoom runs first so the map stays bounded
-      // even when an attacker keeps minting fresh keys.
+      // A new window for this key. Delete first so it moves to the end of the
+      // insertion order, making the map's first entry the true oldest.
       makeRoom();
-      sequence += 1;
-      buckets.set(key, { count: 1, resetAt: now + windowSeconds * 1000, seq: sequence });
+      buckets.delete(key);
+      buckets.set(key, { count: 1, resetAt: now + windowSeconds * 1000 });
     } else {
       existing.count += 1;
     }

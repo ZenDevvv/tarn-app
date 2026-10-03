@@ -153,12 +153,17 @@ The generated Prisma Client is stale or was never generated. Fix with
 `packages/database/prisma/schema.prisma`.
 
 **`pnpm test` shows 135 passing instead of 171, with 36 skipped.**
-PostgreSQL is not reachable. The 7 skipped tests are the database integration
-tests in `packages/database/tests/integration.test.ts`, and they skip loudly
-rather than passing silently. Start it with `docker compose up -d` and re-run.
-Do not treat the 90-test result as equivalent to the 97-test result — the
-skipped tests are the ones covering referential integrity, cascade deletes,
-and cross-user isolation.
+PostgreSQL is not reachable, and **two** suites skip — loudly, never silently:
+
+| Suite | Skipped | Covers |
+|---|---|---|
+| `packages/database/tests/integration.test.ts` | 7 | referential integrity, cascade deletes, cross-user isolation at the persistence layer |
+| `apps/api/src/modules/auth/auth.test.ts` | 29 | the whole auth surface: registration, sign-in, cookies, enumeration defence, token kinds, rate limiting, cross-user isolation |
+
+Start it with `docker compose up -d`, then `pnpm db:deploy && pnpm db:seed`, and re-run.
+
+Do not treat 135 as equivalent to 171. The skipped tests are precisely the ones
+covering the ownership boundary, which is the property that matters most.
 
 **The database looks empty after renaming or moving the repository.**
 The Compose project name is now pinned to `tarn-app` in `docker-compose.yml`,

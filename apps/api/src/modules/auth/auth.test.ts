@@ -441,10 +441,13 @@ describeDb('auth routes', () => {
       }
 
       const limited = responses.filter((r) => r.status === 429);
-      // Every (IP, email) pair here is unique, so the per-account limiter cannot
-      // be what stopped it. The IP limiter must be.
+      // Every (IP, email) pair here is unique, so no single pair ever reaches the
+      // per-account ceiling of 10 — the per-account limiter provably cannot be
+      // what stopped this. Only the IP limiter can have.
       expect(limited.length).toBeGreaterThan(0);
       expect(limited[0]?.body.error.code).toBe('login_rate_limited');
+      // And it stopped at the IP ceiling rather than somewhere arbitrary.
+      expect(limited.length).toBe(responses.length - 50);
     });
 
     it('still allows a normal user several wrong attempts before blocking them', async () => {

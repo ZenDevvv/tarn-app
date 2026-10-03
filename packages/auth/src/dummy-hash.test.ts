@@ -27,15 +27,14 @@ describe('createDummyHash', () => {
   });
 
   it('reflects the current cost parameters, so it cannot drift from real hashes', async () => {
-    const [dummy] = (await createDummyHash()).split('$');
-    const [real] = (await hashPassword('a-real-password')).split('$');
-    const [, dummyN, dummyR, dummyP] = (await createDummyHash()).split('$');
-    const [, realN, realR, realP] = (await hashPassword('a-real-password')).split('$');
+    const dummy = await createDummyHash();
+    const real = await hashPassword('a-real-password');
 
-    expect(dummy).toBe(real);
-    expect(dummyN).toBe(realN);
-    expect(dummyR).toBe(realR);
-    expect(dummyP).toBe(realP);
+    // algorithm, then N, r, p — the cost parameters deriveKey actually uses.
+    const dummyParams = dummy.split('$').slice(1, 4);
+    const realParams = real.split('$').slice(1, 4);
+
+    expect(dummyParams).toEqual(realParams);
   });
 
   it('is unguessable: two calls produce different hashes', async () => {

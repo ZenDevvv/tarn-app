@@ -5,7 +5,7 @@ Status: Accepted truth, ingested from existing project documentation, amended by
 Truth confidence: MEDIUM
 Last truth ingestion: 2026-10-01
 Last owner decision batch: 2026-10-01 (product name, MVP auth, package manager, MVP schema scope, token path); 2026-10-02 (repository directory rename executed; `e2e` browser tests stay advisory rather than merge-blocking)
-Last implementation sync: 2026-10-02 (scaffold, data layer, and delivery pipeline unchanged; directory rename and Compose project-name pin executed)
+Last implementation sync: 2026-10-03 (authentication module implemented; scaffold, data layer, and delivery pipeline unchanged)
 Last adoption audit: 2026-10-01
 
 This file was populated by ingesting the existing project documents into governed truth, then amended by explicit owner decisions recorded in PRD §38 and `.wwg/wiki/decisions/`.
@@ -46,9 +46,9 @@ This ordering is itself accepted truth and governs every conflict below.
 What exists now:
 
 - Monorepo root: `pnpm-workspace.yaml`, `package.json` (pnpm 9.15.4), `tsconfig.base.json`, `docker-compose.yml`, `.env.example`, `.gitignore`, `README.md`, `.github/workflows/ci.yml`, `eslint.config.mjs`, `.prettierrc.json`, `.editorconfig`, `playwright.config.ts`
-- `apps/web` — React + Vite + Tailwind v4 app; renders a shell with a dashboard placeholder that calls the API health endpoint
-- `apps/api` — Express app; exposes `GET /api/v1/health` only
-- `packages/auth` — password hashing (scrypt). **Deviation from architecture §6**, recorded below
+- `apps/web` — React + Vite + Tailwind v4 app; sign-in and registration pages, a route-guarded dashboard, a sign-out control, and transparent session refresh
+- `apps/api` — Express app; `GET /api/v1/health` plus the auth module (`register`, `login`, `logout`, `refresh`, `me`) behind `requireAuth`
+- `packages/auth` — password hashing (scrypt) **and JWT signing/verification**. **Deviation from architecture §6**, recorded below
 - `packages/database` — Prisma schema, centralized client, **committed migration**, idempotent seed, schema-scope tests, database integration tests
 - `packages/validation` — shared Zod schemas
 - `packages/types` — shared domain types and the API response envelope
@@ -110,7 +110,7 @@ A note on counting: **24 is Playwright test *instances*, not assertions.** The b
 Re-verified 2026-10-02 by execution, with the database now actually running:
 
 - `pnpm lint`, `pnpm typecheck`, and `pnpm build` are clean.
-- `pnpm test` reports **171 passing and 0 skipped** with Docker Desktop running. The earlier **83 passing / 7 skipped** figure was the correct count for that machine state, where Docker was stopped; **83 was never equivalent to 90**, because the skipped tests are the ones covering referential integrity, cascade deletes, and cross-user isolation.
+- `pnpm test` reports **171 passing and 0 skipped** with Docker Desktop running. Without a database it reports **135 passing and 36 skipped** — measured, not assumed, by running against an unreachable `DATABASE_URL`. The skipped set is **two** suites, not one: the 7 database integration tests *and* the 29 auth route tests, because both need a live database. **135 is not equivalent to 171**; the skipped tests are the ones covering the ownership boundary.
 - Two failure modes were hit and fixed on 2026-10-02, both consequences of the directory rename rather than code defects, and both now documented in `README.md` § Troubleshooting: a stale `node_modules` whose junctions pointed at the old directory (`MODULE_NOT_FOUND` for `vitest`, fixed with `pnpm install --frozen-lockfile`), and a stale generated Prisma Client (`no exported member 'ApplicationStatus'`, fixed with `pnpm db:generate`). An agent starting work in a renamed checkout should expect both.
 - `pnpm format:check` **now passes** and is enforced in CI. It previously failed on 50 pre-existing files; see REC-0011.
 - **The cross-user isolation test actually executes now.** `packages/database/tests/integration.test.ts:145` (`scopes queries by userId so one user cannot read another's rows`) was previously in the skipped set. This is the single most relevant precondition for the auth module's ownership boundary, and it had no local coverage until 2026-10-02.

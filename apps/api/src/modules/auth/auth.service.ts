@@ -103,10 +103,18 @@ function invalidCredentials(): AppError {
  * and regenerating on every failed sign-in would double the work of the path it
  * exists to make indistinguishable. Built via `createDummyHash`, so it always
  * matches the current cost parameters rather than a literal that can drift.
+ *
+ * **A failure is not cached.** An earlier version memoised the promise
+ * unconditionally, so a single transient failure would cache a *rejected* promise
+ * and every subsequent sign-in attempt would fail for the life of the process.
+ * That is the worst possible failure mode for a cache on an error path.
  */
 let dummyHashPromise: Promise<string> | undefined;
 
 function dummyHash(): Promise<string> {
-  dummyHashPromise ??= createDummyHash();
+  dummyHashPromise ??= createDummyHash().catch((error: unknown) => {
+    dummyHashPromise = undefined;
+    throw error;
+  });
   return dummyHashPromise;
 }

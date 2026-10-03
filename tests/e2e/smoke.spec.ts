@@ -16,9 +16,13 @@
  */
 import { expect, test, type Page } from '@playwright/test';
 
-/** Set by global-setup.ts for the account it created. */
+/** Set by global-setup.ts for the account it created and its password. */
 const SHARED_EMAIL = () => process.env.E2E_EMAIL ?? '';
-const PASSWORD = process.env.E2E_PASSWORD ?? 'correct-horse-battery';
+
+// No fallback: `global-setup` must have run, and a literal here would be a second
+// copy that can drift from the one the account was actually created with — which
+// is the exact failure this is meant to prevent.
+const PASSWORD = process.env.E2E_PASSWORD ?? '';
 
 /**
  * Drop the shared session so a test starts signed out.

@@ -70,13 +70,13 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
    * every 15 minutes. Without this, the user is silently signed out of a session
    * they never asked to end — caught in review.
    *
-   * `/auth/refresh` and `/auth/logout` are excluded: retrying either would loop,
-   * and a 401 from `me` genuinely means "signed out".
+   * **Every `/auth/*` path is excluded**, not just refresh and logout. A 401 from
+   * `login` means the credentials were wrong; refreshing and replaying it would
+   * spend a round trip and burn rate-limit budget to learn the same thing twice.
+   * A 401 from `me` genuinely means signed out. And retrying `refresh` itself
+   * would loop.
    */
-  const isAuthEndpoint = path.startsWith('/auth/refresh') || path.startsWith('/auth/logout');
-  const isSessionProbe = path === '/auth/me';
-
-  if (response.status === 401 && !isAuthEndpoint && !isSessionProbe) {
+  if (response.status === 401 && !path.startsWith('/auth/')) {
     const refreshed = await refreshSession();
 
     if (refreshed) {
