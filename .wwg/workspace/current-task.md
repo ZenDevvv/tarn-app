@@ -1,6 +1,6 @@
 # Current Task
 
-Status: IN PROGRESS — applications module (API). Not yet merged.
+Status: DONE — authentication and the applications API both merged. Awaiting an owner signal for the next module.
 Task mode: **Meaningful feature, high-risk**, under Existing Project Adoption (continued). Both auth and applications touch the ownership boundary and user data, which `AGENTS.md` lists as high-risk and approval-gated. Planning was paused for owner decisions before any code was written. Delivery is AI-agent.
 Instance type: existing-project (adopted)
 Adoption status: ADOPTED_FROM_EXISTING_PROJECT
