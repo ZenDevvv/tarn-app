@@ -25,7 +25,7 @@ const testEnv = {
   PORT: 4000,
   DATABASE_URL: process.env.DATABASE_URL ?? 'postgresql://tarn:tarn@localhost:5432/tarn',
   JWT_SECRET,
-  COOKIE_SECRET: 'test-cookie-secret',
+  COOKIE_SECRET: 'test-cookie-secret-at-least-32-chars',
   WEB_ORIGIN: 'http://localhost:5173',
 };
 

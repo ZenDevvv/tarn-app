@@ -17,7 +17,7 @@ import express from 'express';
 import request from 'supertest';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { createApp, API_PREFIX } from './app.js';
-import { __setEnvForTests } from './config/env.js';
+import { __parseEnvForTests, __setEnvForTests } from './config/env.js';
 import { requireAuth } from './middleware/auth.js';
 import { asyncHandler } from './middleware/async-handler.js';
 import { AppError } from './middleware/error-handler.js';
@@ -28,7 +28,7 @@ const testEnv = {
   DATABASE_URL: 'postgresql://tarn:tarn@localhost:5432/tarn',
   // HS256 requires at least 32 characters (see packages/auth/src/token.ts).
   JWT_SECRET: 'test-jwt-secret-long-enough-for-hs256',
-  COOKIE_SECRET: 'test-cookie-secret',
+  COOKIE_SECRET: 'test-cookie-secret-at-least-32-chars',
   WEB_ORIGIN: 'http://localhost:5173',
 };
 
@@ -166,6 +166,43 @@ describe('asyncHandler bridges rejections to the error handler', () => {
 
     // Must resolve at all. Without the wrapper the request never responds.
     expect(response.status).toBe(500);
+  });
+});
+
+describe('environment validation (architecture §57)', () => {
+  // Regression guard. HS256 needs 256 bits of key material, so a secret under 32
+  // characters cannot sign safely. The length check originally lived only inside
+  // the token module, and the failure was a **500 on the first sign-up** — which is
+  // exactly what §57 forbids, and it took out the CI `e2e` job on 2026-10-03
+  // because that job's secret was 23 characters.
+  //
+  // The contract: a weak secret must be refused at startup, naming the variable.
+  // Asserted against the schema directly, because `__setEnvForTests` writes the
+  // cache and bypasses validation by design.
+  it.each(['JWT_SECRET', 'COOKIE_SECRET'] as const)(
+    'refuses to start when %s is too short, naming the variable',
+    (variable) => {
+      const result = __parseEnvForTests({ ...testEnv, [variable]: 'too-short' });
+
+      expect(result.success).toBe(false);
+      const issue = result.success ? undefined : result.error.issues[0];
+      expect(issue?.path[0]).toBe(variable);
+      expect(issue?.message).toMatch(/at least 32 characters/);
+    },
+  );
+
+  it('accepts a long enough secret', () => {
+    expect(__parseEnvForTests(testEnv).success).toBe(true);
+  });
+
+  it('names every missing variable rather than failing on the first', () => {
+    const result = __parseEnvForTests({ NODE_ENV: 'test', PORT: '4000' });
+
+    expect(result.success).toBe(false);
+    const named = result.success ? [] : result.error.issues.map((i) => i.path[0]);
+    expect(named).toContain('JWT_SECRET');
+    expect(named).toContain('COOKIE_SECRET');
+    expect(named).toContain('DATABASE_URL');
   });
 });
 

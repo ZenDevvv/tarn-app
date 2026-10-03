@@ -35,10 +35,10 @@ it was on 2026-10-01, before the monorepo scaffold and database migration landed
 
 | Suite | Count | Command |
 |---|---|---|
-| Unit + integration (types, auth, validation, database, API, React) | 160 passing | `pnpm test` |
+| Unit + integration (types, auth, validation, database, API, React) | 164 passing | `pnpm test` |
 | Browser E2E (desktop + 360px, real browser) | 36 passing | `npx playwright test` |
 
-Re-verified by execution on 2026-10-03: `pnpm test` → **160 passed, 0 skipped**
+Re-verified by execution on 2026-10-03: `pnpm test` → **164 passed, 0 skipped**
 with a live database, and 153 passed / 7 skipped without one. Both suites run in CI
 (`.github/workflows/ci.yml`, jobs `verify` and `e2e`).
 

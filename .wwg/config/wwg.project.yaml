@@ -74,9 +74,9 @@ product:
     - pnpm test
     - pnpm build
     - npx playwright test
-  # 160 requires a reachable database. Without one, 7 database integration
+  # 164 requires a reachable database. Without one, 7 database integration
   # tests skip loudly and the run reports 153. Re-verified 2026-10-03.
-  executable_tests: 160
+  executable_tests: 164
   executable_tests_without_database: 153
   executable_tests_skipped_without_database: 7
   database_tests_require_docker: true
