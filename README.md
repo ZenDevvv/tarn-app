@@ -97,7 +97,7 @@ Everything below runs in GitHub Actions on every push:
 | `pnpm audit --audit-level=high` | no known high-severity dependency vulnerabilities |
 | dependency review | a PR cannot introduce a vulnerable dependency |
 | `pnpm typecheck` | types across all six packages |
-| `pnpm test` | 179 unit and integration tests (143 without a running database — see Troubleshooting) |
+| `pnpm test` | 181 unit and integration tests (145 without a running database — see Troubleshooting) |
 | `pnpm build` | both apps compile |
 | Playwright job | 36 browser and accessibility test instances in a real engine |
 
@@ -152,7 +152,7 @@ The generated Prisma Client is stale or was never generated. Fix with
 `pnpm db:generate`. This also needs re-running after any change to
 `packages/database/prisma/schema.prisma`.
 
-**`pnpm test` shows 143 passing instead of 179, with 36 skipped.**
+**`pnpm test` shows 145 passing instead of 181, with 36 skipped.**
 PostgreSQL is not reachable, and **two** suites skip — loudly, never silently:
 
 | Suite | Skipped | Covers |
@@ -162,8 +162,10 @@ PostgreSQL is not reachable, and **two** suites skip — loudly, never silently:
 
 Start it with `docker compose up -d`, then `pnpm db:deploy && pnpm db:seed`, and re-run.
 
-Do not treat 143 as equivalent to 179. The skipped tests are precisely the ones
-covering the ownership boundary, which is the property that matters most.
+Do not treat 145 as equivalent to 181. Between them the skipped suites carry the
+ownership-boundary and session-handling coverage — the properties that matter
+most — though they also cover registration, cookies, and rate limiting, so they
+are not *only* about ownership.
 
 **The database looks empty after renaming or moving the repository.**
 The Compose project name is now pinned to `tarn-app` in `docker-compose.yml`,

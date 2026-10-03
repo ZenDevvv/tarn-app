@@ -448,7 +448,11 @@ describeDb('auth routes', () => {
       expect(limited[0]?.body.error.code).toBe('login_rate_limited');
       // And it stopped at the IP ceiling rather than somewhere arbitrary.
       expect(limited.length).toBe(responses.length - 50);
-    });
+      // 30 seconds, not the 5s default: every one of these 60 requests runs a real
+      // scrypt verification on the unknown-email path, which is the timing
+      // equalisation the design depends on. That work is deliberate, so the test
+      // budget has to reflect it rather than skip the hashing to go faster.
+    }, 30_000);
 
     it('still allows a normal user several wrong attempts before blocking them', async () => {
       const { email } = await registerUser();

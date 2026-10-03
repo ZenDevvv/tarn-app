@@ -129,4 +129,36 @@ describe('apiFetch transparent refresh', () => {
     await expect(apiFetch('/companies')).resolves.toEqual({ ok: true });
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
+
+  /**
+   * The refresh call is best-effort. If it fails at the transport level — offline,
+   * DNS failure, CORS — the original 401 is what the caller should see, not a
+   * `TypeError: Failed to fetch` leaking out of a recovery path.
+   */
+  it('surfaces the original error when the refresh call itself fails to connect', async () => {
+    fetchMock
+      .mockResolvedValueOnce(jsonResponse(401, { error: { code: 'unauthorized', message: 'no' } }))
+      .mockRejectedValueOnce(new TypeError('Failed to fetch'));
+
+    await expect(apiFetch('/companies')).rejects.toMatchObject({
+      status: 401,
+      code: 'unauthorized',
+    });
+    // No replay attempted, since the refresh never succeeded.
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it('recovers on a later request after a failed refresh is not cached', async () => {
+    fetchMock
+      // First cycle: refresh fails at the transport level.
+      .mockResolvedValueOnce(jsonResponse(401, { error: { code: 'unauthorized' } }))
+      .mockRejectedValueOnce(new TypeError('Failed to fetch'))
+      // Second cycle: refresh works, so the session recovers.
+      .mockResolvedValueOnce(jsonResponse(401, { error: { code: 'unauthorized' } }))
+      .mockResolvedValueOnce(jsonResponse(200))
+      .mockResolvedValueOnce(jsonResponse(200, { data: { ok: true } }));
+
+    await expect(apiFetch('/companies')).rejects.toMatchObject({ status: 401 });
+    await expect(apiFetch('/companies')).resolves.toEqual({ ok: true });
+  });
 });

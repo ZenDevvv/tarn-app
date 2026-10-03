@@ -98,12 +98,13 @@ Nothing here is a user-facing feature. This is the groundwork the features will 
 
 ### Added — verification
 
-- **179 unit, integration, schema, and script tests** across six packages. Of those, **153
-  run without a database and 36 are database-backed tests that require one** — those 7
-  cover referential integrity, cascade behaviour, unique constraints, and cross-user
-  isolation, and they *skip loudly* rather than passing silently when no database is
-  reachable. So a local run with Docker stopped reports 153 passing and 7 skipped. The
-  164 figure is the full inventory, and is what CI observes against a real database.
+- **181 unit, integration, schema, and script tests** across six packages. Of those, **145
+  run without a database and 36 require one** — 7 database integration tests covering
+  referential integrity, cascade behaviour, unique constraints, and cross-user
+  isolation, plus 29 auth route tests. They *skip loudly* rather than passing silently
+  when no database is reachable, so a local run with Docker stopped reports 145 passing
+  and 36 skipped. The 181 figure is the full inventory, and is what CI observes against
+  a real database.
 - **36 browser and accessibility test instances** in a real browser - 18 test cases run
   across a desktop and a 360px project - covering a full sign-up and sign-in journey plus colour
   contrast in light and dark themes, focus order, 360px layout, and touch-target size.

@@ -89,7 +89,7 @@ Verified on 2026-10-01 by execution:
 
 - `pnpm lint` — clean (ESLint 9 flat config; gate proven to fail on a seeded violation, then reverted)
 - `pnpm typecheck` — clean, including `tests/tsconfig.json` for the Playwright specs
-- `pnpm test` — **179 tests passing**: 7 types, 30 auth (13 password + 14 token + 3 dummy-hash), 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 54 API (16 smoke/envelope/CORS/error/async + 32 auth route + 6 rate limiter), 34 React
+- `pnpm test` — **181 tests passing**: 7 types, 30 auth (13 password + 14 token + 3 dummy-hash), 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 54 API (16 smoke/envelope/CORS/error/async + 32 auth route + 6 rate limiter), 36 React
 - `npx playwright test` — **36 passing test instances** (18 cases × 2 projects) across desktop and 360px, in a real browser, covering a real auth journey
 - `pnpm build` — both apps build; web 279 kB (90 kB gzip)
 - `pnpm format:check` — **clean**; enforced in CI since 2026-10-02
@@ -110,7 +110,7 @@ A note on counting: **24 is Playwright test *instances*, not assertions.** The b
 Re-verified 2026-10-02 by execution, with the database now actually running:
 
 - `pnpm lint`, `pnpm typecheck`, and `pnpm build` are clean.
-- `pnpm test` reports **179 passing and 0 skipped** with Docker Desktop running. Without a database it reports **143 passing and 36 skipped** — measured, not assumed, by running against an unreachable `DATABASE_URL`. The skipped set is **two** suites, not one: the 7 database integration tests *and* the 29 auth route tests, because both need a live database. **143 is not equivalent to 179**; the skipped tests are the ones covering the ownership boundary.
+- `pnpm test` reports **181 passing and 0 skipped** with Docker Desktop running. Without a database it reports **145 passing and 36 skipped** — measured, not assumed, by running against an unreachable `DATABASE_URL`. The skipped set is **two** suites, not one: the 7 database integration tests *and* the 29 auth route tests, because both need a live database. **145 is not equivalent to 181**; the skipped tests are the ones covering the ownership boundary.
 - Two failure modes were hit and fixed on 2026-10-02, both consequences of the directory rename rather than code defects, and both now documented in `README.md` § Troubleshooting: a stale `node_modules` whose junctions pointed at the old directory (`MODULE_NOT_FOUND` for `vitest`, fixed with `pnpm install --frozen-lockfile`), and a stale generated Prisma Client (`no exported member 'ApplicationStatus'`, fixed with `pnpm db:generate`). An agent starting work in a renamed checkout should expect both.
 - `pnpm format:check` **now passes** and is enforced in CI. It previously failed on 50 pre-existing files; see REC-0011.
 - **The cross-user isolation test actually executes now.** `packages/database/tests/integration.test.ts:145` (`scopes queries by userId so one user cannot read another's rows`) was previously in the skipped set. This is the single most relevant precondition for the auth module's ownership boundary, and it had no local coverage until 2026-10-02.
