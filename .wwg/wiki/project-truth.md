@@ -403,15 +403,16 @@ Do not claim production readiness for:
   |---|---|---|
   | 1 | Securely create and access an account | **Met** |
   | 2 | Create, edit, manage applications | **Met** |
+  | 3 | Move applications through the pipeline | **Met at the API level, not at the product level** — status changes are supported and recorded; there is no Kanban board |
   | 5 | Job descriptions can be stored | **Met, scoped** — stored and returned through the applications flow; there is no standalone job read/edit endpoint |
   | 6 | Companies associated with applications | **Met** — the company is found-or-created and linked on create |
   | 7 | History preserved in a timeline | **Partial** — `APPLICATION_CREATED` and `STATUS_CHANGED` are recorded; there is no way for a user to add a manual event (PRD §7.6) and no interview, offer or recruiter-contact events yet |
   | 12 | Data isolated between users | **Met for applications**; not exercised for entities that do not exist yet |
   | 13 | Validation and error handling implemented | **Met** for the auth and applications surfaces |
 
-  **Not met:** 3 (pipeline movement — status changes exist, there is no board), 4 (detail view), 8 (follow-ups — no endpoints), 9 (dashboard metrics), 10 (search and filter — REC-0026), 11 (desktop and mobile interface — the dashboard is a placeholder).
+  **Not met:** 4 (detail view), 8 (follow-ups — no endpoints), 9 (dashboard metrics), 10 (search and filter — REC-0026), 11 (desktop and mobile interface — the dashboard is a placeholder).
 
-  Four of the six unmet items need a web UI, which is why the applications UI is the next module rather than more endpoints.
+  **The remaining work is not only UI work.** Items 3, 4, 9 and 11 need a web interface. But items 8 and 10 also need endpoints that do not exist: there is no follow-up route at all, and the applications list does not accept the search or filter inputs its own schemas define. So the applications UI is the next module **alongside** those API gaps, not instead of them.
 - **Session revocation.** Stateless tokens cannot be revoked server-side. A session is capped at 30 days and cannot be extended by renewal, but there is no kill switch for an individual session.
 - **Rate limiting as a security control.** It is per-process and in-memory, so it resets on restart and does not survive horizontal scaling.
 - **Password recovery.** Not implemented, deliberately.
