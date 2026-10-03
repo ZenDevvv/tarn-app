@@ -81,7 +81,7 @@ The company is **found-or-created by name, scoped to the owner**. There is no wa
 
 **Transaction.** Company, job, application and the first timeline event are created inside one `prisma.$transaction`. Without it, a mid-flight failure leaves a company or a job the user never asked for and cannot see.
 
-**The timeline is written on create and on every status change** (PRD §4.3, §7.6). A status change to the status it already holds writes nothing — "changed to APPLIED" when it was already APPLIED would make the history lie.
+**The timeline is written on create and on every status change** (PRD §4.3, §7.6). A status change to the status it already holds writes nothing — "changed to APPLIED" when it was already APPLIED would make the history lie. **`GET /applications/:id/timeline` is read-only**: PRD §7.6 also says users may add manual timeline events, and there is no endpoint for that yet, so DoD item 7 is only partial.
 
 **Deliberately not implemented, and why:**
 
@@ -397,7 +397,21 @@ This project is **a working authentication flow on a foundation, with no other p
 
 Do not claim production readiness for:
 
-- **The product as a whole.** The MVP Definition of Done (PRD §35) lists 14 criteria. **Two** are met at the API level: item 1 (account creation and access) and item 2 (create, edit, manage applications). Item 12 (data isolation) is met for applications. Items 3 and 4 (pipeline, detail view) are not, because there is no web UI and no Kanban board.
+- **The product as a whole.** The MVP Definition of Done (PRD §35) lists 14 criteria. Counted **at the API level**, and audited item by item rather than in aggregate:
+
+  | # | Criterion | State |
+  |---|---|---|
+  | 1 | Securely create and access an account | **Met** |
+  | 2 | Create, edit, manage applications | **Met** |
+  | 5 | Job descriptions can be stored | **Met, scoped** — stored and returned through the applications flow; there is no standalone job read/edit endpoint |
+  | 6 | Companies associated with applications | **Met** — the company is found-or-created and linked on create |
+  | 7 | History preserved in a timeline | **Partial** — `APPLICATION_CREATED` and `STATUS_CHANGED` are recorded; there is no way for a user to add a manual event (PRD §7.6) and no interview, offer or recruiter-contact events yet |
+  | 12 | Data isolated between users | **Met for applications**; not exercised for entities that do not exist yet |
+  | 13 | Validation and error handling implemented | **Met** for the auth and applications surfaces |
+
+  **Not met:** 3 (pipeline movement — status changes exist, there is no board), 4 (detail view), 8 (follow-ups — no endpoints), 9 (dashboard metrics), 10 (search and filter — REC-0026), 11 (desktop and mobile interface — the dashboard is a placeholder).
+
+  Four of the six unmet items need a web UI, which is why the applications UI is the next module rather than more endpoints.
 - **Session revocation.** Stateless tokens cannot be revoked server-side. A session is capped at 30 days and cannot be extended by renewal, but there is no kill switch for an individual session.
 - **Rate limiting as a security control.** It is per-process and in-memory, so it resets on restart and does not survive horizontal scaling.
 - **Password recovery.** Not implemented, deliberately.
