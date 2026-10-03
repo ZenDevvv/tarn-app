@@ -38,16 +38,16 @@ This ordering is itself accepted truth and governs every conflict below.
 
 ## Implementation Reality
 
-- Implementation status: **AUTHENTICATION IMPLEMENTED. NO OTHER PRODUCT FEATURE IS BUILT.**
+- Implementation status: **AUTHENTICATION AND APPLICATIONS IMPLEMENTED. NO OTHER PRODUCT FEATURE IS BUILT.**
 - Status: CONFIRMED
-- Evidence: working-tree scan plus executed verification on 2026-10-03.
-- Last verified: 2026-10-03
+- Evidence: working-tree scan plus executed verification on 2026-10-04.
+- Last verified: 2026-10-04
 
 What exists now:
 
 - Monorepo root: `pnpm-workspace.yaml`, `package.json` (pnpm 9.15.4), `tsconfig.base.json`, `docker-compose.yml`, `.env.example`, `.gitignore`, `README.md`, `.github/workflows/ci.yml`, `eslint.config.mjs`, `.prettierrc.json`, `.editorconfig`, `playwright.config.ts`
-- `apps/web` — React + Vite + Tailwind v4 app; sign-in and registration pages, a route-guarded dashboard, a sign-out control, and transparent session refresh
-- `apps/api` — Express app; `GET /api/v1/health` plus the auth module (`register`, `login`, `logout`, `refresh`, `me`) behind `requireAuth`
+- `apps/web` — React + Vite + Tailwind v4 app; sign-in and registration pages, a route-guarded dashboard, a sign-out control, and transparent session refresh. **No applications UI yet.**
+- `apps/api` — Express app; `GET /api/v1/health`, the auth module (`register`, `login`, `logout`, `refresh`, `me`), and the applications module (list, create, read, update, delete, status change, timeline) behind `requireAuth`
 - `packages/auth` — password hashing (scrypt) **and JWT signing/verification**. **Deviation from architecture §6**, recorded below
 - `packages/database` — Prisma schema, centralized client, **committed migration**, idempotent seed, schema-scope tests, database integration tests
 - `packages/validation` — shared Zod schemas
@@ -64,9 +64,31 @@ Database state **[OBSERVED]**:
 
 What does **not** exist yet:
 
-- No applications, pipeline/Kanban, timeline, follow-ups, dashboard metrics, analytics, search, saved jobs, skills UI, or offers UI. The dashboard is a placeholder behind the auth guard.
+- No pipeline/Kanban board, no dashboard metrics, no analytics, no search or filtering, no saved jobs UI, no skills UI, no offers UI, no follow-ups.
+- **No web UI for applications.** The module is API-only so far; the dashboard is still the auth-guarded placeholder.
 - **No account settings and no password recovery.** FR-AUTH-005 (recovery) and FR-AUTH-006 (account settings) are not implemented; both are deliberate deferrals — see "Deferred by owner decision" below.
 - No deployment configuration (architecture §65 vendors remain undecided).
+
+## Applications — IMPLEMENTED 2026-10-04
+
+- Status: CONFIRMED by execution. PRD §35 DoD item **2** ("a user can create, edit, and manage applications") is now **met at the API level**. Item **12** ("data is isolated between users") is now **met for applications**, which is the first user-owned feature table to exist and be exercised.
+- Routes (architecture §26, §38): `GET`/`POST /applications`, `GET`/`PATCH`/`DELETE /applications/:id`, `PATCH /applications/:id/status`, `GET /applications/:id/timeline`. The last is an addition — see the note below.
+- **`requireAuth` is applied to the whole router**, not per route, so a route added later cannot land unprotected.
+
+**Owner decision, 2026-10-04 — company and job are supplied inline, not by id.** `createApplicationSchema` was changed from taking an existing `jobId` to taking `company` and `job` objects. Architecture §23 describes one `POST /applications` creating Company, Job, Application and TimelineEvent, and §24 requires them to succeed or fail together; the old contract contradicted both and would have forced three requests to log one application.
+
+The company is **found-or-created by name, scoped to the owner**. There is no way to pass a `companyId`, so a user cannot file an application against another user's company by id.
+
+**Transaction.** Company, job, application and the first timeline event are created inside one `prisma.$transaction`. Without it, a mid-flight failure leaves a company or a job the user never asked for and cannot see.
+
+**The timeline is written on create and on every status change** (PRD §4.3, §7.6). A status change to the status it already holds writes nothing — "changed to APPLIED" when it was already APPLIED would make the history lie.
+
+**Deliberately not implemented, and why:**
+
+- **The `APP-2026-0001` human-readable reference (PRD §7.3).** Adding a column means changing a governed MVP table and its scope test — the same blocker that stopped the `sessions` table. Deferred by owner decision 2026-10-04; the cuid primary key is used instead. Recorded as REC-0025.
+- **Editing company or job details through an application.** `updateApplicationSchema` is `.strict()`, so such a payload is **rejected with 422** rather than silently ignored. Job and company are distinct entities (PRD §11) and need their own endpoints; silently dropping the edit would leave a caller believing a job was renamed.
+- **Search, filtering, sorting and pagination.** `applicationFiltersSchema` exists in the shared validation package but the list endpoint does not yet accept it. Architecture §28-§31 cover it; recorded as REC-0026.
+- **No soft delete.** `DELETE` removes the row and cascades to its timeline, follow-ups and offers. Whether history should survive deletion is a product question that has not been asked.
 
 ## Authentication — IMPLEMENTED 2026-10-03
 
@@ -93,7 +115,7 @@ Verified on 2026-10-01 by execution:
 
 - `pnpm lint` — clean (ESLint 9 flat config; gate proven to fail on a seeded violation, then reverted)
 - `pnpm typecheck` — clean, including `tests/tsconfig.json` for the Playwright specs
-- `pnpm test` — **190 tests passing**: 7 types, 35 auth (13 password + 19 token + 3 dummy-hash), 23 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 58 API (20 smoke/envelope/CORS/error/async/env + 33 auth route + 5 rate limiter), 36 React
+- `pnpm test` — **216 tests passing**: 7 types, 35 auth (13 password + 19 token + 3 dummy-hash), 28 validation, 31 database (17 schema scope + 7 integration + 7 root script wiring), 79 API (21 smoke/envelope/CORS/error/async/env + 33 auth route + 5 rate limiter + 21 application route), 36 React
 - `npx playwright test` — **36 passing test instances** (18 cases × 2 projects) across desktop and 360px, in a real browser, covering a real auth journey
 - `pnpm build` — both apps build; web 279 kB (90 kB gzip)
 - `pnpm format:check` — **clean**; enforced in CI since 2026-10-02
@@ -114,7 +136,7 @@ A note on counting: **24 is Playwright test *instances*, not assertions.** The b
 Re-verified 2026-10-02 by execution, with the database now actually running:
 
 - `pnpm lint`, `pnpm typecheck`, and `pnpm build` are clean.
-- `pnpm test` reports **190 passing and 0 skipped** with Docker Desktop running. Without a database it reports **150 passing and 40 skipped** — measured, not assumed, by running against an unreachable `DATABASE_URL`. The skipped set is **two** suites, not one: the 7 database integration tests *and* the 33 auth route tests, because both need a live database. **150 is not equivalent to 190**; the skipped tests are the ones covering the ownership boundary.
+- `pnpm test` reports **216 passing and 0 skipped** with Docker Desktop running. Without a database it reports **155 passing and 61 skipped** — measured, not assumed, by running against an unreachable `DATABASE_URL`. The skipped set is **two** suites, not one: the 7 database integration tests *and* the 54 auth + application route tests, because both need a live database. **155 is not equivalent to 216**; the skipped tests are the ones covering the ownership boundary.
 - Two failure modes were hit and fixed on 2026-10-02, both consequences of the directory rename rather than code defects, and both now documented in `README.md` § Troubleshooting: a stale `node_modules` whose junctions pointed at the old directory (`MODULE_NOT_FOUND` for `vitest`, fixed with `pnpm install --frozen-lockfile`), and a stale generated Prisma Client (`no exported member 'ApplicationStatus'`, fixed with `pnpm db:generate`). An agent starting work in a renamed checkout should expect both.
 - `pnpm format:check` **now passes** and is enforced in CI. It previously failed on 50 pre-existing files; see REC-0011.
 - **The cross-user isolation test actually executes now.** `packages/database/tests/integration.test.ts:145` (`scopes queries by userId so one user cannot read another's rows`) was previously in the skipped set. This is the single most relevant precondition for the auth module's ownership boundary, and it had no local coverage until 2026-10-02.
@@ -374,13 +396,14 @@ This project is **a working authentication flow on a foundation, with no other p
 
 Do not claim production readiness for:
 
-- **The product as a whole.** The MVP Definition of Done (PRD §35) lists 14 criteria. **One** is met (item 1, account creation and access); item 12 (data isolation) is partially met.
-- **Session revocation.** Stateless tokens cannot be revoked server-side; a leaked refresh token stays valid until it expires. See the owner decision above.
+- **The product as a whole.** The MVP Definition of Done (PRD §35) lists 14 criteria. **Two** are met at the API level: item 1 (account creation and access) and item 2 (create, edit, manage applications). Item 12 (data isolation) is met for applications. Items 3 and 4 (pipeline, detail view) are not, because there is no web UI and no Kanban board.
+- **Session revocation.** Stateless tokens cannot be revoked server-side. A session is capped at 30 days and cannot be extended by renewal, but there is no kill switch for an individual session.
 - **Rate limiting as a security control.** It is per-process and in-memory, so it resets on restart and does not survive horizontal scaling.
 - **Password recovery.** Not implemented, deliberately.
+- **Search, filtering, sorting, pagination.** The shared schemas exist; the applications list endpoint does not use them yet.
 - Any performance, reliability, or accessibility conformance claim beyond what the browser suite asserts.
 
-Authentication **is** implemented and tested. That is a different statement from "ready for production", and both are recorded here so neither is overstated later.
+Authentication and the applications API **are** implemented and tested. That is a different statement from "ready for production", and both are recorded here so neither is overstated later.
 
 Security posture observed in the scaffold:
 

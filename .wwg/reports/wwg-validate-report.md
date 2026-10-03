@@ -35,7 +35,7 @@ wwg-native-project
 - INFO ambiguous-report-classification: evidence=confirmed risk=low Some report-like files need human classification. Recommendation: Run `wwg reports --target .` and review the Ambiguous / Needs Review section.
 - INFO generated-markers-balanced: Generated marker pairs are balanced where present.
 - INFO json-schemas-parse: Parsed and compiled 0 JSON schema file(s).
-- INFO markdown-contract-quality-report-generated (reports/context-skill-quality.md): evidence=confirmed Markdown contract quality report completed with 114 warning(s) and 143 suggestion(s). Advisory Markdown quality findings are recorded in the quality report and do not change validate status by default. Recommendation: Review `.wwg/reports/context-skill-quality.md` during focused documentation remediation.
+- INFO markdown-contract-quality-report-generated (reports/context-skill-quality.md): evidence=confirmed Markdown contract quality report completed with 115 warning(s) and 146 suggestion(s). Advisory Markdown quality findings are recorded in the quality report and do not change validate status by default. Recommendation: Review `.wwg/reports/context-skill-quality.md` during focused documentation remediation.
 - INFO markdown-readable: Markdown files are non-empty and readable.
 - INFO profile-skill-recommendations-valid: evidence=confirmed Validated skill recommendation metadata for 0 profile file(s). Recommendation: Keep profile skill recommendations advisory until manifest generation and runtime activation are implemented.
 - INFO project-registry-valid (.wwg/config/wwg.project.yaml): WWG project registry parses and matches the registry schema.
@@ -59,7 +59,7 @@ Next: No command required.
 - INFO generated-markers-balanced: Generated marker pairs are balanced where present.
 - INFO markdown-readable: Markdown files are non-empty and readable.
 - INFO ambiguous-report-classification: Some report-like files need human classification.
-- INFO markdown-contract-quality-report-generated (reports/context-skill-quality.md): Markdown contract quality report completed with 114 warning(s) and 143 suggestion(s).
+- INFO markdown-contract-quality-report-generated (reports/context-skill-quality.md): Markdown contract quality report completed with 115 warning(s) and 146 suggestion(s).
 
 ## Validation Results
 

@@ -45,6 +45,22 @@ where anything may still change, which honestly signals "early, incomplete."
 
 ## Unreleased
 
+### Added - applications
+
+- **Applications can be created, listed, viewed, edited and deleted**, and moved
+  through the pipeline. Creating one takes the company and the role inline, so
+  logging an application is a single action rather than three.
+- **A company is reused rather than duplicated.** Applying to the same employer
+  again attaches to the company you already have.
+- **Every application carries its own history.** Creating one records the first
+  entry, and every status change records another, so "what happened and when" is
+  preserved rather than inferred.
+- **Applications are private to their owner.** Another user's application returns
+  the same "not found" as one that never existed, so the API cannot be used to
+  discover what other people have applied to.
+- **Deleting is immediate** and takes the application's history with it. There is
+  no undo yet.
+
 ### Added - authentication
 
 - **Accounts can be created, and sessions are maintained.** Register, sign in, sign
@@ -101,12 +117,12 @@ Nothing here is a user-facing feature. This is the groundwork the features will 
 
 ### Added — verification
 
-- **190 unit, integration, schema, and script tests** across six packages. Of those, **150
+- **216 unit, integration, schema, and script tests** across six packages. Of those, **150
   run without a database and 40 require one** — 7 database integration tests covering
   referential integrity, cascade behaviour, unique constraints, and cross-user
-  isolation, plus 33 auth route tests. They *skip loudly* rather than passing silently
-  when no database is reachable, so a local run with Docker stopped reports 150 passing
-  and 40 skipped. The 190 figure is the full inventory, and is what CI observes against
+  isolation, plus 54 auth and application route tests. They *skip loudly* rather than passing silently
+  when no database is reachable, so a local run with Docker stopped reports 155 passing
+  and 61 skipped. The 216 figure is the full inventory, and is what CI observes against
   a real database.
 - **36 browser and accessibility test instances** in a real browser - 18 test cases run
   across a desktop and a 360px project - covering a full sign-up and sign-in journey plus colour
@@ -165,8 +181,16 @@ Nothing here is a user-facing feature. This is the groundwork the features will 
 
 These are deliberate, accepted, or deferred — not oversights.
 
-- **Authentication is the only feature implemented.** Applications, pipeline, timeline,
-  follow-ups, offers, search, and analytics are all still to be built.
+- **There is no interface yet.** Accounts and applications work through the API, but the
+  screen behind sign-in is still a placeholder. The pipeline board, application detail
+  view, follow-ups, offers, search, and analytics are all still to be built.
+- **Deleting an application cannot be undone**, and it takes the application's history
+  with it. Accepted for now because there is no delete button to press; worth deciding
+  before there is.
+- **Applications have no readable identifier**, only an internal one. Referring to one in
+  conversation or in a bug report is awkward until that changes.
+- **The application list cannot be searched, filtered, or sorted.** It returns
+  everything, newest first.
 - **Sessions cannot be revoked server-side.** Signing out clears the cookies, but a
   token that was already issued stays valid until it expires. A stolen refresh token
   is therefore usable for the remainder of its session, which is capped at 30 days
