@@ -45,7 +45,21 @@ where anything may still change, which honestly signals "early, incomplete."
 
 ## Unreleased
 
-### Added — product foundations
+### Added - authentication
+
+- **Accounts can be created, and sessions are maintained.** Register, sign in, sign
+  out, refresh the session, and read the current user. Sign-up and sign-in are
+  rate limited per IP.
+- **Sessions use `httpOnly` cookies**, never browser storage, so a script injected into
+  the page cannot read the session token.
+- **The dashboard is now behind sign-in.** A signed-out visitor is redirected to the
+  sign-in page, and the API refuses unauthenticated requests rather than passing them
+  through.
+- **Sign-in does not reveal whether an email is registered.** An unknown address and a
+  wrong password return the same response and take the same time, so the form cannot
+  be used to discover which addresses have accounts.
+
+### Added - product foundations
 
 Nothing here is a user-facing feature. This is the groundwork the features will stand on.
 
@@ -84,14 +98,14 @@ Nothing here is a user-facing feature. This is the groundwork the features will 
 
 ### Added — verification
 
-- **97 unit, integration, schema, and script tests** across six packages. Of those, **90
+- **160 unit, integration, schema, and script tests** across six packages. Of those, **153
   run without a database and 7 are database integration tests that require one** — those 7
   cover referential integrity, cascade behaviour, unique constraints, and cross-user
   isolation, and they *skip loudly* rather than passing silently when no database is
-  reachable. So a local run with Docker stopped reports 90 passing and 7 skipped. The
-  97 figure is the full inventory, and is what CI observes against a real database.
-- **24 browser and accessibility test instances** in a real browser — 12 test cases run
-  across a desktop and a 360px project — covering colour
+  reachable. So a local run with Docker stopped reports 153 passing and 7 skipped. The
+  160 figure is the full inventory, and is what CI observes against a real database.
+- **36 browser and accessibility test instances** in a real browser - 18 test cases run
+  across a desktop and a 360px project - covering a full sign-up and sign-in journey plus colour
   contrast in light and dark themes, focus order, 360px layout, and touch-target size.
   This suite found and fixed two genuine accessibility defects.
 - **A regression guard for root script wiring.** The database commands are now asserted
@@ -123,6 +137,14 @@ Nothing here is a user-facing feature. This is the groundwork the features will 
 
 ### Fixed
 
+- **Unwarranted request hangs.** The web framework in use does not catch failures from
+  asynchronous route handlers, so a failed sign-in or a rejected form would hang
+  instead of returning an error. Every route now reports failures properly.
+- **Session refresh was not actually rotating.** Two session tokens issued in the same
+  second were byte-identical, so "refresh" could hand back the same token it was given.
+  Every token now carries a random identifier, and refreshing genuinely issues a new
+  one.
+
 - **The database migration command did not work.** `pnpm db:deploy` — the command the
   documented volume-recovery procedure instructs a developer to run — failed every time,
   because the workspace filter resolved the verb as a package-manager command of the
@@ -139,10 +161,19 @@ Nothing here is a user-facing feature. This is the groundwork the features will 
 
 These are deliberate, accepted, or deferred — not oversights.
 
-- **No product feature is implemented.** This is the central limitation.
-- **Sign-in is not available and the API guard rejects every protected request** by
-  design, so no protected route is reachable. Authentication is confirmed MVP scope and
-  is the next piece of work.
+- **Authentication is the only feature implemented.** Applications, pipeline, timeline,
+  follow-ups, offers, search, and analytics are all still to be built.
+- **Sessions cannot be revoked server-side.** Signing out clears the cookies, but a
+  token that was already issued stays valid until it expires - so a stolen refresh
+  token works for up to 7 days. This is a deliberate trade-off: adding a session
+  store would mean widening the agreed MVP database scope. See
+  `.wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md`.
+- **There is no password recovery.** No email delivery exists yet, so a forgotten
+  password has no self-service path back. Fine while this is a development-phase
+  single-user app; not acceptable at any public release.
+- **Sign-in throttling is per-process.** It resets when the API restarts and is not
+  shared between instances, so it needs replacing before the app is scaled beyond one
+  process.
 - **Browser tests report but do not block a merge.** Accepted by the owner: the result
   is visible on every pull request, but a red result will not refuse the merge. The
   decision and the conditions that should reopen it are recorded in

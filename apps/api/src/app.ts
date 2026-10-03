@@ -12,6 +12,7 @@ import { getAllowedOrigins } from './config/env.js';
 import { errorHandler, notFoundHandler } from './middleware/error-handler.js';
 import { requestId } from './middleware/request-id.js';
 import { health } from './routes/health.js';
+import { router as authRouter } from './modules/auth/auth.routes.js';
 
 export const API_PREFIX = '/api/v1';
 
@@ -42,10 +43,12 @@ export function createApp(): Express {
   // every request under /api/v1 and short-circuit all later routing.
   app.get(`${API_PREFIX}/health`, health);
 
-  // Domain routes are mounted here as modules are built, e.g.:
-  //   app.use(`${API_PREFIX}/auth`, require('./modules/auth/routes.js').router);
+  // Auth router mounts its own per-route guard (`/me` uses requireAuth, the rest
+  // are the public entry points that establish a session).
+  app.use(`${API_PREFIX}/auth`, authRouter);
+
+  // Every other domain router must sit behind `requireAuth` (architecture §36):
   //   app.use(`${API_PREFIX}/applications`, requireAuth, applicationsRouter);
-  // Every domain router must sit behind `requireAuth` (architecture §36).
 
   app.use(notFoundHandler);
   app.use(errorHandler);

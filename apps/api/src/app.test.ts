@@ -19,12 +19,15 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { createApp, API_PREFIX } from './app.js';
 import { __setEnvForTests } from './config/env.js';
 import { requireAuth } from './middleware/auth.js';
+import { asyncHandler } from './middleware/async-handler.js';
+import { AppError } from './middleware/error-handler.js';
 
 const testEnv = {
   NODE_ENV: 'test' as const,
   PORT: 4000,
   DATABASE_URL: 'postgresql://tarn:tarn@localhost:5432/tarn',
-  JWT_SECRET: 'test-jwt-secret',
+  // HS256 requires at least 32 characters (see packages/auth/src/token.ts).
+  JWT_SECRET: 'test-jwt-secret-long-enough-for-hs256',
   COOKIE_SECRET: 'test-cookie-secret',
   WEB_ORIGIN: 'http://localhost:5173',
 };
@@ -98,19 +101,71 @@ describe('request size limit (architecture §55)', () => {
   });
 });
 
-describe('requireAuth fails closed until auth is implemented', () => {
-  // A guard that called next() would expose every protected route with no
-  // owner, violating the ownership boundary (architecture §36, PRD §33).
+describe('requireAuth rejects unauthenticated requests', () => {
+  // The guard used to answer 501 while auth was unimplemented. It now verifies a
+  // real token, so the same property is asserted differently: a request without a
+  // valid access token must never reach the handler.
+  //
+  // This remains the property that matters. A guard which called next() would
+  // expose every protected route with no owner, violating the ownership
+  // boundary (architecture §36, PRD §33).
   const app = express();
-  app.get('/protected', requireAuth, (_req, res) => {
-    res.status(200).json({ leaked: true });
+  app.get('/protected', requireAuth, (req, res) => {
+    res.status(200).json({ userId: (req as { userId?: string }).userId ?? null });
   });
 
-  it('rejects instead of passing through', async () => {
+  it('rejects a request with no cookie instead of passing through', async () => {
     const response = await request(app).get('/protected');
 
-    expect(response.status).toBe(501);
+    expect(response.status).toBe(401);
     expect(response.body).not.toHaveProperty('leaked');
+  });
+
+  it('rejects a forged access token', async () => {
+    const response = await request(app).get('/protected').set('cookie', 'tarn_access=not.a.real.token');
+
+    expect(response.status).toBe(401);
+  });
+});
+
+describe('asyncHandler bridges rejections to the error handler', () => {
+  // Regression guard. Express 4 does NOT catch rejected promises from handlers:
+  // an async handler that rejects leaves the request hanging and the error
+  // handler never runs. Every auth controller is async, and this exact bug made
+  // 422s and 401s disappear into unhandled rejections. Express 5 fixes it
+  // natively; until then every async route must be wrapped.
+  const app = express();
+
+  app.get(
+    '/throws',
+    asyncHandler(async () => {
+      throw new AppError(409, 'email_taken', 'Conflict from an async handler.');
+    }),
+  );
+  app.get(
+    '/rejects',
+    asyncHandler(async () => {
+      await Promise.reject(new Error('raw failure with no status'));
+    }),
+  );
+  app.use(requireAuth);
+  app.use((error: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    const status = error instanceof AppError ? error.status : 500;
+    res.status(status).json({ code: error instanceof AppError ? error.code : 'internal_error' });
+  });
+
+  it('routes a thrown AppError to the error handler with its status', async () => {
+    const response = await request(app).get('/throws');
+
+    expect(response.status).toBe(409);
+    expect(response.body.code).toBe('email_taken');
+  });
+
+  it('routes a bare rejection to the error handler instead of hanging', async () => {
+    const response = await request(app).get('/rejects');
+
+    // Must resolve at all. Without the wrapper the request never responds.
+    expect(response.status).toBe(500);
   });
 });
 

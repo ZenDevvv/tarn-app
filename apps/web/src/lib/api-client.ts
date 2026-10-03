@@ -48,7 +48,42 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
   return payload?.data as T;
 }
 
+/** The signed-in user. Mirrors the API's public user shape. */
+export interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+  createdAt: string;
+}
+
 export const api = {
   baseUrl,
   health: () => apiFetch<{ status: string; service: string }>('/health'),
+
+  /**
+   * Auth calls (architecture §38).
+   *
+   * Tokens are httpOnly cookies, so there is nothing to store on the client and
+   * nothing to attach by hand — `apiFetch` already sends `credentials: 'include'`
+   * (architecture §37: never localStorage/sessionStorage).
+   */
+  register: (input: { email: string; password: string; name: string }) =>
+    apiFetch<{ user: AuthUser }>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(input),
+    }),
+
+  login: (input: { email: string; password: string }) =>
+    apiFetch<{ user: AuthUser }>('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify(input),
+    }),
+
+  logout: () => apiFetch<{ signedOut: boolean }>('/auth/logout', { method: 'POST' }),
+
+  /**
+   * Current user. Rejects with 401 when signed out, which the session query
+   * treats as "no session" rather than as an error worth showing.
+   */
+  me: () => apiFetch<{ user: AuthUser }>('/auth/me'),
 };

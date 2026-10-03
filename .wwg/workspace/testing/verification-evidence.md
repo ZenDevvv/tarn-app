@@ -611,3 +611,103 @@ job always starts its own server.
 ### Follow-up
 
 REC-0019 — Proposed.
+
+---
+
+## VER-0008 — The authentication module, and two real bugs it surfaced
+
+**Claim.** Registration, sign-in, sign-out, session refresh, and the authenticated
+dashboard work end to end, with the ownership boundary enforced and tested.
+
+**Evidence level.** Confirmed by execution against a live database, plus a browser
+suite covering the real journey.
+
+### Gate results
+
+| Gate | Before | After |
+|---|---|---|
+| `pnpm test` | 97 passing | **160 passing, 0 skipped** |
+| Playwright | 24 instances | **36 instances** |
+| `pnpm lint` / `typecheck` / `format:check` / `build` | clean | clean |
+| `pnpm audit --audit-level=high` | none | none |
+| `wwg validate` | 0 critical, 0 high | 0 critical, 0 high |
+
+The browser suite was run on ports 5199/4099 with `reuseExistingServer: false`,
+because port 5173 is held by another project on this machine (REC-0019). 36 passed.
+
+### Two real bugs the tests caught — both in code written minutes earlier
+
+**1. Express 4 does not catch rejected promises from async handlers.**
+
+Every auth controller is `async` because it hashes a password. With no bridge, a
+rejection became an *unhandled promise rejection* and the request never responded.
+
+The symptom was distinctive and is worth remembering:
+
+```text
+Serialized Error: { status: 401, code: 'invalid_credentials' }
+```
+
+The status and code were correct — they just never became an HTTP response. 11 tests
+failed this way, and the absence of any `Received:` line is what identified it.
+
+Fixed with `asyncHandler` (`apps/api/src/middleware/async-handler.ts`), applied to
+every route, with two regression tests: a thrown `AppError` keeps its status, and a
+bare rejection resolves to a 500 rather than hanging. Express 5 fixes this natively.
+
+**2. "Refresh token rotation" was theatre.**
+
+JWT claims are deterministic. Two tokens minted for the same user within the same
+second produced **byte-identical output**, so the rotation test failed:
+
+```text
+AssertionError: expected 'eyJhbGciOiJIUzI1NiIs...' not to be 'eyJhbGciOiJIUzI1NiIs...'
+```
+
+The first version of this code would have reissued the same string and called it
+rotation. Fixed by adding a random `jti` to every token, which also gives a future
+`sessions` table a natural key without changing the signing code.
+
+### A third finding: the E2E suite was throttled by its own limiter
+
+The suite originally registered a fresh account **per test** and failed partway
+through with `Too many accounts created from here. Try again later.` — not a flake.
+The register limiter allows 5 per 15 minutes per IP, and every Playwright request
+arrives from `127.0.0.1`.
+
+Fixed with the idiomatic pattern: `tests/e2e/global-setup.ts` creates one account and
+the suite reuses it via `storageState`. Registration remains covered end to end by one
+dedicated test.
+
+**This is a real constraint on the project, not just a test problem:** any local or CI
+activity registering more than 5 accounts per 15 minutes from one IP is throttled.
+
+### Security properties asserted, not assumed
+
+| Property | How it is verified |
+|---|---|
+| Password stored as scrypt, never plaintext | test reads the row and checks the `scrypt$` prefix |
+| `passwordHash` never reaches a client | test asserts the serialized response body contains no `scrypt$` |
+| httpOnly + SameSite=Lax on both cookies | test asserts every `Set-Cookie` header |
+| Unknown email and wrong password are indistinguishable | test compares status, code, and message |
+| Login is not a timing oracle | dummy scrypt verify runs on the unknown-email path; the dummy hash is asserted to parse |
+| A refresh token cannot act as an access token | test presents the refresh cookie to `/auth/me` and expects 401 |
+| A tampered or forged token is rejected | tests cover payload tampering and signature tampering |
+| A deleted account cannot use a still-valid token | test deletes the user, then expects 401 from `/auth/me` |
+| Rate limiting trips and returns 429 + `Retry-After` | tests burst each endpoint |
+| Cross-user isolation | two accounts; each resolves only its own user; forging a `sub` is rejected |
+
+### Missing evidence
+
+- **The ownership boundary is proven for `users` only.** No user-owned *feature* table
+  exists yet, so PRD §35 item 12 is partially met, not fully.
+- **No external security review.** Still deferred by the owner (D-0007).
+- **Sessions are not revocable** — accepted trade-off, D-0009 / REC-0022.
+- **Rate limiting is per-process** — REC-0020, tied to REC-0005.
+- **No load or abuse testing.** The limits are reasoned, not measured against real
+  traffic, because there is no traffic.
+
+### Follow-up
+
+REC-0020, REC-0021, REC-0022, REC-0023 — all Proposed or Deferred, none promoted to
+active work.

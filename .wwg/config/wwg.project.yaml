@@ -74,13 +74,13 @@ product:
     - pnpm test
     - pnpm build
     - npx playwright test
-  # 97 requires a reachable database. Without one, 7 database integration
-  # tests skip loudly and the run reports 90. Re-verified 2026-10-02.
-  executable_tests: 97
-  executable_tests_without_database: 90
+  # 160 requires a reachable database. Without one, 7 database integration
+  # tests skip loudly and the run reports 153. Re-verified 2026-10-03.
+  executable_tests: 160
+  executable_tests_without_database: 153
   executable_tests_skipped_without_database: 7
   database_tests_require_docker: true
-  browser_tests: 24
+  browser_tests: 36
   browser_engine: system-installed (msedge default; CI uses pinned chromium)
   format_gate: enforced in CI since 2026-10-02; `pnpm format:check` passes. See REC-0011.
   delivery_pipeline:

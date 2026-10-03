@@ -18,6 +18,10 @@ coverage/
 playwright-report/
 test-results/
 
+# Playwright session state written by tests/e2e/global-setup.ts.
+# Contains live session cookies — never commit these.
+tests/e2e/.auth/
+
 # Environment — never commit real secrets (architecture §55)
 .env
 .env.local

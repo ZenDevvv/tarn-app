@@ -21,6 +21,13 @@ import { defineConfig, devices } from '@playwright/test';
  */
 const channel = process.env.PW_CHANNEL ?? 'msedge';
 
+/**
+ * The API base URL, published so `globalSetup` can create the shared account
+ * before any browser test runs. Kept next to the webServer block below so the two
+ * cannot drift apart.
+ */
+process.env.E2E_API_URL = 'http://localhost:4000/api/v1';
+
 const browser = channel ? { channel } : {};
 
 /**
@@ -42,8 +49,18 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : [['list']],
 
+  /**
+   * One shared account, created once before the suite runs.
+   *
+   * Registering inside every test exhausts the register rate limit (5 per 15
+   * minutes per IP) partway through the run, because all browser traffic arrives
+   * from 127.0.0.1. See tests/e2e/global-setup.ts.
+   */
+  globalSetup: './tests/e2e/global-setup.ts',
+
   use: {
     baseURL: 'http://localhost:5173',
+    storageState: 'tests/e2e/.auth/shared.json',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     ...browser,
@@ -52,12 +69,14 @@ export default defineConfig({
   projects: [
     {
       name: 'desktop',
+      testIgnore: /global-setup\.ts/,
       use: { ...devices['Desktop Chrome'] },
     },
     {
       // DESIGN.md §11 requires every component to work at 360px. This project
       // enforces it rather than leaving it to manual review.
       name: 'mobile-360',
+      testIgnore: /global-setup\.ts/,
       use: { ...devices['Desktop Chrome'], viewport: { width: 360, height: 740 } },
     },
   ],

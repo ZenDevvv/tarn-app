@@ -61,6 +61,7 @@
     ".wwg/wiki/decisions/D-0006-password-hashing-scrypt.md",
     ".wwg/wiki/decisions/D-0007-code-review-and-dependency-scanning.md",
     ".wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md",
+    ".wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md",
     ".wwg/wiki/principles/README.md",
     ".wwg/wiki/principles/accessibility-principles.md",
     ".wwg/wiki/principles/architecture-restraint-principles.md",
@@ -384,6 +385,11 @@
     },
     {
       "path": ".wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md",
+      "fileType": "context",
+      "reason": "Wiki truth file treated as context for contract review."
+    },
+    {
+      "path": ".wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md",
       "fileType": "context",
       "reason": "Wiki truth file treated as context for contract review."
     },
@@ -1261,6 +1267,15 @@
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
       "affectedFile": ".wwg/wiki/decisions/D-0008-browser-tests-advisory-not-blocking.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
       "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
@@ -2158,6 +2173,14 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-possible-stale-current-language",
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/principles/architecture-restraint-principles.md",
@@ -2195,7 +2218,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 183,
+      "line": 198,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2204,7 +2227,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 200,
+      "line": 215,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2213,7 +2236,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 204,
+      "line": 219,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2222,7 +2245,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 205,
+      "line": 220,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2231,7 +2254,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 206,
+      "line": 221,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2272,11 +2295,21 @@
     {
       "severity": "suggestion",
       "code": "markdown-repeated-heading",
+      "message": "Heading 'Next task — awaiting owner signal' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "affectedSection": "Next task — awaiting owner signal",
+      "line": 224,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
       "message": "Heading 'What changed' repeats at the same level.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "What changed",
-      "line": 230,
+      "line": 336,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2286,7 +2319,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Verified by execution, not assumption",
-      "line": 253,
+      "line": 359,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2296,7 +2329,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Deliberately declined",
-      "line": 302,
+      "line": 408,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2306,7 +2339,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Next task — awaiting owner signal",
-      "line": 312,
+      "line": 418,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -2323,7 +2356,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 417,
+      "line": 523,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -2554,6 +2587,26 @@
       "fileType": "unknown",
       "affectedSection": "Follow-up",
       "line": 611,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 700,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 710,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -3592,6 +3645,15 @@
       "severity": "warning",
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
       "affectedFile": ".wwg/wiki/principles/README.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
@@ -3835,6 +3897,23 @@
       "severity": "warning",
       "code": "context-contract-missing-sections",
       "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
+      "affectedFile": ".wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md",
+      "fileType": "context",
+      "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
+      "recommendedFix": "Add the missing context section or mark it explicitly not applicable."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "warning",
+      "code": "context-contract-missing-sections",
+      "message": "Context is missing contract section(s): Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References.",
       "affectedFile": ".wwg/wiki/principles/README.md",
       "fileType": "context",
       "affectedSection": "Purpose, Scope, Current State, Canonical Terms, Decisions, Constraints, References",
@@ -3933,7 +4012,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 183,
+      "line": 198,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3942,7 +4021,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 200,
+      "line": 215,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3951,7 +4030,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 204,
+      "line": 219,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3960,7 +4039,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 205,
+      "line": 220,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -3969,7 +4048,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 206,
+      "line": 221,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5946,6 +6025,14 @@
     },
     {
       "severity": "suggestion",
+      "code": "markdown-possible-vague-pronouns",
+      "message": "File has many pronouns that may be ambiguous for agents.",
+      "affectedFile": ".wwg/wiki/decisions/D-0009-auth-session-and-rate-limit-design.md",
+      "fileType": "context",
+      "recommendedFix": "Replace ambiguous pronouns with explicit nouns where references may be unclear."
+    },
+    {
+      "severity": "suggestion",
       "code": "markdown-possible-stale-current-language",
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/principles/architecture-restraint-principles.md",
@@ -5983,7 +6070,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 183,
+      "line": 198,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -5992,7 +6079,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 200,
+      "line": 215,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -6001,7 +6088,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 204,
+      "line": 219,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -6010,7 +6097,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 205,
+      "line": 220,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -6019,7 +6106,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/wiki/project-truth.md",
       "fileType": "context",
-      "line": 206,
+      "line": 221,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -6060,11 +6147,21 @@
     {
       "severity": "suggestion",
       "code": "markdown-repeated-heading",
+      "message": "Heading 'Next task — awaiting owner signal' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/current-task.md",
+      "fileType": "unknown",
+      "affectedSection": "Next task — awaiting owner signal",
+      "line": 224,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
       "message": "Heading 'What changed' repeats at the same level.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "What changed",
-      "line": 230,
+      "line": 336,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6074,7 +6171,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Verified by execution, not assumption",
-      "line": 253,
+      "line": 359,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6084,7 +6181,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Deliberately declined",
-      "line": 302,
+      "line": 408,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6094,7 +6191,7 @@
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
       "affectedSection": "Next task — awaiting owner signal",
-      "line": 312,
+      "line": 418,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6111,7 +6208,7 @@
       "message": "Stable or active file contains phase/pass/temporary language.",
       "affectedFile": ".wwg/workspace/current-task.md",
       "fileType": "unknown",
-      "line": 417,
+      "line": 523,
       "recommendedFix": "Route history to reports, changelog, roadmap, or dated history docs unless the file is intentionally historical."
     },
     {
@@ -6342,6 +6439,26 @@
       "fileType": "unknown",
       "affectedSection": "Follow-up",
       "line": 611,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Missing evidence' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Missing evidence",
+      "line": 700,
+      "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
+    },
+    {
+      "severity": "suggestion",
+      "code": "markdown-repeated-heading",
+      "message": "Heading 'Follow-up' repeats at the same level.",
+      "affectedFile": ".wwg/workspace/testing/verification-evidence.md",
+      "fileType": "unknown",
+      "affectedSection": "Follow-up",
+      "line": 710,
       "recommendedFix": "Rename repeated headings or add a qualifier when repeated sections could confuse agents."
     },
     {
@@ -6854,13 +6971,13 @@
   ],
   "metadataPolicyApplied": "Option C: Skill Registry metadata is canonical; skill files may include lightweight metadata when beneficial, and package-side skills do not require frontmatter.",
   "summary": {
-    "checkedFileCount": 80,
+    "checkedFileCount": 81,
     "skippedFileCount": 1,
     "errorCount": 0,
-    "warningCount": 113,
-    "suggestionCount": 139,
+    "warningCount": 114,
+    "suggestionCount": 143,
     "classificationCounts": {
-      "context": 16,
+      "context": 17,
       "skill": 0,
       "governance": 28,
       "report": 22,

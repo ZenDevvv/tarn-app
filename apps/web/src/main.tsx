@@ -4,6 +4,9 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createBrowserRouter, redirect } from 'react-router-dom';
 import { AppLayout } from './layouts/app-layout';
 import { DashboardPage } from './routes/dashboard-page';
+import { LoginPage } from './routes/login-page';
+import { RegisterPage } from './routes/register-page';
+import { RedirectIfAuthed, RequireAuth } from './features/auth/components/require-auth';
 import { queryClient } from './lib/query-client';
 import './index.css';
 
@@ -15,7 +18,35 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { index: true, loader: () => redirect('/dashboard') },
-      { path: 'dashboard', element: <DashboardPage /> },
+
+      // Protected. The guard is a convenience redirect only — the API enforces
+      // authorization server-side (architecture §36, PRD §33).
+      {
+        path: 'dashboard',
+        element: (
+          <RequireAuth>
+            <DashboardPage />
+          </RequireAuth>
+        ),
+      },
+
+      // Public entry points. RedirectIfAuthed keeps a signed-in user off them.
+      {
+        path: 'login',
+        element: (
+          <RedirectIfAuthed>
+            <LoginPage />
+          </RedirectIfAuthed>
+        ),
+      },
+      {
+        path: 'register',
+        element: (
+          <RedirectIfAuthed>
+            <RegisterPage />
+          </RedirectIfAuthed>
+        ),
+      },
     ],
   },
 ]);

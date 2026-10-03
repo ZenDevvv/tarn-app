@@ -31,15 +31,15 @@ This file is generated during existing-project adoption and is **not** regenerat
 `wwg maintain`, `wwg validate`, or `wwg reports`. Its contents describe the repository as
 it was on 2026-10-01, before the monorepo scaffold and database migration landed.
 
-**`gap-no-existing-tests` is no longer true.** As of 2026-10-02 the repository has:
+**`gap-no-existing-tests` is no longer true.** As of 2026-10-03 the repository has:
 
 | Suite | Count | Command |
 |---|---|---|
-| Unit + integration (types, auth, validation, database, API, React) | 97 passing | `pnpm test` |
-| Browser E2E (desktop + 360px, real browser) | 24 passing | `npx playwright test` |
+| Unit + integration (types, auth, validation, database, API, React) | 160 passing | `pnpm test` |
+| Browser E2E (desktop + 360px, real browser) | 36 passing | `npx playwright test` |
 
-Re-verified by execution on 2026-10-02: `pnpm test` → **97 passed, 0 skipped**
-with a live database, and 90 passed / 7 skipped without one. Both suites run in CI
+Re-verified by execution on 2026-10-03: `pnpm test` → **160 passed, 0 skipped**
+with a live database, and 153 passed / 7 skipped without one. Both suites run in CI
 (`.github/workflows/ci.yml`, jobs `verify` and `e2e`).
 
 **Only `verify` is required by branch protection.** The `e2e` job runs and reports

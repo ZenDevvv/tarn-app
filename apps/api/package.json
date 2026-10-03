@@ -9,9 +9,10 @@
     "start": "node dist/server.js",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts",
-    "test": "vitest run --passWithNoTests"
+    "test": "dotenv -e ../../.env -- vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@tarn/auth": "workspace:*",
     "@tarn/database": "workspace:*",
     "@tarn/types": "workspace:*",
     "@tarn/validation": "workspace:*",

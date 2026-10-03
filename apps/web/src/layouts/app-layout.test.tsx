@@ -4,20 +4,43 @@
  * These target the accessibility contract in DESIGN.md §11 and PRD §10.6, which
  * is a requirement rather than a nice-to-have. Copy assertions follow DESIGN.md
  * §12: plain second person, no filler, no exclamation marks.
+ *
+ * The shell reads the session so it can show the user's name and a sign-out
+ * control. `api.me` is stubbed rather than mocked at the module level so the
+ * tests exercise the real TanStack Query path, including the "no QueryClient"
+ * failure that a missing provider produces.
  */
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AppLayout } from '../layouts/app-layout';
+import * as apiClient from '../lib/api-client';
+
+const signedInUser = { id: 'u1', email: 'sam@example.com', name: 'Sam', createdAt: '2026-01-01' };
 
 function renderShell(initialPath = '/dashboard') {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  });
+
   return render(
-    <MemoryRouter initialEntries={[initialPath]}>
-      <AppLayout />
-    </MemoryRouter>,
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={[initialPath]}>
+        <AppLayout />
+      </MemoryRouter>
+    </QueryClientProvider>,
   );
 }
+
+beforeEach(() => {
+  vi.spyOn(apiClient.api, 'me').mockResolvedValue({ user: signedInUser });
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe('AppLayout', () => {
   it('renders the product name and primary navigation', () => {
@@ -61,5 +84,32 @@ describe('AppLayout', () => {
 
     const link = screen.getByRole('link', { name: 'Dashboard' });
     expect(link).toHaveAttribute('aria-current', 'page');
+  });
+
+  it('shows the signed-in user and a sign-out control', async () => {
+    renderShell();
+
+    expect(await screen.findByText('Sam')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /sign out/i })).toBeInTheDocument();
+  });
+
+  it('gives the sign-out control a 44px target (DESIGN.md §11)', async () => {
+    renderShell();
+
+    const button = await screen.findByRole('button', { name: /sign out/i });
+    expect(button.className).toContain('min-h-11');
+  });
+
+  // A dead "Sign out" button on the sign-in page is a small thing that reads as a
+  // bug, so the control is asserted to be absent when there is no session.
+  it('hides the sign-out control when signed out', async () => {
+    vi.spyOn(apiClient.api, 'me').mockRejectedValue(
+      new apiClient.ApiRequestError(401, 'unauthorized', 'Sign in to continue.'),
+    );
+
+    renderShell('/login');
+
+    await screen.findByRole('main');
+    expect(screen.queryByRole('button', { name: /sign out/i })).not.toBeInTheDocument();
   });
 });
